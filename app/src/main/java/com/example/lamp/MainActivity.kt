@@ -1,12 +1,11 @@
 package com.example.lamp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.example.lamp.ui.SignUpFragment
-import com.example.lamp.ui.SigninFragment
+import com.example.lamp.ui.sign_up_page.SignUpFragment
+import com.example.lamp.ui.sign_in_page.SigninFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
