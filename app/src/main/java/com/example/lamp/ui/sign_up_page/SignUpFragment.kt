@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.lamp.R
 
 class SignUpFragment:Fragment() {
-//coment test
+//comment test
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
