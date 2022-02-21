@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/yellow">
+    android:background="@color/yellow"
+    android:padding="12dp">
     <ImageView
         android:id="@+id/frame_signin"
         android:layout_width="match_parent"
@@ -86,7 +87,7 @@
         android:background="@drawable/rounded_button"
         android:text="LOGIN"
         android:elevation="8dp"
-
+        android:onClick="signIn"
         android:textColor="@color/white"
         android:layout_margin="20dp"
         app:layout_constraintStart_toStartOf="parent"

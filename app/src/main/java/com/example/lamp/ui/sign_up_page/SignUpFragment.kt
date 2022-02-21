@@ -1,4 +1,4 @@
-package com.example.lamp.ui
+package com.example.lamp.ui.sign_up_page
 
 import android.os.Bundle
 import android.view.LayoutInflater
