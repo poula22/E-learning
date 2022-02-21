@@ -96,7 +96,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courses_home"
-        tools:listitem="@layout/item_course_rv" />
+        tools:listitem="@layout/item_student_home_course_rv" />
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -117,7 +117,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/features_home"
-        tools:listitem="@layout/item_feature_rv" />
+        tools:listitem="@layout/item_student_home_feature_rv" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
