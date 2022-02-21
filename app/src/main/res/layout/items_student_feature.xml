@@ -9,38 +9,22 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!-- Media -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+        <!--  Media  -->
         <ImageView
             android:id="@+id/feature_image_view"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/login" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            app:srcCompat="@drawable/login"/>
+        <LinearLayout android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/light_pink"
+            android:background="#FF5252"
             android:orientation="vertical"
             android:padding="16dp">
-
-            <TextView
-                android:id="@+id/feature_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Feature Name"
-                android:textColor="@color/white"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
-
+            <!--  Title, secondary and supporting text  -->
+            <TextView android:id="@+id/feature_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Feature Name" android:textAppearance="?attr/textAppearanceHeadline6"/>
         </LinearLayout>
-
-
     </LinearLayout>
-
 
 </androidx.cardview.widget.CardView>
