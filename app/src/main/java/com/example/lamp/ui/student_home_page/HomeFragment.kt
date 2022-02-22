@@ -31,7 +31,7 @@ class HomeFragment: Fragment() {
 
     private fun initViews() {
         coursesRecyclerView=requireView().findViewById(R.id.courses_recycler_view)
-        featuresRecyclerView=requireView().findViewById(R.id.features_recycler_view)
+        featuresRecyclerView=requireView().findViewById(R.id.children_recycler_view)
         coursesRVAdapter=CoursesRVAdapter(type=0)
         coursesRecyclerView.adapter=coursesRVAdapter
         featuresRVAdapter=FeaturesRVAdapter(type=0)
