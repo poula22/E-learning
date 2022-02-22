@@ -46,11 +46,11 @@ class ParentContainerFragment:Fragment() {
                     .replace(R.id.parent_fragment_tab, CoursesFragment())
                     .commit()
             }else if(menuItem.itemId==R.id.communicate){
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.parent_fragment_tab, CommunicateFragment())
-                .commit()
-        }
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.parent_fragment_tab, CommunicateFragment())
+                    .commit()
+            }
             return@setOnItemSelectedListener true
         }
         bottomNavigationView.selectedItemId=R.id.home
