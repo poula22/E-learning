@@ -11,14 +11,14 @@ import com.example.lamp.ui.student_features_page.FeaturesFragment
 import com.example.lamp.ui.student_home_page.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class ContainerFragment:Fragment() {
+class ParentContainerFragment:Fragment() {
     lateinit var bottomNavigationView: BottomNavigationView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_student_container_all_tabs,container,false)
+        return inflater.inflate(R.layout.fragment_parent_container_all_tabs,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,17 +32,17 @@ class ContainerFragment:Fragment() {
             if(menuItem.itemId==R.id.home){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.fragment_tab,HomeFragment())
+                    .replace(R.id.parent_fragment_tab, HomeFragment())
                     .commit()
             }else if(menuItem.itemId==R.id.courses){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.fragment_tab,CoursesFragment())
+                    .replace(R.id.parent_fragment_tab, CoursesFragment())
                     .commit()
             }else if(menuItem.itemId==R.id.features){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.fragment_tab, FeaturesFragment())
+                    .replace(R.id.parent_fragment_tab, FeaturesFragment())
                     .commit()
             }
             return@setOnItemSelectedListener true

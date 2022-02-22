@@ -3,16 +3,13 @@
     <item android:id="@+id/home"
         android:title="home"
         android:icon="@drawable/ic_launcher_foreground"/>
+    <item android:id="@+id/children"
+        android:title="children"
+        android:icon="@drawable/ic_launcher_foreground"/>
     <item android:id="@+id/courses"
         android:title="courses"
         android:icon="@drawable/ic_launcher_foreground"/>
-    <item android:id="@+id/features"
-        android:title="features"
-        android:icon="@drawable/ic_launcher_foreground"/>
-    <item android:id="@+id/websites"
-        android:title="websites"
-        android:icon="@drawable/ic_launcher_foreground"/>
-    <item android:id="@+id/advices"
-        android:title="advices"
+    <item android:id="@+id/communicate"
+        android:title="communicate"
         android:icon="@drawable/ic_launcher_foreground"/>
 </menu>
