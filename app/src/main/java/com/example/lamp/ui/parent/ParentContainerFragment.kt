@@ -27,7 +27,7 @@ class ParentContainerFragment:Fragment() {
     }
 
     private fun initView() {
-        bottomNavigationView=requireView().findViewById(R.id.bottom_naviagation_view)
+        bottomNavigationView=requireView().findViewById(R.id.bottom_navigation_view)
         bottomNavigationView.setOnItemSelectedListener {    menuItem->
             if(menuItem.itemId==R.id.home){
                 requireActivity().supportFragmentManager

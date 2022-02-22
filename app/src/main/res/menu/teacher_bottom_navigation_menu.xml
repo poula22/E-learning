@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/courses"
+        android:title="courses"
+        android:icon="@drawable/ic_launcher_foreground"/>
+    <item android:id="@+id/students"
+        android:title="students"
+        android:icon="@drawable/ic_launcher_foreground"/>
+    <item android:id="@+id/tools"
+        android:title="tools"
+        android:icon="@drawable/ic_launcher_foreground"/>
+    <item android:id="@+id/profile"
+        android:title="profile"
+        android:icon="@drawable/ic_launcher_foreground"/>
+</menu>

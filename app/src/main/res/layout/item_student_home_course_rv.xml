@@ -29,7 +29,7 @@
             android:textColor="#ffffff" />
 
         <TextView
-            android:id="@+id/teacher_name"
+            android:id="@+id/course_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -38,7 +38,7 @@
             android:textColor="#ffffff" />
 
         <TextView
-            android:id="@+id/course_description"
+            android:id="@+id/teacher_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

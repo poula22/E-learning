@@ -26,7 +26,7 @@ class CoursesRVAdapter(var coursesItemsList : List<CourseItem>?=null,val type:In
         val item = coursesItemsList?.get(position)
         holder.courseName.text = item?.courseName
         holder.teacherName.text = item?.teacherName
-        holder.courseDescription.text = item?.courseDescription
+        holder.courseCode.text=item?.courseCode
     }
 
     override fun getItemCount(): Int {
@@ -37,10 +37,7 @@ class CoursesRVAdapter(var coursesItemsList : List<CourseItem>?=null,val type:In
     class CoursesItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var courseName:TextView = itemView.findViewById<TextView>(R.id.course_name)
         var teacherName:TextView = itemView.findViewById<TextView>(R.id.teacher_name)
-        var courseDescription: TextView = itemView.findViewById<TextView>(R.id.course_description)
-
-
-
+        var courseCode:TextView=itemView.findViewById<TextView>(R.id.courses_code)
     }
 
 }
