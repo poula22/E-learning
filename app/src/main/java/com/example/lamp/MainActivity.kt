@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.example.lamp.ui.ContainerFragment
+import com.example.lamp.ui.StudentContainerFragment
 import com.example.lamp.ui.sign_up_page.SignUpFragment
 import com.example.lamp.ui.sign_in_page.SigninFragment
 
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         pushFragment(SignUpFragment())
     }
     fun signIn(view:View){
-        pushFragment(ContainerFragment())
+        pushFragment(StudentContainerFragment())
     }
     fun pushFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()

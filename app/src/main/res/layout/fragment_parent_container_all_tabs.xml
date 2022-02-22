@@ -5,11 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <FrameLayout
-        android:id="@+id/student_fragment_tab"
+        android:id="@+id/parent_fragment_tab"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_naviagation_view"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_naviagation_view"
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
         app:menu="@menu/student_bottom_navigation_menu"
         app:itemTextColor="@color/black"
         app:itemIconTint="@color/black"
-        tools:menu="@menu/student_bottom_navigation_menu"
+        tools:menu="@menu/parent_bottom_navigation_menu"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
