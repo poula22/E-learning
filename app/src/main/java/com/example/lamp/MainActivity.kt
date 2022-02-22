@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.example.lamp.ui.StudentContainerFragment
+import com.example.lamp.ui.student.StudentContainerFragment
 import com.example.lamp.ui.sign_up_page.SignUpFragment
 import com.example.lamp.ui.sign_in_page.SigninFragment
 

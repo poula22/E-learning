@@ -1,4 +1,4 @@
-package com.example.lamp.ui
+package com.example.lamp.ui.parent
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
-import com.example.lamp.ui.student_course_page.CoursesFragment
-import com.example.lamp.ui.student_features_page.FeaturesFragment
-import com.example.lamp.ui.student_home_page.HomeFragment
+import com.example.lamp.ui.student.student_course_page.CoursesFragment
+import com.example.lamp.ui.student.student_features_page.FeaturesFragment
+import com.example.lamp.ui.student.student_home_page.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ParentContainerFragment:Fragment() {

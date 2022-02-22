@@ -1,4 +1,4 @@
-package com.example.lamp.ui
+package com.example.lamp.ui.student
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
-import com.example.lamp.ui.student_course_page.CoursesFragment
-import com.example.lamp.ui.student_features_page.FeaturesFragment
-import com.example.lamp.ui.student_home_page.HomeFragment
+import com.example.lamp.ui.student.student_course_page.CoursesFragment
+import com.example.lamp.ui.student.student_features_page.FeaturesFragment
+import com.example.lamp.ui.student.student_home_page.HomeFragment
+import com.example.lamp.ui.student.student_website_page.WebSitesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class StudentContainerFragment:Fragment() {
@@ -43,6 +44,11 @@ class StudentContainerFragment:Fragment() {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.student_fragment_tab, FeaturesFragment())
+                    .commit()
+            }else if(menuItem.itemId==R.id.websites){
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.student_fragment_tab, WebSitesFragment())
                     .commit()
             }
             return@setOnItemSelectedListener true

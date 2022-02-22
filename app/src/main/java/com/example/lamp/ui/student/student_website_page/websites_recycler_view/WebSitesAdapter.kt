@@ -1,4 +1,4 @@
-package com.example.lamp.ui.student_website_page.websites_recycler_view
+package com.example.lamp.ui.student.student_website_page.websites_recycler_view
 
 import android.view.LayoutInflater
 import android.view.View
