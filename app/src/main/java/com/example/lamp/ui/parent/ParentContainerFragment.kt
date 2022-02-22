@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
-import com.example.lamp.ui.student.student_course_page.CoursesFragment
-import com.example.lamp.ui.student.student_features_page.FeaturesFragment
-import com.example.lamp.ui.student.student_home_page.HomeFragment
+import com.example.lamp.ui.parent.parent_children_page.ChildrenFragment
+import com.example.lamp.ui.parent.parent_communicate_page.CommunicateFragment
+import com.example.lamp.ui.parent.parent_courses_page.CoursesFragment
+import com.example.lamp.ui.parent.parent_home_page.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ParentContainerFragment:Fragment() {
@@ -27,24 +28,29 @@ class ParentContainerFragment:Fragment() {
     }
 
     private fun initView() {
-        bottomNavigationView=requireView().findViewById(R.id.bottom_navigation_view)
+        bottomNavigationView=requireView().findViewById(R.id.parent_bottom_naviagation_view)
         bottomNavigationView.setOnItemSelectedListener {    menuItem->
             if(menuItem.itemId==R.id.home){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.parent_fragment_tab, HomeFragment())
                     .commit()
+            }else if(menuItem.itemId==R.id.children){
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.parent_fragment_tab, ChildrenFragment())
+                    .commit()
             }else if(menuItem.itemId==R.id.courses){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.parent_fragment_tab, CoursesFragment())
                     .commit()
-            }else if(menuItem.itemId==R.id.features){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.parent_fragment_tab, FeaturesFragment())
-                    .commit()
-            }
+            }else if(menuItem.itemId==R.id.communicate){
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.parent_fragment_tab, CommunicateFragment())
+                .commit()
+        }
             return@setOnItemSelectedListener true
         }
         bottomNavigationView.selectedItemId=R.id.home

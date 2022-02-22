@@ -15,23 +15,46 @@
             android:id="@+id/home_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="13dp"
             android:text="Home"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rounded_profile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/roundedImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#DADADA"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_profile" />
+
+        </androidx.cardview.widget.CardView>
+
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:minHeight="200dp"
             app:cardBackgroundColor="#3A4BB7"
             app:cardCornerRadius="30dp"
-            app:cardPreventCornerOverlap="false"
-            app:layout_constraintTop_toBottomOf="@id/home_title">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rounded_profile">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,15 +92,16 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/features_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="Children"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_view_home" />
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/children_recycler_view"
@@ -94,11 +118,11 @@
             android:id="@+id/courses_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="Courses"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/children_recycler_view" />
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/courses_recycler_view"
