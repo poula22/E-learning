@@ -4,24 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:background="@color/yellow">
+    android:background="@color/yellow"
+    android:padding="24dp">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_frame"
-            android:padding="18dp"
             android:layout_marginBottom="10dp"
-            >
-
+            android:background="@drawable/rounded_frame"
+            android:padding="18dp">
 
 
             <TextView
@@ -57,9 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
-
                     android:adjustViewBounds="true"
-
                     android:background="@color/green"
                     android:padding="10dp"
                     android:src="@drawable/student" />
@@ -88,8 +83,9 @@
                 android:id="@+id/first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:hint="First Name"
-                android:padding="8dp"
+                android:paddingHorizontal="8dp"
                 android:textColor="@color/black"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="outline"
@@ -106,7 +102,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -114,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Last Name"
-                android:padding="8dp"
+                android:paddingHorizontal="8dp"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="38dp"
@@ -131,7 +127,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -139,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:padding="8dp"
+                android:paddingHorizontal="8dp"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="38dp"
@@ -156,7 +152,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -164,7 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="password"
-                android:padding="8dp"
+                android:paddingHorizontal="8dp"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="38dp"
@@ -182,15 +178,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/comfirm_password_sign_up"
+                android:id="@+id/confirm_password_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Comfirm Password"
-                android:padding="8dp"
+                android:hint="Confirm Password"
+                android:paddingHorizontal="8dp"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="38dp"
@@ -208,7 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -216,7 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Phone"
-                android:padding="8dp"
+                android:paddingHorizontal="8dp"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="38dp"
@@ -225,37 +221,85 @@
                 app:boxCornerRadiusTopStart="38dp"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidth="2dp"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/comfirm_password_sign_up">
+                app:layout_constraintTop_toBottomOf="@+id/confirm_password_sign_up">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/children_mails_sign_up"
+                android:layout_width="253dp"
+                android:layout_height="59dp"
+                android:hint="Child Email"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="38dp"
+                app:boxCornerRadiusBottomStart="38dp"
+                app:boxCornerRadiusTopEnd="38dp"
+                app:boxCornerRadiusTopStart="38dp"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidth="2dp"
+                app:layout_constraintEnd_toStartOf="@id/rounded_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phone_sign_up">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rounded_profile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:elevation="10dp"
+                app:cardCornerRadius="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/children_mails_sign_up"
+                app:layout_constraintTop_toBottomOf="@id/phone_sign_up">
+
+                <ImageView
+                    android:id="@+id/roundedImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DADADA"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_add_child" />
+
+            </androidx.cardview.widget.CardView>
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_sign_up_registeration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_button"
                 android:fontFamily="sans-serif"
                 android:text="SIGN UP"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_marginHorizontal="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phone_sign_up" />
+                app:layout_constraintTop_toBottomOf="@id/children_mails_sign_up" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:alpha="0.25"
                 android:src="@drawable/register"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -265,11 +309,4 @@
     </ScrollView>
 
 
-
-
-
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

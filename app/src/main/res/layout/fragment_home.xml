@@ -15,23 +15,47 @@
             android:id="@+id/home_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="13dp"
             android:text="Home"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rounded_profile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/roundedImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#DADADA"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_profile" />
+
+        </androidx.cardview.widget.CardView>
+
+
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:minHeight="200dp"
-            app:cardBackgroundColor="#673AB7"
+            app:cardBackgroundColor="#873AB7"
             app:cardCornerRadius="30dp"
-            app:cardPreventCornerOverlap="false"
-            app:layout_constraintTop_toBottomOf="@id/home_title">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rounded_profile">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +74,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Continue to \nWebdeveloper Course"
+                        android:text="Continue to \nJava Course"
                         android:textColor="#ffffff"
                         android:textSize="20sp"
                         android:textStyle="bold" />
