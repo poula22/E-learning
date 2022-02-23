@@ -12,6 +12,7 @@ import com.example.lamp.ui.student.student_features_page.FeaturesFragment
 import com.example.lamp.ui.student.student_home_page.HomeFragment
 import com.example.lamp.ui.teacher.courses_page.TeacherCoursesFragment
 import com.example.lamp.ui.teacher.courses_page.courses_bottom_sheet.TeacherAddCoursesBottomSheet
+import com.example.lamp.ui.teacher.home_page.TeacherHomeFragment
 import com.example.lamp.ui.teacher.profile_page.TeacherProfileFragment
 import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
 import com.example.lamp.ui.teacher.tools_page.TeacherToolsFragment
@@ -62,10 +63,16 @@ class TeacherContainerFragment:Fragment() {
                     .beginTransaction()
                     .replace(R.id.teacher_fragment_tab, TeacherToolsFragment())
                     .commit()
+            }else if(menuItem.itemId== R.id.home){
+                floatingActionButton.isVisible=false
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.teacher_fragment_tab, TeacherHomeFragment())
+                    .commit()
             }
             return@setOnItemSelectedListener true
         }
-        bottomNavigationView.selectedItemId= R.id.profile
+        bottomNavigationView.selectedItemId= R.id.home
         floatingActionButton.setOnClickListener{
             showAddBottomSheet()
         }
