@@ -97,11 +97,11 @@
         app:layout_constraintTop_toBottomOf="@id/password">
 
         <ImageView
+            android:id="@+id/child_img"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
-
             android:adjustViewBounds="true"
 
             android:background="@color/green"
@@ -109,6 +109,7 @@
             android:src="@drawable/student" />
 
         <ImageView
+            android:id="@+id/parent_img"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -119,6 +120,7 @@
             android:src="@drawable/parent" />
 
         <ImageView
+            android:id="@+id/teacher_img"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

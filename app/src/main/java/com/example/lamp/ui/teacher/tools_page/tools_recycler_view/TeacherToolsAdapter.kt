@@ -1,5 +1,6 @@
 package com.example.lamp.ui.teacher.tools_page.tools_recycler_view
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

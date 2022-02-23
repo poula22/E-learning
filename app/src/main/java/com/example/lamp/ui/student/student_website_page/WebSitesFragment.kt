@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
+import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_website_page.websites_recycler_view.WebSitesAdapter
 
 class WebSitesFragment:Fragment() {
@@ -27,7 +28,7 @@ class WebSitesFragment:Fragment() {
 
     private fun initViews() {
         recyclerView=requireView().findViewById(R.id.websites_recycler_view)
-        adapter= WebSitesAdapter()
+        adapter= WebSitesAdapter(TestData.WEBSITES)
         recyclerView.adapter=adapter
     }
 }

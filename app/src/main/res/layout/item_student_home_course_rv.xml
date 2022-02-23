@@ -21,7 +21,7 @@
 
         <!-- Title, secondary and supporting text -->
         <TextView
-            android:id="@+id/course_name"
+            android:id="@+id/courses_course_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Course Name"
@@ -29,7 +29,7 @@
             android:textColor="#ffffff" />
 
         <TextView
-            android:id="@+id/course_code"
+            android:id="@+id/courses_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -38,11 +38,11 @@
             android:textColor="#ffffff" />
 
         <TextView
-            android:id="@+id/teacher_name"
+            android:id="@+id/courses_teacher_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Teacher Name"
+            tools:text="Teacher Name"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="#FFE6E6" />
 

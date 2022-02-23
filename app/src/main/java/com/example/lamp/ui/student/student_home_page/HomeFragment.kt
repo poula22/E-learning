@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
+import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CoursesRVAdapter
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeaturesRVAdapter
 
@@ -32,9 +33,9 @@ class HomeFragment: Fragment() {
     private fun initViews() {
         coursesRecyclerView=requireView().findViewById(R.id.courses_recycler_view)
         featuresRecyclerView=requireView().findViewById(R.id.children_recycler_view)
-        coursesRVAdapter=CoursesRVAdapter(type=0)
+        coursesRVAdapter=CoursesRVAdapter(TestData.COURSES,type=0)
         coursesRecyclerView.adapter=coursesRVAdapter
-        featuresRVAdapter=FeaturesRVAdapter(type=0)
+        featuresRVAdapter=FeaturesRVAdapter(TestData.FEATURES,type=0)
         featuresRecyclerView.adapter=featuresRVAdapter
     }
 }

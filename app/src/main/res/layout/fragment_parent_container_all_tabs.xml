@@ -15,10 +15,9 @@
         android:id="@+id/parent_bottom_naviagation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/student_bottom_navigation_menu"
+        app:menu="@menu/parent_bottom_navigation_menu"
         app:itemTextColor="@color/black"
         app:itemIconTint="@color/black"
-        tools:menu="@menu/parent_bottom_navigation_menu"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

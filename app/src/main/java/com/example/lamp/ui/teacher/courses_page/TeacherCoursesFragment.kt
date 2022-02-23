@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
+import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.TeacherCoursesAdapter
 
 class TeacherCoursesFragment:Fragment() {
@@ -27,7 +28,7 @@ class TeacherCoursesFragment:Fragment() {
 
     private fun initViews() {
         recyclerView=requireView().findViewById(R.id.teacher_courses_recycler_view)
-        adapter=TeacherCoursesAdapter()
+        adapter=TeacherCoursesAdapter(TestData.COURSES,1)
         recyclerView.adapter=adapter
     }
 

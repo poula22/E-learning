@@ -1,4 +1,4 @@
-package com.example.lamp.ui.parent.parent_communicate_page
+package com.example.lamp.ui.teacher.home_page
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,27 +8,28 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.parent.parent_communicate_page.communicate_recycler_view.TeacherAdapter
+import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.TeacherCoursesAdapter
 
-class CommunicateFragment:Fragment() {
-    lateinit var teachersRecyclerView: RecyclerView
-    lateinit var teacherAdapter: TeacherAdapter
-
+class TeacherHomeFragment:Fragment() {
+    lateinit var recyclerView: RecyclerView
+    lateinit var adapter: TeacherCoursesAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_parent_communicate,container,false)
+        return inflater.inflate(R.layout.fragment_teacher_home,container,false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
 
     private fun initViews() {
-        teachersRecyclerView=requireView().findViewById(R.id.parent_student_courses_recycler_view)
-        teacherAdapter=TeacherAdapter(TestData.TEACHERS)
-        teachersRecyclerView.adapter=teacherAdapter
+        recyclerView=requireView().findViewById(R.id.)
+        adapter= TeacherCoursesAdapter(TestData.COURSES,0)
+        recyclerView.adapter=adapter
     }
+
 }

@@ -35,8 +35,8 @@ class CoursesRVAdapter(var coursesItemsList : List<CourseItem>?=null,val type:In
 
 
     class CoursesItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var courseName:TextView = itemView.findViewById<TextView>(R.id.course_name)
-        var teacherName:TextView = itemView.findViewById<TextView>(R.id.teacher_name)
+        var courseName:TextView = itemView.findViewById<TextView>(R.id.courses_course_name)
+        var teacherName:TextView = itemView.findViewById<TextView>(R.id.courses_teacher_name)
         var courseCode:TextView=itemView.findViewById<TextView>(R.id.courses_code)
     }
 
