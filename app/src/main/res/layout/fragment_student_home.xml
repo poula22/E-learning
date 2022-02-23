@@ -43,7 +43,6 @@
         </androidx.cardview.widget.CardView>
 
 
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_home"
             android:layout_width="match_parent"

@@ -27,7 +27,7 @@ class TeacherHomeFragment:Fragment() {
     }
 
     private fun initViews() {
-        recyclerView=requireView().findViewById(R.id.)
+        recyclerView=requireView().findViewById(R.id.courses_recycler_view)
         adapter= TeacherCoursesAdapter(TestData.COURSES,0)
         recyclerView.adapter=adapter
     }
