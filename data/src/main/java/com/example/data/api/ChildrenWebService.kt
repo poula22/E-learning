@@ -1,4 +1,4 @@
 package com.example.data.api
 
-interface StudentWebService {
+interface ChildrenWebService {
 }

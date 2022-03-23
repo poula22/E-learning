@@ -25,11 +25,11 @@ class ApiManager {
         fun getCourseApi():CoursesWebService{
             return getInstance().create(CoursesWebService::class.java)
         }
-        fun getParentApi():ParentWebService{
-            return getInstance().create(ParentWebService::class.java)
+        fun getFeatureApi():FeatureWebService{
+            return getInstance().create(FeatureWebService::class.java)
         }
-        fun getStudentApi():StudentWebService{
-            return getInstance().create(StudentWebService::class.java)
+        fun getChildrenApi():ChildrenWebService{
+            return getInstance().create(ChildrenWebService::class.java)
         }
         fun getLoginApi():LoginWebService{
             return getInstance().create(LoginWebService::class.java)

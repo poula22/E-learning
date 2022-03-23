@@ -1,4 +1,4 @@
 package com.example.data.api
 
-interface ParentWebService {
+interface FeatureWebService {
 }
