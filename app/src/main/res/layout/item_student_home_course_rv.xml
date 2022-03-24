@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card"
-    android:layout_width="256dp"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="8dp"
-    app:cardUseCompatPadding="true"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FF5252"
-        android:orientation="vertical"
-        android:padding="20dp">
+    <data>
+        <variable
+            name="item"
+            type="com.example.recyclerviewpracticekotlin.CourseItem" />
+    </data>
 
-        <!-- Title, secondary and supporting text -->
-        <TextView
-            android:id="@+id/courses_course_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Course Name"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textColor="#ffffff" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/courses_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Course Code"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="#ffffff" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF5252"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <TextView
-            android:id="@+id/courses_teacher_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            tools:text="Teacher Name"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="#FFE6E6" />
+            <!-- Title, secondary and supporting text -->
+            <TextView
+                android:id="@+id/courses_course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.courseName}"
+                tools:text="course name"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="#ffffff" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/courses_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{item.courseCode}"
+                tools:text="courseCode"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/courses_teacher_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{item.teacherName}"
+                tools:text="Teacher Name"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="#FFE6E6" />
+
+        </LinearLayout>
 
 
-</com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -26,5 +26,5 @@ interface ChildrenRepository{
 }
 
 interface ChildrenOnlineDataSource{
-    suspend fun getCoursesById():List<ChildDTO>
+    suspend fun getChildren():List<ChildDTO>
 }

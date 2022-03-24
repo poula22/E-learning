@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
+import com.example.lamp.databinding.ItemStudentCoursesBinding
+import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
 import com.example.recyclerviewpracticekotlin.CourseItem
 
 class CoursesRVAdapter(var coursesItemsList : List<CourseItem>?=null,val type:Int): RecyclerView.Adapter<CoursesRVAdapter.CoursesItemViewHolder>() {
@@ -34,7 +36,8 @@ class CoursesRVAdapter(var coursesItemsList : List<CourseItem>?=null,val type:In
     }
 
 
-    class CoursesItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class CoursesItemViewHolder(val homeItem:ItemStudentHomeCourseRvBinding?=null,val courseItem:ItemStudentCoursesBinding?=null)
+        : RecyclerView.ViewHolder((homeItem?.root?:homeItem?.root)!!){
         var courseName:TextView = itemView.findViewById<TextView>(R.id.courses_course_name)
         var teacherName:TextView = itemView.findViewById<TextView>(R.id.courses_teacher_name)
         var courseCode:TextView=itemView.findViewById<TextView>(R.id.courses_code)
