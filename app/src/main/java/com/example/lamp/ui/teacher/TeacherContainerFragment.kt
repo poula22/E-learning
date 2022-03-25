@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
+import com.example.lamp.databinding.FragmentTeacherContainerAllTabsBinding
 import com.example.lamp.ui.student.student_course_page.CoursesFragment
 import com.example.lamp.ui.student.student_features_page.FeaturesFragment
 import com.example.lamp.ui.student.student_home_page.HomeFragment
@@ -20,8 +21,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class TeacherContainerFragment:Fragment() {
-    lateinit var bottomNavigationView: BottomNavigationView
-    lateinit var floatingActionButton: FloatingActionButton
+    lateinit var teacherContainerAllTabsBinding:FragmentTeacherContainerAllTabsBinding
+//    lateinit var bottomNavigationView: BottomNavigationView
+//    lateinit var teacherContainerAllTabsBinding.floatingActionBtn: FloatingActionButton
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,35 +38,33 @@ class TeacherContainerFragment:Fragment() {
     }
 
     private fun initView() {
-        bottomNavigationView=requireView().findViewById(R.id.bottom_navigation_view)
-        floatingActionButton=requireView().findViewById(R.id.floating_action_btn)
-        bottomNavigationView.setOnItemSelectedListener {    menuItem->
+        teacherContainerAllTabsBinding.bottomNavigationView.setOnItemSelectedListener {    menuItem->
             if(menuItem.itemId== R.id.profile){
-                floatingActionButton.isVisible=false
+                teacherContainerAllTabsBinding.floatingActionBtn.isVisible=false
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.teacher_fragment_tab, TeacherProfileFragment())
                     .commit()
             }else if(menuItem.itemId== R.id.courses){
-                floatingActionButton.isVisible=true
+                teacherContainerAllTabsBinding.floatingActionBtn.isVisible=true
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.teacher_fragment_tab, TeacherCoursesFragment())
                     .commit()
             }else if(menuItem.itemId== R.id.students){
-                floatingActionButton.isVisible=false
+                teacherContainerAllTabsBinding.floatingActionBtn.isVisible=false
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.teacher_fragment_tab, TeacherStudentsFragment())
                     .commit()
             }else if(menuItem.itemId== R.id.tools){
-                floatingActionButton.isVisible=false
+                teacherContainerAllTabsBinding.floatingActionBtn.isVisible=false
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.teacher_fragment_tab, TeacherToolsFragment())
                     .commit()
             }else if(menuItem.itemId== R.id.home){
-                floatingActionButton.isVisible=false
+                teacherContainerAllTabsBinding.floatingActionBtn.isVisible=false
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.teacher_fragment_tab, TeacherHomeFragment())
@@ -72,8 +72,8 @@ class TeacherContainerFragment:Fragment() {
             }
             return@setOnItemSelectedListener true
         }
-        bottomNavigationView.selectedItemId= R.id.home
-        floatingActionButton.setOnClickListener{
+        teacherContainerAllTabsBinding.bottomNavigationView.selectedItemId= R.id.home
+        teacherContainerAllTabsBinding.floatingActionBtn.setOnClickListener{
             showAddBottomSheet()
         }
     }

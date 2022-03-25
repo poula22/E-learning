@@ -4,24 +4,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.databinding.DataBindingUtil
 import com.example.lamp.R
+import com.example.lamp.databinding.FragmentTeacherAddCourseBinding
+import com.example.lamp.databinding.FragmentTeacherCoursesBinding
 import com.example.recyclerviewpracticekotlin.CourseItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 
 
 class TeacherAddCoursesBottomSheet: BottomSheetDialogFragment() {
-    lateinit var courseNameLayout: TextInputLayout
-    lateinit var courseCodeLayout: TextInputLayout
-    lateinit var teacherNameLayout: TextInputLayout
-    lateinit var describtionLayout: TextInputLayout
-    lateinit var addCourse: Button
+    lateinit var teacherAddCourseBinding:FragmentTeacherAddCourseBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_teacher_add_course,container,false)
+        return DataBindingUtil.inflate<FragmentTeacherAddCourseBinding>(inflater,R.layout.fragment_teacher_add_course,container,false).root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,17 +28,13 @@ class TeacherAddCoursesBottomSheet: BottomSheetDialogFragment() {
         initViews()
     }
     fun initViews(){
-        courseNameLayout=requireView().findViewById(R.id.course_name_layout)
-        courseCodeLayout=requireView().findViewById(R.id.code_layout)
-        teacherNameLayout=requireView().findViewById(R.id.teacher_name_layout)
-        describtionLayout=requireView().findViewById(R.id.description_layout)
-        addCourse=requireView().findViewById(R.id.add_course_btn)
-        addCourse.setOnClickListener{
+
+        teacherAddCourseBinding.addCourseBtn.setOnClickListener{
             if (validateForm()){
-                val teacherName=teacherNameLayout.editText?.text.toString()
-                val courseName=courseNameLayout.editText?.text.toString()
-                val courseCode=courseCodeLayout.editText?.text.toString()
-                val description=describtionLayout.editText?.text.toString()
+                val teacherName=teacherAddCourseBinding.teacherNameLayout.editText?.text.toString()
+                val courseName=teacherAddCourseBinding.courseNameLayout.editText?.text.toString()
+                val courseCode=teacherAddCourseBinding.codeLayout.editText?.text.toString()
+                val description=teacherAddCourseBinding.descriptionLayout.editText?.text.toString()
                 val course=CourseItem(courseName,teacherName,courseCode,description)
                 dismiss()
             }
@@ -47,33 +42,33 @@ class TeacherAddCoursesBottomSheet: BottomSheetDialogFragment() {
     }
     fun validateForm():Boolean{
         var isValid=true
-        if(courseNameLayout.editText?.text.toString().isBlank()){
-            courseNameLayout.error="please enter todo details"
+        if(teacherAddCourseBinding.courseNameLayout.editText?.text.toString().isBlank()){
+            teacherAddCourseBinding.courseNameLayout.error="please enter todo details"
             isValid=false
         }
         else{
-            courseNameLayout.error=null
+            teacherAddCourseBinding.courseNameLayout.error=null
         }
-        if(courseCodeLayout.editText?.text.toString().isBlank()){
-            courseCodeLayout.error="please enter todo details"
+        if(teacherAddCourseBinding.codeLayout.editText?.text.toString().isBlank()){
+            teacherAddCourseBinding.codeLayout.error="please enter todo details"
             isValid=false
         }
         else{
-            courseCodeLayout.error=null
+            teacherAddCourseBinding.codeLayout.error=null
         }
-        if(describtionLayout.editText?.text.toString().isBlank()){
-            describtionLayout.error="please enter todo details"
+        if(teacherAddCourseBinding.descriptionLayout.editText?.text.toString().isBlank()){
+            teacherAddCourseBinding.descriptionLayout.error="please enter todo details"
             isValid=false
         }
         else{
-            describtionLayout.error=null
+            teacherAddCourseBinding.descriptionLayout.error=null
         }
-        if(teacherNameLayout.editText?.text.toString().isBlank()){
-            teacherNameLayout.error="please enter todo details"
+        if(teacherAddCourseBinding.teacherNameLayout.editText?.text.toString().isBlank()){
+            teacherAddCourseBinding.teacherNameLayout.error="please enter todo details"
             isValid=false
         }
         else{
-            teacherNameLayout.error=null
+            teacherAddCourseBinding.teacherNameLayout.error=null
         }
         return isValid
     }

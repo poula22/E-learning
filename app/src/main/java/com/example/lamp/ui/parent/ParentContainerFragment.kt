@@ -4,22 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
+import com.example.lamp.databinding.FragmentParentContainerAllTabsBinding
 import com.example.lamp.ui.parent.parent_children_page.ChildrenFragment
 import com.example.lamp.ui.parent.parent_communicate_page.CommunicateFragment
 import com.example.lamp.ui.parent.parent_courses_page.CoursesFragment
 import com.example.lamp.ui.parent.parent_home_page.HomeFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ParentContainerFragment:Fragment() {
-    lateinit var bottomNavigationView: BottomNavigationView
+    lateinit var parentContainerAllTabsBinding: FragmentParentContainerAllTabsBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_parent_container_all_tabs,container,false)
+        parentContainerAllTabsBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_parent_container_all_tabs,container,false)
+        return parentContainerAllTabsBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,8 +30,7 @@ class ParentContainerFragment:Fragment() {
     }
 
     private fun initView() {
-        bottomNavigationView=requireView().findViewById(R.id.parent_bottom_naviagation_view)
-        bottomNavigationView.setOnItemSelectedListener {    menuItem->
+        parentContainerAllTabsBinding.parentBottomNaviagationView.setOnItemSelectedListener { menuItem->
             if(menuItem.itemId==R.id.home){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
@@ -53,6 +54,6 @@ class ParentContainerFragment:Fragment() {
             }
             return@setOnItemSelectedListener true
         }
-        bottomNavigationView.selectedItemId=R.id.home
+        parentContainerAllTabsBinding.parentBottomNaviagationView.selectedItemId=R.id.home
     }
 }

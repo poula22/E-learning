@@ -33,7 +33,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/parent_student_courses_recycler_view"
+            android:id="@+id/parent_communicate_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
