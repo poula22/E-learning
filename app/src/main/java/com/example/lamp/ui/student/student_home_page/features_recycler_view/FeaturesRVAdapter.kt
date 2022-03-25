@@ -5,27 +5,42 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
+import com.example.lamp.databinding.ItemStudentHomeFeatureRvBinding
+import com.example.lamp.databinding.ItemsStudentFeatureBinding
 import com.example.recyclerviewpracticekotlin.FeatureItem
 
 class FeaturesRVAdapter(var featuresItemsList : List<FeatureItem>?=null,val type:Int): RecyclerView.Adapter<FeaturesRVAdapter.FeaturesItemViewHolder>() {
 
     val HOME_SCREEN=R.layout.item_student_home_feature_rv
     val FEATURES_SCREEN=R.layout.items_student_feature
+    lateinit var viewDataBinding: ViewDataBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeaturesItemViewHolder {
-        var screen=HOME_SCREEN
         if(type== 1){
-            screen=FEATURES_SCREEN
+            var screen=FEATURES_SCREEN
+            viewDataBinding=DataBindingUtil.inflate<ItemsStudentFeatureBinding>(LayoutInflater.from(parent.context),screen,parent,false)
         }
-        var view =LayoutInflater.from(parent.context).inflate(screen,parent,false)
-        return FeaturesItemViewHolder(view)
+        else if (type==0){
+            var screen=HOME_SCREEN
+            viewDataBinding=DataBindingUtil.inflate<ItemStudentHomeFeatureRvBinding>(LayoutInflater.from(parent.context),screen,parent,false)
+        }
+        return FeaturesItemViewHolder(viewDataBinding)
     }
 
     override fun onBindViewHolder(holder: FeaturesItemViewHolder, position: Int) {
         val item = featuresItemsList?.get(position)
-        holder.featureName.text = item?.featureName
-        holder.image.setImageResource(item?.featureImageID ?:0)
+        if (type==0){
+            var viewBinding=holder.viewDataBinding as ItemStudentHomeFeatureRvBinding
+            viewBinding.item=item
+        }
+        else{
+            var viewBinding=holder.viewDataBinding as ItemsStudentFeatureBinding
+            viewBinding.item=item
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -33,11 +48,7 @@ class FeaturesRVAdapter(var featuresItemsList : List<FeatureItem>?=null,val type
     }
 
 
-    class FeaturesItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var featureName:TextView = itemView.findViewById<TextView>(R.id.feature_name)
-        var image: ImageView = itemView.findViewById<ImageView>(R.id.feature_image_view)
-
-
+    class FeaturesItemViewHolder(val viewDataBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewDataBinding.root){
 
     }
 

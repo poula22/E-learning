@@ -138,7 +138,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/children_recycler_view"
+                android:id="@+id/feature_recycler_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
