@@ -20,7 +20,8 @@ class TeacherAddCoursesBottomSheet: BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentTeacherAddCourseBinding>(inflater,R.layout.fragment_teacher_add_course,container,false).root
+        teacherAddCourseBinding = DataBindingUtil.inflate<FragmentTeacherAddCourseBinding>(inflater,R.layout.fragment_teacher_add_course,container,false)
+        return teacherAddCourseBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

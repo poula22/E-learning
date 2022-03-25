@@ -110,7 +110,7 @@
                 app:layout_constraintTop_toBottomOf="@id/card_view_home" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/feature_recycler_view"
+                android:id="@+id/children_recycler_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -128,7 +128,7 @@
                 android:text="Courses"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/feature_recycler_view" />
+                app:layout_constraintTop_toBottomOf="@+id/children_recycler_view" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/courses_recycler_view"

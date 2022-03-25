@@ -20,7 +20,8 @@ class TeacherCoursesFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentTeacherCoursesBinding>(inflater,R.layout.fragment_teacher_courses,container,false).root
+        teacherCoursesBinding = DataBindingUtil.inflate<FragmentTeacherCoursesBinding>(inflater,R.layout.fragment_teacher_courses,container,false)
+        return teacherCoursesBinding.root
 
     }
 

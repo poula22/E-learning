@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherContainerAllTabsBinding
@@ -22,14 +23,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class TeacherContainerFragment:Fragment() {
     lateinit var teacherContainerAllTabsBinding:FragmentTeacherContainerAllTabsBinding
-//    lateinit var bottomNavigationView: BottomNavigationView
-//    lateinit var teacherContainerAllTabsBinding.floatingActionBtn: FloatingActionButton
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_teacher_container_all_tabs,container,false)
+        teacherContainerAllTabsBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_teacher_container_all_tabs,container,false)
+        return teacherContainerAllTabsBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
