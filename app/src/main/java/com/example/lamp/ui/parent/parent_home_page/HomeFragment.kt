@@ -30,7 +30,7 @@ class HomeFragment:Fragment() {
     }
 
     private fun initViews() {
-        recyclerView=requireView().findViewById(R.id.children_recycler_view)
+        recyclerView=requireView().findViewById(R.id.feature_recycler_view)
         adapter= ChildrenAdapter(TestData.CHILDREN)
         recyclerView.adapter=adapter
         coursesRecyclerView=requireView().findViewById(R.id.courses_recycler_view)

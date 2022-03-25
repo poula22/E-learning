@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="item"
+            type="com.example.recyclerviewpracticekotlin.FeatureItem" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -26,7 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/login" />
+                tools:srcCompat="@drawable/login"
+                app:imageId="@{item.featureImageID}"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,7 +42,8 @@
                     android:id="@+id/feature_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Feature Name"
+                    android:text="@{item.featureName}"
+                    tools:text="Feature Name"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
             </LinearLayout>
         </LinearLayout>

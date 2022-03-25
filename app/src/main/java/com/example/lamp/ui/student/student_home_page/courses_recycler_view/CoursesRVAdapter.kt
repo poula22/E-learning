@@ -1,9 +1,9 @@
 package com.example.lamp.ui.student.student_home_page.courses_recycler_view
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCoursesBinding
@@ -14,33 +14,48 @@ class CoursesRVAdapter(var coursesItemsList : List<CourseItem>?=null,val type:In
 
     val HOME_SCREEN=R.layout.item_student_home_course_rv
     val COURSES_SCREEN=R.layout.item_student_courses
-
+    lateinit var viewBinding: ViewDataBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesItemViewHolder {
-        var screen=HOME_SCREEN
-        if(type== 1){
-            screen=COURSES_SCREEN
+
+        if (type==0) {
+            var screen = HOME_SCREEN
+            viewBinding = DataBindingUtil.inflate<ItemStudentHomeCourseRvBinding>(
+                LayoutInflater.from(parent.context),
+                screen,
+                parent,
+                false
+            )
+
         }
-        var view =LayoutInflater.from(parent.context).inflate(screen,parent,false)
-        return CoursesItemViewHolder(view)
+        else if(type== 1){
+            var screen=COURSES_SCREEN
+            viewBinding=DataBindingUtil.inflate<ItemStudentCoursesBinding>(LayoutInflater.from(parent.context)
+                ,screen,parent
+                ,false)
+        }
+
+        return CoursesItemViewHolder(viewBinding)
     }
 
     override fun onBindViewHolder(holder: CoursesItemViewHolder, position: Int) {
         val item = coursesItemsList?.get(position)
-        holder.courseName.text = item?.courseName
-        holder.teacherName.text = item?.teacherName
-        holder.courseCode.text=item?.courseCode
+        if (type==0){
+            val view:ItemStudentHomeCourseRvBinding=holder.viewDataBinding as ItemStudentHomeCourseRvBinding
+            view.item=item
+        }
+        else if (type==1){
+            val view:ItemStudentCoursesBinding=holder.viewDataBinding as ItemStudentCoursesBinding
+            view.item=item
+        }
     }
 
     override fun getItemCount(): Int {
         return coursesItemsList?.size ?:0;
     }
 
-
-    class CoursesItemViewHolder(val homeItem:ItemStudentHomeCourseRvBinding?=null,val courseItem:ItemStudentCoursesBinding?=null)
-        : RecyclerView.ViewHolder((homeItem?.root?:homeItem?.root)!!){
-        var courseName:TextView = itemView.findViewById<TextView>(R.id.courses_course_name)
-        var teacherName:TextView = itemView.findViewById<TextView>(R.id.courses_teacher_name)
-        var courseCode:TextView=itemView.findViewById<TextView>(R.id.courses_code)
+    class CoursesItemViewHolder(var viewDataBinding: ViewDataBinding)
+        : RecyclerView.ViewHolder(viewDataBinding.root){
     }
+
 
 }

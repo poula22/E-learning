@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
+import com.example.lamp.databinding.FragmentStudentContainerAllTabsBinding
 import com.example.lamp.ui.student.student_course_page.CoursesFragment
 import com.example.lamp.ui.student.student_features_page.FeaturesFragment
 import com.example.lamp.ui.student.student_home_page.HomeFragment
@@ -13,13 +15,17 @@ import com.example.lamp.ui.student.student_website_page.WebSitesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class StudentContainerFragment:Fragment() {
-    lateinit var bottomNavigationView: BottomNavigationView
+    lateinit var viewBinding:FragmentStudentContainerAllTabsBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_student_container_all_tabs,container,false)
+        viewBinding=DataBindingUtil.inflate(inflater
+            ,R.layout.fragment_student_container_all_tabs
+            ,container
+            ,false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,8 +34,7 @@ class StudentContainerFragment:Fragment() {
     }
 
     private fun initView() {
-        bottomNavigationView=requireView().findViewById(R.id.bottom_navigation_view)
-        bottomNavigationView.setOnItemSelectedListener {    menuItem->
+        viewBinding.bottomNavigationView.setOnItemSelectedListener {    menuItem->
             if(menuItem.itemId==R.id.home){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
@@ -53,6 +58,6 @@ class StudentContainerFragment:Fragment() {
             }
             return@setOnItemSelectedListener true
         }
-        bottomNavigationView.selectedItemId=R.id.home
+       viewBinding.bottomNavigationView.selectedItemId=R.id.home
     }
 }
