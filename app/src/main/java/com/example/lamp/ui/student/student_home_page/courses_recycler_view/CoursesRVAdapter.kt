@@ -39,6 +39,7 @@ class CoursesRVAdapter(var coursesItemsList : List<CourseItem>?=null,val type:In
 
     override fun onBindViewHolder(holder: CoursesItemViewHolder, position: Int) {
         val item = coursesItemsList?.get(position)
+        val view=null
         if (type==0){
             val view:ItemStudentHomeCourseRvBinding=holder.viewDataBinding as ItemStudentHomeCourseRvBinding
             view.item=item
@@ -47,6 +48,7 @@ class CoursesRVAdapter(var coursesItemsList : List<CourseItem>?=null,val type:In
             val view:ItemStudentCoursesBinding=holder.viewDataBinding as ItemStudentCoursesBinding
             view.item=item
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -56,6 +58,7 @@ class CoursesRVAdapter(var coursesItemsList : List<CourseItem>?=null,val type:In
     class CoursesItemViewHolder(var viewDataBinding: ViewDataBinding)
         : RecyclerView.ViewHolder(viewDataBinding.root){
     }
+
 
 
 }

@@ -23,7 +23,6 @@ class WebSitesFragment:Fragment() {
         viewBinding=DataBindingUtil.inflate(inflater,R.layout.fragment_student_websites,container,false)
         return viewBinding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()

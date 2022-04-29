@@ -12,7 +12,7 @@ import com.example.lamp.ui.student.student_course_page.CoursesFragment
 import com.example.lamp.ui.student.student_features_page.FeaturesFragment
 import com.example.lamp.ui.student.student_home_page.HomeFragment
 import com.example.lamp.ui.student.student_website_page.WebSitesFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class StudentContainerFragment:Fragment() {
     lateinit var viewBinding:FragmentStudentContainerAllTabsBinding
@@ -38,26 +38,27 @@ class StudentContainerFragment:Fragment() {
             if(menuItem.itemId==R.id.home){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.student_fragment_tab,HomeFragment())
+                    .replace(viewBinding.studentFragmentTab.id,HomeFragment())
                     .commit()
             }else if(menuItem.itemId==R.id.courses){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.student_fragment_tab,CoursesFragment())
+                    .replace(viewBinding.studentFragmentTab.id,CoursesFragment())
                     .commit()
             }else if(menuItem.itemId==R.id.features){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.student_fragment_tab, FeaturesFragment())
+                    .replace(viewBinding.studentFragmentTab.id, FeaturesFragment())
                     .commit()
             }else if(menuItem.itemId==R.id.websites){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.student_fragment_tab, WebSitesFragment())
+                    .replace(viewBinding.studentFragmentTab.id, WebSitesFragment())
                     .commit()
             }
             return@setOnItemSelectedListener true
         }
+        //home menu
        viewBinding.bottomNavigationView.selectedItemId=R.id.home
     }
 }

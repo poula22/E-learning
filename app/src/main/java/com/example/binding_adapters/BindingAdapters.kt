@@ -5,3 +5,4 @@ import androidx.databinding.BindingAdapter
 fun loadImageFromId(imageView: ImageView,imageId:Int){
     imageView.setImageResource(imageId)
 }
+

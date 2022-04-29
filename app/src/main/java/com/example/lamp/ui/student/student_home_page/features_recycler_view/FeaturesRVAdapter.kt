@@ -35,10 +35,21 @@ class FeaturesRVAdapter(var featuresItemsList : List<FeatureItem>?=null,val type
         if (type==0){
             var viewBinding=holder.viewDataBinding as ItemStudentHomeFeatureRvBinding
             viewBinding.item=item
+            if (onFeatureClickListener!=null && item!=null){
+                viewBinding.card.setOnClickListener{
+                    onFeatureClickListener!!.onFeatureClick(position,item)
+                }
+            }
+
         }
         else{
             var viewBinding=holder.viewDataBinding as ItemsStudentFeatureBinding
             viewBinding.item=item
+            if (onFeatureClickListener!=null && item!=null){
+                viewBinding.card.setOnClickListener{
+                    onFeatureClickListener!!.onFeatureClick(position,item)
+                }
+            }
         }
 
     }
@@ -50,6 +61,11 @@ class FeaturesRVAdapter(var featuresItemsList : List<FeatureItem>?=null,val type
 
     class FeaturesItemViewHolder(val viewDataBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewDataBinding.root){
 
+    }
+
+    var onFeatureClickListener:FeatureClickListener?=null
+    interface FeatureClickListener{
+        fun onFeatureClick(pos:Int,item:FeatureItem)
     }
 
 }
