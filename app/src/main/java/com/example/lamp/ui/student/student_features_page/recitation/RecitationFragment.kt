@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentRecitationBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 
 class RecitationFragment:Fragment() {
@@ -34,6 +36,12 @@ class RecitationFragment:Fragment() {
             ,container
             ,false)
         return fragmentRecitationBinding.root
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation_view)
+        navBar.isVisible=true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,6 +75,7 @@ class RecitationFragment:Fragment() {
         )
         tabLayout.selectTab(paragraphTab)
     }
+
 
 
 

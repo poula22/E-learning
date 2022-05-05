@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.example.lamp.ui.student.student_features_page.recitation.RecitationFr
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CoursesRVAdapter
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeaturesRVAdapter
 import com.example.recyclerviewpracticekotlin.FeatureItem
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class HomeFragment: Fragment() {
@@ -42,6 +44,8 @@ class HomeFragment: Fragment() {
             override fun onFeatureClick(pos: Int, item: FeatureItem) {
                 requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
                     .replace(R.id.student_fragment_tab,RecitationFragment()).commit()
+                val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation_view)
+                navBar.isVisible=false
             }
 
         }

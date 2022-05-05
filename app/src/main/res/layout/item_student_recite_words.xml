@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.lamp.ui.student.student_features_page.recitation.reciteWords.recitation.reciteWordsRV.ReciteWordsItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/english_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{item.englishWord}"
+            android:textSize="25sp"
+
+            app:layout_constraintEnd_toStartOf="@+id/arabic_text"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"
+            tools:text="english"/>
+
+        <TextView
+            android:id="@+id/arabic_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{item.arabicWord}"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@+id/english_text"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"
+            tools:text="arabic"/>
+
+        <View
+            android:id="@+id/bottom_line"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/dark_yellow"
+            app:layout_constraintTop_toBottomOf="@+id/arabic_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
