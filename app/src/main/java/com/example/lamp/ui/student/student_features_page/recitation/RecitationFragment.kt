@@ -12,16 +12,16 @@ import com.example.lamp.databinding.FragmentRecitationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 
-class RecitationFragment:Fragment() {
+class RecitationFragment : Fragment() {
 
     lateinit var fragmentRecitationBinding: FragmentRecitationBinding
-    lateinit var tabLayout:TabLayout
+    lateinit var tabLayout: TabLayout
 
     private fun initTabs(paragraphTab: TabLayout.Tab, wordsTab: TabLayout.Tab) {
-        paragraphTab.text="Paragraph"
-        paragraphTab.tag=ReciteParagraphFragment()
-        wordsTab.text="Words"
-        wordsTab.tag=ReciteWordsFragment()
+        paragraphTab.text = "Paragraph"
+        paragraphTab.tag = ReciteParagraphFragment()
+        wordsTab.text = "Words"
+        wordsTab.tag = ReciteWordsFragment()
         tabLayout.addTab(paragraphTab)
         tabLayout.addTab(wordsTab)
     }
@@ -31,32 +31,33 @@ class RecitationFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentRecitationBinding= DataBindingUtil.inflate(inflater
-            , R.layout.fragment_recitation
-            ,container
-            ,false)
+        fragmentRecitationBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_recitation, container, false
+        )
         return fragmentRecitationBinding.root
     }
 
     override fun onDetach() {
         super.onDetach()
-        val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation_view)
-        navBar.isVisible=true
+        val bottomNavigationView: BottomNavigationView =
+            requireActivity().findViewById(R.id.bottom_navigation_view)
+        bottomNavigationView.isVisible = true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tabLayout =fragmentRecitationBinding.tabLayout
-        var paragraphTab=tabLayout.newTab()
-        var wordsTab=tabLayout.newTab()
-        initTabs(paragraphTab,wordsTab)
+        tabLayout = fragmentRecitationBinding.tabLayout
+        var paragraphTab = tabLayout.newTab()
+        var wordsTab = tabLayout.newTab()
+        initTabs(paragraphTab, wordsTab)
         tabLayout.addOnTabSelectedListener(
-            object :TabLayout.OnTabSelectedListener{
+            object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(fragmentRecitationBinding.recitationFragmentContainer.id,
-                        tab?.tag as Fragment
-                    ).commit()
+                        .replace(
+                            fragmentRecitationBinding.recitationFragmentContainer.id,
+                            tab?.tag as Fragment
+                        ).commit()
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -65,7 +66,8 @@ class RecitationFragment:Fragment() {
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(fragmentRecitationBinding.recitationFragmentContainer.id,
+                        .replace(
+                            fragmentRecitationBinding.recitationFragmentContainer.id,
                             tab?.tag as Fragment
                         ).commit()
                 }
@@ -75,9 +77,6 @@ class RecitationFragment:Fragment() {
         )
         tabLayout.selectTab(paragraphTab)
     }
-
-
-
 
 
 }
