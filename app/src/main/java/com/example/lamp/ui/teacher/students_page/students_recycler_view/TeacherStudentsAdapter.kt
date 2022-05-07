@@ -35,7 +35,7 @@ class TeacherStudentsAdapter(var students: MutableList<StudentItem>? = null) :
         holder.viewBinding.studentFbProfile.text = student?.facebookAcc
         holder.viewBinding.studentNameDetails.text = viewBinding.studentName.text
 //////
-        expandCollapseView(holder)
+        holder.expandCollapseView()
 ////////
     }
 
@@ -43,29 +43,27 @@ class TeacherStudentsAdapter(var students: MutableList<StudentItem>? = null) :
 
     class ViewHolder(val viewBinding: ItemTeacherStudentsBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
-    }
-
-    //////
-    private fun expandCollapseView(holder: ViewHolder) {
-        holder.viewBinding.detailsBtn.setOnClickListener {
-            if (viewBinding.cardGroup.isVisible) {
+        fun expandCollapseView() {
+            viewBinding.detailsBtn.setOnClickListener {
+                if (viewBinding.cardGroup.isVisible) {
 //                TransitionManager.beginDelayedTransition(
 //                    viewBinding.card,
 //                    AutoTransition()
 //                );
-                viewBinding.detailsBtn.text = "Hide Details"
-                viewBinding.cardGroup.isVisible = false
+                    viewBinding.detailsBtn.text = "Show Details"
+                    viewBinding.cardGroup.isVisible = false
 //                arrow.setImageResource(android.R.drawable.arrow_down_float);
-            } else {
+                } else {
 //                TransitionManager.beginDelayedTransition(
 //                    viewBinding.card,
 //                    AutoTransition()
 //                );
-                viewBinding.detailsBtn.text = "Show Details"
-                viewBinding.cardGroup.isVisible = true
+                    viewBinding.detailsBtn.text = "Hide Details"
+                    viewBinding.cardGroup.isVisible = true
 //                arrow.setImageResource(android.R.drawable.arrow_up_float);
+                }
             }
         }
     }
-    //////////////////
+
 }

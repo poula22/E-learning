@@ -46,7 +46,7 @@ class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selecto
             holder.viewDataBinding.recordIcn.setBackgroundResource(R.color.pink)
         }
 
-//////////////////////
+
         holder.viewDataBinding.recordIcn.setOnClickListener { view ->
             val reciteWordBottomSheet = StudentWordRecitationBottomSheet()
             reciteWordBottomSheet.show(
@@ -54,7 +54,7 @@ class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selecto
                 "reciteWordBottomSheet"
             )
         }
-//////////////////////
+
 
 
     }
