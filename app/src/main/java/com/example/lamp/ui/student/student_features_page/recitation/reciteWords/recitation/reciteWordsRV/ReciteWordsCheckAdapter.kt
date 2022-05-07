@@ -22,7 +22,7 @@ class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selecto
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var viewBinding: ItemReciteWordCheckBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_student_recite_words, parent, false
+            R.layout.item_recite_word_check, parent, false
         )
         return ViewHolder(viewBinding)
     }
@@ -31,9 +31,9 @@ class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selecto
         var item = wordsList?.get(position)
         holder.viewDataBinding.item = item
         if (selector == 1) {
-            holder.viewDataBinding.arabicText.visibility = View.GONE
+            holder.viewDataBinding.arabicText.visibility = View.INVISIBLE
         } else if (selector == 2) {
-            holder.viewDataBinding.englishText.visibility = View.GONE
+            holder.viewDataBinding.englishText.visibility = View.INVISIBLE
         }
 
         if (position % 2 == 0) {

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentReciteWordsBinding
+import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_features_page.recitation.reciteWords.recitation.ReciteWordsCheckFragment
 import com.example.lamp.ui.student.student_features_page.recitation.reciteWords.recitation.reciteWordsRV.ReciteWordsAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -33,7 +34,7 @@ class ReciteWordsFragment:Fragment() {
 
     private fun initViews() {
         var selector=2
-        viewBinding.reciteWordsRecycleView.adapter=ReciteWordsAdapter(null)
+        viewBinding.reciteWordsRecycleView.adapter=ReciteWordsAdapter(TestData.WORDs)
         viewBinding.arabicText.setOnClickListener{view->
             view.setBackgroundResource(R.color.blue)
             viewBinding.englishText.setBackgroundResource(R.color.white)
