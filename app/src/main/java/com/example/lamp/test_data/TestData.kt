@@ -57,7 +57,7 @@ object TestData {
         for (i in 1..100){
             STUDENTS.add(
                 StudentItem("name "+i
-                    ,R.drawable.ic_profile)
+                    ,R.drawable.ic_profile,"sdfdsfsdfsd","sdfdsfsdfdsf","sdfsdfsdfs")
             )
         }
         return STUDENTS
