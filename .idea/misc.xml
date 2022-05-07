@@ -26,12 +26,13 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_container_all_tabs.xml" value="0.259375" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_courses.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_add_course.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_container_all_tabs.xml" value="0.259375" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_courses.xml" value="0.25905797101449274" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_home.xml" value="0.2129115006412997" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_students.xml" value="0.2129115006412997" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_tools.xml" value="0.2129115006412997" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/ic_communicate.xml" value="0.2129115006412997" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_communicate.xml" value="0.10405348934391977" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_communicate.xml" value="0.16" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_course.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_courses.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_home_course_rv.xml" value="0.10405348934391977" />
@@ -39,6 +40,7 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_websites.xml" value="0.2129115006412997" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_students.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/items_student_feature.xml" value="0.10405348934391977" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/test_web_view.xml" value="0.259375" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/parent_bottom_navigation_menu.xml" value="0.21021528070915999" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/student_bottom_navigation_menu.xml" value="0.21021528070915999" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/teacher_bottom_navigation_menu.xml" value="0.2129115006412997" />

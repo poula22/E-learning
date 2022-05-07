@@ -13,16 +13,16 @@ import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.teacher.tools_page.tools_recycler_view.TeacherToolsAdapter
 
 
-class TeacherToolsFragment:Fragment() {
-    lateinit var fragmentTeacherToolsBinding : FragmentTeacherToolsBinding
-    lateinit var recyclerView: RecyclerView
+class TeacherToolsFragment : Fragment() {
+    lateinit var fragmentTeacherToolsBinding: FragmentTeacherToolsBinding
     lateinit var adapter: TeacherToolsAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentTeacherToolsBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_teacher_tools,container,false)
+        fragmentTeacherToolsBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_teacher_tools, container, false)
         return fragmentTeacherToolsBinding.root
     }
 
@@ -33,9 +33,8 @@ class TeacherToolsFragment:Fragment() {
 
 
     private fun initViews() {
-        recyclerView=requireView().findViewById(R.id.tools_recycler_view)
-        adapter= TeacherToolsAdapter(TestData.TOOLS)
-        recyclerView.adapter=adapter
+        adapter = TeacherToolsAdapter(TestData.TOOLS)
+        fragmentTeacherToolsBinding.toolsRecyclerView.adapter = adapter
     }
 
 }

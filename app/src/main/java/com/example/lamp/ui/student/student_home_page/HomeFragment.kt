@@ -18,8 +18,8 @@ import com.example.recyclerviewpracticekotlin.FeatureItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class HomeFragment: Fragment() {
-    lateinit var viewBinding:FragmentStudentHomeBinding
+class HomeFragment : Fragment() {
+    lateinit var viewBinding: FragmentStudentHomeBinding
     lateinit var coursesRVAdapter: CoursesRVAdapter
     lateinit var featuresRVAdapter: FeaturesRVAdapter
     override fun onCreateView(
@@ -27,7 +27,8 @@ class HomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding=DataBindingUtil.inflate(inflater,R.layout.fragment_student_home,container,false)
+        viewBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_student_home, container, false)
         return viewBinding.root
     }
 
@@ -37,22 +38,23 @@ class HomeFragment: Fragment() {
     }
 
     private fun initViews() {
-        coursesRVAdapter=CoursesRVAdapter(TestData.COURSES,type=0)
-        viewBinding.coursesRecyclerView.adapter=coursesRVAdapter
-        featuresRVAdapter=FeaturesRVAdapter(TestData.FEATURES,type=0)
-        featuresRVAdapter.onFeatureClickListener=object :FeaturesRVAdapter.FeatureClickListener{
+        coursesRVAdapter = CoursesRVAdapter(TestData.COURSES, type = 0)
+        viewBinding.coursesRecyclerView.adapter = coursesRVAdapter
+        featuresRVAdapter = FeaturesRVAdapter(TestData.FEATURES, type = 0)
+        featuresRVAdapter.onFeatureClickListener = object : FeaturesRVAdapter.FeatureClickListener {
             override fun onFeatureClick(pos: Int, item: FeatureItem) {
                 requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
-                    .replace(R.id.student_fragment_tab,RecitationFragment()).commit()
-                val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation_view)
-                navBar.isVisible=false
+                    .replace(R.id.student_fragment_tab, RecitationFragment()).commit()
+                val bottomNavigationView: BottomNavigationView =
+                    requireActivity().findViewById(R.id.bottom_navigation_view)
+                bottomNavigationView.isVisible = false
             }
 
         }
-        viewBinding.featureRecyclerView.adapter=featuresRVAdapter
+        viewBinding.featureRecyclerView.adapter = featuresRVAdapter
     }
 
-    interface onItemClickListener{
-        fun onItemClick(pos:Int)
+    interface onItemClickListener {
+        fun onItemClick(pos: Int)
     }
 }

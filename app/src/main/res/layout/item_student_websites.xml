@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="@{item}"
             android:maxLines="4"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textColor="@color/blue"
             app:layout_constraintTop_toTopOf="parent" />
 

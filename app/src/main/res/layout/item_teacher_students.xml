@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -28,7 +29,7 @@
                 android:layout_height="40dp"
                 android:elevation="10dp"
                 app:cardCornerRadius="30dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/details_area"
                 app:layout_constraintEnd_toStartOf="@id/student_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -50,19 +51,142 @@
                 android:text="Student Name"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/details_area"
                 app:layout_constraintStart_toEndOf="@+id/rounded_profile"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/details_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#A5F38F"
                 android:text="Show Details"
+                app:layout_constraintBottom_toTopOf="@+id/details_area"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/details_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#A5F38F"
+                android:padding="20dp"
+                app:layout_constraintStart_toStartOf="@id/details_area"
+                app:layout_constraintTop_toBottomOf="@+id/details_btn">
+
+                <ImageView
+                    android:id="@+id/student_pic"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="20dp"
+                    android:src="@drawable/student"
+                    app:layout_constraintBottom_toBottomOf="@+id/details_area"
+                    app:layout_constraintEnd_toStartOf="@id/student_name"
+                    app:layout_constraintStart_toStartOf="@+id/details_area"
+                    app:layout_constraintTop_toTopOf="@+id/details_area" />
+
+                <TextView
+                    android:id="@+id/student_name_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Student Name"
+                    android:textColor="#000000"
+                    android:textSize="25sp"
+                    app:layout_constraintStart_toEndOf="@+id/student_pic"
+                    app:layout_constraintTop_toTopOf="@+id/details_area" />
+
+
+                <LinearLayout
+                    android:id="@+id/phone_linear_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@id/student_pic"
+                    app:layout_constraintTop_toBottomOf="@id/student_name_details">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_phone"
+                        android:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/student_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="5dp"
+                        android:text="+20 152 364 879"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="#000000" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/email_linear_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@id/student_pic"
+                    app:layout_constraintTop_toBottomOf="@id/phone_linear_layout">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_email"
+                        android:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/student_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="5dp"
+                        android:text="student@gmail.com"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="#000000" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/facebook_linear_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@id/student_pic"
+                    app:layout_constraintTop_toBottomOf="@id/email_linear_layout">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_facebook"
+                        android:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/student_fb_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="5dp"
+                        android:text="Hany Fany"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="#000000" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/card_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:constraint_referenced_ids="details_area"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="16dp"
+                tools:visibility="visible" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
