@@ -9,6 +9,7 @@ import com.example.recyclerviewpracticekotlin.CourseItem
 import com.example.recyclerviewpracticekotlin.FeatureItem
 
 object TestData {
+    val TRANSLATIONAPIKEY="fdacb2ce0bmshb0a36e2081822c8p1e7ae6jsn82387bc6a932"
     var COURSES: MutableList<CourseItem> = initCourses()
     val FEATURES:MutableList<FeatureItem> = mutableListOf(
         FeatureItem("translate", R.drawable.ic_translate),

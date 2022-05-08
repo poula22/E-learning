@@ -13,13 +13,16 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentReciteWordsBottomSheetBinding
+import com.example.lamp.ui.student.student_features_page.recitation.reciteWords.recitation.reciteWordsRV.ReciteWordsAdapter
+import com.example.lamp.ui.student.student_features_page.recitation.reciteWords.recitation.reciteWordsRV.ReciteWordsItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class StudentWordRecitationBottomSheet : BottomSheetDialogFragment() {
+class StudentWordRecitationBottomSheet(var wordsList: List<ReciteWordsItem>?,var postion:Int) : BottomSheetDialogFragment() {
 
 
     lateinit var studentWordRecitationBinding: FragmentReciteWordsBottomSheetBinding
     lateinit var mediaRecorder: MediaRecorder
+    var word:ReciteWordsItem?=wordsList?.get(postion)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,10 +49,13 @@ class StudentWordRecitationBottomSheet : BottomSheetDialogFragment() {
         studentWordRecitationBinding.voiceIcon.setOnClickListener {
             if (isRecording){
                 stopRecording()
+                isRecording=false
+                studentWordRecitationBinding.voiceIconImageView.setBackgroundResource(R.color.white)
             }
             else{
                 if (checkPermissions()){
                     startRecording()
+                    studentWordRecitationBinding.voiceIconImageView.setBackgroundResource(R.color.pink)
                 }
                 else{
                     var arr:Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
@@ -60,11 +66,13 @@ class StudentWordRecitationBottomSheet : BottomSheetDialogFragment() {
         }
 
         studentWordRecitationBinding.rightIcon.setOnClickListener {
-
+            postion+=1
+            word=wordsList?.get(postion)
         }
 
         studentWordRecitationBinding.leftIcon.setOnClickListener {
-
+            postion-=1
+            word=wordsList?.get(postion)
         }
 
 

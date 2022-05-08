@@ -19,6 +19,8 @@ class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selecto
 
     }
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var viewBinding: ItemReciteWordCheckBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -29,6 +31,7 @@ class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selecto
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = wordsList?.get(position)
+
         holder.viewDataBinding.item = item
         if (selector == 1) {
             holder.viewDataBinding.arabicText.visibility = View.INVISIBLE
@@ -48,11 +51,12 @@ class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selecto
 
 
         holder.viewDataBinding.recordIcn.setOnClickListener { view ->
-            val reciteWordBottomSheet = StudentWordRecitationBottomSheet()
+            val reciteWordBottomSheet = StudentWordRecitationBottomSheet(wordsList,position)
             reciteWordBottomSheet.show(
                 (view.context as AppCompatActivity).supportFragmentManager,
                 "reciteWordBottomSheet"
             )
+
         }
 
 
