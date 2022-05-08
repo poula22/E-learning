@@ -65,7 +65,8 @@ class RecitationFragment : Fragment() {
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
-                    requireActivity().supportFragmentManager.beginTransaction()
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
                         .replace(
                             fragmentRecitationBinding.recitationFragmentContainer.id,
                             tab?.tag as Fragment

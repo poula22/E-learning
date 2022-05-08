@@ -3,7 +3,6 @@ package com.example.lamp.ui.student.student_features_page.translation
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.speech.RecognizerIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,14 +40,6 @@ class TranslationFragment : Fragment() {
 //                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .start()
 
-
-//            var easyImage = EasyImage.Builder(this.requireContext())
-//            easyImage.allowMultiple(false)
-//                .setChooserTitle("Pick media")
-//                .setChooserType(ChooserType.CAMERA_AND_GALLERY)
-//                .setFolderName("EasyImage sample")
-//                .build();
-
         }
 
 
@@ -72,6 +63,7 @@ class TranslationFragment : Fragment() {
 
 
         viewBinding.cardVoice.setOnClickListener {
+
 
         }
 

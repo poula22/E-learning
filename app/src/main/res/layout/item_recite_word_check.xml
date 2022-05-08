@@ -22,8 +22,9 @@
             android:textSize="25sp"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/arabic_text"
-            app:layout_constraintTop_toBottomOf="@id/top_line"
+
             android:textColor="@color/black"
             tools:text="English"/>
         <EditText
@@ -32,10 +33,10 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:gravity="center"
+            android:text=""
             app:layout_constraintBottom_toTopOf="@id/bottom_line"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/arabic_text"
-            app:layout_constraintTop_toBottomOf="@id/top_line"
             android:textColor="@color/black"
             tools:text="English"/>
 
@@ -44,25 +45,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            tools:text="Arabic"
+            tools:text="@{item.arabicWord}"
             app:layout_constraintEnd_toStartOf="@id/record_icn"
-
+            app:layout_constraintTop_toTopOf="parent"
             android:gravity="center"
+
             app:layout_constraintStart_toEndOf="@id/english_text"
-            app:layout_constraintTop_toBottomOf="@id/top_line"
             android:textColor="@color/black" />
         <EditText
             android:id="@+id/arabic_edtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.arabicWord}"
+            android:text=""
             android:textSize="25sp"
             tools:text="Arabic"
             app:layout_constraintEnd_toStartOf="@id/record_icn"
 
             android:gravity="center"
             app:layout_constraintStart_toEndOf="@id/english_text"
-            app:layout_constraintTop_toBottomOf="@id/top_line"
+
             app:layout_constraintBottom_toTopOf="@id/bottom_line"
             android:textColor="@color/black" />
 

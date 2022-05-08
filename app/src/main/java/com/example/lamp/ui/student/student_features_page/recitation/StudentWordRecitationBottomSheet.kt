@@ -2,6 +2,7 @@ package com.example.lamp.ui.student.student_features_page.recitation
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color.red
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
@@ -45,6 +46,7 @@ class StudentWordRecitationBottomSheet(var wordsList: List<ReciteWordsItem>?,var
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun initViews() {
+        studentWordRecitationBinding.wordTxt.text=wordsList?.get(postion)?.arabicWord
         var isRecording=false
         studentWordRecitationBinding.voiceIcon.setOnClickListener {
             if (isRecording){
@@ -55,7 +57,7 @@ class StudentWordRecitationBottomSheet(var wordsList: List<ReciteWordsItem>?,var
             else{
                 if (checkPermissions()){
                     startRecording()
-                    studentWordRecitationBinding.voiceIconImageView.setBackgroundResource(R.color.pink)
+                    studentWordRecitationBinding.voiceIconImageView.setBackgroundResource(R.color.red)
                 }
                 else{
                     var arr:Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
@@ -66,11 +68,17 @@ class StudentWordRecitationBottomSheet(var wordsList: List<ReciteWordsItem>?,var
         }
 
         studentWordRecitationBinding.rightIcon.setOnClickListener {
+            if (postion+1==wordsList?.size){
+                return@setOnClickListener
+            }
             postion+=1
             word=wordsList?.get(postion)
         }
 
         studentWordRecitationBinding.leftIcon.setOnClickListener {
+            if (postion-1<=-1){
+                return@setOnClickListener
+            }
             postion-=1
             word=wordsList?.get(postion)
         }

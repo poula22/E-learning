@@ -46,6 +46,7 @@ class ReciteWordsFragment:Fragment() {
             viewBinding.arabicText.setBackgroundResource(R.color.white)
             selector=2
         }
+
         viewBinding.btnRecite.setOnClickListener{
             requireActivity()
                 .supportFragmentManager

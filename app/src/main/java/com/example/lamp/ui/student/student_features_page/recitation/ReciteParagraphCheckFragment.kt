@@ -13,20 +13,20 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.commonFunctions.CommonFunctions
 import com.example.lamp.R
-import com.example.lamp.databinding.FragmentReciteParagraphBinding
+import com.example.lamp.databinding.FragmentReciteParagraphCheckBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
 
-class ReciteParagraphFragment:Fragment() {
-    lateinit var viewBinding:FragmentReciteParagraphBinding
+class ReciteParagraphCheckFragment(var paragraph:String):Fragment() {
+    lateinit var viewBinding:FragmentReciteParagraphCheckBinding
     lateinit var mediaRecorder: MediaRecorder
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding=DataBindingUtil.inflate(inflater, R.layout.fragment_recite_paragraph,container,false)
+        viewBinding=DataBindingUtil.inflate(inflater, R.layout.fragment_recite_paragraph_check
+            ,container,false)
         return viewBinding.root
     }
 
@@ -36,23 +36,6 @@ class ReciteParagraphFragment:Fragment() {
     }
 
     private fun initViews() {
-        viewBinding.btnRecite.setOnClickListener{
-            requireActivity()
-                .supportFragmentManager
-                .beginTransaction()
-                .addToBackStack("")
-                .replace(R.id.student_fragment_tab,ReciteParagraphCheckFragment(viewBinding.paragraphInput.text.toString()))
-                .commit()
-        }
-        viewBinding.cardImage.setOnClickListener {
-            ImagePicker.with(this)
-                .crop()                    //Crop image(Optional), Check Customization for more option
-//                .compress(1024)			//Final image size will be less than 1 MB(Optional)
-//                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                .start()
-
-        }
-
         var isRecording=false
         viewBinding.cardVoice.setOnClickListener {
 

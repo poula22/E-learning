@@ -34,9 +34,11 @@ class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selecto
 
         holder.viewDataBinding.item = item
         if (selector == 1) {
-            holder.viewDataBinding.arabicText.visibility = View.INVISIBLE
+            holder.viewDataBinding.arabicEdtext.visibility = View.INVISIBLE
+            holder.viewDataBinding.englishText.visibility=View.INVISIBLE
         } else if (selector == 2) {
-            holder.viewDataBinding.englishText.visibility = View.INVISIBLE
+            holder.viewDataBinding.englishEdtext.visibility = View.INVISIBLE
+            holder.viewDataBinding.arabicText.visibility=View.INVISIBLE
         }
 
         if (position % 2 == 0) {
