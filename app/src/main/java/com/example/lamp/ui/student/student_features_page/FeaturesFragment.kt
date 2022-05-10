@@ -11,6 +11,7 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentFeaturesBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_features_page.recitation.RecitationFragment
+import com.example.lamp.ui.student.student_features_page.summarization.SummarizationFragment
 import com.example.lamp.ui.student.student_features_page.translation.TranslationFragment
 
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeaturesRVAdapter
@@ -45,7 +46,7 @@ class FeaturesFragment : Fragment() {
                 }
                 else if(pos==1){
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
-                        .replace(R.id.student_fragment_tab, RecitationFragment()).commit()
+                        .replace(R.id.student_fragment_tab, SummarizationFragment()).commit()
                 }
                 else if (pos==2){
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
