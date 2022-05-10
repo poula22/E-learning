@@ -8,13 +8,15 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
-import com.example.lamp.databinding.FragmentRecitationBinding
+import com.example.lamp.databinding.FragmentFeatureRecitationBinding
+import com.example.lamp.ui.student.student_features_page.recitation.recite_paragraph.ReciteParagraphFragment
+import com.example.lamp.ui.student.student_features_page.recitation.recite_words.ReciteWordsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 
 class RecitationFragment : Fragment() {
 
-    lateinit var fragmentRecitationBinding: FragmentRecitationBinding
+    lateinit var viewBinding: FragmentFeatureRecitationBinding
     lateinit var tabLayout: TabLayout
 
     private fun initTabs(paragraphTab: TabLayout.Tab, wordsTab: TabLayout.Tab) {
@@ -31,10 +33,10 @@ class RecitationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentRecitationBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_recitation, container, false
+        viewBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_feature_recitation, container, false
         )
-        return fragmentRecitationBinding.root
+        return viewBinding.root
     }
 
     override fun onDetach() {
@@ -46,7 +48,7 @@ class RecitationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tabLayout = fragmentRecitationBinding.tabLayout
+        tabLayout = viewBinding.tabLayout
         var paragraphTab = tabLayout.newTab()
         var wordsTab = tabLayout.newTab()
         initTabs(paragraphTab, wordsTab)
@@ -55,7 +57,7 @@ class RecitationFragment : Fragment() {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(
-                            fragmentRecitationBinding.recitationFragmentContainer.id,
+                            viewBinding.recitationFragmentContainer.id,
                             tab?.tag as Fragment
                         ).commit()
                 }
@@ -68,7 +70,7 @@ class RecitationFragment : Fragment() {
                     requireActivity().supportFragmentManager
                         .beginTransaction()
                         .replace(
-                            fragmentRecitationBinding.recitationFragmentContainer.id,
+                            viewBinding.recitationFragmentContainer.id,
                             tab?.tag as Fragment
                         ).commit()
                 }

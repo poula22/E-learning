@@ -3,7 +3,7 @@ package com.example.lamp.test_data
 import com.example.lamp.R
 import com.example.lamp.ui.parent.parent_communicate_page.communicate_recycler_view.TeacherItem
 import com.example.lamp.ui.parent.parent_courses_page.course_recycler_view.ParentCourseItem
-import com.example.lamp.ui.student.student_features_page.recitation.reciteWords.recitation.reciteWordsRV.ReciteWordsItem
+import com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsItem
 import com.example.lamp.ui.teacher.students_page.students_recycler_view.StudentItem
 import com.example.recyclerviewpracticekotlin.CourseItem
 import com.example.recyclerviewpracticekotlin.FeatureItem

@@ -17,8 +17,8 @@ import com.example.lamp.R
 import com.github.dhaval2404.imagepicker.ImagePicker
 
 class CommonFunctions {
-    companion object{
-        fun imagePick(fragment:Fragment){
+    companion object {
+        fun imagePick(fragment: Fragment) {
             ImagePicker.with(fragment)
                 .crop()                    //Crop image(Optional), Check Customization for more option
 //                .compress(1024)			//Final image size will be less than 1 MB(Optional)
@@ -26,7 +26,7 @@ class CommonFunctions {
                 .start()
         }
 
-        fun uploadDoc(activity:FragmentActivity){
+        fun uploadDoc(activity: FragmentActivity) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 val intentDocument = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
@@ -40,25 +40,33 @@ class CommonFunctions {
                         )
                     )
                 }
-                startActivityForResult(activity,intentDocument, ImagePicker.REQUEST_CODE, Bundle.EMPTY)
+                startActivityForResult(
+                    activity,
+                    intentDocument,
+                    ImagePicker.REQUEST_CODE,
+                    Bundle.EMPTY
+                )
             }
         }
 
-         fun  voiceRecord(mediaRecorder: MediaRecorder,cardVoice:CardView,activity:FragmentActivity,isRecording:Boolean){
-            var colorRose=cardVoice.getContext().getResources().getColor(R.color.light_rose);
-            var colorRed=cardVoice.getContext().getResources().getColor(R.color.red);
-            if (isRecording){
+        fun voiceRecord(
+            mediaRecorder: MediaRecorder,
+            cardVoice: CardView,
+            activity: FragmentActivity,
+            isRecording: Boolean
+        ) {
+            var colorRose = cardVoice.getContext().getResources().getColor(R.color.light_rose);
+            var colorRed = cardVoice.getContext().getResources().getColor(R.color.red);
+            if (isRecording) {
                 stopRecording(mediaRecorder)
                 cardVoice.setCardBackgroundColor(colorRose)
-            }
-            else{
-                if (checkPermissions(activity.baseContext)){
-                    startRecording(activity,mediaRecorder)
+            } else {
+                if (checkPermissions(activity.baseContext)) {
+                    startRecording(activity, mediaRecorder)
                     cardVoice.setCardBackgroundColor(colorRed)
-                }
-                else{
-                    var arr:Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
-                    ActivityCompat.requestPermissions(activity,arr,21)
+                } else {
+                    var arr: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
+                    ActivityCompat.requestPermissions(activity, arr, 21)
                 }
             }
         }
@@ -69,20 +77,20 @@ class CommonFunctions {
 
         }
 
-        private fun startRecording(activity:FragmentActivity,mediaRecorder: MediaRecorder) {
-            var recordPath:String?=activity.getExternalFilesDir("/")?.absolutePath
-            var recordFile="fileName.3gp"
+        private fun startRecording(activity: FragmentActivity, mediaRecorder: MediaRecorder) {
+            var recordPath: String? = activity.getExternalFilesDir("/")?.absolutePath
+            var recordFile = "fileName.3gp"
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.setOutputFile(recordPath+"/"+recordFile)
+            mediaRecorder.setOutputFile(recordPath + "/" + recordFile)
             mediaRecorder.prepare()
             mediaRecorder.start()
         }
 
         @RequiresApi(Build.VERSION_CODES.M)
-        fun checkPermissions(context:Context):Boolean{
-            return context?.checkSelfPermission(Manifest.permission.RECORD_AUDIO)== PackageManager.PERMISSION_GRANTED
+        fun checkPermissions(context: Context): Boolean {
+            return context?.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
         }
 
     }

@@ -1,4 +1,4 @@
-package com.example.lamp.ui.student.student_features_page.recitation.reciteWords.recitation.reciteWordsRV
+package com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
-import com.example.lamp.databinding.ItemReciteWordCheckBinding
-import com.example.lamp.ui.student.student_features_page.recitation.StudentWordRecitationBottomSheet
-import com.example.lamp.ui.teacher.courses_page.courses_bottom_sheet.TeacherAddCoursesBottomSheet
+import com.example.lamp.databinding.ItemFeatureReciteWordsCheckBinding
+import com.example.lamp.ui.student.student_features_page.recitation.recite_words.StudentWordRecitationBottomSheet
 
 
 class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selector: Int) :
     RecyclerView.Adapter<ReciteWordsCheckAdapter.ViewHolder>() {
-    class ViewHolder(var viewDataBinding: ItemReciteWordCheckBinding) :
+    class ViewHolder(var viewDataBinding: ItemFeatureReciteWordsCheckBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
 
     }
@@ -22,9 +21,9 @@ class ReciteWordsCheckAdapter(var wordsList: List<ReciteWordsItem>?, var selecto
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var viewBinding: ItemReciteWordCheckBinding = DataBindingUtil.inflate(
+        var viewBinding: ItemFeatureReciteWordsCheckBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_recite_word_check, parent, false
+            R.layout.item_feature_recite_words_check, parent, false
         )
         return ViewHolder(viewBinding)
     }

@@ -1,7 +1,6 @@
-package com.example.lamp.ui.student.student_features_page.recitation
+package com.example.lamp.ui.student.student_features_page.recitation.recite_words
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Build
@@ -12,45 +11,51 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.example.lamp.R
-import com.example.lamp.databinding.FragmentReciteParagraphCheckBinding
-import com.github.dhaval2404.imagepicker.ImagePicker
+import com.example.lamp.databinding.FragmentFeatureReciteWordsBottomSheetBinding
+import com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsItem
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class ReciteParagraphCheckFragment(var paragraph:String):Fragment() {
-    lateinit var viewBinding:FragmentReciteParagraphCheckBinding
+class StudentWordRecitationBottomSheet(var wordsList: List<ReciteWordsItem>?,var postion:Int) : BottomSheetDialogFragment() {
+
+
+    lateinit var studentWordRecitationBinding: FragmentFeatureReciteWordsBottomSheetBinding
     lateinit var mediaRecorder: MediaRecorder
+    var word:ReciteWordsItem?=wordsList?.get(postion)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding=DataBindingUtil.inflate(inflater, R.layout.fragment_recite_paragraph_check
-            ,container,false)
-        return viewBinding.root
+        studentWordRecitationBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_feature_recite_words_bottom_sheet,
+            container,
+            false
+        )
+        return studentWordRecitationBinding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
 
-    private fun initViews() {
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun initViews() {
+        studentWordRecitationBinding.wordTxt.text=wordsList?.get(postion)?.arabicWord
         var isRecording=false
-        viewBinding.cardVoice.setOnClickListener {
-
-            var colorRose=viewBinding.cardVoice.getContext().getResources().getColor(R.color.light_rose);
-            var colorRed=viewBinding.cardVoice.getContext().getResources().getColor(R.color.red);
+        studentWordRecitationBinding.voiceIcon.setOnClickListener {
             if (isRecording){
                 stopRecording()
                 isRecording=false
-
-                viewBinding.cardVoice.setCardBackgroundColor(colorRose)
+                studentWordRecitationBinding.voiceIconImageView.setBackgroundResource(R.color.white)
             }
             else{
                 if (checkPermissions()){
                     startRecording()
-                    viewBinding.cardVoice.setCardBackgroundColor(colorRed)
+                    studentWordRecitationBinding.voiceIconImageView.setBackgroundResource(R.color.red)
                 }
                 else{
                     var arr:Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
@@ -59,25 +64,26 @@ class ReciteParagraphCheckFragment(var paragraph:String):Fragment() {
                 isRecording=true
             }
         }
-        viewBinding.cardDocument.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                val intentDocument = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    type = "*/*"
-                    putExtra(
-                        Intent.EXTRA_MIME_TYPES, arrayOf(
-                            "application/pdf",
-                            "application/doc",
-                            "application/docx",
-                            "text/plain"
-                        )
-                    )
-                }
-                startActivityForResult(intentDocument, ImagePicker.REQUEST_CODE)
+
+        studentWordRecitationBinding.rightIcon.setOnClickListener {
+            if (postion+1==wordsList?.size){
+                return@setOnClickListener
             }
+            postion+=1
+            word=wordsList?.get(postion)
         }
 
+        studentWordRecitationBinding.leftIcon.setOnClickListener {
+            if (postion-1<=-1){
+                return@setOnClickListener
+            }
+            postion-=1
+            word=wordsList?.get(postion)
+        }
+
+
     }
+
     private fun stopRecording() {
         mediaRecorder.stop()
         mediaRecorder.release()
@@ -87,7 +93,7 @@ class ReciteParagraphCheckFragment(var paragraph:String):Fragment() {
     private fun startRecording() {
         var recordPath:String?=requireActivity().getExternalFilesDir("/")?.absolutePath
         var recordFile="fileName.3gp"
-        mediaRecorder= MediaRecorder()
+        mediaRecorder=MediaRecorder()
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
@@ -98,6 +104,7 @@ class ReciteParagraphCheckFragment(var paragraph:String):Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun checkPermissions():Boolean{
-        return context?.checkSelfPermission(Manifest.permission.RECORD_AUDIO)== PackageManager.PERMISSION_GRANTED
+            return context?.checkSelfPermission(Manifest.permission.RECORD_AUDIO)==PackageManager.PERMISSION_GRANTED
     }
 }
+

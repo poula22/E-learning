@@ -1,21 +1,21 @@
-package com.example.lamp.ui.student.student_features_page.recitation.reciteWords.recitation.reciteWordsRV
+package com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
-import com.example.lamp.databinding.ItemStudentReciteWordsBinding
+import com.example.lamp.databinding.ItemFeatureReciteWordsBinding
 
 class ReciteWordsAdapter(var wordsList:List<ReciteWordsItem>?) :RecyclerView.Adapter<ReciteWordsAdapter.ViewHolder>(){
 
-    class ViewHolder(var viewDataBinding:ItemStudentReciteWordsBinding):RecyclerView.ViewHolder(viewDataBinding.root){
+    class ViewHolder(var viewDataBinding:ItemFeatureReciteWordsBinding):RecyclerView.ViewHolder(viewDataBinding.root){
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var viewBinding:ItemStudentReciteWordsBinding= DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-            R.layout.item_student_recite_words,parent,false)
+        var viewBinding:ItemFeatureReciteWordsBinding= DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+            R.layout.item_feature_recite_words,parent,false)
         return ViewHolder(viewBinding)
     }
 

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.lamp.ui.student.student_features_page.recitation.reciteWords.recitation.reciteWordsRV.ReciteWordsItem" />
+            type="com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

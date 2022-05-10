@@ -1,10 +1,11 @@
 package com.example.lamp.ui.sign_in_page
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
@@ -24,9 +25,13 @@ class SigninFragment : Fragment() {
         return viewBinding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+
+//        QuickstartSample.authExplicit("C:\\Users\\nvenr\\Downloads\\lampitproject-a2ad7178d4b1.json")
+//        QuickstartSample.test()
     }
 
     private fun initView() {

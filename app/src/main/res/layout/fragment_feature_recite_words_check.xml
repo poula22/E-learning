@@ -152,7 +152,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/btn_check"
             app:layout_constraintTop_toBottomOf="@+id/bottom_line"
-            tools:listitem="@layout/item_recite_word_check" />
+            tools:listitem="@layout/item_feature_recite_words_check" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
