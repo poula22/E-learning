@@ -1,9 +1,27 @@
 package com.example.data.model
 
-data class LoginInfoResponse (
-    val loginInfo: LoginInfo?=null
-        )
-data class LoginInfo(
-    val name:String?=null,
-    val pass:String?=null
+import com.google.gson.annotations.SerializedName
+
+data class LoginInfoResponse(
+
+	@field:SerializedName("LoginInfoResponse")
+	val loginInfoResponse: List<LoginInfoResponseItem?>? = null
+)
+
+data class LoginInfoResponseItem(
+
+	@field:SerializedName("emailAddress")
+	val emailAddress: String? = null,
+
+	@field:SerializedName("password")
+	val password: String? = null,
+
+	@field:SerializedName("toDoLists")
+	val toDoLists: List<Any?>? = null,
+
+	@field:SerializedName("id")
+	val id: Int? = null,
+
+	@field:SerializedName("type")
+	val type: Int? = null
 )

@@ -2,12 +2,6 @@ package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class FeaturesResponse(
-
-	@field:SerializedName("FeaturesResponse")
-	val featuresResponse: List<FeaturesResponseItem?>? = null
-)
-
 data class FeaturesResponseItem(
 
 	@field:SerializedName("studentID")
@@ -32,6 +26,3 @@ data class FeaturesResponseItem(
 	val newPath: String? = null
 )
 
-data class Student(
-	val any: Any? = null
-)

@@ -28,9 +28,7 @@ class ApiManager {
         fun getFeatureApi():FeatureWebService{
             return getInstance().create(FeatureWebService::class.java)
         }
-        fun getChildrenApi():ChildrenWebService{
-            return getInstance().create(ChildrenWebService::class.java)
-        }
+
         fun getLoginApi():LoginWebService{
             return getInstance().create(LoginWebService::class.java)
         }
