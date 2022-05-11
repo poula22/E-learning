@@ -12,6 +12,3 @@ data class Grade(
 data class Parent(
     val name:String?=null
 )
-data class Student(
-    val name:String?=null
-)

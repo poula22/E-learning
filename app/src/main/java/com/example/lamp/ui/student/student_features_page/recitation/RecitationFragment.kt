@@ -12,6 +12,7 @@ import com.example.lamp.databinding.FragmentFeatureRecitationBinding
 import com.example.lamp.ui.student.student_features_page.recitation.recite_paragraph.ReciteParagraphFragment
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.ReciteWordsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 
 class RecitationFragment : Fragment() {
