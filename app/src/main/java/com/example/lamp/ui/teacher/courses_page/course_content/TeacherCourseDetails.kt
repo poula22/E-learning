@@ -40,7 +40,7 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.dashboard, R.id.announcements, R.id.homework, R.id.grades,R.id.students,R.id.material,R.id.exams,R.id.edit_course
             ), drawerLayout
         )
         viewBinding.teacherCourseContainer.toolbar.setNavigationOnClickListener{

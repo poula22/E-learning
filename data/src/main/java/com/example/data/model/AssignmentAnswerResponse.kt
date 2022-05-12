@@ -4,24 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class AssignmentAnswerResponse(
 
-	@field:SerializedName("AssignmentAnswerResponse")
-	val assignmentAnswerResponse: List<AssignmentAnswerResponseItem?>? = null
-)
-
-data class AssignmentFeedback(
-	val any: Any? = null
-)
-
-data class AssignmentGrade(
-	val any: Any? = null
-)
-
-data class Badge(
-	val any: Any? = null
-)
-
-data class AssignmentAnswerResponseItem(
-
 	@field:SerializedName("studentID")
 	val studentID: Int? = null,
 
@@ -59,7 +41,17 @@ data class AssignmentAnswerResponseItem(
 	val assignmentGrade: AssignmentGrade? = null
 )
 
+data class AssignmentFeedback(
+	val any: Any? = null
+)
 
+data class AssignmentGrade(
+	val any: Any? = null
+)
+
+data class Badge(
+	val any: Any? = null
+)
 
 data class Assignment(
 	val any: Any? = null

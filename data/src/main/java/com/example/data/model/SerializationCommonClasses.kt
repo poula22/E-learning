@@ -12,6 +12,7 @@ data class Course(
 data class Student(
     val any: Any? = null
 )
+
 data class Lesson(
     val any: Any? = null
 )

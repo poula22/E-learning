@@ -32,7 +32,8 @@
             android:id="@+id/exams"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/exams" />
-
+    </group>
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/edit_course"
             android:icon="@drawable/ic_menu_slideshow"

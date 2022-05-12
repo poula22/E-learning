@@ -2,26 +2,21 @@ package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
 
+
 data class LoginInfoResponse(
 
-	@field:SerializedName("LoginInfoResponse")
-	val loginInfoResponse: List<LoginInfoResponseItem?>? = null
-)
+    @field:SerializedName("emailAddress")
+    val emailAddress: String? = null,
 
-data class LoginInfoResponseItem(
+    @field:SerializedName("password")
+    val password: String? = null,
 
-	@field:SerializedName("emailAddress")
-	val emailAddress: String? = null,
+    @field:SerializedName("toDoLists")
+    val toDoLists: List<Any?>? = null,
 
-	@field:SerializedName("password")
-	val password: String? = null,
+    @field:SerializedName("id")
+    val id: Int? = null,
 
-	@field:SerializedName("toDoLists")
-	val toDoLists: List<Any?>? = null,
-
-	@field:SerializedName("id")
-	val id: Int? = null,
-
-	@field:SerializedName("type")
-	val type: Int? = null
+    @field:SerializedName("type")
+    val type: Int? = null
 )

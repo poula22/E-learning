@@ -2,24 +2,19 @@ package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
 
+
 data class AssignmentFeedbackResponse(
 
-	@field:SerializedName("AssignmentFeedbackResponse")
-	val assignmentFeedbackResponse: List<AssignmentFeedbackResponseItem?>? = null
-)
+    @field:SerializedName("feedback")
+    val feedback: String? = null,
 
-data class AssignmentFeedbackResponseItem(
+    @field:SerializedName("assignmentAnswerID")
+    val assignmentAnswerID: Int? = null,
 
-	@field:SerializedName("feedback")
-	val feedback: String? = null,
+    @field:SerializedName("assignmentAnswer")
+    val assignmentAnswer: AssignmentAnswer? = null,
 
-	@field:SerializedName("assignmentAnswerID")
-	val assignmentAnswerID: Int? = null,
-
-	@field:SerializedName("assignmentAnswer")
-	val assignmentAnswer: AssignmentAnswer? = null,
-
-	@field:SerializedName("id")
-	val id: Int? = null
+    @field:SerializedName("id")
+    val id: Int? = null
 )
 
