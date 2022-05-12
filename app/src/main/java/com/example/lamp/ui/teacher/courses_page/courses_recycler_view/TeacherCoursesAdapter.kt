@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCoursesBinding
 import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
+import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 
 
 class TeacherCoursesAdapter(var coursesItemsList: List<CourseItem>? = null, val type: Int) :

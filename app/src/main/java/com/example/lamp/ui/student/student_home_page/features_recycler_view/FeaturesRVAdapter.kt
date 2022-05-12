@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentHomeFeatureRvBinding
 import com.example.lamp.databinding.ItemsStudentFeatureBinding
-import com.example.recyclerviewpracticekotlin.FeatureItem
 
 class FeaturesRVAdapter(var featuresItemsList : List<FeatureItem>?=null,val type:Int): RecyclerView.Adapter<FeaturesRVAdapter.FeaturesItemViewHolder>() {
 

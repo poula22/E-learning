@@ -13,9 +13,9 @@ import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_features_page.recitation.RecitationFragment
 import com.example.lamp.ui.student.student_features_page.summarization.SummarizationFragment
 import com.example.lamp.ui.student.student_features_page.translation.TranslationFragment
+import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeatureItem
 
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeaturesRVAdapter
-import com.example.recyclerviewpracticekotlin.FeatureItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FeaturesFragment : Fragment() {

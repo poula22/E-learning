@@ -15,8 +15,8 @@ import com.example.lamp.ui.student.student_features_page.recitation.RecitationFr
 import com.example.lamp.ui.student.student_features_page.summarization.SummarizationFragment
 import com.example.lamp.ui.student.student_features_page.translation.TranslationFragment
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CoursesRVAdapter
+import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeatureItem
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeaturesRVAdapter
-import com.example.recyclerviewpracticekotlin.FeatureItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

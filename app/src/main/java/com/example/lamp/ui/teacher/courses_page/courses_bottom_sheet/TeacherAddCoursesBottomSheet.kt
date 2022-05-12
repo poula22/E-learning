@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherAddCourseBinding
-import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.CourseItem
+import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 

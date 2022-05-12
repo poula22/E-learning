@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCoursesBinding
 import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
-import com.example.recyclerviewpracticekotlin.CourseItem
-
 class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type: Int) :
     RecyclerView.Adapter<CoursesRVAdapter.CoursesItemViewHolder>() {
 
