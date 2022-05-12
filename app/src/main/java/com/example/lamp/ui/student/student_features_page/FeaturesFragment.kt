@@ -36,6 +36,8 @@ class FeaturesFragment : Fragment() {
         initViews()
     }
 
+
+
     private fun initViews() {
         featuresRVAdapter = FeaturesRVAdapter(TestData.FEATURES, type = 1)
         featuresRVAdapter.onFeatureClickListener = object : FeaturesRVAdapter.FeatureClickListener {

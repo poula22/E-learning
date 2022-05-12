@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureTranslationBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.ImagePicker.Companion.REQUEST_CODE
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TranslationFragment : Fragment() {
 
@@ -27,6 +29,13 @@ class TranslationFragment : Fragment() {
             R.layout.fragment_feature_translation, container, false
         )
         return viewBinding.root
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        val bottomNavigationView: BottomNavigationView =
+            requireActivity().findViewById(R.id.bottom_navigation_view)
+        bottomNavigationView.isVisible = true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
