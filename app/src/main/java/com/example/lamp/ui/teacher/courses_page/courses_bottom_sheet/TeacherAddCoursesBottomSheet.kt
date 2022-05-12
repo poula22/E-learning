@@ -3,14 +3,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherAddCourseBinding
-import com.example.lamp.databinding.FragmentTeacherCoursesBinding
-import com.example.recyclerviewpracticekotlin.CourseItem
+import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.CourseItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.textfield.TextInputLayout
 
 
 class TeacherAddCoursesBottomSheet: BottomSheetDialogFragment() {
@@ -36,7 +33,7 @@ class TeacherAddCoursesBottomSheet: BottomSheetDialogFragment() {
                 val courseName=teacherAddCourseBinding.courseNameLayout.editText?.text.toString()
                 val courseCode=teacherAddCourseBinding.codeLayout.editText?.text.toString()
                 val description=teacherAddCourseBinding.descriptionLayout.editText?.text.toString()
-                val course=CourseItem(courseName,teacherName,courseCode,description)
+                val course= CourseItem(courseName,teacherName,courseCode,description)
                 dismiss()
             }
         }

@@ -2,14 +2,13 @@ package com.example.lamp.ui.teacher.courses_page.courses_recycler_view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCoursesBinding
 import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
-import com.example.recyclerviewpracticekotlin.CourseItem
+
 
 class TeacherCoursesAdapter(var coursesItemsList: List<CourseItem>? = null, val type: Int) :
     RecyclerView.Adapter<TeacherCoursesAdapter.CoursesItemViewHolder>() {

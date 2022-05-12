@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
-import com.example.recyclerviewpracticekotlin.CourseItem
+import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.CourseItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView

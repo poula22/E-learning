@@ -11,8 +11,8 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCoursesBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.teacher.courses_page.course_content.TeacherCourseDetails
+import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.TeacherCoursesAdapter
-import com.example.recyclerviewpracticekotlin.CourseItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

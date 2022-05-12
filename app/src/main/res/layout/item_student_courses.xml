@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.recyclerviewpracticekotlin.CourseItem" />
+            type="com.example.lamp.ui.teacher.courses_page.courses_recycler_view.CourseItem" />
     </data>
 
     <androidx.cardview.widget.CardView
