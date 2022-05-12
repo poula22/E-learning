@@ -3,16 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable-anydpi/ic_edit_text.xml" value="0.1505" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_add_child.xml" value="0.1505" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.1405" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_children.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_communicate.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_courses.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_features.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_home.xml" value="0.1615" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_menu_camera.xml" value="0.1505" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.1505" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.1505" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_profile.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_students.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_tools.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_websites.xml" value="0.1615" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_button.xml" value="0.1505" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_frame.xml" value="0.1505" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_text.xml" value="0.1505" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/side_nav_bar.xml" value="0.1505" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/activity_main.xml" value="0.12613981762917933" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_home.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_parent_children.xml" value="0.10405348934391977" />
@@ -40,6 +49,7 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_students.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/items_student_feature.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/activity_main_drawer.xml" value="0.259375" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/fragment_nav_drawer.xml" value="0.2553846153846154" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/parent_bottom_navigation_menu.xml" value="0.21021528070915999" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/student_bottom_navigation_menu.xml" value="0.21021528070915999" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/teacher_bottom_navigation_menu.xml" value="0.2129115006412997" />
