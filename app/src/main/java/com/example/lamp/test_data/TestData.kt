@@ -4,9 +4,10 @@ import com.example.lamp.R
 import com.example.lamp.ui.parent.parent_communicate_page.communicate_recycler_view.TeacherItem
 import com.example.lamp.ui.parent.parent_courses_page.course_recycler_view.ParentCourseItem
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsItem
+import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
+import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeatureItem
 import com.example.lamp.ui.teacher.students_page.students_recycler_view.StudentItem
-import com.example.recyclerviewpracticekotlin.CourseItem
-import com.example.recyclerviewpracticekotlin.FeatureItem
+
 
 object TestData {
     val TRANSLATIONAPIKEY="fdacb2ce0bmshb0a36e2081822c8p1e7ae6jsn82387bc6a932"
