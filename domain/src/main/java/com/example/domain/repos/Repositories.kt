@@ -3,6 +3,7 @@ package com.example.domain.repos
 import com.example.domain.model.ChildDTO
 import com.example.domain.model.CourseDTO
 import com.example.domain.model.FeatureDTO
+import com.example.domain.model.OCRResponseDTO
 
 interface CoursesRepository{
     suspend fun getCourses():List<CourseDTO>
@@ -13,7 +14,7 @@ interface CoursesOnlineDataSource{
 }
 
 interface OCROnlineDataSource{
-    suspend fun getTextFromImage(language:String,url:String):OCRResponseDTO
+    suspend fun getTextFromImage(language:String,url:String): OCRResponseDTO
 }
 
 interface OCRRepository{

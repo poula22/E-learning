@@ -1,9 +1,6 @@
 package com.example.data.model.microsoft_apis.ocr
 
-import com.example.domain.repos.LinesItemDTO
-import com.example.domain.repos.OCRResponseDTO
-import com.example.domain.repos.RegionsItemDTO
-import com.example.domain.repos.WordsItemDTO
+import com.example.domain.model.RegionsItemDTO
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
@@ -27,12 +24,13 @@ data class OCRResponse(
 	val code: String? = null,
 	@field:SerializedName("message")
 	val message: String? = null
-){
-	fun toOCRResponseDTO(): OCRResponseDTO {
-		val jsonString=Gson().toJson(this)
-		return Gson().fromJson(jsonString,OCRResponseDTO::class.java)
-	}
-}
+)
+//{
+//	fun toOCRResponseDTO(): OCRResponseDTO {
+//		val jsonString=Gson().toJson(this)
+//		return Gson().fromJson(jsonString,OCRResponseDTO::class.java)
+//	}
+//}
 
 data class RegionsItem(
 
@@ -55,12 +53,13 @@ data class LinesItem(
 
 	@field:SerializedName("words")
 	val words: List<WordsItem?>? = null
-){
-	fun toLinesItemDTO(): LinesItemDTO {
-		val jsonString=Gson().toJson(this)
-		return Gson().fromJson(jsonString,LinesItemDTO::class.java)
-	}
-}
+)
+//{
+//	fun toLinesItemDTO(): LinesItemDTO {
+//		val jsonString=Gson().toJson(this)
+//		return Gson().fromJson(jsonString,LinesItemDTO::class.java)
+//	}
+//}
 
 data class WordsItem(
 
@@ -69,9 +68,10 @@ data class WordsItem(
 
 	@field:SerializedName("text")
 	val text: String? = null
-){
-	fun toWordsItemDTO():WordsItemDTO{
-		val jsonString=Gson().toJson(this)
-		return Gson().fromJson(jsonString,WordsItemDTO::class.java)
-	}
-}
+)
+//{
+//	fun toWordsItemDTO():WordsItemDTO{
+//		val jsonString=Gson().toJson(this)
+//		return Gson().fromJson(jsonString,WordsItemDTO::class.java)
+//	}
+//}

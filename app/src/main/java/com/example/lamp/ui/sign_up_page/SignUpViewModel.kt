@@ -9,7 +9,7 @@ import com.example.data.repos.OCROnlineDataSourceImp
 import com.example.data.repos.OCRRepositoryImp
 import com.example.domain.repos.OCROnlineDataSource
 import com.example.domain.repos.OCRRepository
-import com.example.domain.repos.OCRResponseDTO
+import com.example.domain.model.OCRResponseDTO
 import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {

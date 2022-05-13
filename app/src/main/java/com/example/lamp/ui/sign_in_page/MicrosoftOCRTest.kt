@@ -10,14 +10,12 @@ import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOp
 import java.util.*
 
 class MicrosoftOCRTest {
-    companion object  {
-        var subscriptionKey = "c81d3df2-b7d2-4112-aa7b-d2395196bf58"
-        var endpoint = "ad4b918f3bbb4349828bdf501dc8592c"
+    companion object {
+        var subscriptionKey = "ad4b918f3bbb4349828bdf501dc8592c"
+        var endpoint = "https://ocrtestpolapoula.cognitiveservices.azure.com/"
 
-        @JvmStatic
         fun microsoftOcrTest() {
             println("\nAzure Cognitive Services Computer Vision - Java Quickstart Sample")
-
             // Create an authenticated Computer Vision client.
             val compVisClient: ComputerVisionClient = authenticate(subscriptionKey, endpoint)
 
@@ -25,7 +23,10 @@ class MicrosoftOCRTest {
             readFromUrl(compVisClient)
         }
 
-        fun authenticate(subscriptionKey: String?, endpoint: String?): ComputerVisionClient {
+        private fun authenticate(
+            subscriptionKey: String?,
+            endpoint: String?
+        ): ComputerVisionClient {
             return ComputerVisionManager.authenticate(subscriptionKey).withEndpoint(endpoint)
         }
 
@@ -114,4 +115,5 @@ class MicrosoftOCRTest {
                 println(builder.toString())
             }
         }
-    }}
+    }
+}

@@ -6,19 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.lifecycle.viewModelScope
-import com.example.data.api.ApiManager
-import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
-import com.example.data.repos.OCROnlineDataSourceImp
-import com.example.data.repos.OCRRepositoryImp
-import com.example.domain.repos.OCROnlineDataSource
-import com.example.domain.repos.OCRRepository
-import com.example.domain.repos.OCRResponseDTO
 import com.example.lamp.R
-import java.util.logging.Logger
 
 class SignUpFragment:Fragment() {
 //comment test
