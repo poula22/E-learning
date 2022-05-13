@@ -23,11 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/splash_screen">
-        <activity
-            android:name=".ui.teacher.courses_page.course_content.TeacherCourseDetails"
-            android:exported="false"
-            android:label="@string/title_activity_teacher_course_details"
-            android:theme="@style/splash_screen.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false" />

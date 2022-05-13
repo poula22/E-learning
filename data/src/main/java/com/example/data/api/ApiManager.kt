@@ -1,5 +1,6 @@
 package com.example.data.api
 
+import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -9,124 +10,140 @@ class ApiManager {
     companion object {
         var logging: HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(
             HttpLoggingInterceptor.Level.BASIC
-        );
+        )
         var client: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(logging)
             .build()
-        private val BASEURL: String = "https://"
-        private var retrofit: Retrofit? = null
-        private fun getInstance(): Retrofit {
-            if (retrofit == null)
-                retrofit = Retrofit.Builder()
-                    .baseUrl(BASEURL)
+        private const val BASEURL_BACKEND: String = "https://"
+        private const val BASEURL_OCR:String="https://eastus.api.cognitive.microsoft.com/"
+        private var retrofitBackend: Retrofit? = null
+        private var retrofitOCR:Retrofit?=null
+
+        private fun getBackendInstance(): Retrofit {
+            if (retrofitBackend == null)
+                retrofitBackend = Retrofit.Builder()
+                    .baseUrl(BASEURL_BACKEND)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client).build()
-            return retrofit!!
+            return retrofitBackend!!
+        }
+
+        private fun getOCRInstance(): Retrofit {
+            if (retrofitOCR == null)
+                retrofitOCR = Retrofit.Builder()
+                    .baseUrl(BASEURL_OCR)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client).build()
+            return retrofitOCR!!
         }
 
         fun getCourseApi(): CourseWebService {
-            return getInstance().create(CourseWebService::class.java)
+            return getBackendInstance().create(CourseWebService::class.java)
         }
 
         fun getFeatureApi(): FeatureWebService {
-            return getInstance().create(FeatureWebService::class.java)
+            return getBackendInstance().create(FeatureWebService::class.java)
         }
 
         fun getLoginInfoApi(): LoginInfoWebService {
-            return getInstance().create(LoginInfoWebService::class.java)
+            return getBackendInstance().create(LoginInfoWebService::class.java)
         }
 
         fun getAnnouncementApi(): AnnouncementWebService {
-            return getInstance().create(AnnouncementWebService::class.java)
+            return getBackendInstance().create(AnnouncementWebService::class.java)
         }
 
         fun getAssignmentAnswerApi(): AssignmentAnswerWebService {
-            return getInstance().create(AssignmentAnswerWebService::class.java)
+            return getBackendInstance().create(AssignmentAnswerWebService::class.java)
         }
 
         fun getAssignmentApi(): AssignmentWebService {
-            return getInstance().create(AssignmentWebService::class.java)
+            return getBackendInstance().create(AssignmentWebService::class.java)
         }
 
         fun getQuestionApi(): QuestionWebService {
-            return getInstance().create(QuestionWebService::class.java)
+            return getBackendInstance().create(QuestionWebService::class.java)
         }
 
         fun getQuizApi(): QuizWebService {
-            return getInstance().create(QuizWebService::class.java)
+            return getBackendInstance().create(QuizWebService::class.java)
         }
 
         fun getQuizAnswerApi(): QuizAnswerWebService {
-            return getInstance().create(QuizAnswerWebService::class.java)
+            return getBackendInstance().create(QuizAnswerWebService::class.java)
         }
 
         fun getQuizGradeApi(): QuizGradeWebService {
-            return getInstance().create(QuizGradeWebService::class.java)
+            return getBackendInstance().create(QuizGradeWebService::class.java)
         }
 
         fun getAssignmentFeedbackApi(): AssignmentFeedbackWebService {
-            return getInstance().create(AssignmentFeedbackWebService::class.java)
+            return getBackendInstance().create(AssignmentFeedbackWebService::class.java)
         }
 
         fun getAssignmentGradeApi(): AssignmentGradeWebService {
-            return getInstance().create(AssignmentGradeWebService::class.java)
+            return getBackendInstance().create(AssignmentGradeWebService::class.java)
         }
 
         // Badge
         fun getBadgeApi(): BadgeWebService {
-            return getInstance().create(BadgeWebService::class.java)
+            return getBackendInstance().create(BadgeWebService::class.java)
         }
 
         // Content
         fun getContentApi(): ContentWebService {
-            return getInstance().create(ContentWebService::class.java)
+            return getBackendInstance().create(ContentWebService::class.java)
         }
 
         // LatestPassedLesson
         fun getLatestPassedLessonApi(): LatestPassedLessonWebService {
-            return getInstance().create(LatestPassedLessonWebService::class.java)
+            return getBackendInstance().create(LatestPassedLessonWebService::class.java)
         }
 
         // Lesson
         fun getLessonApi(): LessonWebService {
-            return getInstance().create(LessonWebService::class.java)
+            return getBackendInstance().create(LessonWebService::class.java)
         }
 
         // Note
         fun getNoteApi(): NoteWebService {
-            return getInstance().create(NoteWebService::class.java)
+            return getBackendInstance().create(NoteWebService::class.java)
         }
 
         // Parent
         fun getParentApi(): ParentWebService {
-            return getInstance().create(ParentWebService::class.java)
+            return getBackendInstance().create(ParentWebService::class.java)
         }
 
         //Question
         fun getQuestionAnswerApi(): QuestionAnswerWebService {
-            return getInstance().create(QuestionAnswerWebService::class.java)
+            return getBackendInstance().create(QuestionAnswerWebService::class.java)
         }
 
         // Resource
         fun getResourceApi(): ResourceWebService {
-            return getInstance().create(ResourceWebService::class.java)
+            return getBackendInstance().create(ResourceWebService::class.java)
         }
 
         //Student
         fun getStudentApi(): StudentWebService {
-            return getInstance().create(StudentWebService::class.java)
+            return getBackendInstance().create(StudentWebService::class.java)
         }
 
         // Teacher
         fun getTeacherApi(): TeacherWebService {
-            return getInstance().create(TeacherWebService::class.java)
+            return getBackendInstance().create(TeacherWebService::class.java)
         }
 
         //TodoList
         fun getToDoListApi(): ToDoListWebService {
-            return getInstance().create(ToDoListWebService::class.java)
+            return getBackendInstance().create(ToDoListWebService::class.java)
         }
 
+        //OCR
+        fun getOCRApi():MicrosoftOCRWebService{
+            return getOCRInstance().create(MicrosoftOCRWebService::class.java)
+        }
 
     }
 }
