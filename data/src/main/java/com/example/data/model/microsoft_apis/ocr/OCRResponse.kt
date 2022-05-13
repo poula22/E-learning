@@ -25,12 +25,7 @@ data class OCRResponse(
 	@field:SerializedName("message")
 	val message: String? = null
 )
-//{
-//	fun toOCRResponseDTO(): OCRResponseDTO {
-//		val jsonString=Gson().toJson(this)
-//		return Gson().fromJson(jsonString,OCRResponseDTO::class.java)
-//	}
-//}
+
 
 data class RegionsItem(
 
@@ -39,12 +34,7 @@ data class RegionsItem(
 
 	@field:SerializedName("lines")
 	val lines: List<LinesItem?>? = null
-){
-	fun toRegionsItemDTO(): RegionsItemDTO {
-		val jsonString=Gson().toJson(this)
-		return Gson().fromJson(jsonString,RegionsItemDTO::class.java)
-	}
-}
+)
 
 data class LinesItem(
 
@@ -54,12 +44,7 @@ data class LinesItem(
 	@field:SerializedName("words")
 	val words: List<WordsItem?>? = null
 )
-//{
-//	fun toLinesItemDTO(): LinesItemDTO {
-//		val jsonString=Gson().toJson(this)
-//		return Gson().fromJson(jsonString,LinesItemDTO::class.java)
-//	}
-//}
+
 
 data class WordsItem(
 
@@ -69,9 +54,3 @@ data class WordsItem(
 	@field:SerializedName("text")
 	val text: String? = null
 )
-//{
-//	fun toWordsItemDTO():WordsItemDTO{
-//		val jsonString=Gson().toJson(this)
-//		return Gson().fromJson(jsonString,WordsItemDTO::class.java)
-//	}
-//}

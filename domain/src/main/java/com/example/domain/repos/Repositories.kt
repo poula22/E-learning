@@ -1,9 +1,6 @@
 package com.example.domain.repos
 
-import com.example.domain.model.ChildDTO
-import com.example.domain.model.CourseDTO
-import com.example.domain.model.FeatureDTO
-import com.example.domain.model.OCRResponseDTO
+import com.example.domain.model.*
 
 interface CoursesRepository{
     suspend fun getCourses():List<CourseDTO>
@@ -15,10 +12,12 @@ interface CoursesOnlineDataSource{
 
 interface OCROnlineDataSource{
     suspend fun getTextFromImage(language:String,url:String): OCRResponseDTO
+    suspend fun getTextFromImageReadApi(language:String?=null,url:String): ReadOCRResponseDTO
 }
 
 interface OCRRepository{
     suspend fun getTextFromImage(language:String,url:String):OCRResponseDTO
+    suspend fun getTextFromImageReadApi(language: String?=null, url: String): ReadOCRResponseDTO
 }
 
 interface FeaturesRepository{

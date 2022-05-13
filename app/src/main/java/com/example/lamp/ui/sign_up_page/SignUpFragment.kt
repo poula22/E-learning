@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.lamp.R
+import java.util.*
+import kotlin.concurrent.schedule
 
 class SignUpFragment:Fragment() {
 //comment test
@@ -31,17 +33,28 @@ lateinit var viewModel:SignUpViewModel
         viewModel.getData()
     }
 
+
     fun subscirbeToLiveData(){
                 viewModel.liveData.observe(viewLifecycleOwner
         ) {
+
 //                    regions?.get(0)?.lines?.get(0)?.words?.get(0)?.text?
-            it?.regions?.get(0)?.lines?.get(0)?.words?.get(0)?.text?.let { it1 ->
-                val text=it1
-                Log.v("MSOCR",
-                    text
-                )
-            }
+                    it.let { it1 ->
+                        Log.v("MSOCR",
+                            it1.toString()
+                        )
+                    }
+
+//            it?.regions?.get(0)?.lines?.get(0)?.words?.get(0)?.text?.let { it1 ->
+//                val text=it1
+//                Log.v("MSOCR",
+//                    text
+//                )
+//            }
 
         }
+
+
+
     }
 }
