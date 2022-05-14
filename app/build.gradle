@@ -65,10 +65,9 @@ dependencies {
     implementation platform('com.google.cloud:libraries-bom:25.2.0')
     implementation 'com.google.cloud:google-cloud-vision'
     implementation 'com.google.cloud:google-cloud-storage'
-    ///////
-
-
-    //
+    ///////////////////////////////
+    implementation 'com.microsoft.cognitiveservices.speech:client-sdk:1.21.0'
+    /////////////////////////////////
     implementation 'com.microsoft.projectoxford:vision:1.0.395'
     implementation 'com.microsoft.azure.cognitiveservices:azure-cognitiveservices-computervision:1.0.9-beta'
 

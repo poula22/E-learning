@@ -1,11 +1,18 @@
 package com.example.data.repos
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
 import com.example.data.data_classes.URLOCR
 import com.example.data.model.convertTo
+import com.example.data.model.microsoft_apis.ocr.ReadOCRResponse
 import com.example.domain.repos.OCROnlineDataSource
 import com.example.domain.model.OCRResponseDTO
 import com.example.domain.model.ReadOCRResponseDTO
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
 
 class OCROnlineDataSourceImp(val webService:MicrosoftOCRWebService):OCROnlineDataSource {
     override suspend fun getTextFromImage(language:String,url:String): OCRResponseDTO {
@@ -17,7 +24,7 @@ class OCROnlineDataSourceImp(val webService:MicrosoftOCRWebService):OCROnlineDat
     override suspend fun getTextFromImageReadApi(language: String?, url: String): ReadOCRResponseDTO {
         var opId=getHeader(language,url)
         var result=webService.getTextFromSource(opId)
-        return result.convertTo(ReadOCRResponseDTO::class.java)
+        return result.convertTo(ReadOCRResponseDTO::class.java)!!
     }
 
     private suspend fun getHeader(language:String?=null,url:String):String {

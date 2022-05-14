@@ -5,6 +5,7 @@ import com.example.data.model.microsoft_apis.ocr.OCRResponse
 import com.example.data.model.microsoft_apis.ocr.ReadOCRResponse
 import retrofit2.Response
 import retrofit2.http.*
+import java.util.*
 
 interface MicrosoftOCRWebService {
     @Headers(

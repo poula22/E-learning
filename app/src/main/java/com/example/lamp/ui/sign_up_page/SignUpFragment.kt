@@ -5,15 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.lamp.R
+import com.example.lamp.databinding.FragmentSignUpBinding
 import java.util.*
 import kotlin.concurrent.schedule
 
 class SignUpFragment:Fragment() {
 //comment test
 lateinit var viewModel:SignUpViewModel
+lateinit var viewBinging:FragmentSignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +27,17 @@ lateinit var viewModel:SignUpViewModel
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_sign_up,container,false)
+        viewBinging=DataBindingUtil.inflate(inflater,R.layout.fragment_sign_up,container,false)
+        return viewBinging.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscirbeToLiveData()
         viewModel.getData()
+        viewBinging.buttonSignUpRegisteration.setOnClickListener{
+            viewModel.test(viewBinging.txtPhone)
+        }
     }
 
 

@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
+import com.example.lamp.ui.teacher.courses_page.course_content.homework.TeacherCourseHomeworkFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -45,6 +46,15 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
         )
         viewBinding.teacherCourseContainer.toolbar.setNavigationOnClickListener{
             drawerLayout.open()
+        }
+        viewBinding.navView.setNavigationItemSelectedListener { item->
+            if(item.itemId==R.id.homework){
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.course_content_container,TeacherCourseHomeworkFragment())
+                    .commit()
+            }
+            drawerLayout.close()
+            return@setNavigationItemSelectedListener true
         }
 
     }

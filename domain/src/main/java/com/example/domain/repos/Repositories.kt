@@ -1,6 +1,7 @@
 package com.example.domain.repos
 
 import com.example.domain.model.*
+import kotlinx.coroutines.CoroutineScope
 
 interface CoursesRepository{
     suspend fun getCourses():List<CourseDTO>

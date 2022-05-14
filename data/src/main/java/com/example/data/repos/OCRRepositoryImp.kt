@@ -4,6 +4,7 @@ import com.example.domain.repos.OCROnlineDataSource
 import com.example.domain.repos.OCRRepository
 import com.example.domain.model.OCRResponseDTO
 import com.example.domain.model.ReadOCRResponseDTO
+import kotlinx.coroutines.CoroutineScope
 
 class OCRRepositoryImp(val ocrOnlineDataSource: OCROnlineDataSource):OCRRepository {
     override suspend fun getTextFromImage(language: String, url: String): OCRResponseDTO {
