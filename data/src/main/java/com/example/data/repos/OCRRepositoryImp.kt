@@ -1,5 +1,6 @@
 package com.example.data.repos
 
+import com.example.data.api.ApiManager
 import com.example.domain.repos.OCROnlineDataSource
 import com.example.domain.repos.OCRRepository
 import com.example.domain.model.OCRResponseDTO

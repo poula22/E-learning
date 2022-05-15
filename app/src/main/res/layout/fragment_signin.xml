@@ -113,7 +113,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
 
-                android:background="@color/green"
+                android:background="@color/light_green"
                 android:padding="10dp"
                 android:src="@drawable/student" />
 

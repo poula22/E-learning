@@ -2,6 +2,7 @@ package com.example.data.repos
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.data.api.ApiManager
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
 import com.example.data.data_classes.URLOCR
 import com.example.data.model.convertTo
@@ -14,7 +15,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
-class OCROnlineDataSourceImp(val webService:MicrosoftOCRWebService):OCROnlineDataSource {
+class OCROnlineDataSourceImp(private val webService:MicrosoftOCRWebService=ApiManager.getOCRApi()):OCROnlineDataSource {
     override suspend fun getTextFromImage(language:String,url:String): OCRResponseDTO {
        var u=URLOCR(url =url )
         var result= webService.getTextFromImage(language=language,url=u)

@@ -25,8 +25,7 @@ class SignUpViewModel : ViewModel() {
     //MVVM
 //    val liveData=MutableLiveData<OCRResponseDTO?>()
     val liveData=MutableLiveData<ReadOCRResponseDTO?>()
-    var webService: MicrosoftOCRWebService = ApiManager.getOCRApi()
-    var ocrOnlineDataSource: OCROnlineDataSource = OCROnlineDataSourceImp(webService)
+    var ocrOnlineDataSource: OCROnlineDataSource = OCROnlineDataSourceImp()
     var ocrRepository: OCRRepository = OCRRepositoryImp(ocrOnlineDataSource)
 
     var microphoneStream:MicrophoneStream?=null

@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#4FCD00"
+            android:background="@color/dark_green"
             android:padding="8dp">
 
 
@@ -60,7 +60,7 @@
                 android:id="@+id/details_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#A5F38F"
+                android:backgroundTint="@color/green"
                 android:text="Show Details"
                 app:layout_constraintBottom_toTopOf="@+id/details_area"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
                 android:id="@+id/details_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#A5F38F"
+                android:background="@color/green"
                 android:padding="20dp"
                 app:layout_constraintStart_toStartOf="@id/details_area"
                 app:layout_constraintTop_toBottomOf="@+id/details_btn">
@@ -84,7 +84,6 @@
                     android:paddingEnd="20dp"
                     android:src="@drawable/student"
                     app:layout_constraintBottom_toBottomOf="@+id/details_area"
-                    app:layout_constraintEnd_toStartOf="@id/student_name"
                     app:layout_constraintStart_toStartOf="@+id/details_area"
                     app:layout_constraintTop_toTopOf="@+id/details_area" />
 
@@ -111,7 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_phone"
-                        android:tint="@color/black" />
+                        app:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/student_phone"
@@ -136,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_email"
-                        android:tint="@color/black" />
+                        app:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/student_email"
@@ -162,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_facebook"
-                        android:tint="@color/black" />
+                        app:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/student_fb_profile"
