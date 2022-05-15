@@ -10,17 +10,17 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentHomeFeatureRvBinding
-import com.example.lamp.databinding.ItemsStudentFeatureBinding
+import com.example.lamp.databinding.ItemStudentFeatureBinding
 
 class FeaturesRVAdapter(var featuresItemsList : List<FeatureItem>?=null,val type:Int): RecyclerView.Adapter<FeaturesRVAdapter.FeaturesItemViewHolder>() {
 
     val HOME_SCREEN=R.layout.item_student_home_feature_rv
-    val FEATURES_SCREEN=R.layout.items_student_feature
+    val FEATURES_SCREEN=R.layout.item_student_feature
     lateinit var viewDataBinding: ViewDataBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeaturesItemViewHolder {
         if(type== 1){
             var screen=FEATURES_SCREEN
-            viewDataBinding=DataBindingUtil.inflate<ItemsStudentFeatureBinding>(LayoutInflater.from(parent.context),screen,parent,false)
+            viewDataBinding=DataBindingUtil.inflate<ItemStudentFeatureBinding>(LayoutInflater.from(parent.context),screen,parent,false)
         }
         else if (type==0){
             var screen=HOME_SCREEN
@@ -42,7 +42,7 @@ class FeaturesRVAdapter(var featuresItemsList : List<FeatureItem>?=null,val type
 
         }
         else{
-            var viewBinding=holder.viewDataBinding as ItemsStudentFeatureBinding
+            var viewBinding=holder.viewDataBinding as ItemStudentFeatureBinding
             viewBinding.item=item
             if (onFeatureClickListener!=null && item!=null){
                 viewBinding.card.setOnClickListener{

@@ -1,4 +1,5 @@
 package com.example.lamp.ui.teacher.courses_page.courses_bottom_sheet
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,19 @@ import com.example.lamp.ui.student.student_home_page.courses_recycler_view.Cours
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class TeacherAddCoursesBottomSheet: BottomSheetDialogFragment() {
-    lateinit var teacherAddCourseBinding:FragmentTeacherAddCourseBinding
+class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
+    lateinit var teacherAddCourseBinding: FragmentTeacherAddCourseBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        teacherAddCourseBinding = DataBindingUtil.inflate<FragmentTeacherAddCourseBinding>(inflater,R.layout.fragment_teacher_add_course,container,false)
+        teacherAddCourseBinding = DataBindingUtil.inflate<FragmentTeacherAddCourseBinding>(
+            inflater,
+            R.layout.fragment_teacher_add_course,
+            container,
+            false
+        )
         return teacherAddCourseBinding.root
     }
 
@@ -25,48 +31,60 @@ class TeacherAddCoursesBottomSheet: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
-    fun initViews(){
 
-        teacherAddCourseBinding.addCourseBtn.setOnClickListener{
-            if (validateForm()){
-                val teacherName=teacherAddCourseBinding.teacherNameLayout.editText?.text.toString()
-                val courseName=teacherAddCourseBinding.courseNameLayout.editText?.text.toString()
-                val courseCode=teacherAddCourseBinding.codeLayout.editText?.text.toString()
-                val description=teacherAddCourseBinding.descriptionLayout.editText?.text.toString()
-                val course= CourseItem(courseName,teacherName,courseCode,description)
+    fun initViews() {
+
+        teacherAddCourseBinding.addCourseBtn.setOnClickListener {
+            if (validateForm()) {
+                val teacherName =
+                    teacherAddCourseBinding.teacherNameLayout.editText?.text.toString()
+                val courseName = teacherAddCourseBinding.courseNameLayout.editText?.text.toString()
+                val courseCode = teacherAddCourseBinding.codeLayout.editText?.text.toString()
+                val description =
+                    teacherAddCourseBinding.descriptionLayout.editText?.text.toString()
+                val courseImageId = R.drawable.login
+                val startDate = "2020-01-01"
+                val endDate = "2020-01-01"
+                val course =
+                    CourseItem(
+                        courseName,
+                        teacherName,
+                        courseCode,
+                        description,
+                        courseImageId,
+                        startDate,
+                        endDate
+                    )
                 dismiss()
             }
         }
     }
-    fun validateForm():Boolean{
-        var isValid=true
-        if(teacherAddCourseBinding.courseNameLayout.editText?.text.toString().isBlank()){
-            teacherAddCourseBinding.courseNameLayout.error="please enter todo details"
-            isValid=false
+
+    fun validateForm(): Boolean {
+        var isValid = true
+        if (teacherAddCourseBinding.courseNameLayout.editText?.text.toString().isBlank()) {
+            teacherAddCourseBinding.courseNameLayout.error = "please enter todo details"
+            isValid = false
+        } else {
+            teacherAddCourseBinding.courseNameLayout.error = null
         }
-        else{
-            teacherAddCourseBinding.courseNameLayout.error=null
+        if (teacherAddCourseBinding.codeLayout.editText?.text.toString().isBlank()) {
+            teacherAddCourseBinding.codeLayout.error = "please enter todo details"
+            isValid = false
+        } else {
+            teacherAddCourseBinding.codeLayout.error = null
         }
-        if(teacherAddCourseBinding.codeLayout.editText?.text.toString().isBlank()){
-            teacherAddCourseBinding.codeLayout.error="please enter todo details"
-            isValid=false
+        if (teacherAddCourseBinding.descriptionLayout.editText?.text.toString().isBlank()) {
+            teacherAddCourseBinding.descriptionLayout.error = "please enter todo details"
+            isValid = false
+        } else {
+            teacherAddCourseBinding.descriptionLayout.error = null
         }
-        else{
-            teacherAddCourseBinding.codeLayout.error=null
-        }
-        if(teacherAddCourseBinding.descriptionLayout.editText?.text.toString().isBlank()){
-            teacherAddCourseBinding.descriptionLayout.error="please enter todo details"
-            isValid=false
-        }
-        else{
-            teacherAddCourseBinding.descriptionLayout.error=null
-        }
-        if(teacherAddCourseBinding.teacherNameLayout.editText?.text.toString().isBlank()){
-            teacherAddCourseBinding.teacherNameLayout.error="please enter todo details"
-            isValid=false
-        }
-        else{
-            teacherAddCourseBinding.teacherNameLayout.error=null
+        if (teacherAddCourseBinding.teacherNameLayout.editText?.text.toString().isBlank()) {
+            teacherAddCourseBinding.teacherNameLayout.error = "please enter todo details"
+            isValid = false
+        } else {
+            teacherAddCourseBinding.teacherNameLayout.error = null
         }
         return isValid
     }

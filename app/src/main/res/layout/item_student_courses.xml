@@ -23,7 +23,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/ourses_course_image"
+                android:id="@+id/courses_course_image"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -43,7 +43,7 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@id/courses_code"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ourses_course_image"
+                app:layout_constraintStart_toEndOf="@id/courses_course_image"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
 
@@ -59,7 +59,7 @@
 
                 app:layout_constraintBottom_toTopOf="@id/courses_teacher_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ourses_course_image"
+                app:layout_constraintStart_toEndOf="@id/courses_course_image"
                 app:layout_constraintTop_toBottomOf="@id/courses_course_name" />
 
             <TextView
@@ -72,7 +72,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ourses_course_image"
+                app:layout_constraintStart_toEndOf="@id/courses_course_image"
                 app:layout_constraintTop_toBottomOf="@id/courses_code" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

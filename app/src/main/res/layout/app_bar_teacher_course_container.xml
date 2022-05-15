@@ -13,16 +13,27 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            app:navigationIcon="@drawable/ic_menu"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/splash_screen.PopupOverlay" />
+            app:navigationIcon="@drawable/ic_menu"
+            app:popupTheme="@style/splash_screen.PopupOverlay">
+
+            <ImageView
+                android:id="@+id/settings_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="top|end"
+                android:src="@drawable/ic_settings"
+                android:layout_marginEnd="10dp"
+                />
+
+        </androidx.appcompat.widget.Toolbar>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/fragment_teacher_course_container" />
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
