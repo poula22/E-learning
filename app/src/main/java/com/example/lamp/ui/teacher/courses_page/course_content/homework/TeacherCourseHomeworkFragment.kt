@@ -34,7 +34,8 @@ class TeacherCourseHomeworkFragment:Fragment() {
         viewBinding.addBtn.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction().
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .add(R.id.teacher_course_container,TeacherCourseAddAssignmentFragment())
+                .addToBackStack("")
+                .replace(this.id,TeacherCourseAddAssignmentFragment())
                 .commit()
         }
     }
