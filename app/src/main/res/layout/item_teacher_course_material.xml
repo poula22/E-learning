@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="item"
+            type="com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.LessonItem" />
 
     </data>
 
@@ -16,6 +19,7 @@
             android:id="@+id/lessson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{item.lessonName}"
             tools:text="lessson"
             android:textSize="28sp"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,8 +42,10 @@
             android:background="@color/light_green"
             app:layout_constraintTop_toBottomOf="@id/lessson">
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/section_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_teacher_course_material_lesson_content"
                 app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
