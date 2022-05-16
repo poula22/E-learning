@@ -17,23 +17,42 @@
             android:fillViewport="true"
             app:layout_constraintHeight_percent=".6"
             app:layout_constraintTop_toTopOf="parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <VideoView
-                    android:id="@+id/video"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/video_player"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/youtube_player_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/video_player"
+                     />
+
                 <TextView
                     android:id="@+id/youtube_link"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="24sp"
-                    app:layout_constraintTop_toBottomOf="@id/video"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/youtube_player_view" />
+
+                <TextView
+                    android:id="@+id/content_text_html"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/youtube_player_view" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -44,8 +63,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/dark_green"
-            app:layout_constraintTop_toBottomOf="@+id/material_content_container"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/material_content_container" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

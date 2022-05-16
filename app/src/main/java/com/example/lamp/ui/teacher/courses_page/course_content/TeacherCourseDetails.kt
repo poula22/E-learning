@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
+import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.homework.TeacherCourseHomeworkFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -72,6 +74,15 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                 R.id.homework -> {
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(R.id.course_content_container, TeacherCourseHomeworkFragment())
+                        .commit()
+                }
+                R.id.material -> {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.course_content_container, TeacherCourseMaterialFragment(
+                                TestData.COURSES[0]
+                            )
+                        )
                         .commit()
                 }
                 R.id.edit_course -> {
