@@ -47,6 +47,7 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_features.xml" value="0.115625" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_add_course.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_add_assignment.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_add_section.xml" value="0.16" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_details.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_material.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_settings.xml" value="0.2" />
