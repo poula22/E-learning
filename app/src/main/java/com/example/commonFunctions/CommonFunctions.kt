@@ -1,12 +1,15 @@
 package com.example.commonFunctions
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
+import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
@@ -15,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.lamp.R
 import com.github.dhaval2404.imagepicker.ImagePicker
+import java.util.*
 
 class CommonFunctions {
     companion object {
@@ -93,6 +97,27 @@ class CommonFunctions {
             return context?.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
         }
 
-    }
 
+        val calendar = Calendar.getInstance()
+
+        @SuppressLint("SetTextI18n")
+        fun showDatePicker(edText: EditText, context: Context) {
+
+            val datePicker = DatePickerDialog(
+                context,
+                { view, year, month, dayOfMonth ->
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    calendar.set(Calendar.MONTH, month)
+                    calendar.set(Calendar.YEAR, year)
+                    edText.setText("" + dayOfMonth + "/" + month.plus(1) + "/" + year)
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+            datePicker.show()
+        }
+
+
+    }
 }

@@ -15,18 +15,18 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/save_btn"
+            android:id="@+id/create_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
-            android:textStyle="bold"
-            android:textSize="24sp"
+            android:text="Create"
             android:textColor="#CE007BFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/course_title"
+            android:id="@+id/section_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Course Name"
@@ -40,32 +40,76 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Youtube Link"
+            android:inputType="textUri"
             android:text="@{item.youtubeLink}"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_title" />
+            app:layout_constraintTop_toBottomOf="@+id/section_title" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
             android:layout_marginVertical="8dp"
-
+            app:boxBackgroundColor="@color/white"
             app:boxBackgroundMode="outline"
-            app:layout_constraintTop_toBottomOf="@id/youtube_link"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/youtube_link">
 
             <EditText
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="top"
                 android:hint="Description"
-                android:textSize="18sp"
                 android:lines="6"
-                android:gravity="top"/>
+                android:text="@{item.paragraph}"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_video_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Video"
+            app:icon="@drawable/ic_add_photo"
+            app:layout_constraintEnd_toStartOf="@+id/attach_file_btn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_layout" />
+
+        <TextView
+            android:id="@+id/start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:text="Publish at: "
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_video_btn" />
+
+
+        <EditText
+            android:id="@+id/publish_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:hint="dd/mm/yyyy"
+            android:text="@{item.publishAt}"
+            app:layout_constraintStart_toEndOf="@id/start_date"
+            app:layout_constraintTop_toBottomOf="@id/add_video_btn" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/attach_file_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attach File"
+            app:icon="@drawable/ic_attachment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/add_video_btn"
+            app:layout_constraintTop_toBottomOf="@+id/description_layout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

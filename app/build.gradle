@@ -72,6 +72,9 @@ dependencies {
     implementation 'com.microsoft.projectoxford:vision:1.0.395'
     implementation 'com.microsoft.azure.cognitiveservices:azure-cognitiveservices-computervision:1.0.9-beta'
 
+    implementation platform('software.amazon.awssdk:bom:2.15.0')
+    implementation 'com.amplifyframework:aws-api:1.35.3'
+    implementation 'com.amplifyframework:aws-datastore:1.35.3'
 
     implementation 'com.github.jkwiecien:EasyImage:3.2.0'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
