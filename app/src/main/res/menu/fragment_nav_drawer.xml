@@ -13,9 +13,9 @@
             android:icon="@drawable/ic_announcement"
             android:title="@string/announcements" />
         <item
-            android:id="@+id/homework"
+            android:id="@+id/assignment"
             android:icon="@drawable/ic_assignment"
-            android:title="@string/homework" />
+            android:title="@string/assignment" />
         <item
             android:id="@+id/grades"
             android:icon="@drawable/ic_grades"

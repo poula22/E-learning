@@ -1,20 +1,19 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.settings
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.commonFunctions.CommonFunctions
+import com.example.commonFunctions.CommonFunctions.Companion.calendar
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseSettingsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -55,14 +54,13 @@ class TeacherCourseSettingsFragment : Fragment() {
             viewBinding.courseImageView.setImageResource(R.drawable.ic_courses)
             //delete image from database
         }
-
         viewBinding.startDateTxt.setText(
             "" + calendar.get(Calendar.DAY_OF_MONTH)
                     + "/" + calendar.get(Calendar.MONTH)
                     + "/" + calendar.get(Calendar.YEAR)
         )
         viewBinding.startDateTxt.setOnClickListener {
-            showDatePicker(viewBinding.startDateTxt)
+            CommonFunctions.showDatePicker(viewBinding.startDateTxt, requireContext())
         }
         viewBinding.endDateTxt.setText(
             "" + calendar.get(Calendar.DAY_OF_MONTH)
@@ -70,7 +68,7 @@ class TeacherCourseSettingsFragment : Fragment() {
                     + "/" + calendar.get(Calendar.YEAR)
         )
         viewBinding.endDateTxt.setOnClickListener {
-            showDatePicker(viewBinding.endDateTxt)
+            CommonFunctions.showDatePicker(viewBinding.endDateTxt, requireContext())
         }
 
         viewBinding.saveBtn.setOnClickListener {
@@ -88,7 +86,7 @@ class TeacherCourseSettingsFragment : Fragment() {
     }
 
 
-    fun onBackPressed() {
+    private fun onBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -109,7 +107,7 @@ class TeacherCourseSettingsFragment : Fragment() {
             })
     }
 
-    fun copyTextToClipboard() {
+    private fun copyTextToClipboard() {
         val textToCopy = viewBinding.courseCodeTextView.text
         val clipboardManager =
             getSystemService(requireContext(), ClipboardManager::class.java) as ClipboardManager
@@ -118,24 +116,6 @@ class TeacherCourseSettingsFragment : Fragment() {
         Toast.makeText(context, "Course code copied to clipboard", Toast.LENGTH_LONG).show()
     }
 
-
-    val calendar = Calendar.getInstance()
-
-    @SuppressLint("SetTextI18n")
-    fun showDatePicker(edText: EditText) {
-
-        val datePicker = DatePickerDialog(
-            requireContext(),
-            { view, year, month, dayOfMonth ->
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                calendar.set(Calendar.MONTH, month)
-                calendar.set(Calendar.YEAR, year)
-                edText.setText("" + dayOfMonth + "/" + month.plus(1) + "/" + year)
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
-        datePicker.show()
-    }
 }
+
+

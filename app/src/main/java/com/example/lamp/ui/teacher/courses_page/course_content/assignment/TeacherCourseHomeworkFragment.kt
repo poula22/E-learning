@@ -1,4 +1,4 @@
-package com.example.lamp.ui.teacher.courses_page.course_content.homework
+package com.example.lamp.ui.teacher.courses_page.course_content.assignment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,19 +8,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.lamp.R
-import com.example.lamp.databinding.FragmentTeacherCourseHomeworkBinding
-import com.example.lamp.ui.teacher.courses_page.course_content.homework.homework_recycler_view.TeacherCourseHomeworkAdapter
+import com.example.lamp.databinding.FragmentTeacherCourseAssignmentBinding
+import com.example.lamp.ui.teacher.courses_page.course_content.assignment.assignment_recycler_view.TeacherCourseAssignmentAdapter
 
 
-class TeacherCourseHomeworkFragment:Fragment() {
+class TeacherCourseAssignmentFragment:Fragment() {
     //
-    lateinit var viewBinding:FragmentTeacherCourseHomeworkBinding
+    lateinit var viewBinding:FragmentTeacherCourseAssignmentBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding=DataBindingUtil.inflate(inflater,R.layout.fragment_teacher_course_homework,container,false)
+        viewBinding=DataBindingUtil.inflate(inflater,R.layout.fragment_teacher_course_assignment,container,false)
         return viewBinding.root
     }
 
@@ -30,7 +30,7 @@ class TeacherCourseHomeworkFragment:Fragment() {
     }
 
     private fun initViews() {
-        viewBinding.homeWorkRecyclerView.adapter=TeacherCourseHomeworkAdapter(mutableListOf("homework1","homework2"))
+        viewBinding.assignmentRecyclerView.adapter=TeacherCourseAssignmentAdapter(mutableListOf("assignment1","assignment2"))
         viewBinding.addBtn.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction().
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
