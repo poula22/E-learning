@@ -1,5 +1,6 @@
 package com.example.lamp.ui.teacher.students_page.students_recycler_view
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -25,6 +26,11 @@ class TeacherStudentsAdapter(var students: MutableList<StudentItem>? = null) :
 
     }
 
+    companion object
+    fun setFilteredList(filteredList: MutableList<StudentItem>) {
+        this.students = filteredList
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var student = students?.get(position)

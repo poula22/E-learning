@@ -52,6 +52,7 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_material.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_material_grades.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_settings.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_students.xml" value="0.2006340579710145" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_courses.xml" value="0.25905797101449274" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_home.xml" value="0.2129115006412997" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_students.xml" value="0.2129115006412997" />
@@ -116,7 +117,7 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_container.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_dashboard.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_details.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_assignment.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_homework.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_material.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_courses.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_home.xml" value="0.25" />
