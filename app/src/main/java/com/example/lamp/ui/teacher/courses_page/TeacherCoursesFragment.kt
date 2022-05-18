@@ -33,6 +33,9 @@ class TeacherCoursesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        val floatingActionBtn: FloatingActionButton =
+            requireActivity().findViewById(R.id.floating_action_btn)
+        floatingActionBtn.isVisible = true
     }
 
     private fun initViews() {

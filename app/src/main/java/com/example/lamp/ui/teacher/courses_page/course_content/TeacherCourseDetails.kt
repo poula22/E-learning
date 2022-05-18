@@ -112,9 +112,6 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
         val bottomNavigationView: BottomNavigationView =
             requireActivity().findViewById(R.id.bottom_navigation_view)
         bottomNavigationView.isVisible = true
-        val floatingActionBtn: FloatingActionButton =
-            requireActivity().findViewById(R.id.floating_action_btn)
-        floatingActionBtn.isVisible = true
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

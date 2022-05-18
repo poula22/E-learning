@@ -10,11 +10,11 @@ import retrofit2.http.Query
 
 interface AssignmentAnswerWebService {
     @POST("h1")
-    fun addAssignmentAnswer(@Query("assignmentAnswer")assignmentAnswer: AssignmentAnswer): Call<AssignmentAnswerResponse>
+    suspend fun addAssignmentAnswer(@Query("assignmentAnswer")assignmentAnswer: AssignmentAnswer): AssignmentAnswerResponse
     @POST("h1")
-    fun updateAssignmentAnswer(@Query("assignmentAnswer") apiKey:String): Call<AssignmentAnswerResponse>
+    suspend fun updateAssignmentAnswer(@Query("assignmentAnswer") apiKey:String): AssignmentAnswerResponse
     @DELETE("h1")
-    fun deleteAssignmentAnswer(@Query("id") id:Int): Call<AssignmentAnswerResponse>
+    suspend fun deleteAssignmentAnswer(@Query("id") id:Int): AssignmentAnswerResponse
     @GET("h1")
     fun getAllAssignmentAnswer(): Call<List<AssignmentAnswerResponse>>
     @GET("h1")

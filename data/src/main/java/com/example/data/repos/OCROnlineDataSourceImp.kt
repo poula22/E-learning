@@ -12,17 +12,19 @@ import com.example.domain.model.OCRResponseDTO
 import com.example.domain.model.ReadOCRResponseDTO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.util.*
 
 class OCROnlineDataSourceImp(private val webService:MicrosoftOCRWebService=ApiManager.getOCRApi()):OCROnlineDataSource {
     override suspend fun getTextFromImage(language:String,url:String): OCRResponseDTO {
-       var u=URLOCR(url =url )
+        var u=URLOCR(url =url )
         var result= webService.getTextFromImage(language=language,url=u)
         return result.convertTo(OCRResponseDTO::class.java)
     }
 
     override suspend fun getTextFromImageReadApi(language: String?, url: String): ReadOCRResponseDTO {
+
         var opId=getHeader(language,url)
         var result=webService.getTextFromSource(opId)
         return result.convertTo(ReadOCRResponseDTO::class.java)!!

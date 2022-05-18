@@ -10,13 +10,13 @@ import retrofit2.http.Query
 
 interface AnnouncementWebService {
     @POST("h1")
-    fun addAnnouncement(@Query("announcement")announcement: Announcement): Call<AnnouncementResponse>
+    suspend fun addAnnouncement(@Query("announcement")announcement: Announcement): AnnouncementResponse
     @POST("h1")
-    fun updateAnnouncement(@Query("announcement") apiKey:String): Call<AnnouncementResponse>
+    suspend fun updateAnnouncement(@Query("announcement") apiKey:String): AnnouncementResponse
     @DELETE("h1")
-    fun deleteAnnouncement(@Query("id") id:Int): Call<AnnouncementResponse>
+    suspend fun deleteAnnouncement(@Query("id") id:Int): AnnouncementResponse
     @GET("h1")
-    fun getAllAnnouncement(): Call<List<AnnouncementResponse>>
+    suspend fun getAllAnnouncement(): List<AnnouncementResponse>
     @GET("h1")
-    fun getAnnouncementById(@Query("id") id:Int): Call<AnnouncementResponse>
+    suspend fun getAnnouncementById(@Query("id") id:Int): AnnouncementResponse
 }

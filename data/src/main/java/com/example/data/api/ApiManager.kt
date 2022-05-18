@@ -5,6 +5,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.KeyStore
+import java.security.SecureRandom
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
+import javax.net.ssl.*
 
 class ApiManager {
     companion object {
@@ -14,17 +19,21 @@ class ApiManager {
         var client: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(logging)
             .build()
-        private const val BASEURL_BACKEND: String = "https://"
-        private const val BASEURL_OCR:String="https://eastus.api.cognitive.microsoft.com/"
+
+        var unSafeClient = getUnsafeOkHttpClient()?.addInterceptor(logging)?.build()
+
+
+        private const val BASEURL_BACKEND: String = "https://25.46.88.203:7097/"
+        private const val BASEURL_OCR: String = "https://eastus.api.cognitive.microsoft.com/"
         private var retrofitBackend: Retrofit? = null
-        private var retrofitOCR:Retrofit?=null
+        private var retrofitOCR: Retrofit? = null
 
         private fun getBackendInstance(): Retrofit {
             if (retrofitBackend == null)
                 retrofitBackend = Retrofit.Builder()
                     .baseUrl(BASEURL_BACKEND)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .client(client).build()
+                    .client(unSafeClient).build()
             return retrofitBackend!!
         }
 
@@ -141,9 +150,68 @@ class ApiManager {
         }
 
         //OCR
-        fun getOCRApi():MicrosoftOCRWebService{
+        fun getOCRApi(): MicrosoftOCRWebService {
             return getOCRInstance().create(MicrosoftOCRWebService::class.java)
         }
 
+
+        fun getLoginApi(): LoginInfoWebService {
+            return getBackendInstance().create(LoginInfoWebService::class.java)
+        }
+
+
+        private fun getUnsafeOkHttpClient(): OkHttpClient.Builder? {
+            return try {
+                // Create a trust manager that does not validate certificate chains
+                val trustAllCerts = arrayOf<TrustManager>(
+                    object : X509TrustManager {
+                        @Throws(CertificateException::class)
+                        override fun checkClientTrusted(
+                            chain: Array<X509Certificate?>?,
+                            authType: String?
+                        ) {
+                        }
+
+                        @Throws(CertificateException::class)
+                        override fun checkServerTrusted(
+                            chain: Array<X509Certificate?>?,
+                            authType: String?
+                        ) {
+                        }
+
+                        override fun getAcceptedIssuers(): Array<X509Certificate?>? {
+                            return arrayOf()
+                        }
+                    }
+                )
+
+                // Install the all-trusting trust manager
+                val sslContext = SSLContext.getInstance("SSL")
+                sslContext.init(null, trustAllCerts, SecureRandom())
+                // Create an ssl socket factory with our all-trusting manager
+                val sslSocketFactory = sslContext.socketFactory
+                val trustManagerFactory: TrustManagerFactory =
+                    TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+                trustManagerFactory.init(null as KeyStore?)
+                val trustManagers: Array<TrustManager> =
+                    trustManagerFactory.trustManagers
+                check(!(trustManagers.size != 1 || trustManagers[0] !is X509TrustManager)) {
+                    "Unexpected default trust managers:" + trustManagers.contentToString()
+                }
+
+                val trustManager =
+                    trustManagers[0] as X509TrustManager
+
+
+                val builder = OkHttpClient.Builder()
+                builder.sslSocketFactory(sslSocketFactory, trustManager)
+                builder.hostnameVerifier(HostnameVerifier { _, _ -> true })
+                builder
+            } catch (e: Exception) {
+                throw RuntimeException(e)
+            }
+
+
+        }
     }
 }

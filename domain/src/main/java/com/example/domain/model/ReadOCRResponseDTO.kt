@@ -23,8 +23,6 @@ data class LinesItemReadDTO(
 )
 
 data class ReadResultsItemReadDTO(
-
-
     val unit: String? = null,
 
     val width: Int? = null,
@@ -34,7 +32,6 @@ data class ReadResultsItemReadDTO(
     val page: Int? = null,
 
     val lines: List<LinesItemReadDTO?>? = null,
-
 
     val height: Int? = null
 )

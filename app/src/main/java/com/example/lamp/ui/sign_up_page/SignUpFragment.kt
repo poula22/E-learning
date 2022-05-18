@@ -36,7 +36,8 @@ lateinit var viewBinging:FragmentSignUpBinding
         subscirbeToLiveData()
         viewModel.getData()
         viewBinging.buttonSignUpRegisteration.setOnClickListener{
-            viewModel.test(viewBinging.txtPhone)
+            viewBinging.txtPhone.setText(viewModel.getTestData().analyzeResult.toString())
+
         }
     }
 
@@ -44,13 +45,21 @@ lateinit var viewBinging:FragmentSignUpBinding
     fun subscirbeToLiveData(){
                 viewModel.liveData.observe(viewLifecycleOwner
         ) {
+                        if (it != null) {
+                            it.let { it1 ->
+                                Log.v(
+                                    "test",
+                                    it1.analyzeResult.toString()
+                                )
+                            }
+
+                        }
+
+
 
 //                    regions?.get(0)?.lines?.get(0)?.words?.get(0)?.text?
-                    it.let { it1 ->
-                        Log.v("MSOCR",
-                            it1.toString()
-                        )
-                    }
+
+
 
 //            it?.regions?.get(0)?.lines?.get(0)?.words?.get(0)?.text?.let { it1 ->
 //                val text=it1
@@ -60,6 +69,7 @@ lateinit var viewBinging:FragmentSignUpBinding
 //            }
 
         }
+
 
 
 

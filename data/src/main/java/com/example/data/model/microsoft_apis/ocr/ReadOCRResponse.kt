@@ -2,7 +2,7 @@ package com.example.data.model.microsoft_apis.ocr
 
 import com.google.gson.annotations.SerializedName
 
-data class ReadOCRResponse(
+	data class ReadOCRResponse(
 
 	@field:SerializedName("analyzeResult")
 	val analyzeResult: AnalyzeResult? = null,
