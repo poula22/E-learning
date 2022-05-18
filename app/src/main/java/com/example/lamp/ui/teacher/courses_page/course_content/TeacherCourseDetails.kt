@@ -15,9 +15,8 @@ import com.example.lamp.ui.student.student_home_page.courses_recycler_view.Cours
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.TeacherCourseAssignmentFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
-import com.example.lamp.ui.teacher.courses_page.course_content.students.TeacherCourseStudentsFragment
+import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
 
@@ -93,7 +92,7 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                 }
                 R.id.students -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.course_content_container, TeacherCourseStudentsFragment())
+                        .replace(R.id.course_content_container, TeacherStudentsFragment(TestData.STUDENTS))
                         .commit()
                 }
             }

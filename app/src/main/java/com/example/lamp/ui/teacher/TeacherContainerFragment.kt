@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherContainerAllTabsBinding
+import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.teacher.courses_page.TeacherCoursesFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseAddSectionFragment
 import com.example.lamp.ui.teacher.courses_page.courses_bottom_sheet.TeacherAddCoursesBottomSheet
@@ -64,7 +65,7 @@ class TeacherContainerFragment : Fragment() {
                     .beginTransaction()
                     .replace(
                         teacherContainerAllTabsBinding.teacherFragmentTab.id,
-                        TeacherStudentsFragment()
+                        TeacherStudentsFragment(TestData.STUDENTS)
                     )
                     .commit()
             } else if (menuItem.itemId == R.id.tools) {

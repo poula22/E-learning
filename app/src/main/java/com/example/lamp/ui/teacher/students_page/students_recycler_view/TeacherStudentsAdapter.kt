@@ -26,7 +26,6 @@ class TeacherStudentsAdapter(var students: MutableList<StudentItem>? = null) :
 
     }
 
-    companion object
     fun setFilteredList(filteredList: MutableList<StudentItem>) {
         this.students = filteredList
         notifyDataSetChanged()
