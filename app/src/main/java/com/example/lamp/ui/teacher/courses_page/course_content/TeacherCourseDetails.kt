@@ -12,7 +12,7 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
-import com.example.lamp.ui.teacher.courses_page.course_content.homework.TeacherCourseHomeworkFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.assignment.TeacherCourseAssignmentFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -56,7 +56,7 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
             setOf(
                 R.id.dashboard,
                 R.id.announcements,
-                R.id.homework,
+                R.id.assignment,
                 R.id.grades,
                 R.id.students,
                 R.id.material,
@@ -71,9 +71,9 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
             viewBinding.teacherCourseContainer.toolbar.subtitle =
                 viewBinding.navView.menu.findItem(item.itemId).title
             when (item.itemId) {
-                R.id.homework -> {
+                R.id.assignment -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.course_content_container, TeacherCourseHomeworkFragment())
+                        .replace(R.id.course_content_container, TeacherCourseAssignmentFragment())
                         .commit()
                 }
                 R.id.material -> {

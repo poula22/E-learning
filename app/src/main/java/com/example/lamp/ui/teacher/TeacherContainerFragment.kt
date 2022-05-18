@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherContainerAllTabsBinding
 import com.example.lamp.ui.teacher.courses_page.TeacherCoursesFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseAddSectionFragment
 import com.example.lamp.ui.teacher.courses_page.courses_bottom_sheet.TeacherAddCoursesBottomSheet
 import com.example.lamp.ui.teacher.home_page.TeacherHomeFragment
 import com.example.lamp.ui.teacher.profile_page.TeacherProfileFragment
@@ -81,7 +82,7 @@ class TeacherContainerFragment : Fragment() {
                     .beginTransaction()
                     .replace(
                         teacherContainerAllTabsBinding.teacherFragmentTab.id,
-                        TeacherHomeFragment()
+                        TeacherCourseAddSectionFragment()
                     )
                     .commit()
             }

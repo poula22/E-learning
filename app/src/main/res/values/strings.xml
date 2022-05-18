@@ -11,7 +11,7 @@
 
     <string name="dashboard">Dashboard</string>
     <string name="announcements">Announcements</string>
-    <string name="homework">Homework</string>
+    <string name="assignment">Assignment</string>
     <string name="grades">Grades</string>
     <string name="students">Students</string>
     <string name="material">Material</string>

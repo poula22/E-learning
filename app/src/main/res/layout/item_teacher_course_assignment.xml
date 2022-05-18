@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/homework_txt"
+            android:id="@+id/assignment_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#E0F2F1"
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:background="#80CBC4"
-            app:layout_constraintTop_toBottomOf="@id/homework_txt" />
+            app:layout_constraintTop_toBottomOf="@id/assignment_txt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
