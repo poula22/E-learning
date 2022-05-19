@@ -33,8 +33,11 @@ interface MicrosoftOCRWebService {
         @Body url: URLOCR
     ): Response<Void>
     @Headers(
-        "Ocp-Apim-Subscription-Key: 801adcabb2984e64aab3c0c8fb883e49"
+        "Ocp-Apim-Subscription-Key: 801adcabb2984e64aab3c0c8fb883e49",
+        "Content-Type: application/json; charset=utf-8"
+        , "x-ms-logging-context: com.microsoft.azure.cognitiveservices.vision.computervision.ComputerVision getReadResult"
     )
-    @GET("vision/v3.2/read/analyzeResults/{operationId}")
-    suspend fun getTextFromSource(@Path("operationId") opId:String):ReadOCRResponse
+    @GET("vision/v3.2/read/analyzeResults/{operationId}",)
+    suspend fun getTextFromSource(@Path("operationId") opId:String,@Header("accept-language") acceptLanguage:String?=null, @Header("x-ms-parameterized-host")  parameterizedHost:String?=null, @Header("User-Agent") userAgent:String?=null)
+    :ReadOCRResponse
 }

@@ -11,14 +11,14 @@ import com.example.data.api.LoginInfoWebService
 import com.example.data.model.LoginInfoResponse
 import com.example.data.repos.OCROnlineDataSourceImp
 import com.example.data.repos.OCRRepositoryImp
-import com.example.domain.model.OCRResponseDTO
-import com.example.domain.model.ReadOCRResponseDTO
 import com.example.domain.repos.OCROnlineDataSource
 import com.example.domain.repos.OCRRepository
+import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import com.microsoft.cognitiveservices.speech.*
 import com.microsoft.cognitiveservices.speech.samples.sdkdemo.MicrophoneStream
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +27,7 @@ import retrofit2.Response
 class SignUpViewModel : ViewModel() {
     //MVVM
 //    val liveData=MutableLiveData<OCRResponseDTO?>()
-    val liveData=MutableLiveData<ReadOCRResponseDTO>()
+    val liveData=MutableLiveData<ReadOperationResult>()
     var ocrOnlineDataSource: OCROnlineDataSource = OCROnlineDataSourceImp()
     var ocrRepository: OCRRepository = OCRRepositoryImp(ocrOnlineDataSource)
 
@@ -37,20 +37,27 @@ class SignUpViewModel : ViewModel() {
     var microphoneStream:MicrophoneStream?=null
 
     fun getData(){
-        viewModelScope.launch {
+        Thread{
+
 //            val result=ocrRepository.getTextFromImage("unk"
 //                ,"https://ocr-demo.abtosoftware.com/uploads/handwritten2.jpg")
             try{
+                    runBlocking {
+                        var result= ocrRepository.getTextFromImageReadApi(url = "https://ocr-demo.abtosoftware.com/uploads/handwritten2.jpg")
+                        viewModelScope.launch { liveData.value=result }
 
-                var result= ocrRepository.getTextFromImageReadApi(url = "https://ocr-demo.abtosoftware.com/uploads/handwritten2.jpg")
-                liveData.value=result
+                    }
+
+
+
             }catch (e:Exception){
 
             }
-        }
+
+        }.start()
     }
 
-    fun getTestData():ReadOCRResponseDTO{
+    fun getTestData(): ReadOperationResult {
         return liveData.value!!
     }
 

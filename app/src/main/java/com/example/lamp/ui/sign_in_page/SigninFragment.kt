@@ -29,10 +29,7 @@ class SigninFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-//        Thread {
-//            //Do some Network Request
-//            MicrosoftOCRTest.microsoftOcrTest()
-//        }.start()
+
 //        QuickstartSample.authExplicit("C:\\Users\\nvenr\\Downloads\\lampitproject-a2ad7178d4b1.json")
 //        QuickstartSample.test()
     }

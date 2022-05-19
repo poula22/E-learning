@@ -1,29 +1,21 @@
-package com.example.lamp.ui.sign_in_page
+package com.example.data.api.microsoft_api.ocr
 
 import com.microsoft.azure.cognitiveservices.vision.computervision.ComputerVision
 import com.microsoft.azure.cognitiveservices.vision.computervision.ComputerVisionClient
 import com.microsoft.azure.cognitiveservices.vision.computervision.ComputerVisionManager
+import com.microsoft.azure.cognitiveservices.vision.computervision.ComputerVisionManager.authenticate
 import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionImpl
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.OperationStatusCodes
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHeaders
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import java.util.*
 
-class MicrosoftOCRTest {
+class MicrosoftOCRApiManager {
     companion object {
         var subscriptionKey = "ad4b918f3bbb4349828bdf501dc8592c"
         var endpoint = "https://ocrtestpolapoula.cognitiveservices.azure.com/"
+        val client: ComputerVisionClient = authenticate(subscriptionKey, endpoint)
 
-        fun microsoftOcrTest() {
-            println("\nAzure Cognitive Services Computer Vision - Java Quickstart Sample")
-            // Create an authenticated Computer Vision client.
-            val compVisClient: ComputerVisionClient = authenticate(subscriptionKey, endpoint)
-
-            // Read from remote image
-            readFromUrl(compVisClient
-                ,"https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/printed_text.jpg"
-            )
-        }
 
         private fun authenticate(
             subscriptionKey: String?,
@@ -31,16 +23,8 @@ class MicrosoftOCRTest {
         ): ComputerVisionClient {
             return ComputerVisionManager.authenticate(subscriptionKey).withEndpoint(endpoint)
         }
-
-        /**
-         * OCR with READ : Performs a Read Operation
-         * @param client instantiated vision client
-         */
-        private fun readFromUrl(client: ComputerVisionClient,url:String) {
+        fun readFromUrl(url:String) {
             println("-----------------------------------------------")
-//            val remoteTextImageURL =
-//                "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/ComputerVision/Images/printed_text.jpg"
-
             println("Read with URL: $url")
             try {
                 // Cast Computer Vision to its implementation to expose the required methods
@@ -62,29 +46,8 @@ class MicrosoftOCRTest {
                 e.printStackTrace()
             }
         }
-
-        /**
-         * Extracts the OperationId from a Operation-Location returned by the POST Read operation
-         * @param operationLocation
-         * @return operationId
-         */
-        private fun extractOperationIdFromOpLocation(operationLocation: String?): String {
-            if (operationLocation != null && operationLocation.isNotEmpty()) {
-                val splits = operationLocation.split("/").toTypedArray()
-                if (splits.isNotEmpty()) {
-                    return splits[splits.size - 1]
-                }
-            }
-            throw IllegalStateException("Something went wrong: Couldn't extract the operation id from the operation location")
-        }
-
-        /**
-         * Polls for Read result and prints results to console
-         * @param vision Computer Vision instance
-         * @return operationLocation returned in the POST Read response header
-         */
         @Throws(InterruptedException::class)
-        private fun getAndPrintReadResult(vision: ComputerVision, operationLocation: String) {
+         fun getAndPrintReadResult(vision: ComputerVision, operationLocation: String):ReadOperationResult{
             println("Polling for Read results ...")
 
             // Extract OperationId from Operation Location
@@ -102,10 +65,11 @@ class MicrosoftOCRTest {
                     val status: OperationStatusCodes = readResults.status()
                     if (status === OperationStatusCodes.FAILED || status === OperationStatusCodes.SUCCEEDED) {
                         pollForResult = false
+
                     }
                 }
             }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Print read results, page per page
             for (pageResult in readResults!!.analyzeResult().readResults()) {
                 println("")
@@ -117,6 +81,17 @@ class MicrosoftOCRTest {
                 }
                 println(builder.toString())
             }
+            return readResults
         }
+        private fun extractOperationIdFromOpLocation(operationLocation: String?): String {
+            if (operationLocation != null && operationLocation.isNotEmpty()) {
+                val splits = operationLocation.split("/").toTypedArray()
+                if (splits.isNotEmpty()) {
+                    return splits[splits.size - 1]
+                }
+            }
+            throw IllegalStateException("Something went wrong: Couldn't extract the operation id from the operation location")
+        }
+
     }
 }

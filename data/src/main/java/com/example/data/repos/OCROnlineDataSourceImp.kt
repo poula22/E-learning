@@ -3,18 +3,17 @@ package com.example.data.repos
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.data.api.ApiManager
+import com.example.data.api.microsoft_api.ocr.MicrosoftOCRApiManager
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
 import com.example.data.data_classes.URLOCR
 import com.example.data.model.convertTo
 import com.example.data.model.microsoft_apis.ocr.ReadOCRResponse
 import com.example.domain.repos.OCROnlineDataSource
 import com.example.domain.model.OCRResponseDTO
-import com.example.domain.model.ReadOCRResponseDTO
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import java.util.*
+import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionImpl
+import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHeaders
+import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
+
 
 class OCROnlineDataSourceImp(private val webService:MicrosoftOCRWebService=ApiManager.getOCRApi()):OCROnlineDataSource {
     override suspend fun getTextFromImage(language:String,url:String): OCRResponseDTO {
@@ -23,11 +22,30 @@ class OCROnlineDataSourceImp(private val webService:MicrosoftOCRWebService=ApiMa
         return result.convertTo(OCRResponseDTO::class.java)
     }
 
-    override suspend fun getTextFromImageReadApi(language: String?, url: String): ReadOCRResponseDTO {
+    override suspend fun getTextFromImageReadApi(language: String?, url: String): ReadOperationResult {
+            println("-----------------------------------------------")
+            println("Read with URL: $url")
+            try {
+                // Cast Computer Vision to its implementation to expose the required methods
+                val vision: ComputerVisionImpl = MicrosoftOCRApiManager.client.computerVision() as ComputerVisionImpl
 
-        var opId=getHeader(language,url)
-        var result=webService.getTextFromSource(opId)
-        return result.convertTo(ReadOCRResponseDTO::class.java)!!
+                // Read in remote image and response header
+                val responseHeader: ReadHeaders =
+                    vision.readWithServiceResponseAsync(url, null)
+                        .toBlocking()
+                        .single()
+                        .headers()
+
+                // Extract the operation Id from the operationLocation header
+                val operationLocation: String = responseHeader.operationLocation()
+                println("Operation Location:$operationLocation")
+                var result=MicrosoftOCRApiManager.getAndPrintReadResult(vision, operationLocation)
+                return result
+            } catch (e: Exception) {
+                println(e.message)
+                e.printStackTrace()
+                return ReadOperationResult()
+            }
     }
 
     private suspend fun getHeader(language:String?=null,url:String):String {

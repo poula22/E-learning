@@ -1,6 +1,7 @@
 package com.example.domain.repos
 
 import com.example.domain.model.*
+import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import kotlinx.coroutines.CoroutineScope
 
 interface CoursesRepository{
@@ -13,12 +14,12 @@ interface CoursesOnlineDataSource{
 
 interface OCROnlineDataSource{
     suspend fun getTextFromImage(language:String,url:String): OCRResponseDTO
-    suspend fun getTextFromImageReadApi(language:String?=null,url:String): ReadOCRResponseDTO
+    suspend fun getTextFromImageReadApi(language:String?=null,url:String): ReadOperationResult
 }
 
 interface OCRRepository{
     suspend fun getTextFromImage(language:String,url:String):OCRResponseDTO
-    suspend fun getTextFromImageReadApi(language: String?=null, url: String): ReadOCRResponseDTO
+    suspend fun getTextFromImageReadApi(language: String?=null, url: String): ReadOperationResult
 }
 
 interface FeaturesRepository{
