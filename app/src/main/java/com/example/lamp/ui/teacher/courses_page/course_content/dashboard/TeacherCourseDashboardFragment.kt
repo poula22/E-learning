@@ -39,6 +39,7 @@ class TeacherCourseDashboardFragment : Fragment() {
             requireActivity()
                 .supportFragmentManager
                 .beginTransaction().replace(R.id.fragment_container, TeacherCoursesFragment())
+                .addToBackStack("")
                 .commit()
         }
 
@@ -46,6 +47,7 @@ class TeacherCourseDashboardFragment : Fragment() {
             requireActivity()
                 .supportFragmentManager
                 .beginTransaction().replace(R.id.fragment_container, TeacherStudentsFragment())
+                .addToBackStack("")
                 .commit()
         }
     }

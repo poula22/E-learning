@@ -101,14 +101,14 @@ class OcrFragment : Fragment() {
     fun subscirbeToLiveData(){
         viewModel.liveData.observe(viewLifecycleOwner
         ) {
-                val builder = StringBuilder()
-                for (pageResult in it.analyzeResult().readResults()) {
-                    for (line in pageResult.lines()) {
-                        builder.append(line.text())
-                        builder.append(" ")
-                    }
+            val builder = StringBuilder()
+            for (pageResult in it.analyzeResult().readResults()) {
+                for (line in pageResult.lines()) {
+                    builder.append(line.text())
+                    builder.append(" ")
                 }
-                viewBinding.paragraphInput.setText(builder)
+            }
+            viewBinding.paragraphInput.setText(builder)
 
 
         }
