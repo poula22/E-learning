@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentFeaturesBinding
 import com.example.lamp.test_data.TestData
+import com.example.lamp.ui.student.student_features_page.ocr.OcrFragment
 import com.example.lamp.ui.student.student_features_page.recitation.RecitationFragment
 import com.example.lamp.ui.student.student_features_page.summarization.SummarizationFragment
 import com.example.lamp.ui.student.student_features_page.translation.TranslationFragment
@@ -37,23 +38,25 @@ class FeaturesFragment : Fragment() {
     }
 
 
-
     private fun initViews() {
         featuresRVAdapter = FeaturesRVAdapter(TestData.FEATURES, type = 1)
         featuresRVAdapter.onFeatureClickListener = object : FeaturesRVAdapter.FeatureClickListener {
             override fun onFeatureClick(pos: Int, item: FeatureItem) {
-                if (pos==0){
+                if (pos == 0) {
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
-                        .replace(R.id.student_fragment_tab,TranslationFragment()).commit()
-                }
-                else if(pos==1){
+                        .replace(R.id.student_fragment_tab, TranslationFragment()).commit()
+                } else if (pos == 1) {
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
                         .replace(R.id.student_fragment_tab, SummarizationFragment()).commit()
-                }
-                else if (pos==2){
+                } else if (pos == 2) {
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
                         .replace(R.id.student_fragment_tab, RecitationFragment()).commit()
+                } else if (pos == 3) {
+                    requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
+                        .replace(R.id.student_fragment_tab, OcrFragment()).commit()
                 }
+
+
                 val bottomNavigationView: BottomNavigationView =
                     requireActivity().findViewById(R.id.bottom_navigation_view)
                 bottomNavigationView.isVisible = false

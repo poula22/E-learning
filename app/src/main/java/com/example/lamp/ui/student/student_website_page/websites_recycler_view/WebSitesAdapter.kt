@@ -23,6 +23,7 @@ class WebSitesAdapter(var websites:MutableList<String>?=null):RecyclerView.Adapt
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item=websites?.get(position)
         holder.viewBinding.item=item
+        holder.viewBinding.websiteLink.load(item!!)
     }
 
     override fun getItemCount(): Int =websites?.size ?:0

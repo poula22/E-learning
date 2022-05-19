@@ -2,55 +2,72 @@ package com.example.commonFunctions
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.widget.EditText
-import androidx.annotation.RequiresApi
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requireViewById
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleOwner
 import com.example.lamp.R
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 
 class CommonFunctions {
+
+
     companion object {
-        fun imagePick(fragment: Fragment) {
+        fun imagePick(fragment: Fragment, activity: FragmentActivity) {
             ImagePicker.with(fragment)
                 .crop()                    //Crop image(Optional), Check Customization for more option
 //                .compress(1024)			//Final image size will be less than 1 MB(Optional)
 //                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .saveDir(activity.getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
                 .start()
         }
 
+
         fun uploadDoc(activity: FragmentActivity) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                val intentDocument = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    type = "*/*"
-                    putExtra(
-                        Intent.EXTRA_MIME_TYPES, arrayOf(
-                            "application/pdf",
-                            "application/doc",
-                            "application/docx",
-                            "text/plain"
-                        )
+            val intentDocument = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "*/*"
+                putExtra(
+                    Intent.EXTRA_MIME_TYPES, arrayOf(
+                        "application/pdf",
+                        "application/doc",
+                        "application/docx",
+                        "text/plain"
                     )
-                }
-                startActivityForResult(
-                    activity,
-                    intentDocument,
-                    ImagePicker.REQUEST_CODE,
-                    Bundle.EMPTY
                 )
             }
+            startActivityForResult(
+                activity,
+                intentDocument,
+                ImagePicker.REQUEST_CODE,
+                Bundle.EMPTY
+            )
         }
 
         fun voiceRecord(
@@ -92,13 +109,12 @@ class CommonFunctions {
             mediaRecorder.start()
         }
 
-        @RequiresApi(Build.VERSION_CODES.M)
         fun checkPermissions(context: Context): Boolean {
             return context?.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
         }
 
 
-        val calendar = Calendar.getInstance()
+        val calendar: Calendar = Calendar.getInstance()
 
         @SuppressLint("SetTextI18n")
         fun showDatePicker(edText: EditText, context: Context) {
@@ -118,6 +134,44 @@ class CommonFunctions {
             datePicker.show()
         }
 
+
+        fun copyTextToClipboard(text: String, context: Context) {
+            val clipboardManager =
+                ContextCompat.getSystemService(
+                    context,
+                    ClipboardManager::class.java
+                ) as ClipboardManager
+            val clipData = ClipData.newPlainText("text", text)
+            clipboardManager.setPrimaryClip(clipData)
+            Toast.makeText(context, "Course code copied to clipboard", Toast.LENGTH_LONG).show()
+        }
+
+
+        fun onBackPressed(
+            activity: FragmentActivity,
+            lifecycleOwner: LifecycleOwner,
+            context: Context
+        ) {
+            activity.onBackPressedDispatcher.addCallback(
+                lifecycleOwner,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        MaterialAlertDialogBuilder(context)
+                            .setTitle("Do you want to save?")
+//                        .setMessage("")
+                            .setNeutralButton("Cancel") { dialog, which ->
+                                // Respond to neutral button press
+                            }
+                            .setNegativeButton("Discard") { dialog, which ->
+                                Toast.makeText(context, "Changes discarded", Toast.LENGTH_SHORT)
+                                    .show()
+                                activity.supportFragmentManager.popBackStack()
+                            }
+                            .show()
+
+                    }
+                })
+        }
 
     }
 }

@@ -15,10 +15,13 @@ object TestData {
     val FEATURES: MutableList<FeatureItem> = mutableListOf(
         FeatureItem("translate", R.drawable.ic_translate),
         FeatureItem("summary", R.drawable.ic_summary),
-        FeatureItem("Recite", R.drawable.ic_edit_text)
+        FeatureItem("Recite", R.drawable.ic_edit_text),
+        FeatureItem("OCR", R.drawable.ic_image)
     )
     val WEBSITES: MutableList<String> = mutableListOf(
-        "www.google.com", "www.youtube.com", "www.facebook.com"
+        "https://github.com/arhanashik/LinkPreview",
+        "https://github.com/arhanashik/LinkPreview",
+        "https://pay.google.com/gp/w/u/2/home/subscriptionsandservices"
     )
     val TOOLS: MutableList<String> = mutableListOf(
         "whatsApp", "youtube", "facebook"

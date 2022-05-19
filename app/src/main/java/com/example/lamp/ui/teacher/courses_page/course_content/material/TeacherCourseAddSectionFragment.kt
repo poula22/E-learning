@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.commonFunctions.CONSTANTS
 import com.example.commonFunctions.CommonFunctions.Companion.calendar
 import com.example.commonFunctions.CommonFunctions.Companion.showDatePicker
 import com.example.lamp.R
@@ -42,14 +43,14 @@ class TeacherCourseAddSectionFragment : Fragment() {
         viewBinding.addVideoBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "video/*"
-            startActivityForResult(intent, 1)
+            startActivityForResult(intent, CONSTANTS.VIDEO_REQUEST_CODE)
         }
 
         viewBinding.attachFileBtn.setOnClickListener {
             val intent = Intent()
                 .setType("*/*")
                 .setAction(Intent.ACTION_GET_CONTENT)
-            startActivityForResult(Intent.createChooser(intent, "Select a file"), 2)
+            startActivityForResult(Intent.createChooser(intent, "Select a file"), CONSTANTS.FILE_REQUEST_CODE)
         }
 
         viewBinding.createBtn.setOnClickListener {
@@ -72,7 +73,7 @@ class TeacherCourseAddSectionFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if ((requestCode == 1 || requestCode == 2) && resultCode == RESULT_OK) {
+        if ((requestCode == CONSTANTS.FILE_REQUEST_CODE || requestCode == CONSTANTS.VIDEO_REQUEST_CODE) && resultCode == RESULT_OK) {
             val selectedFile = data?.data //The uri with the location of the file
             val selectedFilePath = data?.data?.path
         }
