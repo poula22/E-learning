@@ -15,11 +15,13 @@ interface CoursesOnlineDataSource{
 interface OCROnlineDataSource{
     suspend fun getTextFromImage(language:String,url:String): OCRResponseDTO
     suspend fun getTextFromImageReadApi(language:String?=null,url:String): ReadOperationResult
+    suspend fun getTextFromImageReadApi(language: String?, image:ByteArray): ReadOperationResult
 }
 
 interface OCRRepository{
     suspend fun getTextFromImage(language:String,url:String):OCRResponseDTO
     suspend fun getTextFromImageReadApi(language: String?=null, url: String): ReadOperationResult
+    suspend fun getTextFromImageReadApi(language: String?=null, image:ByteArray): ReadOperationResult
 }
 
 interface FeaturesRepository{

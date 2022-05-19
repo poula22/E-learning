@@ -58,7 +58,7 @@ class ReciteWordsFragment : Fragment() {
         }
 
         viewBinding.cardImage.setOnClickListener {
-            CommonFunctions.imagePick(this,requireActivity())
+            CommonFunctions.imagePick(this)
 
         }
 

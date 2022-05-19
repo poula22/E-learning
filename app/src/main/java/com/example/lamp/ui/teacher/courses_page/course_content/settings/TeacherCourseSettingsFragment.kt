@@ -42,7 +42,7 @@ class TeacherCourseSettingsFragment : Fragment() {
     private fun initViews() {
 
         viewBinding.changeImageBtn.setOnClickListener {
-            CommonFunctions.imagePick(this,requireActivity())
+            CommonFunctions.imagePick(this)
         }
 
         viewBinding.deleteImageBtn.setOnClickListener {

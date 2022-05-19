@@ -39,12 +39,35 @@ class CommonFunctions {
 
 
     companion object {
-        fun imagePick(fragment: Fragment, activity: FragmentActivity) {
-            ImagePicker.with(fragment)
+        fun test(fragment: Fragment):ByteArray?{
+            var result1:ByteArray?=null
+            fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+                val data = result.data
+
+                if (resultCode == Activity.RESULT_OK) {
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data?.data!!
+
+                    var inputStream = fragment.requireActivity().contentResolver.openInputStream(fileUri)
+                    var byteArray = inputStream?.readBytes()
+                    result1=byteArray
+//                    viewModel.getData(byteArray!!)
+                } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                    Toast.makeText(fragment.requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(fragment.requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
+                }
+            }
+            return result1
+        }
+        fun imagePick(fragment: Fragment) {
+            ImagePicker
+                .with(fragment)
                 .crop()                    //Crop image(Optional), Check Customization for more option
 //                .compress(1024)			//Final image size will be less than 1 MB(Optional)
 //                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                .saveDir(activity.getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
+                .saveDir(fragment.requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
                 .start()
         }
 

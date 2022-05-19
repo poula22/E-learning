@@ -40,7 +40,7 @@ class ReciteParagraphFragment:Fragment() {
                 .commit()
         }
         viewBinding.cardImage.setOnClickListener {
-            CommonFunctions.imagePick(this,requireActivity())
+            CommonFunctions.imagePick(this)
 
         }
 

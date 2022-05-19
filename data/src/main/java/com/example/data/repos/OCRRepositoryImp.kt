@@ -16,4 +16,12 @@ class OCRRepositoryImp(val ocrOnlineDataSource: OCROnlineDataSource):OCRReposito
         var result=ocrOnlineDataSource.getTextFromImageReadApi(language=language,url=url)
         return result
     }
+
+    override suspend fun getTextFromImageReadApi(
+        language: String?,
+        image: ByteArray
+    ): ReadOperationResult {
+        var result=ocrOnlineDataSource.getTextFromImageReadApi(language,image)
+        return result
+    }
 }
