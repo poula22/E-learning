@@ -53,6 +53,13 @@ dependencies {
     /////////////////////////////////
     implementation 'com.microsoft.projectoxford:vision:1.0.395'
     implementation 'com.microsoft.azure.cognitiveservices:azure-cognitiveservices-computervision:1.0.9-beta'
+    //////////////////////////////////////
+    def roomVersion = "2.4.1"
+
+    api "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    ////////////////////////////////////
 
 
     testImplementation 'junit:junit:4.13.2'

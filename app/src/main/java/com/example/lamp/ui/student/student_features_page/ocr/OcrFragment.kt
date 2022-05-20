@@ -1,7 +1,6 @@
 package com.example.lamp.ui.student.student_features_page.ocr
 
 import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -14,13 +13,16 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.commonFunctions.CommonFunctions
+import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureOcrBinding
 import com.example.lamp.ui.sign_up_page.SignUpViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
@@ -31,8 +33,9 @@ class OcrFragment : Fragment() {
     lateinit var viewModel: OcrViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel= ViewModelProvider(this).get(OcrViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(OcrViewModel::class.java)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -71,7 +74,10 @@ class OcrFragment : Fragment() {
         }
 
         viewBinding.copyOutputBtn.setOnClickListener {
-            CommonFunctions.copyTextToClipboard(viewBinding.paragraphInput.text.toString(),requireContext())
+            CommonFunctions.copyTextToClipboard(
+                viewBinding.paragraphInput.text.toString(),
+                requireContext()
+            )
         }
 
     }
@@ -90,16 +96,17 @@ class OcrFragment : Fragment() {
                 viewModel.getData(byteArray!!)
 
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
 
 
-
-    fun subscirbeToLiveData(){
-        viewModel.liveData.observe(viewLifecycleOwner
+    fun subscirbeToLiveData() {
+        viewModel.liveData.observe(
+            viewLifecycleOwner
         ) {
             val builder = StringBuilder()
             for (pageResult in it.analyzeResult().readResults()) {
@@ -112,12 +119,14 @@ class OcrFragment : Fragment() {
 
 
         }
-
-
-
-
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        val bottomNavigationView: BottomNavigationView =
+            requireActivity().findViewById(R.id.bottom_navigation_view)
+        bottomNavigationView.isVisible = true
+    }
 
 }
 

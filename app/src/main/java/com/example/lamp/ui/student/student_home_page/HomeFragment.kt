@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentHomeBinding
 import com.example.lamp.test_data.TestData
+import com.example.lamp.ui.student.student_features_page.ocr.OcrFragment
 import com.example.lamp.ui.student.student_features_page.recitation.RecitationFragment
 import com.example.lamp.ui.student.student_features_page.summarization.SummarizationFragment
 import com.example.lamp.ui.student.student_features_page.translation.TranslationFragment
@@ -56,6 +57,10 @@ class HomeFragment : Fragment() {
                 else if (pos==2){
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
                         .replace(R.id.student_fragment_tab, RecitationFragment()).commit()
+                }
+                else if (pos==3){
+                    requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
+                        .replace(R.id.student_fragment_tab,OcrFragment()).commit()
                 }
                 val bottomNavigationView: BottomNavigationView =
                     requireActivity().findViewById(R.id.bottom_navigation_view)

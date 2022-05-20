@@ -3,6 +3,7 @@ package com.example.lamp.ui.teacher.courses_page.course_content
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -13,6 +14,7 @@ import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.TeacherCourseAssignmentFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.dashboard.TeacherCourseDashboardFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
 import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
@@ -95,6 +97,11 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                         .replace(R.id.course_content_container, TeacherStudentsFragment(TestData.STUDENTS))
                         .commit()
                 }
+                R.id.dashboard->{
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.course_content_container, TeacherCourseDashboardFragment())
+                        .commit()
+                }
             }
             drawerLayout.close()
             viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
@@ -102,6 +109,8 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
             }
             return@setNavigationItemSelectedListener true
         }
+        viewBinding.navView.setCheckedItem(R.id.dashboard)
+        viewBinding.navView.menu.performIdentifierAction(R.id.dashboard,0)
 
 
         viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {

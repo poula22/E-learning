@@ -79,6 +79,8 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/teacher_course_details.xml" value="0.259375" />
         <entry key="..\:/Android_Studio/.gradle/caches/transforms-3/6d013df5b22d785a9ce7e0717098ae99/transformed/android-rteditor-1.7.6/res/layout/rte_toolbar_character.xml" value="0.25885416666666666" />
         <entry key="..\:/Android_Studio/.gradle/caches/transforms-3/6d013df5b22d785a9ce7e0717098ae99/transformed/android-rteditor-1.7.6/res/layout/rte_toolbar_paragraph.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable-anydpi/rounded_btn.xml" value="0.15" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_add.xml" value="0.15" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_done.xml" value="0.191" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.121" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/rounded_button.xml" value="0.125" />
@@ -91,6 +93,7 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/activity_signin.xml" value="0.2" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/app_bar_teacher_course_container.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_add_todo.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_container.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_container_all_tabs.xml" value="0.176" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_feature_summarization.xml" value="0.25" />
@@ -127,6 +130,7 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_profile.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_students.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_tools.xml" value="0.25" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_todo_list.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_course_rv.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_feature_recite_words.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_feature_rv.xml" value="0.264" />
@@ -144,6 +148,7 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_teacher_course_material_lesson_content.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_teacher_students.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/items_student_feature.xml" value="0.16" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/recyclerview_todo_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/home_navigation_menu.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/parent_bottom_navigation_menu.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/student_bottom_navigation_menu.xml" value="0.25" />

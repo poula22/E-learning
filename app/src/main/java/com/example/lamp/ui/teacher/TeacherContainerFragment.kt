@@ -83,7 +83,7 @@ class TeacherContainerFragment : Fragment() {
                     .beginTransaction()
                     .replace(
                         teacherContainerAllTabsBinding.teacherFragmentTab.id,
-                        TeacherCourseAddSectionFragment()
+                        TeacherHomeFragment()
                     )
                     .commit()
             }

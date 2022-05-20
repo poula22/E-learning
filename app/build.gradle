@@ -11,13 +11,13 @@ android {
         resources.excludes.add("META-INF/*")
     }
     //
+
     defaultConfig {
         applicationId "com.example.lamp"
         minSdk 24
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -59,7 +59,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
 
 
     //google cloud vision api dep
@@ -75,8 +74,12 @@ dependencies {
     implementation platform('software.amazon.awssdk:bom:2.15.0')
     implementation 'com.amplifyframework:aws-api:1.35.3'
     implementation 'com.amplifyframework:aws-datastore:1.35.3'
-
-    implementation 'com.github.jkwiecien:EasyImage:3.2.0'
+    ////////////////////////////////////////////////////////////
+    implementation ('com.github.prolificinteractive:material-calendarview:2.0.0'){
+        exclude( group :"org.threeten", module: "threetenbp")
+    }
+    ///////////////////////////////////////////////////////////////
+//    implementation 'com.github.jkwiecien:EasyImage:3.2.0'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
     implementation 'androidx.fragment:fragment-ktx:1.4.1'
     implementation 'androidx.activity:activity-ktx:1.4.0'
