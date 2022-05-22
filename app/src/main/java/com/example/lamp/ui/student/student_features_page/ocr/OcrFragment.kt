@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -74,10 +75,7 @@ class OcrFragment : Fragment() {
         }
 
         viewBinding.copyOutputBtn.setOnClickListener {
-            CommonFunctions.copyTextToClipboard(
-                viewBinding.paragraphInput.text.toString(),
-                requireContext()
-            )
+            CommonFunctions.copyTextToClipboard(viewBinding.paragraphInput.text.toString(),requireContext())
         }
 
     }
@@ -93,20 +91,28 @@ class OcrFragment : Fragment() {
 
                 var inputStream = requireActivity().contentResolver.openInputStream(fileUri)
                 var byteArray = inputStream?.readBytes()
+
+                // Show progress bar when request is in progress
+                viewBinding.greyBackground.visibility = View.VISIBLE
+                viewBinding.progressBar.visibility = View.VISIBLE
+                requireActivity().window.setFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                )
+                ///
                 viewModel.getData(byteArray!!)
 
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
 
 
-    fun subscirbeToLiveData() {
-        viewModel.liveData.observe(
-            viewLifecycleOwner
+
+    fun subscirbeToLiveData(){
+        viewModel.liveData.observe(viewLifecycleOwner
         ) {
             val builder = StringBuilder()
             for (pageResult in it.analyzeResult().readResults()) {
@@ -115,6 +121,12 @@ class OcrFragment : Fragment() {
                     builder.append(" ")
                 }
             }
+
+            // Hide progress bar when response is received
+            viewBinding.greyBackground.visibility = View.GONE
+            viewBinding.progressBar.visibility = View.GONE
+            requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
             viewBinding.paragraphInput.setText(builder)
 
 

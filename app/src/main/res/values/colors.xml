@@ -15,4 +15,24 @@
     <color name="light_purple">#A6B9FF</color>
     <color name="green">#A5F38F</color>
     <color name="dark_green">#4FCD00</color>
+
+
+
+    /////
+    <color name="quiz_student_answer_text">#FF001970</color>
+    <color name="quiz_student_answer_background">#ffffff</color>
+
+    <color name="quiz_student_answer_correct_background">#43a047</color>
+    <color name="quiz_student_answer_correct_text">#ffffff</color>
+
+    <color name="quiz_student_answer_chosen_correct_background">#034508</color>
+    <color name="quiz_student_answer_chosen_correct_text">#FFFF6E40</color>
+
+    <color name="quiz_student_answer_chosen_incorrect_background">#d32f2f</color>
+    <color name="quiz_student_answer_chosen_incorrect_text">#ffffff</color>
+
+    <color name="quiz_student_answer_incorrect_background">#d32f2f</color>
+    <color name="quiz_student_answer_incorrect_text">#ffffff</color>
+
+
 </resources>

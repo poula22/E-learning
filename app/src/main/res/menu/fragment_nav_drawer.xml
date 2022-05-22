@@ -29,9 +29,9 @@
             android:icon="@drawable/ic_material"
             android:title="@string/material" />
         <item
-            android:id="@+id/exams"
+            android:id="@+id/quizzes"
             android:icon="@drawable/ic_quiz"
-            android:title="@string/exams" />
+            android:title="@string/quizzes" />
         <item
             android:id="@+id/edit_course"
             android:icon="@drawable/ic_edit"
