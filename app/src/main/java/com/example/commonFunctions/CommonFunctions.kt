@@ -10,27 +10,23 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.requireViewById
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.example.lamp.R
+import com.example.lamp.ui.student.student_features_page.ocr.OcrViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
@@ -39,35 +35,51 @@ class CommonFunctions {
 
 
     companion object {
-        fun test(fragment: Fragment):ByteArray?{
-            var result1:ByteArray?=null
-            fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+
+        fun test(
+            fragment: Fragment,
+            viewModel: OcrViewModel,
+            context: Context,
+            activity: FragmentActivity
+        ): ActivityResultLauncher<Intent> {
+            return fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                 val resultCode = result.resultCode
                 val data = result.data
 
                 if (resultCode == Activity.RESULT_OK) {
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
-
-                    var inputStream = fragment.requireActivity().contentResolver.openInputStream(fileUri)
+                    var inputStream = activity.contentResolver.openInputStream(fileUri)
                     var byteArray = inputStream?.readBytes()
-                    result1=byteArray
-//                    viewModel.getData(byteArray!!)
+
+//                    // Show progress bar when request is in progress
+//                    viewBinding.greyBackground.visibility = View.VISIBLE
+//                    viewBinding.progressBar.visibility = View.VISIBLE
+//                    requireActivity().window.setFlags(
+//                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+//                    )
+                    ///
+                    viewModel.getData(byteArray!!)
+
                 } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                    Toast.makeText(fragment.requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT)
+                        .show()
                 } else {
-                    Toast.makeText(fragment.requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
                 }
             }
-            return result1
         }
+
         fun imagePick(fragment: Fragment) {
             ImagePicker
                 .with(fragment)
                 .crop()                    //Crop image(Optional), Check Customization for more option
 //                .compress(1024)			//Final image size will be less than 1 MB(Optional)
 //                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                .saveDir(fragment.requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
+                .saveDir(
+                    fragment.requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!
+                )
                 .start()
         }
 
@@ -166,7 +178,7 @@ class CommonFunctions {
                 ) as ClipboardManager
             val clipData = ClipData.newPlainText("text", text)
             clipboardManager.setPrimaryClip(clipData)
-            Toast.makeText(context, "Course code copied to clipboard", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_LONG).show()
         }
 
 

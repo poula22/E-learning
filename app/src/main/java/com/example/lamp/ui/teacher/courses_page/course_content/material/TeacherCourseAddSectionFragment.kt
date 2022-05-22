@@ -1,6 +1,6 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.material
 
-import android.app.Activity.RESULT_OK
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -39,6 +39,7 @@ class TeacherCourseAddSectionFragment : Fragment() {
         initViews()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initViews() {
         viewBinding.addVideoBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
@@ -50,7 +51,10 @@ class TeacherCourseAddSectionFragment : Fragment() {
             val intent = Intent()
                 .setType("*/*")
                 .setAction(Intent.ACTION_GET_CONTENT)
-            startActivityForResult(Intent.createChooser(intent, "Select a file"), CONSTANTS.FILE_REQUEST_CODE)
+            startActivityForResult(
+                Intent.createChooser(intent, "Select a file"),
+                CONSTANTS.FILE_REQUEST_CODE
+            )
         }
 
         viewBinding.createBtn.setOnClickListener {
@@ -71,18 +75,18 @@ class TeacherCourseAddSectionFragment : Fragment() {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if ((requestCode == CONSTANTS.FILE_REQUEST_CODE || requestCode == CONSTANTS.VIDEO_REQUEST_CODE) && resultCode == RESULT_OK) {
-            val selectedFile = data?.data //The uri with the location of the file
-            val selectedFilePath = data?.data?.path
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if ((requestCode == CONSTANTS.FILE_REQUEST_CODE || requestCode == CONSTANTS.VIDEO_REQUEST_CODE) && resultCode == RESULT_OK) {
+//            val selectedFile = data?.data //The uri with the location of the file
+//            val selectedFilePath = data?.data?.path
+//        }
+//    }
 
     // we will use it to play video on video view on content part
     fun playVideoInDevicePlayer(videoPath: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoPath))
-        intent.setDataAndType(Uri.parse(videoPath), "video/mp4")
+        intent.setDataAndType(Uri.parse(videoPath), "video/*")
         startActivity(intent)
     }
 

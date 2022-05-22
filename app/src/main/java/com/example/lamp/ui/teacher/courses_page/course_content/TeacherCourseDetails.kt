@@ -3,7 +3,6 @@ package com.example.lamp.ui.teacher.courses_page.course_content
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,6 +15,7 @@ import com.example.lamp.ui.student.student_home_page.courses_recycler_view.Cours
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.TeacherCourseAssignmentFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.dashboard.todo_list.TeacherCourseDashboardFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.quiz.TeacherCourseQuizzesFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
 import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -62,7 +62,7 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                 R.id.grades,
                 R.id.students,
                 R.id.material,
-                R.id.exams,
+                R.id.quizzes,
                 R.id.edit_course
             ), drawerLayout
         )
@@ -94,12 +94,20 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                 }
                 R.id.students -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.course_content_container, TeacherStudentsFragment(TestData.STUDENTS))
+                        .replace(
+                            R.id.course_content_container,
+                            TeacherStudentsFragment(TestData.STUDENTS)
+                        )
                         .commit()
                 }
-                R.id.dashboard->{
+                R.id.dashboard -> {
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(R.id.course_content_container, TeacherCourseDashboardFragment())
+                        .commit()
+                }
+                R.id.quizzes -> {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.course_content_container, TeacherCourseQuizzesFragment())
                         .commit()
                 }
             }
@@ -110,7 +118,7 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
             return@setNavigationItemSelectedListener true
         }
         viewBinding.navView.setCheckedItem(R.id.dashboard)
-        viewBinding.navView.menu.performIdentifierAction(R.id.dashboard,0)
+        viewBinding.navView.menu.performIdentifierAction(R.id.dashboard, 0)
 
 
         viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {

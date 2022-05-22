@@ -87,7 +87,7 @@
                 <ImageView
                     android:id="@+id/icon_voice"
                     android:layout_width="46dp"
-                    android:layout_height="40dp"
+                    android:layout_height="43dp"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_voice" />
