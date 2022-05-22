@@ -15,12 +15,15 @@ abstract class DataBase : RoomDatabase() {
     abstract fun todoDao(): TodoDao
     companion object{
         private var myDataBase:DataBase?=null
-        fun getInstance(context:Context):DataBase{
+        fun init(context:Context){
             if (myDataBase==null)
                 myDataBase=Room.databaseBuilder(context,DataBase::class.java,"Todo_database")
                     .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .build()
+
+        }
+        fun getInstance():DataBase{
             return myDataBase!!
         }
     }

@@ -18,6 +18,10 @@ class TodoRepositoryImp(var offlineDataSource: TodoOfflineDataSource):TodoReposi
         offlineDataSource.removeTodo(todo)
     }
 
+    override fun removeAll() {
+        offlineDataSource.removeAll()
+    }
+
     override fun getAllTodo(): MutableList<TodoDTO> {
         return offlineDataSource.getAllTodo()
     }

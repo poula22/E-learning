@@ -28,6 +28,7 @@ interface TodoOfflineDataSource{
     fun addTodo(todo: TodoDTO)
     fun updateTodo(todo: TodoDTO)
     fun removeTodo(todo: TodoDTO)
+    fun removeAll()
     fun getAllTodo():MutableList<TodoDTO>
     fun getTodoByDate(date: Date):MutableList<TodoDTO>
 }
@@ -35,6 +36,7 @@ interface TodoRepository{
     fun addTodo(todo: TodoDTO)
     fun updateTodo(todo: TodoDTO)
     fun removeTodo(todo: TodoDTO)
+    fun removeAll()
     fun getAllTodo():MutableList<TodoDTO>
     fun getTodoByDate(date: Date):MutableList<TodoDTO>
 }

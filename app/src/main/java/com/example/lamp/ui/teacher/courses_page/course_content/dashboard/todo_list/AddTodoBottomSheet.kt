@@ -1,4 +1,4 @@
-package com.example.todo_app
+package com.example.lamp.ui.teacher.courses_page.course_content.dashboard.todo_list
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -51,7 +51,7 @@ class AddTodoBottomSheet:BottomSheetDialogFragment() {
                 val description=detailsLayout.editText?.text.toString()
                 val todo= Todo(title = title, description = description, date = calendar.clearTime().time,)
                 Log.v("todo::",todo.title!!)
-                DataBase.getInstance(requireContext().applicationContext).todoDao().addTodo(todo)
+                DataBase.getInstance().todoDao().addTodo(todo)
                 onTodoAddedListener?.onTodoAdded()
                 dismiss()
             }

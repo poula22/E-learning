@@ -13,15 +13,15 @@ import com.example.domain.repos.TodoOfflineDataSource
 import com.example.domain.repos.TodoRepository
 import kotlinx.coroutines.launch
 
-class TeacherCourseDashboardViewModel(context: Context) : ViewModel() {
+class TeacherCourseDashboardViewModel : ViewModel() {
     var liveData=MutableLiveData<MutableList<TodoDTO>>()
-    var offlineDataSource:TodoOfflineDataSource=TodoOfflineDataSourceImp(DataBase.getInstance(context).todoDao())
+    var offlineDataSource:TodoOfflineDataSource=TodoOfflineDataSourceImp(DataBase.getInstance())
     var repository:TodoRepository=TodoRepositoryImp(offlineDataSource)
 
     fun getData(){
         viewModelScope.launch {
-            repository.getAllTodo()?.let {
-                liveData?.value =it!!
+            repository.getAllTodo().let {
+                liveData.value =it
             }
         }
     }

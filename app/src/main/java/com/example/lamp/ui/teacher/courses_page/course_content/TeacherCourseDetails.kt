@@ -14,7 +14,7 @@ import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.TeacherCourseAssignmentFragment
-import com.example.lamp.ui.teacher.courses_page.course_content.dashboard.TeacherCourseDashboardFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.dashboard.todo_list.TeacherCourseDashboardFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
 import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment

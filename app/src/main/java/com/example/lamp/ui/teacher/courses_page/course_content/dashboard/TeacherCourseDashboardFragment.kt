@@ -1,5 +1,4 @@
-package com.example.lamp.ui.teacher.courses_page.course_content.dashboard
-
+package com.example.lamp.ui.teacher.courses_page.course_content.dashboard.todo_list
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,21 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.data.database.DataBase
 import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseDashboardBinding
 import com.example.lamp.ui.teacher.courses_page.TeacherCoursesFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.dashboard.TeacherCourseDashboardViewModel
 import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
-import com.example.todo_app.AddTodoBottomSheet
-import com.example.todo_app.TodoAdapter
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.util.*
 
 class TeacherCourseDashboardFragment : Fragment() {
     lateinit var viewBinding: FragmentTeacherCourseDashboardBinding
     val adapter= TodoAdapter(null)
-    lateinit var viewModel:TeacherCourseDashboardViewModel
+    lateinit var viewModel: TeacherCourseDashboardViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(TeacherCourseDashboardViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +41,6 @@ class TeacherCourseDashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel=TeacherCourseDashboardViewModel(requireContext())
         initViews()
         subscirbeToLiveData()
         viewModel.getData()
