@@ -9,10 +9,9 @@ import com.example.lamp.databinding.ItemTeacherCourseQuizCardBinding
 
 class TeacherQuizAdapter(var quizzes: MutableList<TeacherQuizItem>? = null) :
     RecyclerView.Adapter<TeacherQuizAdapter.ViewHolder>() {
-    lateinit var viewBinding: ItemTeacherCourseQuizCardBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        viewBinding = DataBindingUtil.inflate(
+        var viewBinding: ItemTeacherCourseQuizCardBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_teacher_course_quiz_card,
             parent,
@@ -22,15 +21,25 @@ class TeacherQuizAdapter(var quizzes: MutableList<TeacherQuizItem>? = null) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var quizzes = quizzes?.get(position)
-        holder.viewBinding.item = quizzes
+        var quiz = quizzes?.get(position)
+        holder.viewBinding.item = quiz
+        holder.viewBinding.createQuizDeleteQuiz.setOnClickListener{
+            quizzes?.remove(quiz)
+//            notifyDataSetChanged()
+        }
+        holder.viewBinding.createQuizEditQuiz.setOnClickListener{
+            onEditQuizListener?.onEditQuiz(quiz!!)
+        }
 
+    }
+    var onEditQuizListener:OnEditQuizListener?=null
+
+    interface OnEditQuizListener{
+        fun onEditQuiz(quiz:TeacherQuizItem)
     }
 
     override fun getItemCount(): Int = quizzes?.size ?: 0
 
     class ViewHolder(val viewBinding: ItemTeacherCourseQuizCardBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) {
-
-    }
+        RecyclerView.ViewHolder(viewBinding.root)
 }

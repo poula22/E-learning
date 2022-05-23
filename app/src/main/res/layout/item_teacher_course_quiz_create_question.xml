@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem" />
@@ -31,7 +30,7 @@
                 android:layout_marginBottom="16dp">
 
                 <TextView
-                    android:id="@+id/create_question_title"
+                    android:id="@+id/create_quiz_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -54,7 +53,7 @@
                     android:layout_marginTop="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/create_question_title">
+                    app:layout_constraintTop_toBottomOf="@+id/create_quiz_title">
 
                     <View
                         android:id="@+id/divider"
@@ -124,6 +123,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="24dp"
                         android:ems="10"
+                        android:text="@={item.question}"
                         android:hint="Question"
                         android:inputType="textCapSentences|textAutoCorrect|textAutoComplete|textMultiLine"
                         app:layout_constraintEnd_toEndOf="parent"

@@ -31,7 +31,7 @@ class AddTodoBottomSheet : BottomSheetDialogFragment() {
 
     fun initViews() {
         viewBinding.todoChooseDate.text = ("" + calendar.get(Calendar.DAY_OF_MONTH)
-            .plus(1) + "/" + calendar.get(Calendar.MONTH) + "/"
+             + "/" + calendar.get(Calendar.MONTH).plus(1) + "/"
                 + calendar.get(Calendar.YEAR))
         viewBinding.todoChooseDate.setOnClickListener {
             showDatePicker()
@@ -48,7 +48,7 @@ class AddTodoBottomSheet : BottomSheetDialogFragment() {
                     date = calendar.clearTime().time,
                 )
                 Log.v("todo::", todo.title!!)
-                DataBase.getInstance(requireContext().applicationContext).todoDao().addTodo(todo)
+                DataBase.getInstance().todoDao().addTodo(todo)
                 onTodoAddedListener?.onTodoAdded()
                 dismiss()
             }

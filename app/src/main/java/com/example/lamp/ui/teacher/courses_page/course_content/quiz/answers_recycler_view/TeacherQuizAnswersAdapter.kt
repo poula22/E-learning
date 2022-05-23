@@ -1,26 +1,25 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizQuestionAnswerBinding
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem
 
-class TeacherQuizAnswersAdapter(var question: QuestionItem) :
+class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
     RecyclerView.Adapter<TeacherQuizAnswersAdapter.ViewHolder>() {
-    var counter = 1
-
     init {
-        question.answers = HashMap()
+        if (answers==null){
+            answers= mutableListOf()
+        }
     }
+
 
     class ViewHolder(var viewBinding: ItemTeacherCourseQuizQuestionAnswerBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) {
-
-    }
+        RecyclerView.ViewHolder(viewBinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewBinding: ItemTeacherCourseQuizQuestionAnswerBinding = DataBindingUtil.inflate(
@@ -33,36 +32,29 @@ class TeacherQuizAnswersAdapter(var question: QuestionItem) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.viewBinding.answerListItemAnswerText.setText(
-            question.answers?.keys?.elementAt(
-                position
-            )
-        )
+        var item=answers?.get(position)
+        holder.viewBinding.item=item
+        holder.viewBinding.answerListItemAnswerText.addTextChangedListener {
+            Log.v("pos:::",item.toString())
+        }
         holder.viewBinding.answerListItemDelete.setOnClickListener {
-            removeItem(holder.viewBinding.answerListItemAnswerText.text.toString())
+            Log.v("pos:::", item!!.toString())
+            removeItem(position,item)
         }
-        holder.viewBinding.answerListItemAnswerText.doAfterTextChanged {
-            addItem(holder.viewBinding.answerListItemAnswerText.text.toString())
-        }
-        holder.viewBinding.answerListItemCorrect.setOnCheckedChangeListener { _, isChecked ->
-            question.answers!![holder.viewBinding.answerListItemAnswerText.text.toString()] =
-                isChecked
-        }
+
     }
 
-    override fun getItemCount(): Int = counter
 
-    fun addItem(answer: String) {
-        question.answers!![answer] = false
-        counter++
-        notifyDataSetChanged()
+    override fun getItemCount(): Int = answers?.size ?:0
+
+    fun addAnswer(){
+        answers?.add(AnswerItem())
+        notifyItemInserted(answers?.size?.minus(1)!!)
     }
 
-    fun removeItem(answer: String) {
-        if (counter != 0) {
-            counter--
-            question.answers!!.remove(answer)
-            notifyDataSetChanged()
-        }
+
+    private fun removeItem(position: Int, item: AnswerItem) {
+        answers?.remove(item)
+        notifyItemRemoved(position)
     }
 }
