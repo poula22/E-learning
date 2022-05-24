@@ -27,6 +27,6 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_header_teacher_course_details"
-            app:menu="@menu/teacher_nav_drawer" />
+            app:menu="@menu/student_nav_drawer" />
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

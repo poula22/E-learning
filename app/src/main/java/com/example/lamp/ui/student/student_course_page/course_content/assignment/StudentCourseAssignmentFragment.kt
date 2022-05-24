@@ -87,7 +87,7 @@ class StudentCourseAssignmentFragment(var assignments: MutableList<AssignmentIte
             for (item in it) {
                 if (item.state.lowercase() == text.lowercase()) {
                     filteredList.add(item) //add to filtered list
-                } else {
+                } else if(item.state.lowercase() == "all" ){
                     filteredList.add(item) // add all the items that are not filtered
                 }
             }
