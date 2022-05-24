@@ -51,6 +51,7 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_assignment.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_container.xml" value="0.165625" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_details.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_material.xml" value="0.23731884057971014" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_courses.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_features.xml" value="0.115625" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_quiz.xml" value="0.2" />
@@ -80,6 +81,8 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_communicate.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_course.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_assignment.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_material.xml" value="0.23731884057971014" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_material_lesson_content.xml" value="0.23731884057971014" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_quiz_question.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_quiz_question_answer.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_quiz_question_card.xml" value="0.25885416666666666" />
@@ -89,6 +92,7 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_home_feature_rv.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_websites.xml" value="0.2129115006412997" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_grades.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_material.xml" value="0.23731884057971014" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_material_lesson_content.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_quiz.xml" value="0.1578125" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_quiz_card.xml" value="0.25885416666666666" />

@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseDetailsBinding
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.StudentCourseAssignmentFragment
+import com.example.lamp.ui.student.student_course_page.course_content.material.StudentCourseMaterialFragment
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -72,7 +73,12 @@ class StudentCourseDetails(var course: CourseItem?) : Fragment() {
                     )
                     .commit()
             } else if (item.itemId == R.id.material) {
-
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.student_course_content_container,
+                        StudentCourseMaterialFragment(course)
+                    )
+                    .commit()
 
             } else if (item.itemId == R.id.dashboard) {
 
