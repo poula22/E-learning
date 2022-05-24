@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashboard"
+            android:icon="@drawable/ic_dashboard"
+            android:title="@string/dashboard" />
+        <item
+            android:id="@+id/announcements"
+            android:icon="@drawable/ic_announcement"
+            android:title="@string/announcements" />
+        <item
+            android:id="@+id/assignment"
+            android:icon="@drawable/ic_assignment"
+            android:title="@string/assignment" />
+        <item
+            android:id="@+id/grades"
+            android:icon="@drawable/ic_grades"
+            android:title="@string/grades" />
+        <item
+            android:id="@+id/material"
+            android:icon="@drawable/ic_material"
+            android:title="@string/material" />
+        <item
+            android:id="@+id/quizzes"
+            android:icon="@drawable/ic_quiz"
+            android:title="@string/quizzes" />
+    </group>
+</menu>

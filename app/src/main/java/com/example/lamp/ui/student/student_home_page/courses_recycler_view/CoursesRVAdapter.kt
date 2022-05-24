@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCoursesBinding
 import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
+
 class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type: Int) :
     RecyclerView.Adapter<CoursesRVAdapter.CoursesItemViewHolder>() {
 
     val HOME_SCREEN = R.layout.item_student_home_course_rv
     val COURSES_SCREEN = R.layout.item_student_courses
     lateinit var viewBinding: ViewDataBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesItemViewHolder {
 
         if (type == 0) {
@@ -36,15 +38,26 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type:
     }
 
     override fun onBindViewHolder(holder: CoursesItemViewHolder, position: Int) {
+
         val item = coursesItemsList?.get(position)
         if (type == 0) {
             val view: ItemStudentHomeCourseRvBinding =
                 holder.viewDataBinding as ItemStudentHomeCourseRvBinding
             view.item = item
+            if (onCourseClickListener != null) {
+                view.card.setOnClickListener {
+                    onCourseClickListener!!.setOnCourseClickListener(item)
+                }
+            }
         } else if (type == 1) {
             val view: ItemStudentCoursesBinding =
                 holder.viewDataBinding as ItemStudentCoursesBinding
             view.item = item
+            if (onCourseClickListener != null) {
+                view.card.setOnClickListener {
+                    onCourseClickListener!!.setOnCourseClickListener(item)
+                }
+            }
         }
 
     }
@@ -57,5 +70,10 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type:
         RecyclerView.ViewHolder(viewDataBinding.root) {
     }
 
+    var onCourseClickListener: OnCourseClickListener? = null
+
+    interface OnCourseClickListener {
+        fun setOnCourseClickListener(item: CourseItem?)
+    }
 
 }

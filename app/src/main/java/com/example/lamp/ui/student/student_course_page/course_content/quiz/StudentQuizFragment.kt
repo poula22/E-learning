@@ -1,4 +1,4 @@
-package com.example.lamp.ui.student.student_course_page.quiz
+package com.example.lamp.ui.student.student_course_page.course_content.quiz
 
 import android.os.Bundle
 import android.view.LayoutInflater

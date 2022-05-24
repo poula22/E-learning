@@ -75,13 +75,16 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
             when (item.itemId) {
                 R.id.assignment -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.course_content_container, TeacherCourseAssignmentFragment())
+                        .replace(
+                            R.id.teacher_course_content_container,
+                            TeacherCourseAssignmentFragment()
+                        )
                         .commit()
                 }
                 R.id.material -> {
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(
-                            R.id.course_content_container, TeacherCourseMaterialFragment(
+                            R.id.teacher_course_content_container, TeacherCourseMaterialFragment(
                                 TestData.COURSES[0]
                             )
                         )
@@ -89,25 +92,34 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                 }
                 R.id.edit_course -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.course_content_container, TeacherCourseSettingsFragment())
+                        .replace(
+                            R.id.teacher_course_content_container,
+                            TeacherCourseSettingsFragment()
+                        )
                         .commit()
                 }
                 R.id.students -> {
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(
-                            R.id.course_content_container,
+                            R.id.teacher_course_content_container,
                             TeacherStudentsFragment(TestData.STUDENTS)
                         )
                         .commit()
                 }
                 R.id.dashboard -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.course_content_container, TeacherCourseDashboardFragment())
+                        .replace(
+                            R.id.teacher_course_content_container,
+                            TeacherCourseDashboardFragment()
+                        )
                         .commit()
                 }
                 R.id.quizzes -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.course_content_container, TeacherCourseQuizzesFragment())
+                        .replace(
+                            R.id.teacher_course_content_container,
+                            TeacherCourseQuizzesFragment()
+                        )
                         .commit()
                 }
             }
@@ -124,7 +136,7 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
         viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
             viewBinding.teacherCourseContainer.toolbar.subtitle = "Settings"
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.course_content_container, TeacherCourseSettingsFragment())
+                .replace(R.id.teacher_course_content_container, TeacherCourseSettingsFragment())
                 .commit()
         }
     }

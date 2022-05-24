@@ -15,8 +15,8 @@
         tools:openDrawer="start">
 
         <include
-            android:id="@+id/teacher_course_container"
-            layout="@layout/app_bar_teacher_course_container"
+            android:id="@+id/student_course_container"
+            layout="@layout/app_bar_student_course_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
