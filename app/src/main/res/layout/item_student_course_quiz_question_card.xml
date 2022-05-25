@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="item"
+            type="com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -32,6 +34,7 @@
                 android:scrollHorizontally="false"
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
                 android:textSize="20sp"
+                android:text="@{item.question}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

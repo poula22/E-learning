@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentQuizBinding
+import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizAdapter
 
 class StudentQuizFragment : Fragment() {
     lateinit var viewBinding: FragmentStudentQuizBinding
@@ -27,6 +28,8 @@ class StudentQuizFragment : Fragment() {
     }
 
     private fun initViews() {
+        val adapter=TeacherQuizAdapter()
+        viewBinding.includeTest.gameQuestionAnswerList.adapter = adapter
 
     }
 
