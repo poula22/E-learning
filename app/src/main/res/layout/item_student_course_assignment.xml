@@ -29,7 +29,6 @@
             tools:text="Assignment Title" />
 
         <com.google.android.material.divider.MaterialDivider
-            style="@style/Widget.Material3.MaterialDivider"
             android:layout_width="2dp"
             android:layout_height="30dp"
             android:orientation="vertical"
@@ -42,7 +41,7 @@
             android:id="@+id/deadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.deadline}"
+            android:text="@{item.deadline.toString()}"
             android:textSize="17sp"
             app:layout_constraintEnd_toStartOf="@+id/state"
             app:layout_constraintHorizontal_bias="0.5"
@@ -51,7 +50,6 @@
             tools:text="Deadline" />
 
         <com.google.android.material.divider.MaterialDivider
-            style="@style/Widget.Material3.MaterialDivider"
             android:layout_width="2dp"
             android:layout_height="30dp"
             android:orientation="vertical"
@@ -73,7 +71,6 @@
             tools:text="State" />
 
         <com.google.android.material.divider.MaterialDivider
-            style="@style/Widget.Material3.MaterialDivider"
             android:layout_width="2dp"
             android:layout_height="30dp"
             android:orientation="vertical"
@@ -85,7 +82,7 @@
             android:id="@+id/grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.grade}"
+            android:text="@{String.valueOf(item.grade)}"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

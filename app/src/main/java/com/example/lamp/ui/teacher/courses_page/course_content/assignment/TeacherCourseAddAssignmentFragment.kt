@@ -6,16 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.commonFunctions.CommonFunctions
 import com.example.commonFunctions.CommonFunctions.Companion.calendar
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddAssignmentBinding
+import com.google.android.material.navigation.NavigationView
 import java.util.*
 
 class TeacherCourseAddAssignmentFragment : Fragment() {
     lateinit var viewBinding: FragmentTeacherCourseAddAssignmentBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,5 +70,13 @@ class TeacherCourseAddAssignmentFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
+    }
+
+    override fun onStart() {
+        super.onStart()
+        var toolbar:Toolbar=requireActivity().findViewById(R.id.toolbar)
+        toolbar.isVisible=false
+        var drawerLayout:DrawerLayout=requireActivity().findViewById(R.id.drawer_layout)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 }

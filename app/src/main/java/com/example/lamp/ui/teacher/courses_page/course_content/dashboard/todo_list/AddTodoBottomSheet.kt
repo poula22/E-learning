@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.example.data.database.DataBase
 import com.example.data.model.entities.Todo
 import com.example.extentions.clearTime
@@ -21,7 +22,9 @@ class AddTodoBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_add_todo, container, false)
+        viewBinding=DataBindingUtil.inflate(inflater,R.layout.fragment_add_todo, container, false)
+
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

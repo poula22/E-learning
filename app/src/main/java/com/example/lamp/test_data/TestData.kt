@@ -1,12 +1,15 @@
 package com.example.lamp.test_data
 
+import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.ui.parent.parent_communicate_page.communicate_recycler_view.TeacherItem
 import com.example.lamp.ui.parent.parent_courses_page.course_recycler_view.ParentCourseItem
+import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsItem
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeatureItem
 import com.example.lamp.ui.teacher.students_page.students_recycler_view.StudentItem
+import java.util.*
 
 
 object TestData {
@@ -39,6 +42,24 @@ object TestData {
     val RECITATIONWORD: MutableList<ReciteWordsItem> =
         mutableListOf(ReciteWordsItem("عربي", "english"))
     val WORDs: MutableList<ReciteWordsItem> = mutableListOf(ReciteWordsItem("عربي", "english"))
+
+    var ASSIGNMENTS :MutableList<AssignmentItem> =initAssignments()
+
+        private fun initAssignments(): MutableList<AssignmentItem> {
+        ASSIGNMENTS = mutableListOf()
+        for (i in 1..50) {
+            ASSIGNMENTS.add(
+                AssignmentItem("assignment$i", Calendar.getInstance().clearTime().time, "submitted", 100)
+            )
+        }
+            for (i in 51..100) {
+                ASSIGNMENTS.add(
+                    AssignmentItem("assignment$i",Calendar.getInstance().time, "not submitted",100)
+                )
+        }
+        return ASSIGNMENTS
+    }
+
     private fun initParentCourse(): MutableList<ParentCourseItem> {
         PARENTCOURSES = mutableListOf()
         for (i in 1..100) {

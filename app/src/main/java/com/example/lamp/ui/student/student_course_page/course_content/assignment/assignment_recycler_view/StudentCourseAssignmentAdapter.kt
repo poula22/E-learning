@@ -15,7 +15,7 @@ class StudentCourseAssignmentAdapter(var assignments: MutableList<AssignmentItem
     lateinit var viewBinding: ItemStudentCourseAssignmentBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        viewBinding = DataBindingUtil.inflate<ItemStudentCourseAssignmentBinding>(
+        viewBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_student_course_assignment,
             parent,

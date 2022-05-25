@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizzesBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizAdapter
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizItem
+import com.google.android.material.navigation.NavigationView
 
 class TeacherCourseQuizzesFragment(var quizzes:MutableList<TeacherQuizItem>?=null) : Fragment() {
 
@@ -70,9 +73,16 @@ class TeacherCourseQuizzesFragment(var quizzes:MutableList<TeacherQuizItem>?=nul
             .supportFragmentManager
             .beginTransaction()
             .addToBackStack("")
-            .replace(R.id.teacher_course_container
+            .replace(R.id.teacher_course_content_container
                 ,TeacherCourseQuizAddQuestionsFragment(item))
             .commit()
+    }
+    override fun onStart() {
+        super.onStart()
+        var toolbar: Toolbar =requireActivity().findViewById(R.id.toolbar)
+        toolbar.isVisible=true
+        var drawerLayout: DrawerLayout =requireActivity().findViewById(R.id.drawer_layout)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
 

@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizAddQuestionsBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizItem
+import com.google.android.material.navigation.NavigationView
 
 class TeacherCourseQuizAddQuestionsFragment(var quiz:TeacherQuizItem) : Fragment() {
 
@@ -66,6 +69,13 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz:TeacherQuizItem) : Fragment
         }
         var question:QuestionItem= QuestionItem(null,null,null)
         adapter.addQuestion(question)
+    }
+    override fun onStart() {
+        super.onStart()
+        var toolbar: Toolbar =requireActivity().findViewById(R.id.toolbar)
+        toolbar.isVisible=false
+        var drawerLayout: DrawerLayout =requireActivity().findViewById(R.id.drawer_layout)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
 

@@ -152,4 +152,5 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
         inflater.inflate(R.menu.teacher_course_details, menu)
     }
 
+
 }
