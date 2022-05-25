@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="item"
+            type="com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem" />
     </data>
 
     <LinearLayout
@@ -14,12 +16,13 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/game_answer_list_item_answer_text"
+            android:id="@+id/answer_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#BCDDF8"
+            android:background="@color/md_light_blue_100"
             android:minHeight="35dp"
             android:padding="8dp"
+            android:text="@{item.answer}"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             tools:text="Answer Choice" />

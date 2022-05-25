@@ -12,10 +12,9 @@ import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizzesBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizAdapter
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizItem
-import com.google.android.material.navigation.NavigationView
+import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
 
-class TeacherCourseQuizzesFragment(var quizzes:MutableList<TeacherQuizItem>?=null) : Fragment() {
+class TeacherCourseQuizzesFragment(var quizzes:MutableList<QuizItem>?=null) : Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseQuizzesBinding
     override fun onCreateView(
@@ -47,7 +46,7 @@ class TeacherCourseQuizzesFragment(var quizzes:MutableList<TeacherQuizItem>?=nul
         }
         val adapter=TeacherQuizAdapter()
         adapter.onEditQuizListener=object :TeacherQuizAdapter.OnEditQuizListener{
-            override fun onEditQuiz(quiz:TeacherQuizItem) {
+            override fun onEditQuiz(quiz:QuizItem) {
                 requireActivity()
                     .supportFragmentManager
                     .beginTransaction()
@@ -68,7 +67,7 @@ class TeacherCourseQuizzesFragment(var quizzes:MutableList<TeacherQuizItem>?=nul
         if(quizzes==null){
             quizzes= mutableListOf()
         }
-        var item=TeacherQuizItem(null,null,null,null)
+        var item=QuizItem(null,null,null,null,null,null,null)
         requireActivity()
             .supportFragmentManager
             .beginTransaction()

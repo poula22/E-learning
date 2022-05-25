@@ -1,23 +1,20 @@
-package com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view
+package com.example.lamp.ui.student.student_course_page.course_content.quiz.questions_recycler_view
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
-import com.example.lamp.databinding.ItemStudentCourseQuizQuestionCardBinding
 import com.example.lamp.databinding.ItemTeacherCourseQuizCreateQuestionBinding
-import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.sections_recycler_view.TeacherCourseLessonsSectionsAdapter
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.TeacherQuizAnswersAdapter
+import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem
 
 
-class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = null) :
-    RecyclerView.Adapter<TeacherQuizQuestionsAdapter.ViewHolder>() {
+open class StudentQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = null) :
+    RecyclerView.Adapter<StudentQuizQuestionsAdapter.ViewHolder>() {
     init {
         if ( questions==null){
             questions= mutableListOf()

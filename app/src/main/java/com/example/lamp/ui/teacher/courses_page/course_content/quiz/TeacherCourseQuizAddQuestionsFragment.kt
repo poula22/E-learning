@@ -13,10 +13,9 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizAddQuestionsBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizItem
-import com.google.android.material.navigation.NavigationView
+import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
 
-class TeacherCourseQuizAddQuestionsFragment(var quiz:TeacherQuizItem) : Fragment() {
+class TeacherCourseQuizAddQuestionsFragment(var quiz:QuizItem) : Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseQuizAddQuestionsBinding
     override fun onCreateView(

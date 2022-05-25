@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizCardBinding
 
-class TeacherQuizAdapter(var quizzes: MutableList<TeacherQuizItem>? = null) :
+class TeacherQuizAdapter(var quizzes: MutableList<QuizItem>? = null) :
     RecyclerView.Adapter<TeacherQuizAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +35,7 @@ class TeacherQuizAdapter(var quizzes: MutableList<TeacherQuizItem>? = null) :
     var onEditQuizListener:OnEditQuizListener?=null
 
     interface OnEditQuizListener{
-        fun onEditQuiz(quiz:TeacherQuizItem)
+        fun onEditQuiz(quiz:QuizItem)
     }
 
     override fun getItemCount(): Int = quizzes?.size ?: 0
