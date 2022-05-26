@@ -12,12 +12,13 @@ import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentQuizBinding
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.answers_recycler_view.StudentQuizAnswersAdapter
+import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
 
 class StudentQuizFragment(var quiz:QuizItem):Fragment() {
     lateinit var viewBinding: FragmentStudentQuizBinding
     var questionList=quiz.questions
-    var studentAnswers= mutableListOf<Int>()
+    var studentAnswers= mutableListOf<AnswerItem>()//o(n)-->o(1)
     var questionIndex=0
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,8 +42,8 @@ class StudentQuizFragment(var quiz:QuizItem):Fragment() {
         val adapter=StudentQuizAnswersAdapter(question?.answers!!)
         viewBinding.questionCard.questionAnswerRecyclerView.adapter=adapter
         adapter.onAnswerSelectedListener=object :StudentQuizAnswersAdapter.OnAnswerSelectedListener{
-            override fun onAnswerSelected(position: Int) {
-                studentAnswers.set(questionIndex,position)
+            override fun onAnswerSelected(answer: AnswerItem) {
+                studentAnswers.set(questionIndex,answer)
             }
 
         }
@@ -68,7 +69,7 @@ class StudentQuizFragment(var quiz:QuizItem):Fragment() {
                 requireActivity()
                     .supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.student_course_content_container,FragmentStudentQuizFinishedStats(quiz))
+                    .replace(R.id.student_course_content_container,FragmentStudentQuizFinishedStats(studentAnswers,quiz))
                     .commit()
 
             }

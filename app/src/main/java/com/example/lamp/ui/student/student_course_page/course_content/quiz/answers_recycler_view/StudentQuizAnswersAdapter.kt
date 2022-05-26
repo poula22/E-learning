@@ -39,7 +39,7 @@ class StudentQuizAnswersAdapter(var answers: MutableList<AnswerItem>) :
         holder.viewBinding.answerText.setOnClickListener{
             itemSelectedIndex=position
             holder.changeColor(R.color.green)
-            onAnswerSelectedListener?.onAnswerSelected(position)
+            onAnswerSelectedListener?.onAnswerSelected(item)
         }
 
         if (itemSelectedIndex>-1){
@@ -54,7 +54,7 @@ class StudentQuizAnswersAdapter(var answers: MutableList<AnswerItem>) :
     }
     var onAnswerSelectedListener:OnAnswerSelectedListener?=null
     interface OnAnswerSelectedListener{
-        fun onAnswerSelected(position: Int)
+        fun onAnswerSelected(answer:AnswerItem)
     }
     fun changeData(newAnswers:MutableList<AnswerItem>){
         answers=newAnswers
