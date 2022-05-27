@@ -4,18 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.example.commonFunctions.CommonFunctions
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizAddQuestionsBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
 
-class TeacherCourseQuizAddQuestionsFragment(var quiz:QuizItem) : Fragment() {
+class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizItem) : Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseQuizAddQuestionsBinding
     override fun onCreateView(
@@ -40,16 +42,17 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz:QuizItem) : Fragment() {
     private fun initViews() {
         viewBinding.quizEditQuizTitle.setText(quiz.quizName)
         viewBinding.quizInstructions.setText(quiz.instructions)
-        val adapter=TeacherQuizQuestionsAdapter(quiz.questions)
-        adapter.onQuestionAddedListener=object :TeacherQuizQuestionsAdapter.OnQuestionAddedListener{
-            override fun onQuestionAdded(question: QuestionItem) {
-                quiz.questions?.add(question)
+        val adapter = TeacherQuizQuestionsAdapter(quiz.questions)
+        adapter.onQuestionAddedListener =
+            object : TeacherQuizQuestionsAdapter.OnQuestionAddedListener {
+                override fun onQuestionAdded(question: QuestionItem) {
+                    quiz.questions?.add(question)
+                }
+
             }
+        viewBinding.quizEditQuestionsList.adapter = adapter
 
-        }
-        viewBinding.quizEditQuestionsList.adapter=adapter
-
-        if(adapter.itemCount==0) {
+        if (adapter.itemCount == 0) {
             viewBinding.createQuestionLayout.visibility = View.VISIBLE
         }
 
@@ -59,21 +62,29 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz:QuizItem) : Fragment() {
         viewBinding.createQuestionFab.setOnClickListener {
             createQuestion(adapter)
         }
+
+        viewBinding.saveBtn.setOnClickListener {
+            Toast.makeText(context, "Saved successfully", Toast.LENGTH_SHORT).show()
+            //insert in database
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+        CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
     }
 
-    private fun createQuestion(adapter:TeacherQuizQuestionsAdapter) {
-        if (viewBinding.createQuestionLayout.isVisible){
+    private fun createQuestion(adapter: TeacherQuizQuestionsAdapter) {
+        if (viewBinding.createQuestionLayout.isVisible) {
             viewBinding.createQuestionLayout.visibility = View.GONE
-            viewBinding.quizEditQuestionsList.visibility=View.VISIBLE
+            viewBinding.quizEditQuestionsList.visibility = View.VISIBLE
         }
-        var question:QuestionItem= QuestionItem(null,null,null)
+        var question: QuestionItem = QuestionItem(null, null, null)
         adapter.addQuestion(question)
     }
+
     override fun onStart() {
         super.onStart()
-        var toolbar: Toolbar =requireActivity().findViewById(R.id.toolbar)
-        toolbar.isVisible=false
-        var drawerLayout: DrawerLayout =requireActivity().findViewById(R.id.drawer_layout)
+        var toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar)
+        toolbar.isVisible = false
+        var drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 

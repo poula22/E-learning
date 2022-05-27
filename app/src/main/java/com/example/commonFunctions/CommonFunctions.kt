@@ -100,7 +100,7 @@ class CommonFunctions {
             startActivityForResult(
                 activity,
                 intentDocument,
-                ImagePicker.REQUEST_CODE,
+                CONSTANTS.DOCUMENT_REQUEST_CODE,
                 Bundle.EMPTY
             )
         }

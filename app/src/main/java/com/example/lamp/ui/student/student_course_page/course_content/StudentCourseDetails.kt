@@ -13,6 +13,7 @@ import com.example.lamp.databinding.FragmentStudentCourseDetailsBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.StudentCourseAssignmentFragment
 import com.example.lamp.ui.student.student_course_page.course_content.material.StudentCourseMaterialFragment
+import com.example.lamp.ui.student.student_course_page.course_content.quiz.StudentQuizzesFragment
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -84,7 +85,12 @@ class StudentCourseDetails(var course: CourseItem?) : Fragment() {
             } else if (item.itemId == R.id.dashboard) {
 
             } else if (item.itemId == R.id.quizzes) {
-
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.student_course_content_container,
+                        StudentQuizzesFragment()
+                    )
+                    .commit()
             }
             drawerLayout.close()
             viewBinding.studentCourseContainer.infoIcon.setOnClickListener {

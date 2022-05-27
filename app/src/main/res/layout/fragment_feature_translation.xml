@@ -112,6 +112,7 @@
                 app:layout_constraintTop_toBottomOf="@id/card_voice">
 
                 <EditText
+                    android:id="@+id/text_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top"
@@ -135,16 +136,18 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:maxLines="1"
                 app:layout_constraintBottom_toTopOf="@+id/text_output"
                 app:layout_constraintStart_toEndOf="@id/translate_to"
                 app:layout_constraintTop_toBottomOf="@id/text_input">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/auto_complete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    android:text="ar"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -176,11 +179,12 @@
                 app:layout_constraintTop_toBottomOf="@id/translate_btn">
 
                 <EditText
+                    android:id="@+id/text_output_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top"
-                    android:lines="6"
                     android:inputType="none"
+                    android:lines="6"
                     android:textSize="25sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
