@@ -11,6 +11,7 @@ import com.example.lamp.databinding.FragmentStudentContainerAllTabsBinding
 import com.example.lamp.ui.student.student_course_page.CoursesFragment
 import com.example.lamp.ui.student.student_features_page.FeaturesFragment
 import com.example.lamp.ui.student.student_home_page.HomeFragment
+import com.example.lamp.ui.student.student_profile_page.ProfileFragment
 import com.example.lamp.ui.student.student_website_page.WebSitesFragment
 
 
@@ -54,6 +55,11 @@ class StudentContainerFragment:Fragment() {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(viewBinding.studentFragmentTab.id, WebSitesFragment())
+                    .commit()
+            } else if(menuItem.itemId==R.id.profile){
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(viewBinding.studentFragmentTab.id, ProfileFragment())
                     .commit()
             }
             return@setOnItemSelectedListener true
