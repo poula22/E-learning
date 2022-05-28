@@ -49,12 +49,12 @@ object TestData {
         ASSIGNMENTS = mutableListOf()
         for (i in 1..50) {
             ASSIGNMENTS.add(
-                AssignmentItem("assignment$i", Calendar.getInstance().clearTime().time, "submitted", 100)
+                AssignmentItem("assignment$i","", Calendar.getInstance().clearTime().time,Calendar.getInstance().clearTime().time, "submitted", 100)
             )
         }
             for (i in 51..100) {
                 ASSIGNMENTS.add(
-                    AssignmentItem("assignment$i",Calendar.getInstance().time, "not submitted",100)
+                    AssignmentItem("assignment$i","",Calendar.getInstance().time,Calendar.getInstance().clearTime().time, "not submitted",100)
                 )
         }
         return ASSIGNMENTS

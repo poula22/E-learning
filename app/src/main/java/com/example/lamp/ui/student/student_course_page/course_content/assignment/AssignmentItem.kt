@@ -3,8 +3,10 @@ package com.example.lamp.ui.student.student_course_page.course_content.assignmen
 import java.util.*
 
 data class AssignmentItem(
-    val title: String,
-    val deadline: Date,
-    val state: String,
-    val grade: Int
+    var title: String,
+    var description:String,
+    var startDate:Date,
+    var deadline: Date,
+    var state: String,
+    var grade: Int
 )

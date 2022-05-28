@@ -72,19 +72,10 @@ class OcrFragment : Fragment() {
                 type = "*/*"
                 putExtra(
                     Intent.EXTRA_MIME_TYPES, arrayOf(
-                        "application/pdf",
-                        "application/doc",
-                        "application/docx",
-                        "text/plain"
+                        "application/pdf"
                     )
                 )
             }
-            ActivityCompat.startActivityForResult(
-                requireActivity(),
-                intentDocument,
-                CONSTANTS.DOCUMENT_REQUEST_CODE,
-                Bundle.EMPTY
-            )
             startForImageResult.launch(intentDocument)
         }
 

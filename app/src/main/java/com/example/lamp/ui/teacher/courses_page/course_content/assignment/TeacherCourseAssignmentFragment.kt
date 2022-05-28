@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAssignmentBinding
+import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.assignment_recycler_view.TeacherCourseAssignmentAdapter
 import com.google.android.material.navigation.NavigationView
 
@@ -34,7 +35,11 @@ class TeacherCourseAssignmentFragment:Fragment() {
     }
 
     private fun initViews() {
-        viewBinding.assignmentRecyclerView.adapter=TeacherCourseAssignmentAdapter(mutableListOf("assignment1","assignment2"))
+        var dataList= mutableListOf<String?>()
+        TestData.ASSIGNMENTS.forEach{
+            dataList.add(it.title)
+        }
+        viewBinding.assignmentRecyclerView.adapter=TeacherCourseAssignmentAdapter(dataList)
         viewBinding.addBtn.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction().
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
