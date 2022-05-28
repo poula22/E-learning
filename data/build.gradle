@@ -53,6 +53,8 @@ dependencies {
     /////////////////////////////////
     implementation 'com.microsoft.projectoxford:vision:1.0.395'
     implementation 'com.microsoft.azure.cognitiveservices:azure-cognitiveservices-computervision:1.0.9-beta'
+    implementation 'com.squareup.okhttp:okhttp-android-support:2.7.5'
+//    implementation 'com.azure:azure-ai-textanalytics:5.2.0-beta.3'
     //////////////////////////////////////
     def roomVersion = '2.4.2'
 

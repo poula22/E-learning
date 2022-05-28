@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:background="#DADADA"
                 android:scaleType="centerCrop"
-                android:src="@drawable/teacher" />
+                android:src="@drawable/student" />
 
         </com.google.android.material.card.MaterialCardView>
 
