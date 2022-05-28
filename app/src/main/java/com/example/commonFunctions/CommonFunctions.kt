@@ -12,7 +12,11 @@ import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Environment
+import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
@@ -36,51 +40,13 @@ class CommonFunctions {
 
     companion object {
 
-        fun test(
-            fragment: Fragment,
-            viewModel: OcrViewModel,
-            context: Context,
-            activity: FragmentActivity
-        ): ActivityResultLauncher<Intent> {
-            return fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                val resultCode = result.resultCode
-                val data = result.data
-
-                if (resultCode == Activity.RESULT_OK) {
-                    //Image Uri will not be null for RESULT_OK
-                    val fileUri = data?.data!!
-                    var inputStream = activity.contentResolver.openInputStream(fileUri)
-                    var byteArray = inputStream?.readBytes()
-
-//                    // Show progress bar when request is in progress
-//                    viewBinding.greyBackground.visibility = View.VISIBLE
-//                    viewBinding.progressBar.visibility = View.VISIBLE
-//                    requireActivity().window.setFlags(
-//                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-//                    )
-                    ///
-                    viewModel.getData(byteArray!!)
-
-                } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                    Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        fun imagePick(fragment: Fragment) {
-            ImagePicker
-                .with(fragment)
+        fun imagePick(fragment: Fragment
+                      ,startForResult: ActivityResultLauncher<Intent>
+                      ) {
+            ImagePicker.with(fragment)
                 .crop()                    //Crop image(Optional), Check Customization for more option
-//                .compress(1024)			//Final image size will be less than 1 MB(Optional)
-//                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                .saveDir(
-                    fragment.requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!
-                )
-                .start()
+                .saveDir(fragment.requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
+                .createIntent(startForResult::launch)
         }
 
 

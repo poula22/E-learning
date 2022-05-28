@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
@@ -27,6 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class OcrFragment : Fragment() {
     lateinit var viewBinding: FragmentFeatureOcrBinding
     lateinit var viewModel: OcrViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(OcrViewModel::class.java)
@@ -50,15 +52,16 @@ class OcrFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         subscirbeToLiveData()
-
     }
 
     private fun initViews() {
         viewBinding.cardImage.setOnClickListener {
-            ImagePicker.with(this)
-                .crop()                    //Crop image(Optional), Check Customization for more option
-                .saveDir(requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
-                .createIntent(startForImageResult::launch)
+//                ImagePicker.with(this)
+//                .crop()                    //Crop image(Optional), Check Customization for more option
+//                .saveDir(requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
+//                .createIntent(startForImageResult::launch)
+            CommonFunctions.imagePick(this,startForImageResult)
+
         }
 
         viewBinding.cardDocument.setOnClickListener {
@@ -85,6 +88,7 @@ class OcrFragment : Fragment() {
             startForImageResult.launch(intentDocument)
         }
 
+
         viewBinding.copyOutputBtn.setOnClickListener {
             CommonFunctions.copyTextToClipboard(
                 viewBinding.paragraphInput.text.toString(),
@@ -93,6 +97,7 @@ class OcrFragment : Fragment() {
         }
 
     }
+
 
     val startForImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -125,7 +130,7 @@ class OcrFragment : Fragment() {
         }
 
 
-    fun subscirbeToLiveData() {
+    private fun subscirbeToLiveData() {
         viewModel.liveData.observe(
             viewLifecycleOwner
         ) {

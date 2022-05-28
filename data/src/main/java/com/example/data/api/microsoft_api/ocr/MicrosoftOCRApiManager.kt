@@ -1,9 +1,9 @@
 package com.example.data.api.microsoft_api.ocr
 
+import com.example.data.api.ApiManager
 import com.microsoft.azure.cognitiveservices.vision.computervision.ComputerVision
 import com.microsoft.azure.cognitiveservices.vision.computervision.ComputerVisionClient
 import com.microsoft.azure.cognitiveservices.vision.computervision.ComputerVisionManager
-import com.microsoft.azure.cognitiveservices.vision.computervision.ComputerVisionManager.authenticate
 import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionImpl
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.OperationStatusCodes
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHeaders
@@ -28,8 +28,8 @@ class MicrosoftOCRApiManager {
             println("Read with URL: $url")
             try {
                 // Cast Computer Vision to its implementation to expose the required methods
-                val vision: ComputerVisionImpl = client.computerVision() as ComputerVisionImpl
-
+//                val vision: ComputerVisionImpl = client.computerVision() as ComputerVisionImpl
+                val vision: ComputerVisionImpl = ApiManager.getRetrofitVisionApi()
                 // Read in remote image and response header
                 val responseHeader: ReadHeaders =
                     vision.readWithServiceResponseAsync(url, null)

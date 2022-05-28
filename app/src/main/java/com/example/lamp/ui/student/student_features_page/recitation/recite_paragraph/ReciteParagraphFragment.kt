@@ -53,7 +53,7 @@ class ReciteParagraphFragment : Fragment() {
                 .commit()
         }
         viewBinding.cardImage.setOnClickListener {
-            CommonFunctions.imagePick(this)
+//            CommonFunctions.imagePick(this)
         }
 
         var isRecording = false

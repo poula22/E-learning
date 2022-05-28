@@ -16,6 +16,7 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
             answers= mutableListOf()
         }
     }
+    var selectedItem:Int=-1
 
 
     class ViewHolder(var viewBinding: ItemTeacherCourseQuizQuestionAnswerBinding) :
@@ -39,8 +40,21 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
         }
         holder.viewBinding.answerListItemDelete.setOnClickListener {
             Log.v("pos:::", item!!.toString())
-            removeItem(position,item)
+            removeItem(holder.absoluteAdapterPosition,item)
         }
+
+        holder.viewBinding.answerListItemCorrect.setOnClickListener {
+            if (selectedItem>-1){
+//                var preItem=answers?.get(selectedItem)
+//                preItem?.isCorrect=false
+//                notifyItemChanged(selectedItem)
+                notifyItemChanged(selectedItem)
+            }
+            selectedItem=holder.absoluteAdapterPosition
+            notifyItemChanged(selectedItem)
+        }
+
+        item?.isCorrect= (selectedItem==position)
 
     }
 
@@ -55,6 +69,9 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
 
     private fun removeItem(position: Int, item: AnswerItem) {
         answers?.remove(item)
+        if (selectedItem==position){
+            selectedItem=-1
+        }
         notifyItemRemoved(position)
     }
 }

@@ -17,12 +17,17 @@ class OcrViewModel : ViewModel() {
     var ocrOnlineDataSource: OCROnlineDataSource = OCROnlineDataSourceImp()
     var ocrRepository: OCRRepository = OCRRepositoryImp(ocrOnlineDataSource)
 
-    fun getData(image: ByteArray) {
+     fun getData(image: ByteArray?) {
         Thread {
             try {
                 runBlocking {
-                    var result = ocrRepository.getTextFromImageReadApi(image = image)
-                    viewModelScope.launch { liveData.value = result }
+                    if (image!=null){
+                        var result = ocrRepository.getTextFromImageReadApi(image = image)
+                        viewModelScope.launch {
+                            liveData.value = result
+                        }
+                    }
+
                 }
             } catch (e: Exception) {
 

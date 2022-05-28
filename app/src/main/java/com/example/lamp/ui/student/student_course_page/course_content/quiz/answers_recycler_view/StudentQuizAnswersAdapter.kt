@@ -37,9 +37,12 @@ class StudentQuizAnswersAdapter(var answers: MutableList<AnswerItem>) :
         holder.viewBinding.item=item
 
         holder.viewBinding.answerText.setOnClickListener{
-            itemSelectedIndex=position
-            holder.changeColor(R.color.green)
+            if (itemSelectedIndex>-1){
+                notifyItemChanged(itemSelectedIndex)
+            }
+            itemSelectedIndex=holder.absoluteAdapterPosition
             onAnswerSelectedListener?.onAnswerSelected(item)
+
         }
 
         if (itemSelectedIndex>-1){
@@ -48,6 +51,7 @@ class StudentQuizAnswersAdapter(var answers: MutableList<AnswerItem>) :
             }
             else{
                 holder.changeColor(com.workfort.linkpreview.R.color.md_light_blue_100)
+                notifyItemChanged(position)
             }
         }
 

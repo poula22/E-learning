@@ -62,7 +62,7 @@ class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = nu
 
         }
         holder.viewBinding.createQuestionDeleteQuestion.setOnClickListener{
-            removeQuestion(position,item!!)
+            removeQuestion(holder.absoluteAdapterPosition,item!!)
         }
     }
 

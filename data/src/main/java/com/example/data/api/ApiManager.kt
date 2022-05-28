@@ -1,6 +1,8 @@
 package com.example.data.api
 
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
+import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionClientImpl
+import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionImpl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,7 +28,12 @@ class ApiManager {
         private const val BASEURL_BACKEND: String = "https://25.46.88.203:7097/"
         private const val BASEURL_OCR: String = "https://eastus.api.cognitive.microsoft.com/"
         private var retrofitBackend: Retrofit? = null
-        private var retrofitOCR: Retrofit? = null
+        private var retrofitApi: Retrofit? = null
+
+        fun getRetrofitVisionApi():ComputerVisionImpl{
+            val vision: ComputerVisionImpl = ComputerVisionImpl(retrofitApi,client as ComputerVisionClientImpl)
+            return vision
+        }
 
         private fun getBackendInstance(): Retrofit {
             if (retrofitBackend == null)
@@ -38,12 +45,12 @@ class ApiManager {
         }
 
         private fun getOCRInstance(): Retrofit {
-            if (retrofitOCR == null)
-                retrofitOCR = Retrofit.Builder()
+            if (retrofitApi == null)
+                retrofitApi = Retrofit.Builder()
                     .baseUrl(BASEURL_OCR)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client).build()
-            return retrofitOCR!!
+            return retrofitApi!!
         }
 
         fun getCourseApi(): CourseWebService {
