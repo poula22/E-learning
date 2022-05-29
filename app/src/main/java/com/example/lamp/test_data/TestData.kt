@@ -5,7 +5,7 @@ import com.example.lamp.R
 import com.example.lamp.ui.parent.parent_communicate_page.communicate_recycler_view.TeacherItem
 import com.example.lamp.ui.parent.parent_courses_page.course_recycler_view.ParentCourseItem
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentToTeacherItem
+import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentFromStudentItem
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsItem
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeatureItem
@@ -56,7 +56,7 @@ object TestData {
                     Calendar.getInstance().clearTime().time,
                     Calendar.getInstance().clearTime().time,
                     "submitted",
-                    100
+                    100, mutableListOf()
                 )
             )
         }
@@ -68,7 +68,7 @@ object TestData {
                     Calendar.getInstance().time,
                     Calendar.getInstance().clearTime().time,
                     "not submitted",
-                    100
+                    100, mutableListOf()
                 )
             )
         }
@@ -76,18 +76,18 @@ object TestData {
     }
 
 
-    var ASSIGNMENT_FROM_STUDENT: MutableList<AssignmentToTeacherItem> = initAssignmentsFromStudents()
+    var ASSIGNMENT_FROM_STUDENT: MutableList<AssignmentFromStudentItem?>? = initAssignmentsFromStudents()
 
-    private fun initAssignmentsFromStudents(): MutableList<AssignmentToTeacherItem> {
+    private fun initAssignmentsFromStudents(): MutableList<AssignmentFromStudentItem?>? {
         ASSIGNMENT_FROM_STUDENT = mutableListOf()
         for (i in 1..50) {
-            ASSIGNMENT_FROM_STUDENT.add(
-                AssignmentToTeacherItem("assignment$i", "", "", 20, 30)
+            ASSIGNMENT_FROM_STUDENT!!.add(
+                AssignmentFromStudentItem("student$i", "", "", "", 30,30)
             )
         }
         for (i in 51..100) {
-            ASSIGNMENT_FROM_STUDENT.add(
-                AssignmentToTeacherItem("assignment$i", "", "", 20, 30)
+            ASSIGNMENT_FROM_STUDENT!!.add(
+                AssignmentFromStudentItem("student$i", "", "", "", 30,30)
             )
         }
         return ASSIGNMENT_FROM_STUDENT

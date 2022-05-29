@@ -8,5 +8,6 @@ data class AssignmentItem(
     var startDate:Date,
     var deadline: Date,
     var state: String,
-    var grade: Int
+    var grade: Int,
+    var assignmentsFromStudents : MutableList<AssignmentFromStudentItem?>?
 )

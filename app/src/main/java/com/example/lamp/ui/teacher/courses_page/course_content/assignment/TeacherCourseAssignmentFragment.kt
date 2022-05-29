@@ -44,7 +44,8 @@ class TeacherCourseAssignmentFragment : Fragment() {
         TestData.ASSIGNMENTS.forEach {
             dataList.add(it.title)
         }
-        val adapter = TeacherCourseAssignmentAdapter(dataList)
+        viewBinding.assignmentRecyclerView.adapter = TeacherCourseAssignmentAdapter(dataList)
+        val adapter = viewBinding.assignmentRecyclerView.adapter as TeacherCourseAssignmentAdapter
         adapter.onAssignmentClickListener =
             object : TeacherCourseAssignmentAdapter.OnAssignmentClickListener {
                 override fun setOnAssignmentClickListener(item: AssignmentItem?) {
@@ -58,7 +59,7 @@ class TeacherCourseAssignmentFragment : Fragment() {
                         .commit()
                 }
             }
-        viewBinding.assignmentRecyclerView.adapter = TeacherCourseAssignmentAdapter(dataList)
+
         viewBinding.addBtn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

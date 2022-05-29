@@ -9,10 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherAssignmentsFromStudentsBinding
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentToTeacherItem
+import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentFromStudentItem
 import com.rajat.pdfviewer.PdfViewerActivity
 
-class TeacherAssignmentsFromStudentsAdapter(var assignmentList: MutableList<AssignmentToTeacherItem>?) :
+class TeacherAssignmentsFromStudentsAdapter(var assignmentList: MutableList<AssignmentFromStudentItem?>?) :
     RecyclerView.Adapter<TeacherAssignmentsFromStudentsAdapter.ViewHolder>() {
     class ViewHolder(var itemViewBinding: ItemTeacherAssignmentsFromStudentsBinding) :
         RecyclerView.ViewHolder(itemViewBinding.root)
@@ -30,6 +30,7 @@ class TeacherAssignmentsFromStudentsAdapter(var assignmentList: MutableList<Assi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = assignmentList?.get(position)
+
         holder.itemViewBinding.item = item
         holder.itemViewBinding.assignGrade.setOnClickListener {
             if (holder.itemViewBinding.studentGrade.text.toString() == "" ||

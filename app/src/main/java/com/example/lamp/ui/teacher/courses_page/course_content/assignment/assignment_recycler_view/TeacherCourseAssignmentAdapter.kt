@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseAssignmentBinding
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 
 class TeacherCourseAssignmentAdapter(var assignmentList: MutableList<String>) :
     RecyclerView.Adapter<TeacherCourseAssignmentAdapter.ViewHolder>() {
@@ -27,7 +26,7 @@ class TeacherCourseAssignmentAdapter(var assignmentList: MutableList<String>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = assignmentList.get(position)
-        holder.itemViewBinding.item.title = item
+        holder.itemViewBinding.item?.title = item
         holder.itemViewBinding.assignmentTxt.setOnClickListener {
 
         }
@@ -35,9 +34,10 @@ class TeacherCourseAssignmentAdapter(var assignmentList: MutableList<String>) :
 
     override fun getItemCount(): Int = assignmentList.size ?: 0
 
-    var onAssignmentClickListener:OnAssignmentClickListener?=null
-    interface OnAssignmentClickListener{
+    var onAssignmentClickListener: OnAssignmentClickListener? = null
+
+    interface OnAssignmentClickListener {
         fun setOnAssignmentClickListener(item: AssignmentItem?)
     }
 
-    }
+}

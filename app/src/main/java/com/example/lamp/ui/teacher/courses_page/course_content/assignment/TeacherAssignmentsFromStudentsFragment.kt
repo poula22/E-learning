@@ -10,7 +10,6 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherAssignmentsFromStudentsBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentToTeacherItem
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.assignments_from_students.TeacherAssignmentsFromStudentsAdapter
 
 class TeacherAssignmentsFromStudentsFragment(val item : AssignmentItem?) : Fragment() {

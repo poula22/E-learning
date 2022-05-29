@@ -128,7 +128,8 @@ class TeacherCourseAddAssignmentFragment : Fragment() {
 
                 Toast.makeText(context, "saved succesful", Toast.LENGTH_SHORT).show()
                 //insert in database
-                TestData.ASSIGNMENTS.add(AssignmentItem(title,description,startDate,endDate,points,100))
+                TestData.ASSIGNMENTS.add(AssignmentItem(title,description,startDate,endDate,points,100,
+                    TestData.ASSIGNMENT_FROM_STUDENT))
                 requireActivity().supportFragmentManager.popBackStack()
             }
         }

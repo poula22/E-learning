@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentToTeacherItem" />
+            type="com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentFromStudentItem" />
     </data>
 
     <androidx.cardview.widget.CardView
