@@ -13,19 +13,24 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAssignmentBinding
 import com.example.lamp.test_data.TestData
+import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.assignment_recycler_view.TeacherCourseAssignmentAdapter
-import com.google.android.material.navigation.NavigationView
 
 
-class TeacherCourseAssignmentFragment:Fragment() {
+class TeacherCourseAssignmentFragment : Fragment() {
     //
-    lateinit var viewBinding:FragmentTeacherCourseAssignmentBinding
+    lateinit var viewBinding: FragmentTeacherCourseAssignmentBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding=DataBindingUtil.inflate(inflater,R.layout.fragment_teacher_course_assignment,container,false)
+        viewBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_teacher_course_assignment,
+            container,
+            false
+        )
         return viewBinding.root
     }
 
@@ -35,25 +40,42 @@ class TeacherCourseAssignmentFragment:Fragment() {
     }
 
     private fun initViews() {
-        var dataList= mutableListOf<String?>()
-        TestData.ASSIGNMENTS.forEach{
+        var dataList = mutableListOf<String>()
+        TestData.ASSIGNMENTS.forEach {
             dataList.add(it.title)
         }
-        viewBinding.assignmentRecyclerView.adapter=TeacherCourseAssignmentAdapter(dataList)
-        viewBinding.addBtn.setOnClickListener{
-            requireActivity().supportFragmentManager.beginTransaction().
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        val adapter = TeacherCourseAssignmentAdapter(dataList)
+        adapter.onAssignmentClickListener =
+            object : TeacherCourseAssignmentAdapter.OnAssignmentClickListener {
+                override fun setOnAssignmentClickListener(item: AssignmentItem?) {
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .addToBackStack("")
+                        .replace(
+                            R.id.teacher_fragment_tab,
+                            TeacherAssignmentsFromStudentsFragment(item)
+                        )
+                        .commit()
+                }
+            }
+        viewBinding.assignmentRecyclerView.adapter = TeacherCourseAssignmentAdapter(dataList)
+        viewBinding.addBtn.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack("")
-                .replace(R.id.teacher_course_content_container,TeacherCourseAddAssignmentFragment())
+                .replace(
+                    R.id.teacher_course_content_container,
+                    TeacherCourseAddAssignmentFragment()
+                )
                 .commit()
         }
     }
 
     override fun onStart() {
         super.onStart()
-        var toolbar: Toolbar =requireActivity().findViewById(R.id.toolbar)
-        toolbar.isVisible=true
-        var drawerLayout: DrawerLayout =requireActivity().findViewById(R.id.drawer_layout)
+        var toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar)
+        toolbar.isVisible = true
+        var drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 }

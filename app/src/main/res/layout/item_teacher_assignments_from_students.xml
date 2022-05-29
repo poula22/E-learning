@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentToTeacherItem" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#E1BEE7"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/student_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.studentName}"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Student Name" />
+
+            <ImageView
+                android:id="@+id/assign_grade"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_done"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#5C6BC0" />
+
+            <TextView
+                android:id="@+id/points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:text="@{String.valueOf(item.totalPoints)}"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/student_grade"
+                app:layout_constraintEnd_toStartOf="@+id/assign_grade"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="/30" />
+
+            <EditText
+                android:id="@+id/student_grade"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="30"
+                android:text="@{String.valueOf(item.studentGrade)}"
+                android:textSize="24sp"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toStartOf="@+id/points"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/attachment"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_btn"
+                android:backgroundTint="#F3E5F5"
+                android:gravity="center"
+                android:text="@{item.fileName}"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/student_name"
+                tools:text="Document.pdf" />
+
+            <TextView
+                android:id="@+id/student_assignment_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lines="5"
+                android:text="@{item.assignmentNote}"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/attachment"
+                tools:text="fffff" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -86,4 +86,6 @@ dependencies {
 
 
     implementation 'com.github.arhanashik:LinkPreview:1.2.3'
+
+    implementation 'com.github.afreakyelf:Pdf-Viewer:v1.0.7'
 }
