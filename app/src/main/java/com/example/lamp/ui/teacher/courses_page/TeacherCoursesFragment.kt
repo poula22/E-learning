@@ -38,6 +38,8 @@ class TeacherCoursesFragment : Fragment() {
         floatingActionBtn.isVisible = true
     }
 
+
+
     private fun initViews() {
         adapter = TeacherCoursesAdapter(TestData.COURSES, 1)
         adapter.onCourseClickListener=object :TeacherCoursesAdapter.OnCourseClickListener{

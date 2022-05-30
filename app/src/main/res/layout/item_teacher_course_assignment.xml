@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem" />
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#E0F2F1"
-            android:text="@{item.title}"
+            android:text="@{item}"
             android:textSize="32sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

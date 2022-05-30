@@ -56,27 +56,11 @@ class OcrFragment : Fragment() {
 
     private fun initViews() {
         viewBinding.cardImage.setOnClickListener {
-//                ImagePicker.with(this)
-//                .crop()                    //Crop image(Optional), Check Customization for more option
-//                .saveDir(requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
-//                .createIntent(startForImageResult::launch)
             CommonFunctions.imagePick(this,startForImageResult)
-
         }
 
         viewBinding.cardDocument.setOnClickListener {
-//            val x =CommonFunctions.uploadDoc(requireActivity())
-
-            val intentDocument = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "*/*"
-                putExtra(
-                    Intent.EXTRA_MIME_TYPES, arrayOf(
-                        "application/pdf"
-                    )
-                )
-            }
-            startForImageResult.launch(intentDocument)
+            startForImageResult.launch(CommonFunctions.uploadDoc(this.requireActivity()))
         }
 
 

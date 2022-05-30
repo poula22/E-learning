@@ -141,6 +141,12 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewBinding.navView.menu.performIdentifierAction(viewBinding.navView.checkedItem?.itemId!!, 0)
+
+    }
+
     override fun onDetach() {
         super.onDetach()
         val bottomNavigationView: BottomNavigationView =

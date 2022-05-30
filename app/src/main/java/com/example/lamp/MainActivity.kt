@@ -43,22 +43,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         pushFragment(SigninFragment())
-
     }
 
     fun signUp(view: View) {
-        pushFragment(SignUpFragment())
+        pushFragment(SignUpFragment(),"add")
     }
 
     fun signIn(view: View) {
         pushFragment(ParentContainerFragment())
     }
 
-    fun pushFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
+    fun pushFragment(fragment: Fragment,string: String?=null) {
+        var fragment=supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        if (string!=null){
+            fragment.addToBackStack("")
+        }
+        fragment.commit()
     }
 
 }

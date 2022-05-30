@@ -26,10 +26,11 @@ class TeacherCourseAssignmentAdapter(var assignmentList: MutableList<String>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = assignmentList.get(position)
-        holder.itemViewBinding.item?.title = item
+        holder.itemViewBinding.item= item
         holder.itemViewBinding.assignmentTxt.setOnClickListener {
-
+                onAssignmentClickListener?.setOnAssignmentClickListener(position)
         }
+
     }
 
     override fun getItemCount(): Int = assignmentList.size ?: 0
@@ -37,7 +38,7 @@ class TeacherCourseAssignmentAdapter(var assignmentList: MutableList<String>) :
     var onAssignmentClickListener: OnAssignmentClickListener? = null
 
     interface OnAssignmentClickListener {
-        fun setOnAssignmentClickListener(item: AssignmentItem?)
+        fun setOnAssignmentClickListener(pos:Int)
     }
 
 }

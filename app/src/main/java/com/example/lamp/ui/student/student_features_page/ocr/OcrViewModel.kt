@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.data.api.ApiManager
 import com.example.data.repos.OCROnlineDataSourceImp
 import com.example.data.repos.OCRRepositoryImp
 import com.example.domain.repos.OCROnlineDataSource

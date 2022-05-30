@@ -50,25 +50,17 @@ class CommonFunctions {
         }
 
 
-        fun uploadDoc(activity: FragmentActivity) {
-            val intentDocument = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+        fun uploadDoc(activity: FragmentActivity):Intent {
+            return Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "*/*"
                 putExtra(
                     Intent.EXTRA_MIME_TYPES, arrayOf(
-                        "application/pdf",
-                        "application/doc",
-                        "application/docx",
-                        "text/plain"
+                        "application/pdf"
                     )
                 )
             }
-            startActivityForResult(
-                activity,
-                intentDocument,
-                CONSTANTS.DOCUMENT_REQUEST_CODE,
-                Bundle.EMPTY
-            )
+
         }
 
         fun voiceRecord(

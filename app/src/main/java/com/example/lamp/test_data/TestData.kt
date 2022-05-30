@@ -85,11 +85,6 @@ object TestData {
                 AssignmentFromStudentItem("student$i", "", "", "", 30,30)
             )
         }
-        for (i in 51..100) {
-            ASSIGNMENT_FROM_STUDENT!!.add(
-                AssignmentFromStudentItem("student$i", "", "", "", 30,30)
-            )
-        }
         return ASSIGNMENT_FROM_STUDENT
     }
 

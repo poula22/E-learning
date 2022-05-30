@@ -1,16 +1,19 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.assignment.assignments_from_students
 
-import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.graphics.drawable.toDrawable
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import aws.smithy.kotlin.runtime.http.Url
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherAssignmentsFromStudentsBinding
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentFromStudentItem
-import com.rajat.pdfviewer.PdfViewerActivity
+import java.io.File
+import java.net.URL
 
 class TeacherAssignmentsFromStudentsAdapter(var assignmentList: MutableList<AssignmentFromStudentItem?>?) :
     RecyclerView.Adapter<TeacherAssignmentsFromStudentsAdapter.ViewHolder>() {
@@ -33,32 +36,25 @@ class TeacherAssignmentsFromStudentsAdapter(var assignmentList: MutableList<Assi
 
         holder.itemViewBinding.item = item
         holder.itemViewBinding.assignGrade.setOnClickListener {
-            if (holder.itemViewBinding.studentGrade.text.toString() == "" ||
-                holder.itemViewBinding.studentGrade.text.toString()
+            if (holder.itemViewBinding.studentGradeTxt.text.toString() == "" ||
+                holder.itemViewBinding.studentGradeTxt.text.toString()
                     .toInt() > holder.itemViewBinding.points.text.toString().toInt()
             ) {
-                Toast.makeText(it.context, "Please, enter a valid grade", Toast.LENGTH_SHORT).show()
+                holder.itemViewBinding.studentGradeTxt.error="please enter valid grade"
             } else {
-                item?.studentGrade = holder.itemViewBinding.studentGrade.text.toString().toInt()
-                it.background = Color.GREEN.toDrawable()
+                item?.studentGrade = holder.itemViewBinding.studentGradeTxt.text.toString().toInt()
+                it.setBackgroundResource(R.color.green)
             }
-
         }
-        holder.itemViewBinding.attachment.setOnClickListener {
-            it.context.startActivity(
-                // Use 'launchPdfFromPath' if you want to use assets file (enable "fromAssets" flag) / internal directory
-                PdfViewerActivity.launchPdfFromUrl(
-                    it.context,
-                    "C:\\Users\\Pola\\Desktop\\11111.pdf",                                // PDF URL in String format
-                    "11111.pdf", // PDF Name/Title in String format
-                    "", // Enable/Disable "fromAssets" flag
-                    true, // Enable/Disable "fromSD" flag
-                )
-            )
 
+        holder.itemViewBinding.attachment.setOnClickListener {
+            onPdfOpenListener?.onPdfOpen()
         }
     }
-
+    var  onPdfOpenListener:OnPdfOpenListener?=null
+    interface OnPdfOpenListener{
+        fun onPdfOpen()
+    }
     override fun getItemCount(): Int = assignmentList?.size ?: 0
 }
 

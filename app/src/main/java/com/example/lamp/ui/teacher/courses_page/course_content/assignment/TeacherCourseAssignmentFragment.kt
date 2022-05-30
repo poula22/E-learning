@@ -48,13 +48,13 @@ class TeacherCourseAssignmentFragment : Fragment() {
         val adapter = viewBinding.assignmentRecyclerView.adapter as TeacherCourseAssignmentAdapter
         adapter.onAssignmentClickListener =
             object : TeacherCourseAssignmentAdapter.OnAssignmentClickListener {
-                override fun setOnAssignmentClickListener(item: AssignmentItem?) {
+                override fun setOnAssignmentClickListener(pos:Int) {
                     requireActivity().supportFragmentManager
                         .beginTransaction()
                         .addToBackStack("")
                         .replace(
                             R.id.teacher_fragment_tab,
-                            TeacherAssignmentsFromStudentsFragment(item)
+                            TeacherAssignmentsFromStudentsFragment(TestData.ASSIGNMENTS.get(pos))
                         )
                         .commit()
                 }
