@@ -1,5 +1,6 @@
 package com.example.lamp.ui.student.student_course_page.course_content.assignment
 
+import java.io.Serializable
 import java.util.*
 
 data class AssignmentItem(
@@ -10,4 +11,4 @@ data class AssignmentItem(
     var state: String,
     var grade: Int,
     var assignmentsFromStudents : MutableList<AssignmentFromStudentItem?>?
-)
+) : Serializable

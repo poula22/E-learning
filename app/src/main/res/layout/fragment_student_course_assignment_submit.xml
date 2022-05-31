@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/assignment_notes_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="8"
+            android:textSize="24sp"
+            android:hint="write notes here"
+            android:gravity="start"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/upload_file"
+            android:layout_width="wrap_content"
+            android:textSize="32sp"
+            android:text="upload_file"
+            android:gravity="start"
+            app:drawableStartCompat="@drawable/ic_upload"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assignment_notes_txt" />
+
+        <Button
+            android:id="@+id/submit_assignment_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="submit"
+            app:layout_constraintTop_toBottomOf="@+id/upload_file" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

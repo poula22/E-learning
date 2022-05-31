@@ -7,19 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseAssignmentBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.assignment_recycler_view.StudentCourseAssignmentAdapter
+import com.example.lamp.ui.student.student_course_page.course_content.assignment.assignment_submit.StudentCourseAssignmentSubmitFragment
 import com.example.lamp.ui.student.student_features_page.recitation.recite_paragraph.ReciteParagraphFragment
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.ReciteWordsFragment
 import com.google.android.material.tabs.TabLayout
 
-class StudentCourseAssignmentFragment(var assignments: MutableList<AssignmentItem>? = null) :
+class StudentCourseAssignmentFragment :
     Fragment() {
     lateinit var viewBinding: FragmentStudentCourseAssignmentBinding
     lateinit var adapter: StudentCourseAssignmentAdapter
     lateinit var tabLayout: TabLayout
+    lateinit var viewModel: StudentCourseAssignmentViewModel
 
     private fun initTabs(
         all: TabLayout.Tab,
@@ -33,6 +37,12 @@ class StudentCourseAssignmentFragment(var assignments: MutableList<AssignmentIte
         tabLayout.addTab(submitted)
         tabLayout.addTab(notSubmitted)
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(StudentCourseAssignmentViewModel::class.java)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +60,35 @@ class StudentCourseAssignmentFragment(var assignments: MutableList<AssignmentIte
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter= StudentCourseAssignmentAdapter(assignments)
+        initViews()
+        subscibeToLiveData()
+        viewModel.getData(requireArguments())
+
+    }
+
+    private fun subscibeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner){
+            adapter.setFilteredList(it)
+        }
+    }
+
+    private fun initViews() {
+        adapter= StudentCourseAssignmentAdapter()
+        adapter.onStudentAssignmentClickedListener=object :StudentCourseAssignmentAdapter.OnStudentAssignmentClickedListener{
+            override fun onAssignmentClick(postion: Int) {
+                var bundle=Bundle()
+                var assignment: AssignmentItem? =viewModel.liveData.value?.get(postion)
+                bundle.putSerializable("assignment",assignment)
+                var fragment=StudentCourseAssignmentSubmitFragment()
+                fragment.arguments=bundle
+                requireActivity()
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .replace(this@StudentCourseAssignmentFragment.id,fragment)
+                    .addToBackStack("")
+                    .commit()
+            }
+        }
         viewBinding.studentAssignmentsRv.adapter=adapter
         tabLayout = viewBinding.tabLayout
         val all = tabLayout.newTab()
@@ -60,8 +98,13 @@ class StudentCourseAssignmentFragment(var assignments: MutableList<AssignmentIte
         tabLayout.addOnTabSelectedListener(
             object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
-                    Log.v("action;::",tab?.text.toString())
-                    filterList(tab?.text.toString())
+                    var text=tab?.text.toString()
+                    Log.v("action;::",text)
+                    if (text.isNotEmpty()) {
+                        var list=viewModel.filterList(text)
+                        adapter.setFilteredList(list)
+                    }
+
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -70,37 +113,20 @@ class StudentCourseAssignmentFragment(var assignments: MutableList<AssignmentIte
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     Log.v("action;::",tab?.text.toString())
-                    filterList(tab?.text.toString())
+                    var text=tab?.text.toString()
+                    if (text.isNotEmpty()) {
+                        var list=viewModel.filterList(text)
+                        adapter.setFilteredList(list)
+                    }
                 }
-
-
             }
         )
         tabLayout.selectTab(all)
+
     }
 
 
-    fun filterList(text: String) {
-        if (text.isEmpty()) {
-            adapter.setFilteredList(assignments!!)
-        }
-        //filter list here
-        val filteredList = mutableListOf<AssignmentItem>()
-        assignments?.let {
-            for (item in it) {
-                if (item.state.lowercase() == text.lowercase()) {
-                    filteredList.add(item) //add to filtered list
-                } else if(text.lowercase() == "all" ){
-                    filteredList.add(item) // add all the items that are not filtered
-                }
-            }
 
-        }
-
-        if (filteredList.isNotEmpty()) {
-            adapter.setFilteredList(filteredList)
-        }
-    }
 
 
 }

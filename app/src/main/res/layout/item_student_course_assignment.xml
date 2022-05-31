@@ -11,6 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_assignment_constrain_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="20dp">
@@ -41,7 +42,7 @@
             android:id="@+id/deadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.deadline.toString()}"
+            android:text="@{String.valueOf(item.deadline.date)+String.valueOf('/')+String.valueOf(item.deadline.month+1)+String.valueOf('/')+String.valueOf(item.deadline.year+1900)}"
             android:textSize="17sp"
             app:layout_constraintEnd_toStartOf="@+id/state"
             app:layout_constraintHorizontal_bias="0.5"

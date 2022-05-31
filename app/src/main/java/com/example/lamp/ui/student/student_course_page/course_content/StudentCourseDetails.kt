@@ -1,16 +1,22 @@
 package com.example.lamp.ui.student.student_course_page.course_content
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.lamp.MainActivity
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseDetailsBinding
 import com.example.lamp.test_data.TestData
+import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.StudentCourseAssignmentFragment
 import com.example.lamp.ui.student.student_course_page.course_content.material.StudentCourseMaterialFragment
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.StudentQuizzesFragment
@@ -23,6 +29,7 @@ class StudentCourseDetails(var course: CourseItem?) : Fragment() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewBinding: FragmentStudentCourseDetailsBinding
+    private var fragment:Fragment?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,36 +75,52 @@ class StudentCourseDetails(var course: CourseItem?) : Fragment() {
             viewBinding.studentCourseContainer.toolbar.subtitle =
                 viewBinding.navView.menu.findItem(item.itemId).title
             if (item.itemId == R.id.assignment) {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(
-                        R.id.student_course_content_container,
-                        StudentCourseAssignmentFragment(TestData.ASSIGNMENTS)
-                    )
-                    .commit()
+                var bundle=Bundle()
+                bundle.putSerializable("assignmentList",TestData.ASSIGNMENTS as ArrayList<AssignmentItem>)
+                var fragmentSwap= StudentCourseAssignmentFragment()
+                fragmentSwap.arguments=bundle
+                fragment=fragmentSwap
             } else if (item.itemId == R.id.material) {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(
-                        R.id.student_course_content_container,
-                        StudentCourseMaterialFragment(course)
-                    )
-                    .commit()
-
+                fragment=StudentCourseMaterialFragment(course)
             } else if (item.itemId == R.id.dashboard) {
 
             } else if (item.itemId == R.id.quizzes) {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(
-                        R.id.student_course_content_container,
-                        StudentQuizzesFragment()
-                    )
-                    .commit()
+                fragment=StudentQuizzesFragment()
             }
-            drawerLayout.close()
-            viewBinding.studentCourseContainer.infoIcon.setOnClickListener {
-
-            }
+            drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true
         }
+        viewBinding.studentCourseContainer.infoIcon.setOnClickListener {
+
+        }
+        drawerLayout.addDrawerListener(object :DrawerLayout.DrawerListener{
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                fragment?.let {
+                    Handler(Looper.getMainLooper()).postDelayed( {
+                        requireActivity().supportFragmentManager
+                            .beginTransaction()
+                            .replace(
+                                R.id.student_course_content_container,
+                                it
+                            )
+                            .commit()
+                    },0)
+
+                }
+                fragment=null
+
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+            }
+
+        })
         viewBinding.navView.setCheckedItem(R.id.dashboard)
         viewBinding.navView.menu.performIdentifierAction(R.id.dashboard, 0)
 

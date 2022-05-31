@@ -1,8 +1,11 @@
 package com.example.lamp.ui.teacher.courses_page.course_content
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -26,7 +29,7 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewBinding: FragmentTeacherCourseDetailsBinding
-
+    var fragment: Fragment? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -74,65 +77,62 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                 viewBinding.navView.menu.findItem(item.itemId).title
             when (item.itemId) {
                 R.id.assignment -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.teacher_course_content_container,
-                            TeacherCourseAssignmentFragment()
-                        )
-                        .commit()
+                    fragment=TeacherCourseAssignmentFragment()
                 }
                 R.id.material -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.teacher_course_content_container, TeacherCourseMaterialFragment(
-                                TestData.COURSES[0]
-                            )
-                        )
-                        .commit()
+                    fragment=TeacherCourseMaterialFragment(TestData.COURSES[0])
                 }
                 R.id.edit_course -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.teacher_course_content_container,
-                            TeacherCourseSettingsFragment()
-                        )
-                        .commit()
+                    fragment=TeacherCourseSettingsFragment()
                 }
                 R.id.students -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.teacher_course_content_container,
-                            TeacherStudentsFragment(TestData.STUDENTS)
-                        )
-                        .commit()
+                    fragment=TeacherStudentsFragment(TestData.STUDENTS)
                 }
                 R.id.dashboard -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.teacher_course_content_container,
-                            TeacherCourseDashboardFragment()
-                        )
-                        .commit()
+                    fragment=TeacherCourseDashboardFragment()
                 }
                 R.id.quizzes -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.teacher_course_content_container,
-                            TeacherCourseQuizzesFragment()
-                        )
-                        .commit()
+                    fragment=TeacherCourseQuizzesFragment()
                 }
             }
-            drawerLayout.close()
-            viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
 
+            //????????
+            viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
+            //????????
             }
+            drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true
         }
+        drawerLayout.addDrawerListener(object :DrawerLayout.DrawerListener{
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                fragment?.let {
+                    Handler(Looper.getMainLooper()).postDelayed( {
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(
+                                R.id.teacher_course_content_container,
+                                it
+                            )
+                            .commit()
+                    },0)
+
+                }
+                fragment=null
+
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+
+            }
+
+        })
         viewBinding.navView.setCheckedItem(R.id.dashboard)
         viewBinding.navView.menu.performIdentifierAction(R.id.dashboard, 0)
-
-
         viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
             viewBinding.teacherCourseContainer.toolbar.subtitle = "Settings"
             requireActivity().supportFragmentManager.beginTransaction()
@@ -144,7 +144,13 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
     override fun onResume() {
         super.onResume()
         viewBinding.navView.menu.performIdentifierAction(viewBinding.navView.checkedItem?.itemId!!, 0)
-
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.teacher_course_content_container,
+                fragment!!
+            )
+            .commit()
+        fragment=null
     }
 
     override fun onDetach() {

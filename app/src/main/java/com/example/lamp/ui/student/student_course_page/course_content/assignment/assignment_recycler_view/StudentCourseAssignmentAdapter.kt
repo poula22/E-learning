@@ -32,7 +32,18 @@ class StudentCourseAssignmentAdapter(var assignments: MutableList<AssignmentItem
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = assignments?.get(position)
         holder.viewBinding.item = item
-
+        if (position%2==0){
+            holder.viewBinding.itemAssignmentConstrainLayout.setBackgroundResource(R.color.dark_green)
+        }else{
+            holder.viewBinding.itemAssignmentConstrainLayout.setBackgroundResource(R.color.light_pink)
+        }
+        holder.viewBinding.itemAssignmentConstrainLayout.setOnClickListener {
+            onStudentAssignmentClickedListener?.onAssignmentClick(holder.bindingAdapterPosition)
+        }
+    }
+    var onStudentAssignmentClickedListener:OnStudentAssignmentClickedListener?=null
+    interface OnStudentAssignmentClickedListener{
+        fun onAssignmentClick(pos:Int)
     }
 
     override fun getItemCount(): Int = assignments?.size ?: 0
