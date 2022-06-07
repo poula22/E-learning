@@ -19,13 +19,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.commonFunctions.CONSTANTS
 import com.example.commonFunctions.CommonFunctions
+import com.example.commonFunctions.ExternalStorageAccessFragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureOcrBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class OcrFragment : Fragment() {
+class OcrFragment : ExternalStorageAccessFragment() {
     lateinit var viewBinding: FragmentFeatureOcrBinding
     lateinit var viewModel: OcrViewModel
 
@@ -56,11 +57,13 @@ class OcrFragment : Fragment() {
 
     private fun initViews() {
         viewBinding.cardImage.setOnClickListener {
-            CommonFunctions.imagePick(this,startForImageResult)
+//            CommonFunctions.imagePick(this,startForImageResult)
+            imagePick()
         }
 
         viewBinding.cardDocument.setOnClickListener {
-            startForImageResult.launch(CommonFunctions.uploadDoc(this.requireActivity()))
+//            startForImageResult.launch(CommonFunctions.uploadDoc(this.requireActivity()))
+            uploadDoc()
         }
 
 
@@ -73,36 +76,46 @@ class OcrFragment : Fragment() {
 
     }
 
+    override fun showProgressBar() {
+        viewBinding.greyBackground.visibility = View.VISIBLE
+        viewBinding.progressBar.visibility = View.VISIBLE
+    }
 
-    val startForImageResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            val resultCode = result.resultCode
-            val data = result.data
+    override fun resultListener(byteArray: ByteArray) {
+        viewModel.getData(byteArray)
+    }
 
-            if (resultCode == Activity.RESULT_OK) {
-                //Image Uri will not be null for RESULT_OK
-                val fileUri = data?.data!!
 
-                var inputStream = requireActivity().contentResolver.openInputStream(fileUri)
-                var byteArray = inputStream?.readBytes()
 
-                // Show progress bar when request is in progress
-                viewBinding.greyBackground.visibility = View.VISIBLE
-                viewBinding.progressBar.visibility = View.VISIBLE
-                requireActivity().window.setFlags(
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                )
-                ///
-                viewModel.getData(byteArray!!)
-
-            } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_SHORT).show()
-            }
-        }
+//    val startForImageResult =
+//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+//            val resultCode = result.resultCode
+//            val data = result.data
+//
+//            if (resultCode == Activity.RESULT_OK) {
+//                //Image Uri will not be null for RESULT_OK
+//                val fileUri = data?.data!!
+//
+//                var inputStream = requireActivity().contentResolver.openInputStream(fileUri)
+//                var byteArray = inputStream?.readBytes()
+//
+//                // Show progress bar when request is in progress
+//                viewBinding.greyBackground.visibility = View.VISIBLE
+//                viewBinding.progressBar.visibility = View.VISIBLE
+//                requireActivity().window.setFlags(
+//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+//                )
+//                ///
+//                viewModel.getData(byteArray!!)
+//
+//            } else if (resultCode == ImagePicker.RESULT_ERROR) {
+//                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
+//                    .show()
+//            } else {
+//                Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_SHORT).show()
+//            }
+//        }
 
 
     private fun subscirbeToLiveData() {
