@@ -1,25 +1,19 @@
 package com.example.lamp.ui.student.student_features_page.recitation.recite_paragraph
 
-import android.app.Activity
-import android.content.Intent
 import android.media.MediaRecorder
 import android.os.Bundle
-import android.speech.RecognizerIntent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CommonFunctions
-import com.example.commonFunctions.ExternalStorageAccessFragment
+import com.example.commonFunctions.ExternalStorageWithMicAccessFragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureReciteParagraphBinding
 
-class ReciteParagraphFragment : ExternalStorageAccessFragment() {
+class ReciteParagraphFragment : ExternalStorageWithMicAccessFragment() {
     lateinit var viewBinding: FragmentFeatureReciteParagraphBinding
     lateinit var mediaRecorder: MediaRecorder
     lateinit var viewModel: ReciteParagraphViewModel
@@ -45,7 +39,7 @@ class ReciteParagraphFragment : ExternalStorageAccessFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        subscirbeToLiveData()
+        subscribeToLiveData()
     }
 
     private fun initViews() {
@@ -101,6 +95,10 @@ class ReciteParagraphFragment : ExternalStorageAccessFragment() {
         }
     }
 
+    override fun sendText(text: String){
+        viewBinding.paragraphInput.setText(text)
+    }
+
     override fun showProgressBar() {
         viewBinding.greyBackground.visibility = View.VISIBLE
         viewBinding.progressBar.visibility = View.VISIBLE
@@ -110,7 +108,7 @@ class ReciteParagraphFragment : ExternalStorageAccessFragment() {
         viewModel.getData(byteArray)
     }
 
-    private fun subscirbeToLiveData() {
+    private fun subscribeToLiveData() {
         viewModel.liveData.observe(
             viewLifecycleOwner
         ) {

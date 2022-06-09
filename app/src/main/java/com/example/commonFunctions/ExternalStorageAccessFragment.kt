@@ -17,9 +17,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import java.util.*
 
 abstract class ExternalStorageAccessFragment:Fragment() {
-    companion object{
-        private var text:CharSequence?=null
-    }
+
     abstract fun showProgressBar()
     abstract fun resultListener(byteArray: ByteArray)
 
@@ -46,25 +44,9 @@ abstract class ExternalStorageAccessFragment:Fragment() {
 
     }
 
-    fun getText():CharSequence?{
-        return text
-    }
 
-     fun voiceRecognition(){
-         var intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-         intent.putExtra(
-             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-         )
-         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.US.language)
-         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "speech to text")
-         try {
-             startForVoiceResult.launch(intent)
 
-         } catch (ex: Exception) {
-             Log.v("error::::::", ex.message.toString())
-         }
-     }
+
 
     val startForImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -98,17 +80,5 @@ abstract class ExternalStorageAccessFragment:Fragment() {
             }
         }
 
-        private val startForVoiceResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                val resultCode = result.resultCode
-                val data = result.data
-                if (resultCode == Activity.RESULT_OK) {
-                    text= Objects.requireNonNull(
-                            data?.getStringArrayListExtra(
-                                RecognizerIntent.EXTRA_RESULTS
-                            )!!
-                        ).get(0)
 
-                }
-            }
 }
