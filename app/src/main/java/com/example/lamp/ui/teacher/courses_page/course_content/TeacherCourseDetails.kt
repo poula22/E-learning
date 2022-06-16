@@ -16,7 +16,7 @@ import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.TeacherCourseAssignmentFragment
-import com.example.lamp.ui.teacher.courses_page.course_content.dashboard.todo_list.TeacherCourseDashboardFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.dashboard.TeacherCourseDashboardFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.TeacherCourseQuizzesFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
@@ -77,33 +77,33 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                 viewBinding.navView.menu.findItem(item.itemId).title
             when (item.itemId) {
                 R.id.assignment -> {
-                    fragment=TeacherCourseAssignmentFragment()
+                    fragment = TeacherCourseAssignmentFragment()
                 }
                 R.id.material -> {
-                    fragment=TeacherCourseMaterialFragment(TestData.COURSES[0])
+                    fragment = TeacherCourseMaterialFragment(TestData.COURSES[0])
                 }
                 R.id.edit_course -> {
-                    fragment=TeacherCourseSettingsFragment()
+                    fragment = TeacherCourseSettingsFragment()
                 }
                 R.id.students -> {
-                    fragment=TeacherStudentsFragment(TestData.STUDENTS)
+                    fragment = TeacherStudentsFragment(TestData.STUDENTS)
                 }
                 R.id.dashboard -> {
-                    fragment=TeacherCourseDashboardFragment()
+                    fragment = TeacherCourseDashboardFragment()
                 }
                 R.id.quizzes -> {
-                    fragment=TeacherCourseQuizzesFragment()
+                    fragment = TeacherCourseQuizzesFragment()
                 }
             }
 
             //????????
             viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
-            //????????
+                //????????
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true
         }
-        drawerLayout.addDrawerListener(object :DrawerLayout.DrawerListener{
+        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
@@ -112,17 +112,17 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
 
             override fun onDrawerClosed(drawerView: View) {
                 fragment?.let {
-                    Handler(Looper.getMainLooper()).postDelayed( {
+                    Handler(Looper.getMainLooper()).postDelayed({
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(
                                 R.id.teacher_course_content_container,
                                 it
                             )
                             .commit()
-                    },0)
+                    }, 0)
 
                 }
-                fragment=null
+                fragment = null
 
             }
 
@@ -143,14 +143,17 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewBinding.navView.menu.performIdentifierAction(viewBinding.navView.checkedItem?.itemId!!, 0)
+        viewBinding.navView.menu.performIdentifierAction(
+            viewBinding.navView.checkedItem?.itemId!!,
+            0
+        )
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(
                 R.id.teacher_course_content_container,
                 fragment!!
             )
             .commit()
-        fragment=null
+        fragment = null
     }
 
     override fun onDetach() {

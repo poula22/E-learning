@@ -8,5 +8,5 @@ class TodoDTO (
     val title:String?=null,
     val description:String?=null,
     val date: Date?=null,
-    val isDone:Boolean?=false
+    var isDone:Boolean?=false
 )

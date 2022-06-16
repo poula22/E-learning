@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem" />
@@ -43,7 +44,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="How many FBLA competitions exist?" />
-
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,7 +93,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/create_question_answer_list" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/create_question_add_answer"
                         style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
                         android:layout_width="wrap_content"
@@ -104,14 +104,14 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/create_question_delete_question"
-                        style="@android:style/Widget.Material.Button.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="24dp"
                         android:backgroundTint="#b71c1c"
                         android:text="Delete Question"
+                        app:icon="@drawable/ic_delete"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
@@ -123,9 +123,9 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="24dp"
                         android:ems="10"
-                        android:text="@={item.question}"
                         android:hint="Question"
                         android:inputType="textCapSentences|textAutoCorrect|textAutoComplete|textMultiLine"
+                        android:text="@={item.question}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider" />

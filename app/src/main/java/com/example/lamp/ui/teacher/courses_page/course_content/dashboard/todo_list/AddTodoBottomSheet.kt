@@ -22,8 +22,8 @@ class AddTodoBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding=DataBindingUtil.inflate(inflater,R.layout.fragment_add_todo, container, false)
-
+        viewBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_add_todo, container, false)
         return viewBinding.root
     }
 
@@ -34,7 +34,7 @@ class AddTodoBottomSheet : BottomSheetDialogFragment() {
 
     fun initViews() {
         viewBinding.todoChooseDate.text = ("" + calendar.get(Calendar.DAY_OF_MONTH)
-             + "/" + calendar.get(Calendar.MONTH).plus(1) + "/"
+                + "/" + calendar.get(Calendar.MONTH).plus(1) + "/"
                 + calendar.get(Calendar.YEAR))
         viewBinding.todoChooseDate.setOnClickListener {
             showDatePicker()

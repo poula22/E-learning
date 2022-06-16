@@ -33,6 +33,11 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true"/>
         <activity
+            android:name=".OnBoardingActivity"
+            android:enabled="true"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".SplashScreenActivity"
             android:exported="true">
             <intent-filter>

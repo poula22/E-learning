@@ -177,6 +177,7 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
        viewBinding.textInputText.setText(text)
     }
     private fun subscribeToLiveData() {
+        try{
         viewModel.liveData.observe(
             viewLifecycleOwner
         ) {
@@ -193,6 +194,8 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
             viewBinding.progressBar.visibility = View.GONE
             requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             viewBinding.textInputText.setText(builder)
+        }}catch (e:Exception){
+            Toast.makeText(requireContext(), "Please Enter Text", Toast.LENGTH_SHORT).show()
         }
     }
 }
