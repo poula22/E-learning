@@ -94,7 +94,7 @@ dependencies {
 
     implementation 'com.github.ErrorxCode:ModernOnboarding:1.0.0'
 
-
+//
     implementation 'nl.dionsegijn:konfetti-xml:2.0.2'
 
 }

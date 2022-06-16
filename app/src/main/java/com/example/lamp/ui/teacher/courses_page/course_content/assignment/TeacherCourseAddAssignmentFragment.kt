@@ -1,47 +1,43 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.assignment
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
-import android.icu.util.LocaleData
-import android.os.Build
-import android.text.format.DateFormat
+
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
+
 import com.example.commonFunctions.CommonFunctions
 import com.example.commonFunctions.CommonFunctions.Companion.calendar
+import com.example.commonFunctions.DocumentAccessFragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddAssignmentBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
-import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.navigation.NavigationView
+
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.ofPattern
+
 import java.util.*
 
-class TeacherCourseAddAssignmentFragment : Fragment() {
+class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
     lateinit var viewBinding: FragmentTeacherCourseAddAssignmentBinding
-    var filePath:String?=null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun showProgressBar() {
+        return
+    }
+
+    override fun resultListener(byteArray: ByteArray) {
+       //send file path to backend
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,14 +52,12 @@ class TeacherCourseAddAssignmentFragment : Fragment() {
         return viewBinding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("SetTextI18n")
     private fun initViews() {
         if (calendar.get(Calendar.MONTH).plus(1)<10){
             viewBinding.startDateTxt.setText(
@@ -96,21 +90,11 @@ class TeacherCourseAddAssignmentFragment : Fragment() {
         }
 
         viewBinding.addAttachmentBtn.setOnClickListener {
-            CommonFunctions.uploadDoc(requireActivity())
+           uploadDoc()
+            Log.v("fragment",this.view.toString())
         }
 
-        viewBinding.addAttachmentBtn.setOnClickListener {
-            val intentDocument = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "*/*"
-                putExtra(
-                    Intent.EXTRA_MIME_TYPES, arrayOf(
-                        "application/pdf"
-                    )
-                )
-            }
-            startForFileResult.launch(intentDocument)
-        }
+
         viewBinding.saveBtn.setOnClickListener {
             if(validateForm()){
                 var title=viewBinding.title.text.toString()
@@ -136,13 +120,6 @@ class TeacherCourseAddAssignmentFragment : Fragment() {
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
     }
 
-    override fun onStart() {
-        super.onStart()
-        var toolbar:Toolbar=requireActivity().findViewById(R.id.toolbar)
-        toolbar.isVisible=false
-        var drawerLayout:DrawerLayout=requireActivity().findViewById(R.id.drawer_layout)
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-    }
 
     fun validateForm(): Boolean {
         var isValid = true
@@ -173,22 +150,6 @@ class TeacherCourseAddAssignmentFragment : Fragment() {
         }
         return isValid
     }
-    val startForFileResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            val resultCode = result.resultCode
-            val data = result.data
 
-            if (resultCode == Activity.RESULT_OK) {
-                //Image Uri will not be null for RESULT_OK
-                val fileUri = data?.data!!
-                filePath=fileUri.path
-
-            } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_SHORT).show()
-            }
-        }
 
 }

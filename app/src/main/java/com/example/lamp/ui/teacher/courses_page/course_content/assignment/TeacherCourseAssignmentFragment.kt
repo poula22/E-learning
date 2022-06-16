@@ -61,22 +61,16 @@ class TeacherCourseAssignmentFragment : Fragment() {
             }
 
         viewBinding.addBtn.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            requireActivity().supportFragmentManager
+                .beginTransaction()
                 .addToBackStack("")
                 .replace(
-                    R.id.teacher_course_content_container,
+                    R.id.teacher_fragment_tab,
                     TeacherCourseAddAssignmentFragment()
                 )
                 .commit()
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        var toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar)
-        toolbar.isVisible = true
-        var drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-    }
+
 }
