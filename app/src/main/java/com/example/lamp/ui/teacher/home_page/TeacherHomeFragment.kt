@@ -1,24 +1,33 @@
 package com.example.lamp.ui.teacher.home_page
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherHomeBinding
-import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
-import com.example.lamp.ui.teacher.courses_page.course_content.TeacherCourseDetails
-import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.TeacherCoursesAdapter
+import com.example.lamp.ui.teacher.courses_page.TeacherCoursesFragment
+import com.example.lamp.ui.todo_list.TodoAdapter
 import com.example.lamp.ui.teacher.profile_page.TeacherProfileFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
+import com.example.lamp.ui.todo_list.AddTodoBottomSheet
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import java.util.*
 
 class TeacherHomeFragment : Fragment() {
     lateinit var viewBinding: FragmentTeacherHomeBinding
-    lateinit var adapter: TeacherCoursesAdapter
+//    lateinit var adapter: TeacherCoursesAdapter
+lateinit var viewModel: TeacherHomeViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TeacherHomeViewModel::class.java)
+    }
+    val adapter = TodoAdapter(null)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,24 +45,37 @@ class TeacherHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        subscirbeToLiveData()
+        viewModel.getData()
+        Log.v("data:::", viewModel.liveData.value.toString())
+    }
+
+    fun subscirbeToLiveData() {
+        viewModel.liveData.observe(
+            viewLifecycleOwner
+        ) {
+
+            Log.v(
+                "poula: ",
+                it.toString()
+            )
+
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getTodosListFromDB()
+    }
+
+    var calendar = Calendar.getInstance()
+    fun getTodosListFromDB() {
+        val todoList = viewModel.repository.getTodoByDate(calendar.clearTime().time)
+        adapter.changeData(todoList)
     }
 
     private fun initViews() {
-        adapter = TeacherCoursesAdapter(TestData.COURSES, 0)
-        adapter.onCourseClickListener = object : TeacherCoursesAdapter.OnCourseClickListener {
-            override fun setOnCourseClickListener(item: CourseItem?) {
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .addToBackStack("")
-                    .replace(R.id.teacher_fragment_tab, TeacherCourseDetails(item))
-                    .commit()
-                val bottomNavigationView: BottomNavigationView =
-                    requireActivity().findViewById(R.id.bottom_navigation_view)
-                bottomNavigationView.isVisible = false
-            }
 
-        }
-        viewBinding.coursesRecyclerView.adapter = adapter
 
         viewBinding.roundedProfile.setOnClickListener {
             requireActivity().supportFragmentManager
@@ -62,7 +84,46 @@ class TeacherHomeFragment : Fragment() {
                 .replace(R.id.teacher_fragment_tab, TeacherProfileFragment())
                 .commit()
         }
+        viewBinding.coursesNumberCard.setOnClickListener {
+            requireActivity()
+                .supportFragmentManager
+                .beginTransaction().replace(R.id.fragment_container, TeacherCoursesFragment())
+                .addToBackStack("")
+                .commit()
+        }
+
+        viewBinding.studentsNumberCard.setOnClickListener {
+            requireActivity()
+                .supportFragmentManager
+                .beginTransaction().replace(R.id.fragment_container, TeacherStudentsFragment())
+                .addToBackStack("")
+                .commit()
+        }
+        viewBinding.calendarView.selectedDate = CalendarDay.today()
+        viewBinding.todoRecycler.adapter = adapter
+        viewBinding.calendarView.setOnDateChangedListener { widget, calenderDay, selected ->
+            calendar.set(Calendar.DAY_OF_MONTH, calenderDay.day)
+            calendar.set(Calendar.MONTH, calenderDay.month - 1)
+            calendar.set(Calendar.YEAR, calenderDay.year)
+            getTodosListFromDB()
+        }
+        viewBinding.addBtn.setOnClickListener {
+            showAddBottomSheet()
+        }
+
 
     }
 
+    private fun showAddBottomSheet() {
+        var bundle=Bundle()
+        bundle.putInt("type",0)
+        val addTodoBottomSheet = AddTodoBottomSheet()
+        addTodoBottomSheet.arguments=bundle
+        addTodoBottomSheet.show(requireActivity().supportFragmentManager, "")
+        addTodoBottomSheet.onTodoAddedListener = object : AddTodoBottomSheet.OnTodoAddedListener {
+            override fun onTodoAdded() {
+                this@TeacherHomeFragment.getTodosListFromDB()
+            }
+        }
+    }
 }

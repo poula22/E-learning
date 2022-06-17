@@ -1,4 +1,4 @@
-package com.example.todo_app
+package com.example.lamp.ui.todo_list
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.data.database.DataBase
-import com.example.data.model.entities.Todo
+import com.example.data.model.entities.StudentTodo
+import com.example.data.model.entities.TeacherTodo
 import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentAddTodoBinding
@@ -17,6 +18,8 @@ import java.util.*
 
 class AddTodoBottomSheet : BottomSheetDialogFragment() {
     lateinit var viewBinding: FragmentAddTodoBinding
+    var type:Int?=null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,6 +32,8 @@ class AddTodoBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        type=requireArguments().getInt("type")
+        Log.v("Type:::::",type.toString())
         initViews()
     }
 
@@ -45,13 +50,25 @@ class AddTodoBottomSheet : BottomSheetDialogFragment() {
             if (validateForm()) {
                 val title = viewBinding.tittleLayout.editText?.text.toString()
                 val description = viewBinding.detailsLayout.editText?.text.toString()
-                val todo = Todo(
-                    title = title,
-                    description = description,
-                    date = calendar.clearTime().time,
-                )
-                Log.v("todo::", todo.title!!)
-                DataBase.getInstance().todoDao().addTodo(todo)
+
+                if (type==0){
+                    val teacherTodo = TeacherTodo(
+                        title = title,
+                        description = description,
+                        date = calendar.clearTime().time,
+                    )
+                    Log.v("todo::", teacherTodo.title!!)
+                    DataBase.getInstance().teacherTodoDao().addTodo(teacherTodo)
+                }
+                else{
+                    val studentTodo = StudentTodo(
+                        title = title,
+                        description = description,
+                        date = calendar.clearTime().time,
+                    )
+                    Log.v("todo::", studentTodo.title!!)
+                    DataBase.getInstance().studentTodoDao().addTodo(studentTodo)
+                }
                 onTodoAddedListener?.onTodoAdded()
                 dismiss()
             }

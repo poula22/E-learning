@@ -16,7 +16,6 @@ import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.TeacherCourseAssignmentFragment
-import com.example.lamp.ui.teacher.courses_page.course_content.dashboard.TeacherCourseDashboardFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.TeacherCourseQuizzesFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
@@ -59,7 +58,6 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.dashboard,
                 R.id.announcements,
                 R.id.assignment,
                 R.id.grades,
@@ -87,9 +85,6 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                 }
                 R.id.students -> {
                     fragment = TeacherStudentsFragment(TestData.STUDENTS)
-                }
-                R.id.dashboard -> {
-                    fragment = TeacherCourseDashboardFragment()
                 }
                 R.id.quizzes -> {
                     fragment = TeacherCourseQuizzesFragment()
@@ -131,8 +126,8 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
             }
 
         })
-        viewBinding.navView.setCheckedItem(R.id.dashboard)
-        viewBinding.navView.menu.performIdentifierAction(R.id.dashboard, 0)
+        viewBinding.navView.setCheckedItem(R.id.announcements)
+        viewBinding.navView.menu.performIdentifierAction(R.id.announcements, 0)
         viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
             viewBinding.teacherCourseContainer.toolbar.subtitle = "Settings"
             requireActivity().supportFragmentManager.beginTransaction()

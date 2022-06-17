@@ -10,7 +10,7 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentContainerAllTabsBinding
 import com.example.lamp.ui.student.student_course_page.CoursesFragment
 import com.example.lamp.ui.student.student_features_page.FeaturesFragment
-import com.example.lamp.ui.student.student_home_page.HomeFragment
+import com.example.lamp.ui.student.student_home_page.StudentHomeFragment
 import com.example.lamp.ui.student.student_profile_page.ProfileFragment
 import com.example.lamp.ui.student.student_website_page.WebSitesFragment
 
@@ -39,7 +39,7 @@ class StudentContainerFragment:Fragment() {
             if(menuItem.itemId==R.id.home){
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(viewBinding.studentFragmentTab.id,HomeFragment())
+                    .replace(viewBinding.studentFragmentTab.id,StudentHomeFragment())
                     .commit()
             }else if(menuItem.itemId==R.id.courses){
                 requireActivity().supportFragmentManager

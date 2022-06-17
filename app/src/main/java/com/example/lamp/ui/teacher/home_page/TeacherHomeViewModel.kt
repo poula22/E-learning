@@ -1,7 +1,5 @@
-package com.example.lamp.ui.teacher.courses_page.course_content.dashboard
+package com.example.lamp.ui.teacher.home_page
 
-import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,9 +11,9 @@ import com.example.domain.repos.TodoOfflineDataSource
 import com.example.domain.repos.TodoRepository
 import kotlinx.coroutines.launch
 
-class TeacherCourseDashboardViewModel : ViewModel() {
+class TeacherHomeViewModel : ViewModel() {
     var liveData=MutableLiveData<MutableList<TodoDTO>>()
-    var offlineDataSource:TodoOfflineDataSource=TodoOfflineDataSourceImp(DataBase.getInstance())
+    var offlineDataSource:TodoOfflineDataSource=TodoOfflineDataSourceImp(DataBase.getInstance(),0)
     var repository:TodoRepository=TodoRepositoryImp(offlineDataSource)
 
     fun getData(){

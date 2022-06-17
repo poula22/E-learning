@@ -1,4 +1,4 @@
-package com.example.lamp.ui.teacher.courses_page.course_content.dashboard.todo_list
+package com.example.lamp.ui.todo_list
 
 import android.graphics.Color
 import android.view.LayoutInflater
