@@ -2,21 +2,17 @@ package com.example.data.api
 
 import com.example.data.data_classes.Student
 import com.example.data.model.StudentResponse
+import com.example.domain.model.StudentResponseDTO
 import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface StudentWebService {
-    @POST("h1")
-    fun addStudent(@Query("student")student: Student): Call<StudentResponse>
-    @POST("h1")
-    fun updateStudent(@Query("student") apiKey:String): Call<StudentResponse>
-    @DELETE("h1")
-    fun deleteStudent(@Query("id") id:Int): Call<StudentResponse>
-    @GET("h1")
-    fun getAllStudent(): Call<List<StudentResponse>>
-    @GET("h1")
-    fun getStudentById(@Query("id") id:Int): Call<StudentResponse>
+    @POST("api/Students")
+    suspend fun addStudent(@Path("student") student: StudentResponseDTO):StudentResponse
+    @GET("api/Students/GetStudentsByParentId/{parentId}")
+    suspend fun updateStudent(@Query("parentId") parentId:Int):StudentResponse
+    @GET("api/Students/GetStudentsByCourseId/{courseId}")
+    suspend fun getStudentByCourseId(@Path("courseId") courseId:Int):List<StudentResponse>
+    @GET("Email/{email}")
+    suspend fun getStudentByEmail(@Path("email") email:String):StudentResponse
 }

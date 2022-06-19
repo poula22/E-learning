@@ -1,6 +1,5 @@
 package com.example.data.model.microsoft_apis.ocr
 
-import com.example.domain.model.RegionsItemDTO
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 

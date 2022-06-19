@@ -15,8 +15,8 @@ interface AssignmentGradeWebService {
     fun updateAssignmentGrade(@Query("assignmentGrade") apiKey:String): Call<AssignmentGradeResponse>
     @DELETE("h1")
     fun deleteAssignmentGrade(@Query("id") id:Int): Call<AssignmentGradeResponse>
-    @GET("h1")
-    fun getAllAssignmentGrade(): Call<List<AssignmentGradeResponse>>
+    @GET("api/AssignmentGrades")
+    suspend fun getAllAssignmentGrade(): List<AssignmentGradeResponse>
     @GET("h1")
     fun getAssignmentGradeById(@Query("id") id:Int): Call<AssignmentGradeResponse>
 }

@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSigninBinding
 import com.example.lamp.ui.parent.ParentContainerFragment
@@ -16,6 +18,11 @@ import com.example.lamp.ui.teacher.TeacherContainerFragment
 
 class SigninFragment : Fragment() {
     lateinit var viewBinding: FragmentSigninBinding
+    lateinit var viewModel: SigninViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(SigninViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.data.model.convertTo
+import com.example.domain.model.TeacherResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSignUpBinding
 import java.util.*
@@ -17,6 +19,7 @@ class SignUpFragment:Fragment() {
 //comment test
 lateinit var viewModel:SignUpViewModel
 lateinit var viewBinging:FragmentSignUpBinding
+var selected:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,40 +33,40 @@ lateinit var viewBinging:FragmentSignUpBinding
         viewBinging=DataBindingUtil.inflate(inflater,R.layout.fragment_sign_up,container,false)
         return viewBinging.root
     }
+    private fun subscirbeToLiveData() {
+        viewModel.liveData.observe(
+            viewLifecycleOwner
+        ) {
+            Log.v("response test::",it.firstName!!)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscirbeToLiveData()
-        viewModel.getData()
+        initViews()
+    }
+
+    private fun initViews() {
+      viewBinging.imageStudent.setOnClickListener {
+          it.setBackgroundColor(resources.getColor(R.color.green))
+          selected="Student"
+    }
+        viewBinging.imageTeacher.setOnClickListener {
+            it.setBackgroundColor(resources.getColor(R.color.green))
+            selected="Teacher"
+        }
+        viewBinging.imageParent.setOnClickListener {
+            it.setBackgroundColor(resources.getColor(R.color.green))
+            selected="Parent"
+        }
         viewBinging.buttonSignUpRegisteration.setOnClickListener{
-            viewBinging.txtPhone.setText(viewModel.getTestData().toString())
-
-        }
-    }
-
-
-    fun subscirbeToLiveData(){
-                viewModel.liveData.observe(viewLifecycleOwner
-        ) {
-
-                                Log.v(
-                                    "poula: ",
-                                    it.toString()
-                                )
-
-//                    regions?.get(0)?.lines?.get(0)?.words?.get(0)?.text?
-
-//            it?.regions?.get(0)?.lines?.get(0)?.words?.get(0)?.text?.let { it1 ->
-//                val text=it1
-//                Log.v("MSOCR",
-//                    text
-//                )
-//            }
+            if(selected =="Teacher"){
+                viewModel.addUser()
+            }
 
         }
 
-
-
-
     }
+
 }

@@ -25,7 +25,7 @@ class ApiManager {
         var unSafeClient = getUnsafeOkHttpClient()?.addInterceptor(logging)?.build()
 
 
-        private const val BASEURL_BACKEND: String = "https://25.46.88.203:7097/"
+        private const val BASEURL_BACKEND: String = "https://25.70.83.232:7097/"
         private const val BASEURL_OCR: String = "https://eastus.api.cognitive.microsoft.com/"
         private var retrofitBackend: Retrofit? = null
         private var retrofitApi: Retrofit? = null
@@ -144,7 +144,10 @@ class ApiManager {
         fun getOCRApi(): MicrosoftOCRWebService {
             return getOCRInstance().create(MicrosoftOCRWebService::class.java)
         }
-
+        //user
+        fun getUserApi(): UserWebService {
+            return getBackendInstance().create(UserWebService::class.java)
+        }
 
 
         private fun getUnsafeOkHttpClient(): OkHttpClient.Builder? {

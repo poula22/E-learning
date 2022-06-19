@@ -2,21 +2,26 @@ package com.example.data.api
 
 import com.example.data.data_classes.AssignmentAnswer
 import com.example.data.model.AssignmentAnswerResponse
+import com.example.domain.model.AssignmentAnswerResponseDTO
 import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface AssignmentAnswerWebService {
-    @POST("h1")
-    suspend fun addAssignmentAnswer(@Query("assignmentAnswer")assignmentAnswer: AssignmentAnswer): AssignmentAnswerResponse
-    @POST("h1")
-    suspend fun updateAssignmentAnswer(@Query("assignmentAnswer") apiKey:String): AssignmentAnswerResponse
-    @DELETE("h1")
-    suspend fun deleteAssignmentAnswer(@Query("id") id:Int): AssignmentAnswerResponse
-    @GET("h1")
-    fun getAllAssignmentAnswer(): Call<List<AssignmentAnswerResponse>>
-    @GET("h1")
-    fun getAssignmentAnswerById(@Query("id") id:Int): Call<AssignmentAnswerResponse>
+    @POST("api/AssignmentAnswers")
+    suspend fun addAssignmentAnswer(@Body assignmentAnswer: AssignmentAnswerResponseDTO): AssignmentAnswerResponse
+    @PUT("api/AssignmentAnswers/{id}")
+    suspend fun updateAssignmentAnswer(@Path("id") id:Int
+                                       , @Body assignmentAnswer: AssignmentAnswerResponseDTO): AssignmentAnswerResponse
+    @DELETE("api/AssignmentAnswers/{id}")
+    suspend fun deleteAssignmentAnswer(@Path("id") id:Int): AssignmentAnswerResponse
+    @GET("api/AssignmentAnswers")
+    fun getAllAssignmentAnswer(): List<AssignmentAnswerResponse>
+    @GET("api/AssignmentAnswers/{id}")
+    fun getAssignmentAnswerById(@Path("id") id:Int): AssignmentAnswerResponse
+    @GET("api/AssignmentAnswers/GetAssignmentAnswersByAssignmentId/{assignmentId}")
+    fun getAssignmentAnswersByAssignmentId(@Path("assignmentId") assignmentId:Int)
+    @GET("api/AssignmentAnswers/GetAssignmentAnswerByStudentIdByAssignmentId/{studentId}/{assignmentId}")
+    fun getAssignmentAnswerByStudentIdByAssignmentId(@Path("studentId") studentID:Int
+                                                     ,@Path("assignmentId") assignmentId:Int)
+
 }

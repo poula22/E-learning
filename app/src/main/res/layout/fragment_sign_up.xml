@@ -56,6 +56,7 @@
                     app:layout_constraintTop_toBottomOf="@id/title_sign_up">
 
                     <ImageView
+                        android:id="@+id/image_student"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
@@ -66,6 +67,7 @@
                         android:src="@drawable/student" />
 
                     <ImageView
+                        android:id="@+id/image_parent"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
@@ -76,6 +78,7 @@
                         android:src="@drawable/parent" />
 
                     <ImageView
+                        android:id="@+id/image_teacher"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

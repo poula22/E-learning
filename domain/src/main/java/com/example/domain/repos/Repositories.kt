@@ -5,13 +5,7 @@ import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOp
 import kotlinx.coroutines.CoroutineScope
 import java.util.*
 
-interface CoursesRepository{
-    suspend fun getCourses():List<CourseDTO>
-}
 
-interface CoursesOnlineDataSource{
-    suspend fun getCoursesById():List<CourseDTO>
-}
 
 interface OCROnlineDataSource{
     suspend fun getTextFromImage(language:String,url:String): OCRResponseDTO
@@ -41,18 +35,4 @@ interface TodoRepository{
     fun getTodoByDate(date: Date):MutableList<TodoDTO>
 }
 
-interface FeaturesRepository{
-    suspend fun getGrades():List<FeatureDTO>
-}
 
-interface FeaturesOnlineDataSource{
-    suspend fun getCoursesById():List<FeatureDTO>
-}
-
-interface ChildrenRepository{
-    suspend fun getGrades():List<ChildDTO>
-}
-
-interface ChildrenOnlineDataSource{
-    suspend fun getChildren():List<ChildDTO>
-}

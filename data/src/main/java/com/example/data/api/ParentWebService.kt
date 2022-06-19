@@ -3,20 +3,12 @@ package com.example.data.api
 import com.example.data.data_classes.Parent
 import com.example.data.model.ParentResponse
 import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ParentWebService {
-    @POST("h1")
-    fun addParent(@Query("parent")parent: Parent): Call<ParentResponse>
-    @POST("h1")
-    fun updateParent(@Query("parent") apiKey:String): Call<ParentResponse>
-    @DELETE("h1")
-    fun deleteParent(@Query("id") id:Int): Call<ParentResponse>
-    @GET("h1")
-    fun getAllParent(): Call<List<ParentResponse>>
-    @GET("h1")
-    fun getParentById(@Query("id") id:Int): Call<ParentResponse>
+    @POST("api/Parents")
+    suspend fun addParent(@Body parent: Parent): ParentResponse
+    @GET("api/Parents/AddStudentsByEmailToParent/{parentId}/{studentEmail}")
+    suspend fun addStudentsByEmailToParent(@Path("parentId") parentId:Int
+                                           , @Path("studentEmail") studentEmail:String): List<ParentResponse>
 }
