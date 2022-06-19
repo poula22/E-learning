@@ -2,27 +2,17 @@ package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
 
-
 data class LessonResponse(
 
-    @field:SerializedName("notes")
-    val notes: List<Any?>? = null,
+	@field:SerializedName("description")
+	val description: String? = null,
 
-    @field:SerializedName("contents")
-    val contents: List<Any?>? = null,
+	@field:SerializedName("id")
+	val id: Int? = null,
 
-    @field:SerializedName("questions")
-    val questions: List<Any?>? = null,
+	@field:SerializedName("title")
+	val title: String? = null,
 
-    @field:SerializedName("lessonID")
-    val lessonID: Int? = null,
-
-    @field:SerializedName("course")
-    val course: Course? = null,
-
-    @field:SerializedName("title")
-    val title: String? = null,
-
-    @field:SerializedName("courseID")
-    val courseID: Int? = null
+	@field:SerializedName("courseId")
+	val courseId: Int? = null
 )

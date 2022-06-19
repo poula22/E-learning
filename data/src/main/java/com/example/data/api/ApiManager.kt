@@ -61,9 +61,6 @@ class ApiManager {
             return getBackendInstance().create(FeatureWebService::class.java)
         }
 
-        fun getLoginInfoApi(): LoginInfoWebService {
-            return getBackendInstance().create(LoginInfoWebService::class.java)
-        }
 
         fun getAnnouncementApi(): AnnouncementWebService {
             return getBackendInstance().create(AnnouncementWebService::class.java)
@@ -85,17 +82,13 @@ class ApiManager {
             return getBackendInstance().create(QuizWebService::class.java)
         }
 
-        fun getQuizAnswerApi(): QuizAnswerWebService {
-            return getBackendInstance().create(QuizAnswerWebService::class.java)
-        }
+
 
         fun getQuizGradeApi(): QuizGradeWebService {
             return getBackendInstance().create(QuizGradeWebService::class.java)
         }
 
-        fun getAssignmentFeedbackApi(): AssignmentFeedbackWebService {
-            return getBackendInstance().create(AssignmentFeedbackWebService::class.java)
-        }
+
 
         fun getAssignmentGradeApi(): AssignmentGradeWebService {
             return getBackendInstance().create(AssignmentGradeWebService::class.java)
@@ -111,20 +104,14 @@ class ApiManager {
             return getBackendInstance().create(ContentWebService::class.java)
         }
 
-        // LatestPassedLesson
-        fun getLatestPassedLessonApi(): LatestPassedLessonWebService {
-            return getBackendInstance().create(LatestPassedLessonWebService::class.java)
-        }
+
 
         // Lesson
         fun getLessonApi(): LessonWebService {
             return getBackendInstance().create(LessonWebService::class.java)
         }
 
-        // Note
-        fun getNoteApi(): NoteWebService {
-            return getBackendInstance().create(NoteWebService::class.java)
-        }
+
 
         // Parent
         fun getParentApi(): ParentWebService {
@@ -136,10 +123,7 @@ class ApiManager {
             return getBackendInstance().create(QuestionAnswerWebService::class.java)
         }
 
-        // Resource
-        fun getResourceApi(): ResourceWebService {
-            return getBackendInstance().create(ResourceWebService::class.java)
-        }
+
 
         //Student
         fun getStudentApi(): StudentWebService {
@@ -161,10 +145,6 @@ class ApiManager {
             return getOCRInstance().create(MicrosoftOCRWebService::class.java)
         }
 
-
-        fun getLoginApi(): LoginInfoWebService {
-            return getBackendInstance().create(LoginInfoWebService::class.java)
-        }
 
 
         private fun getUnsafeOkHttpClient(): OkHttpClient.Builder? {

@@ -2,7 +2,7 @@ package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class StudentResponse(
+data class UserResponse(
 
 	@field:SerializedName("firstName")
 	val firstName: String? = null,

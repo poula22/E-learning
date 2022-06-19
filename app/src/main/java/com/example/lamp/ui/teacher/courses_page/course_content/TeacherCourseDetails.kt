@@ -142,12 +142,14 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
             viewBinding.navView.checkedItem?.itemId!!,
             0
         )
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.teacher_course_content_container,
-                fragment!!
-            )
-            .commit()
+        fragment?.let {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.teacher_course_content_container,
+                    fragment!!
+                )
+                .commit()
+        }
         fragment = null
     }
 
