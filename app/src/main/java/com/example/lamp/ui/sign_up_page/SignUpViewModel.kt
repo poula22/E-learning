@@ -19,6 +19,7 @@ import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOp
 import com.microsoft.cognitiveservices.speech.samples.sdkdemo.MicrophoneStream
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import retrofit2.HttpException
 
 
 class SignUpViewModel : ViewModel() {
@@ -35,8 +36,15 @@ class SignUpViewModel : ViewModel() {
                         "test2","test2","test4@gmail.com","test2","test","+201233333335"
                         ,"")
                 )
-            }catch (ex:Exception){
+            }catch (cause:Throwable){
+                when(cause){
+                    is HttpException -> cause.response()?.errorBody()?.string()
+                        ?.let { Log.e("error", it) }
+                    else ->{
 
+
+                    }
+                }
             }
 
         }
