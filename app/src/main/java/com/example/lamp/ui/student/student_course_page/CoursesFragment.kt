@@ -50,11 +50,10 @@ class CoursesFragment:Fragment() {
                     requireActivity().findViewById(R.id.bottom_navigation_view)
                 bottomNavigationView.isVisible = false
             }
-
         }
         studentCoursesBinding.studentCoursesRecyclerView.adapter=coursesRVAdapter
+        studentCoursesBinding.joinCourseButton.setOnClickListener {
 
-
-
+        }
     }
 }

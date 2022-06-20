@@ -1,22 +1,30 @@
 package com.example.data.api
 
 import com.example.data.data_classes.QuizGrade
+import com.example.data.model.QuestionResponse
 import com.example.data.model.QuizGradeResponse
+import com.example.domain.model.QuestionResponseDTO
+import com.example.domain.model.QuizGradeResponseDTO
 import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface QuizGradeWebService {
-    @POST("h1")
-    fun addQuizGrade(@Query("quizGrade")quizGrade: QuizGrade): Call<QuizGradeResponse>
-    @POST("h1")
-    fun updateQuizGrade(@Query("quizGrade") apiKey:String): Call<QuizGradeResponse>
-    @DELETE("h1")
-    fun deleteQuizGrade(@Query("id") id:Int): Call<QuizGradeResponse>
-    @GET("h1")
-    fun getAllQuizGrade(): Call<List<QuizGradeResponse>>
-    @GET("h1")
-    fun getQuizGradeById(@Query("id") id:Int): Call<QuizGradeResponse>
+    @GET("api/QuizGrades")
+    suspend fun getAllQuizGrades(): List<QuestionResponse>
+    @POST("api/QuizGrades")
+    suspend fun quizGrades(@Body quizGrades: QuizGradeResponseDTO): QuizGradeResponse
+    @DELETE("api/QuizGrades/{id}")
+    suspend fun deleteQuizGrades(@Path("id") id: Int): QuizGradeResponse
+    @PUT("api/QuizGrades/{id}")
+    suspend fun updateQuizGrades(@Path("id") id: Int, @Body QuizGrades: QuizGradeResponseDTO): QuizGradeResponse
+    @GET("api/QuizGrades/{id}")
+    suspend fun getQuizGrades(@Path("id") id: Int): QuizGradeResponse
+    @GET("api/QuizGrades/GetQuizGradesByQuizId/{id}")
+    suspend fun getQuizGradesByQuizId(@Path("id") id: Int): List<QuizGradeResponse>
+    @GET("api/QuizGrades/GetQuizGradeByQuizIdByStudentId/{studentId}/{quizId}")
+    suspend fun getQuizGradeByQuizIdByStudentId(@Path("studentId") studentId: Int
+                                                , @Path("quizId") quizId: Int): QuizGradeResponse
+    @GET("api/QuizGrades/QuizGradeAdder/{studentId}/{quizId}")
+    suspend fun quizGradeAdder(@Path("studentId") studentId: Int
+                              , @Path("quizId") quizId: Int): QuizGradeResponse
 }

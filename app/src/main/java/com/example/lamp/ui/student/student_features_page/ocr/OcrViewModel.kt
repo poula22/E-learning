@@ -15,5 +15,4 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class OcrViewModel : ApisViewModel() {
-
 }
