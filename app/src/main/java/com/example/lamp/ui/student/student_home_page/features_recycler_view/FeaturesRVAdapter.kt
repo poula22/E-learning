@@ -15,7 +15,7 @@ import com.example.lamp.databinding.ItemStudentFeatureBinding
 class FeaturesRVAdapter(var featuresItemsList : List<FeatureItem>?=null,val type:Int): RecyclerView.Adapter<FeaturesRVAdapter.FeaturesItemViewHolder>() {
 
     val HOME_SCREEN=R.layout.item_student_home_feature_rv
-    val FEATURES_SCREEN=R.layout.item_student_home_feature_rv
+    val FEATURES_SCREEN=R.layout.item_student_feature
     lateinit var viewDataBinding: ViewDataBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeaturesItemViewHolder {
         if(type== 1){
