@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem" />
@@ -19,12 +19,12 @@
             android:id="@+id/answer_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/md_light_blue_100"
-            android:minHeight="35dp"
+            android:background="@drawable/rounded_btn_blue"
+            android:minHeight="40dp"
             android:padding="8dp"
             android:text="@{item.answer}"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/white"
             tools:text="Answer Choice" />
 
     </LinearLayout>

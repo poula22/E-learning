@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -13,13 +12,13 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
-        app:cardElevation="8dp"
+        app:cardElevation="2dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#527DFF"
+            android:background="@drawable/gradient_3"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -30,16 +29,14 @@
                 android:paddingBottom="10dp"
                 android:shadowRadius="4"
                 android:text="Child Name"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="#C7D3FF" />
+                android:textAppearance="?attr/textAppearanceBody2" />
 
             <TextView
                 android:id="@+id/course_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Course Name"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="#ffffff" />
+                android:textAppearance="?attr/textAppearanceHeadline6" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,8 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Teacher Name"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="#FFE6E6" />
+                    android:textAppearance="?attr/textAppearanceBody2" />
 
                 <TextView
                     android:id="@+id/progress_percentage"
@@ -59,14 +55,12 @@
                     android:layout_height="wrap_content"
                     android:text="80%"
                     android:textAlignment="viewEnd"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="@color/yellow" />
+                    android:textAppearance="?attr/textAppearanceBody2" />
             </LinearLayout>
 
 
-            <ProgressBar
+            <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"

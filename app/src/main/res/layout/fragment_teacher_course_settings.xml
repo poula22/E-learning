@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="15dp">
 
 
         <TextView
@@ -38,22 +39,12 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card"
             android:layout_width="220dp"
-            android:layout_height="220dp"
-            app:cardCornerRadius="30dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
             app:cardElevation="8dp"
-            app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings">
-
-            <!--            <ImageView-->
-            <!--                android:layout_width="50dp"-->
-            <!--                android:layout_height="50dp"-->
-            <!--                android:layout_gravity="top|end"-->
-            <!--                android:background="#00BCD4"-->
-            <!--                android:elevation="10dp"-->
-            <!--                android:src="@drawable/ic_delete"-->
-            <!--                app:tint="#FF1100" />-->
 
 
             <androidx.cardview.widget.CardView
@@ -91,13 +82,12 @@
 
                 <LinearLayout
                     android:id="@+id/change_image_btn"
-                    style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:background="#00BCD4"
                     android:gravity="center"
                     android:orientation="vertical">
-                    <!--  Title, secondary and supporting text  -->
+
                     <TextView
                         android:id="@+id/change_image_tv"
                         android:layout_width="wrap_content"
@@ -114,8 +104,8 @@
             android:id="@+id/course_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.courseName}"
             android:hint="Course Name"
+            android:text="@{item.courseName}"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card" />
@@ -126,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:text="start date: "
+            android:text="Start date: "
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/course_title" />
@@ -137,8 +127,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false"
-            android:text="@{item.startDate}"
             android:hint="dd/mm/yyyy"
+            android:text="@{item.startDate}"
             app:layout_constraintStart_toEndOf="@id/start_date"
             app:layout_constraintTop_toBottomOf="@id/course_title" />
 
@@ -148,8 +138,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false"
-            android:text="@{item.endDate}"
             android:hint="dd/mm/yyyy"
+            android:text="@{item.endDate}"
             app:layout_constraintStart_toEndOf="@id/end_date"
             app:layout_constraintTop_toBottomOf="@id/start_date_txt" />
 
@@ -159,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:text="end date: "
+            android:text="End date: "
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@id/end_date_txt"
             app:layout_constraintStart_toStartOf="parent"
@@ -170,17 +160,17 @@
             android:id="@+id/description_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
-            app:boxBackgroundMode="outline"
             app:layout_constraintTop_toBottomOf="@+id/end_date">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_frame"
+                android:backgroundTint="#F1F1F1"
                 android:gravity="top"
+                android:lines="4"
                 android:text="@{item.courseDescription}"
-                tools:text="Course Description"
-                android:lines="4" />
+                tools:text="Course Description" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -198,9 +188,9 @@
                 android:layout_height="wrap_content"
                 android:background="#5C00BCD4"
                 android:text="@{item.courseCode}"
-                tools:text="S5H22M"
                 android:textColor="@color/black"
-                android:textSize="50sp" />
+                android:textSize="50sp"
+                tools:text="S5H22M" />
 
             <ImageView
                 android:layout_width="50dp"

@@ -11,7 +11,7 @@ import com.example.data.model.entities.StudentTodo
 import com.example.data.model.entities.TeacherTodo
 import com.example.data.model.entities.converters.DateConverter
 
-@Database(entities = [TeacherTodo::class,StudentTodo::class], version = 1, exportSchema = false)
+@Database(entities = [TeacherTodo::class,StudentTodo::class], version = 2, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class DataBase : RoomDatabase() {
     abstract fun teacherTodoDao(): TeacherTodoDao

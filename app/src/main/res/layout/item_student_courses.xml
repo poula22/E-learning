@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem" />
@@ -13,10 +14,10 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="8dp"
         android:backgroundTint="#FF5252"
-        app:cardUseCompatPadding="true">
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        android:layout_margin="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,6 +27,7 @@
                 android:id="@+id/courses_course_image"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/login"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -36,44 +38,44 @@
                 android:id="@+id/courses_course_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="@{item.courseName}"
-                tools:text="Course Name"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textColor="@color/white"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@id/courses_code"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/courses_course_image"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Course Name" />
 
             <TextView
                 android:id="@+id/courses_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.courseCode}"
-                tools:text="Course Code"
                 android:layout_marginBottom="8dp"
+                android:text="@{item.courseCode}"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="@color/white"
-
                 app:layout_constraintBottom_toTopOf="@id/courses_teacher_name"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/courses_course_image"
-                app:layout_constraintTop_toBottomOf="@id/courses_course_name" />
+                app:layout_constraintTop_toBottomOf="@id/courses_course_name"
+                tools:text="Course Code" />
 
             <TextView
                 android:id="@+id/courses_teacher_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.teacherName}"
-                tools:text="Teacher Name"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/courses_course_image"
-                app:layout_constraintTop_toBottomOf="@id/courses_code" />
+                app:layout_constraintTop_toBottomOf="@id/courses_code"
+                tools:text="Teacher Name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

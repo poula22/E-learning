@@ -8,36 +8,34 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.data.model.convertTo
-import com.example.domain.model.TeacherResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSignUpBinding
-import java.util.*
-import kotlin.concurrent.schedule
 
-class SignUpFragment:Fragment() {
-//comment test
-lateinit var viewModel:SignUpViewModel
-lateinit var viewBinging:FragmentSignUpBinding
-var selected:String?=null
+class SignUpFragment : Fragment() {
+    //comment test
+    lateinit var viewModel: SignUpViewModel
+    lateinit var viewBinging: FragmentSignUpBinding
+    var selected: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel=ViewModelProvider(this).get(SignUpViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinging=DataBindingUtil.inflate(inflater,R.layout.fragment_sign_up,container,false)
+        viewBinging = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
         return viewBinging.root
     }
+
     private fun subscirbeToLiveData() {
         viewModel.liveData.observe(
             viewLifecycleOwner
         ) {
-            Log.v("response test::",it.firstName!!)
+            Log.v("response test::", it.emailAddress!!)
         }
     }
 
@@ -48,20 +46,20 @@ var selected:String?=null
     }
 
     private fun initViews() {
-      viewBinging.imageStudent.setOnClickListener {
-          it.setBackgroundColor(resources.getColor(R.color.green))
-          selected="Student"
-    }
+        viewBinging.imageStudent.setOnClickListener {
+            it.setBackgroundColor(resources.getColor(R.color.green))
+            selected = "Student"
+        }
         viewBinging.imageTeacher.setOnClickListener {
             it.setBackgroundColor(resources.getColor(R.color.green))
-            selected="Teacher"
+            selected = "Teacher"
         }
         viewBinging.imageParent.setOnClickListener {
             it.setBackgroundColor(resources.getColor(R.color.green))
-            selected="Parent"
+            selected = "Parent"
         }
-        viewBinging.buttonSignUpRegisteration.setOnClickListener{
-            if(selected =="Teacher"){
+        viewBinging.buttonSignUpRegisteration.setOnClickListener {
+            if (selected == "Teacher") {
                 viewModel.addUser()
             }
 
