@@ -1,5 +1,6 @@
 package com.example.lamp.test_data
 
+import com.example.domain.model.CourseResponseDTO
 import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.ui.parent.parent_communicate_page.communicate_recycler_view.TeacherItem
@@ -15,7 +16,7 @@ import java.util.*
 
 object TestData {
     val TRANSLATIONAPIKEY = "fdacb2ce0bmshb0a36e2081822c8p1e7ae6jsn82387bc6a932"
-    var COURSES: MutableList<CourseItem> = initCourses()
+    var COURSES: MutableList<CourseResponseDTO> = initCourses()
     val FEATURES: MutableList<FeatureItem> = mutableListOf(
         FeatureItem("translate", R.drawable.ic_translate),
         FeatureItem("summary", R.drawable.ic_summary),
@@ -121,18 +122,16 @@ object TestData {
         return STUDENTS
     }
 
-    private fun initCourses(): MutableList<CourseItem> {
+    private fun initCourses(): MutableList<CourseResponseDTO> {
         COURSES = mutableListOf()
         for (i in 1..100) {
             COURSES.add(
-                CourseItem(
+                CourseResponseDTO(
                     "course " + i,
                     "teacher " + i,
-                    "description " + i,
-                    "JD3K8" + (1000 + i),
-                    R.drawable.login,
+                     i,
+                     i,
                     "start",
-                    "end"
                 )
             )
         }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCoursesBinding
 import com.example.lamp.test_data.TestData
@@ -43,7 +44,7 @@ class TeacherCoursesFragment : Fragment() {
     private fun initViews() {
         adapter = TeacherCoursesAdapter(TestData.COURSES, 1)
         adapter.onCourseClickListener=object :TeacherCoursesAdapter.OnCourseClickListener{
-            override fun setOnCourseClickListener(item: CourseItem?) {
+            override fun setOnCourseClickListener(item: CourseResponseDTO?) {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .addToBackStack("")

@@ -1,5 +1,6 @@
 package com.example.lamp.ui.student.student_course_page
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,10 @@ import android.widget.EditText
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.commonFunctions.CONSTANTS
+import com.example.data.model.convertTo
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCoursesBinding
 import com.example.lamp.test_data.TestData
@@ -20,6 +25,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class CoursesFragment : Fragment() {
     lateinit var coursesRVAdapter: CoursesRVAdapter
     lateinit var studentCoursesBinding: FragmentStudentCoursesBinding
+    lateinit var viewModel: CoursesViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(CoursesViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,7 +43,21 @@ class CoursesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
+        //get student id from previous fragment
         initViews()
+        viewModel.getAllCourses()
+    }
+    fun subscribeToLiveData() {
+        viewModel.coursesLiveData.observe(viewLifecycleOwner){
+            it?.let {
+                var list= mutableListOf<CourseResponseDTO>()
+                it.forEach {
+                    list.add(it.convertTo(CourseResponseDTO::class.java))
+                }
+                coursesRVAdapter.updateCoursesList(list)
+            }
+        }
     }
 
     private fun initViews() {
@@ -40,7 +65,7 @@ class CoursesFragment : Fragment() {
 
 
         coursesRVAdapter.onCourseClickListener = object : CoursesRVAdapter.OnCourseClickListener {
-            override fun setOnCourseClickListener(item: CourseItem?) {
+            override fun setOnCourseClickListener(item: CourseResponseDTO?) {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .addToBackStack("")
@@ -54,6 +79,7 @@ class CoursesFragment : Fragment() {
         }
         studentCoursesBinding.studentCoursesRecyclerView.adapter = coursesRVAdapter
         studentCoursesBinding.joinCourseButton.setOnClickListener {
+            var courseCode:String?=null
             val join_course = EditText(requireContext())
             MaterialAlertDialogBuilder(requireContext())
                 // Add customization options here
@@ -61,12 +87,16 @@ class CoursesFragment : Fragment() {
                 .setMessage("Enter Course Code")
                 .setView(join_course)
                 .setPositiveButton("Join") { dialog, which ->
-                    val courseCode = join_course.text.toString()
-                    if (courseCode.isEmpty()) {
+                    courseCode = join_course.text.toString()
+                    if (courseCode.isNullOrEmpty()) {
                         join_course.error = "Please enter course code"
                     }
                 }
                 .show()
+            courseCode?.let {
+                viewModel.joinCourse(CONSTANTS.user_id,Integer.parseInt(it))
+            }
+
         }
     }
 }
