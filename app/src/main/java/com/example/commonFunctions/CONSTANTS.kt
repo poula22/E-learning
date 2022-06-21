@@ -6,4 +6,5 @@ object CONSTANTS {
         const val FILE_REQUEST_CODE = 3
         const val VOICE_REQUEST_CODE = 4
         const val VIDEO_REQUEST_CODE = 5
+        var user_id=-1
 }

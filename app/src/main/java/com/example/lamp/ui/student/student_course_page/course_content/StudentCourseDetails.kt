@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.MainActivity
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseDetailsBinding
@@ -25,7 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 
-class StudentCourseDetails(var course: CourseItem?) : Fragment() {
+class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewBinding: FragmentStudentCourseDetailsBinding
@@ -81,7 +82,9 @@ class StudentCourseDetails(var course: CourseItem?) : Fragment() {
                 fragmentSwap.arguments=bundle
                 fragment=fragmentSwap
             } else if (item.itemId == R.id.material) {
-                fragment=StudentCourseMaterialFragment(course)
+                var bundle=Bundle()
+                bundle.putInt("courseId",course?.id!!)
+                fragment=StudentCourseMaterialFragment()
             } else if (item.itemId == R.id.dashboard) {
 
             } else if (item.itemId == R.id.quizzes) {

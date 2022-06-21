@@ -2,14 +2,16 @@ package com.example.lamp.ui.student.student_home_page.courses_recycler_view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCoursesBinding
 import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
 
-class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type: Int) :
+class CoursesRVAdapter(var coursesItemsList: List<CourseResponseDTO>? = null, val type: Int) :
     RecyclerView.Adapter<CoursesRVAdapter.CoursesItemViewHolder>() {
 
     val HOME_SCREEN = R.layout.item_student_home_course_rv
@@ -44,6 +46,7 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type:
             val view: ItemStudentHomeCourseRvBinding =
                 holder.viewDataBinding as ItemStudentHomeCourseRvBinding
             view.item = item
+
             if (onCourseClickListener != null) {
                 view.card.setOnClickListener {
                     onCourseClickListener!!.setOnCourseClickListener(item)
@@ -53,6 +56,7 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type:
             val view: ItemStudentCoursesBinding =
                 holder.viewDataBinding as ItemStudentCoursesBinding
             view.item = item
+            view.coursesCourseImage.setImageURI(item?.courseImage?.toUri())
             if (onCourseClickListener != null) {
                 view.card.setOnClickListener {
                     onCourseClickListener!!.setOnCourseClickListener(item)
@@ -65,6 +69,10 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type:
     override fun getItemCount(): Int {
         return coursesItemsList?.size ?: 0;
     }
+    fun updateCoursesList(list: List<CourseResponseDTO>) {
+        coursesItemsList = list
+        notifyDataSetChanged()
+    }
 
     class CoursesItemViewHolder(var viewDataBinding: ViewDataBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
@@ -73,7 +81,7 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type:
     var onCourseClickListener: OnCourseClickListener? = null
 
     interface OnCourseClickListener {
-        fun setOnCourseClickListener(item: CourseItem?)
+        fun setOnCourseClickListener(item: CourseResponseDTO?)
     }
 
 }

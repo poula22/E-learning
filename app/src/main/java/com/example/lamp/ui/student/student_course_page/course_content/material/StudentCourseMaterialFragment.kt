@@ -23,8 +23,9 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 
-class StudentCourseMaterialFragment(var course: CourseItem?) : Fragment() {
+class StudentCourseMaterialFragment() : Fragment() {
     lateinit var viewBinding: FragmentStudentCourseMaterialBinding
+    var courseId: Int? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +40,7 @@ class StudentCourseMaterialFragment(var course: CourseItem?) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        courseId = arguments?.getInt("courseId")
         initViews()
     }
 
