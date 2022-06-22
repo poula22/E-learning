@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
         <!--        <TextView-->
         <!--            android:id="@+id/title"-->
@@ -25,7 +26,6 @@
             android:id="@+id/line"
             android:layout_width="70dp"
             android:layout_height="5dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_btn_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +49,7 @@
             android:id="@+id/details_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             app:boxBackgroundColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/tittle_layout">
 
@@ -102,10 +103,11 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_todo_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="18sp"
             android:backgroundTint="@color/light_blue"
-            android:text="add Todo"
-            android:textColor="@color/white"
+            android:text="Add Todo"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/urgent_checkbox" />
 
 

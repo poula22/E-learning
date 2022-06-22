@@ -33,11 +33,8 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
     }
 
     fun initViews() {
-
         teacherAddCourseBinding.addCourseBtn.setOnClickListener {
             if (validateForm()) {
-                val teacherName =
-                    teacherAddCourseBinding.teacherNameLayout.editText?.text.toString()
                 val courseName = teacherAddCourseBinding.courseNameLayout.editText?.text.toString()
                 val courseCode = teacherAddCourseBinding.codeLayout.editText?.text.toString()
                 val description =
@@ -48,7 +45,7 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
                 val course =
                     CourseItem(
                         courseName,
-                        teacherName,
+                        null,
                         courseCode,
                         description,
                         courseImageId,
@@ -79,12 +76,6 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
             isValid = false
         } else {
             teacherAddCourseBinding.descriptionLayout.error = null
-        }
-        if (teacherAddCourseBinding.teacherNameLayout.editText?.text.toString().isBlank()) {
-            teacherAddCourseBinding.teacherNameLayout.error = "please enter todo details"
-            isValid = false
-        } else {
-            teacherAddCourseBinding.teacherNameLayout.error = null
         }
         return isValid
     }

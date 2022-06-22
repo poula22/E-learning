@@ -13,6 +13,7 @@ import com.example.lamp.databinding.FragmentTeacherCoursesBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.TeacherCourseDetails
+import com.example.lamp.ui.teacher.courses_page.courses_bottom_sheet.TeacherAddCoursesBottomSheet
 import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.TeacherCoursesAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -34,9 +35,6 @@ class TeacherCoursesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        val floatingActionBtn: FloatingActionButton =
-            requireActivity().findViewById(R.id.floating_action_btn)
-        floatingActionBtn.isVisible = true
     }
 
 
@@ -60,6 +58,15 @@ class TeacherCoursesFragment : Fragment() {
 
         }
         teacherCoursesBinding.teacherCoursesRecyclerView.adapter = adapter
+
+        teacherCoursesBinding.floatingActionBtn.setOnClickListener {
+            showAddBottomSheet()
+        }
+    }
+
+    private fun showAddBottomSheet() {
+        val addCourseBottomSheet = TeacherAddCoursesBottomSheet()
+        addCourseBottomSheet.show(requireActivity().supportFragmentManager, "")
     }
 
 }

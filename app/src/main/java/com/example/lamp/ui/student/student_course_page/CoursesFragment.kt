@@ -2,6 +2,7 @@ package com.example.lamp.ui.student.student_course_page
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.text.InputType.TYPE_CLASS_NUMBER
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,10 +82,11 @@ class CoursesFragment : Fragment() {
         studentCoursesBinding.joinCourseButton.setOnClickListener {
             var courseCode:String?=null
             val join_course = EditText(requireContext())
+            join_course.hint="Enter course code"
+            join_course.inputType=TYPE_CLASS_NUMBER
             MaterialAlertDialogBuilder(requireContext())
                 // Add customization options here
                 .setTitle("Join Course")
-                .setMessage("Enter Course Code")
                 .setView(join_course)
                 .setPositiveButton("Join") { dialog, which ->
                     courseCode = join_course.text.toString()

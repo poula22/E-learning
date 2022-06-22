@@ -9,32 +9,32 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_rose">
+        android:background="@drawable/rounded_bottom_sheet">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="add New Course"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            app:layout_constraintTop_toTopOf="parent"
+        <View
+            android:id="@+id/view"
+            android:layout_width="80dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_btn_blue"
+            android:backgroundTint="@color/material_dynamic_primary20"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/course_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="38dp"
-            app:boxCornerRadiusBottomStart="38dp"
-            app:boxCornerRadiusTopEnd="38dp"
-            app:boxCornerRadiusTopStart="38dp"
-            android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="8dp"
+            app:boxBackgroundColor="@color/white"
             app:boxBackgroundMode="outline"
-            app:layout_constraintTop_toBottomOf="@id/title">
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
+            app:layout_constraintTop_toBottomOf="@id/view">
 
             <EditText
                 android:layout_width="match_parent"
@@ -46,14 +46,14 @@
             android:id="@+id/code_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="8dp"
             app:boxBackgroundColor="@color/white"
             app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="38dp"
-            app:boxCornerRadiusBottomStart="38dp"
-            app:boxCornerRadiusTopEnd="38dp"
-            app:boxCornerRadiusTopStart="38dp"
-            android:layout_marginVertical="8dp"
-            android:layout_marginHorizontal="8dp"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
             app:layout_constraintTop_toBottomOf="@id/course_name_layout">
 
             <EditText
@@ -62,55 +62,37 @@
                 android:hint="Course Code" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacher_name_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="38dp"
-            app:boxCornerRadiusBottomStart="38dp"
-            app:boxCornerRadiusTopEnd="38dp"
-            app:boxCornerRadiusTopStart="38dp"
-            android:layout_marginVertical="8dp"
-            android:layout_marginHorizontal="8dp"
-            app:layout_constraintTop_toBottomOf="@id/code_layout">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Teacher Name" />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
-            android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="8dp"
-            app:boxBackgroundMode="outline"
-            app:layout_constraintTop_toBottomOf="@id/teacher_name_layout">
+            android:layout_marginVertical="8dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
+            app:layout_constraintTop_toBottomOf="@id/code_layout">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="top"
                 android:hint="Course Description"
-                android:lines="4"
-                android:gravity="top"/>
+                android:lines="4" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/add_course_btn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="Add Course"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/pink"
             android:layout_margin="8dp"
-            app:layout_constraintTop_toBottomOf="@id/description_layout"
+            android:text="Add Course"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/description_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
