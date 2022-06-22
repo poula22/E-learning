@@ -1,6 +1,7 @@
 package com.example.data.api
 
 import com.example.data.data_classes.Assignment
+import com.example.data.model.AssignmentDetailsResponse
 import com.example.data.model.AssignmentResponse
 import com.example.domain.model.AssignmentResponseDTO
 import retrofit2.Call
@@ -20,5 +21,5 @@ interface AssignmentWebService {
     @GET("api/Assignments/GetAssignmentsByCourseId/{courseId}")
     suspend fun getAssignmentsByCourseId(@Path("courseId") courseId:Int): List<AssignmentResponse>
     @GET("api/Assignments/GetAssignmentsByCourseIdForStudent/{courseId}/{studentId}")
-    suspend fun getAssignmentsByCourseIdForStudent(@Path("courseId") courseId:Int, @Path("studentId") studentId:Int): List<AssignmentResponse>
+    suspend fun getAssignmentsByCourseIdForStudent(@Path("courseId") courseId:Int, @Path("studentId") studentId:Int): List<AssignmentDetailsResponse>
 }

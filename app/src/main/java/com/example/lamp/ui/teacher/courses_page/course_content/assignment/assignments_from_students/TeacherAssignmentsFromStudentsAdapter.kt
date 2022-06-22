@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import aws.smithy.kotlin.runtime.http.Url
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherAssignmentsFromStudentsBinding
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentFromStudentItem

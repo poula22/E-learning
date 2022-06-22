@@ -13,7 +13,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.commonFunctions.CONSTANTS
 import com.example.commonFunctions.CommonFunctions
+import com.example.data.model.AssignmentAnswerDetailsResponse
+import com.example.domain.model.AssignmentAnswerResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseAssignmentSubmitBinding
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
@@ -21,7 +25,13 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 
 class StudentCourseAssignmentSubmitFragment:Fragment() {
     lateinit var viewBinding:FragmentStudentCourseAssignmentSubmitBinding
+    lateinit var studentCourseAssignmentSubmitViewModel:StudentCourseAssignmentSubmitViewModel
     var uri:String?=null
+    var assignmentId:Int=-1
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        studentCourseAssignmentSubmitViewModel=ViewModelProvider(this).get(StudentCourseAssignmentSubmitViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,10 +44,12 @@ class StudentCourseAssignmentSubmitFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var bundle=arguments
-        var assignment=bundle?.getSerializable("assignment") as AssignmentItem
+        var assignment=bundle?.getSerializable("assignment") as AssignmentAnswerDetailsResponse
+        assignmentId= assignment.id!!
         viewBinding.submitAssignmentBtn.setOnClickListener {
             if(uri!=null){
-                //send notes and uri to server
+                var studentAnswer=AssignmentAnswerResponseDTO(CONSTANTS.user_id,uri.toString(),uri.toString(),null,null,null, assignmentId)
+                studentCourseAssignmentSubmitViewModel.submitAssignment(studentAnswer)
             }
         }
         viewBinding.uploadFile.setOnClickListener {

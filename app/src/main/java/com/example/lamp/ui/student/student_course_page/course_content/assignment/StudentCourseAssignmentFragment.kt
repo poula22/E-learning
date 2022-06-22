@@ -5,10 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import com.example.commonFunctions.CONSTANTS
+import com.example.data.model.AssignmentDetailsResponse
+import com.example.data.model.AssignmentResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseAssignmentBinding
 import com.example.lamp.test_data.TestData
@@ -17,13 +21,14 @@ import com.example.lamp.ui.student.student_course_page.course_content.assignment
 import com.example.lamp.ui.student.student_features_page.recitation.recite_paragraph.ReciteParagraphFragment
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.ReciteWordsFragment
 import com.google.android.material.tabs.TabLayout
-
+//filter fun - new json
 class StudentCourseAssignmentFragment :
     Fragment() {
     lateinit var viewBinding: FragmentStudentCourseAssignmentBinding
     lateinit var adapter: StudentCourseAssignmentAdapter
     lateinit var tabLayout: TabLayout
     lateinit var viewModel: StudentCourseAssignmentViewModel
+    var courseId:Int = -1
 
     private fun initTabs(
         all: TabLayout.Tab,
@@ -60,15 +65,19 @@ class StudentCourseAssignmentFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        courseId=arguments?.getInt("courseId")!!
         initViews()
-        subscibeToLiveData()
-        viewModel.getData(requireArguments())
-
+        subscribeToLiveData()
+        viewModel.getData(courseId)
     }
 
-    private fun subscibeToLiveData() {
+    private fun subscribeToLiveData() {
         viewModel.liveData.observe(viewLifecycleOwner){
-            adapter.setFilteredList(it)
+            adapter.setFilteredList(it.toMutableList())
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+            viewModel.errorMessage.value=it
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -77,7 +86,7 @@ class StudentCourseAssignmentFragment :
         adapter.onStudentAssignmentClickedListener=object :StudentCourseAssignmentAdapter.OnStudentAssignmentClickedListener{
             override fun onAssignmentClick(postion: Int) {
                 var bundle=Bundle()
-                var assignment: AssignmentItem? =viewModel.liveData.value?.get(postion)
+                var assignment: AssignmentDetailsResponse? =viewModel.liveData.value?.get(postion)
                 bundle.putSerializable("assignment",assignment)
                 var fragment=StudentCourseAssignmentSubmitFragment()
                 fragment.arguments=bundle

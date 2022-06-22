@@ -1,25 +1,43 @@
 package com.example.lamp.ui.student.student_course_page.course_content.assignment
 
-import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.commonFunctions.CONSTANTS
+import com.example.data.api.ApiManager
+import com.example.data.model.AssignmentDetailsResponse
+import com.example.data.model.AssignmentResponse
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import retrofit2.http.HTTP
 
+//filter
 class StudentCourseAssignmentViewModel:ViewModel() {
-    var liveData =MutableLiveData<MutableList<AssignmentItem>>()
-    fun getData(bundle: Bundle){
+    var errorMessage=MutableLiveData<String>()
+    var liveData =MutableLiveData<List<AssignmentDetailsResponse>>()
+    val assignmentWebService=ApiManager.getAssignmentApi()
+    fun getData(courseId:Int){
         viewModelScope.launch {
-            liveData.value=bundle.getSerializable("assignmentList") as MutableList<AssignmentItem>
+            try {
+                liveData.value=assignmentWebService.getAssignmentsByCourseIdForStudent(courseId,CONSTANTS.user_id)
+
+            }catch (t:Throwable){
+                when(t){
+                    is HttpException ->
+                        errorMessage.value=t.response()?.errorBody()?.string()
+                }
+            }
         }
     }
-    fun filterList(text: String):MutableList<AssignmentItem> {
-        val filteredList = mutableListOf<AssignmentItem>()
+    fun filterList(text: String):MutableList<AssignmentDetailsResponse> {
+        val filteredList = mutableListOf<AssignmentDetailsResponse>()
         liveData.value?.let {
             for (item in it) {
-                if (item.state.lowercase() == text.lowercase()) {
+                if(item.submitted==true && text.lowercase()=="submitted"){
                     filteredList.add(item) //add to filtered list
-                } else if(text.lowercase() == "all" ){
+                }else if (item.submitted==false && text.lowercase()=="not submitted") {
+                    filteredList.add(item) //add to filtered list
+                }else if(text.lowercase() == "all" ){
                     filteredList.add(item) // add all the items that are not filtered
                 }
             }

@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.data.model.LessonResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseMaterialBinding
 import com.example.lamp.ui.student.student_course_page.course_content.material.lessons_recycler_view.StudentCourseLessonsAdapter
@@ -26,6 +29,14 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 class StudentCourseMaterialFragment() : Fragment() {
     lateinit var viewBinding: FragmentStudentCourseMaterialBinding
     var courseId: Int? = null
+    lateinit var viewModel:StudentCourseMaterialViewModel
+    val adapter=StudentCourseLessonsAdapter(mutableListOf(LessonResponse("desc1", 1, "lesson1",1)))
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(StudentCourseMaterialViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,11 +51,27 @@ class StudentCourseMaterialFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        courseId = arguments?.getInt("courseId")
+        courseId = requireArguments().getInt("courseId")
+        subscribeToLiveData()
         initViews()
+        viewModel.getCourseLessons(courseId!!)
     }
 
     private fun initViews() {
+        //play teacher video
+        playTeacherVideo()
+        // youtube player
+        playYoutubeVideo()
+        adapter.onLessonClickListener=object :StudentCourseLessonsAdapter.OnLessonClickListener{
+            override fun onLessonClick(lessonId: Int) {
+                viewModel.getLessonContent(lessonId)
+            }
+        }
+        viewBinding.lessonsRecyclerView.adapter= adapter
+    //        viewBinding.contentTextHtml.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+    }
+
+    private fun playTeacherVideo(path:String?=null) {
         val mediaController = MediaController(requireContext())
         mediaController.setAnchorView(viewBinding.videoPlayer)
         val uri: Uri = Uri.parse(
@@ -54,18 +81,39 @@ class StudentCourseMaterialFragment() : Fragment() {
         viewBinding.videoPlayer.setVideoURI(uri);
         viewBinding.videoPlayer.requestFocus();
         viewBinding.videoPlayer.start();
-        // youtube player
-        playYoutubeVideo()
-        viewBinding.lessonsRecyclerView.adapter= StudentCourseLessonsAdapter(mutableListOf(
-            LessonItem("lesson1", mutableListOf(SectionItem("link1","videoP1","att1","ppp","sec")))
-        ))
-    //        viewBinding.contentTextHtml.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+    }
 
+    private fun subscribeToLiveData(){
+        viewModel.LessonsLiveData.observe(viewLifecycleOwner){
+            it?.let {
+                adapter.updateLessonsList(it)
+            }
+        }
+        viewModel.contentLiveData.observe(viewLifecycleOwner){
+            it?.let { contentResponse->
+                contentResponse.forEach{content ->
+                    if (content.path?.contains("https://www.youtube.com") == true){
+                        playYoutubeVideo(content.path!!)
+                    }else if (content.fileName?.contains(".pdf") == true){
 
+                    }else if (content.fileName?.contains("text")==true){
+
+                    }else{
+                        playTeacherVideo(content.path!!)
+                    }
+                }
+            }
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+            it?.let {
+                viewModel.errorMessage.value=it
+                Toast.makeText(requireContext(),it, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 
-    private fun playYoutubeVideo() {
+    private fun playYoutubeVideo(youtubeUrl: String?=null) {
         val youTubePlayerView: YouTubePlayerView = viewBinding.youtubePlayerView
         lifecycle.addObserver(youTubePlayerView)
         val videoId =

@@ -77,14 +77,16 @@ class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
                 viewBinding.navView.menu.findItem(item.itemId).title
             if (item.itemId == R.id.assignment) {
                 var bundle=Bundle()
-                bundle.putSerializable("assignmentList",TestData.ASSIGNMENTS as ArrayList<AssignmentItem>)
+                bundle.putInt("courseId",course?.id!!)
                 var fragmentSwap= StudentCourseAssignmentFragment()
                 fragmentSwap.arguments=bundle
                 fragment=fragmentSwap
             } else if (item.itemId == R.id.material) {
                 var bundle=Bundle()
                 bundle.putInt("courseId",course?.id!!)
-                fragment=StudentCourseMaterialFragment()
+                var fragmentSwap= StudentCourseMaterialFragment()
+                fragmentSwap.arguments=bundle
+                fragment=fragmentSwap
             } else if (item.itemId == R.id.dashboard) {
 
             } else if (item.itemId == R.id.quizzes) {

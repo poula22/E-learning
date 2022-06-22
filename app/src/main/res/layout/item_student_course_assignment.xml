@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem" />
+            type="com.example.data.model.AssignmentDetailsResponse" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -40,7 +40,7 @@
                 android:id="@+id/deadline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(item.deadline.date)+String.valueOf('/')+String.valueOf(item.deadline.month+1)+String.valueOf('/')+String.valueOf(item.deadline.year+1900)}"
+                android:text="@{item.endTime.substring(0,9)}"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toStartOf="@+id/state"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -54,7 +54,7 @@
                 android:id="@+id/state"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{item.state}"
+                android:text="@{item.submitted.toString()}"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toStartOf="@+id/grade"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -67,7 +67,7 @@
                 android:id="@+id/grade"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(item.grade)}"
+                android:text="@{String.valueOf(item.assignedGrade)}"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

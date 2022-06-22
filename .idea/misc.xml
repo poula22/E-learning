@@ -173,6 +173,7 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_assignment_submit.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_container.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_details.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_material.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_quizzes.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_courses.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_features.xml" value="0.25" />
@@ -205,6 +206,7 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_parent_course.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_recite_word_check.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_assignment.xml" value="0.2" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_material.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_material_lesson_content.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_quiz_card.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_quiz_question_answer.xml" value="0.24947916666666667" />
@@ -241,5 +243,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.2" />
+      </ProjectState>
+    </option>
   </component>
 </project>
