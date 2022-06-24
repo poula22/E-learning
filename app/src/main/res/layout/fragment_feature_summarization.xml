@@ -136,13 +136,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top"
-                    android:lines="12"
+                    android:lines="9"
                     android:textSize="25sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/translate_btn"
+                android:id="@+id/summarize_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_marginEnd="16dp"
@@ -152,11 +152,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_input" />
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_output"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Translated text"
+                android:hint="Summarization"
                 android:scrollbars="vertical"
                 app:boxBackgroundColor="@color/light_pink"
                 app:boxBackgroundMode="outline"
@@ -166,9 +167,18 @@
                 app:boxCornerRadiusTopStart="20dp"
                 app:boxStrokeWidth="2dp"
                 app:hintTextColor="@color/black"
-
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/translate_btn" />
+                app:layout_constraintTop_toBottomOf="@id/summarize_btn">
+
+                <EditText
+                    android:id="@+id/text_output_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:inputType="none"
+                    android:lines="5"
+                    android:textSize="25sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

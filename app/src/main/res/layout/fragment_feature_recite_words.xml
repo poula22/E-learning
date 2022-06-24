@@ -136,7 +136,7 @@
             android:id="@+id/english_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/dark_yellow"
+            android:background="#FFF59D"
             android:gravity="center"
             android:text="English"
             android:textColor="@color/black"
@@ -177,10 +177,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_choose_column" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_recite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:backgroundTint="@color/yellow"
             android:text="Recite"
             android:textColor="@color/black"

@@ -9,18 +9,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:background="#E3F2FD"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="5dp">
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/title"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="add New Todo"-->
-        <!--            android:textSize="18sp"-->
-        <!--            android:textStyle="bold"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <View
             android:id="@+id/line"
@@ -35,7 +27,6 @@
             android:id="@+id/tittle_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/line">
 
             <EditText
@@ -50,7 +41,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:boxBackgroundColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/tittle_layout">
 
             <EditText
@@ -58,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:hint="details"
+                android:hint="Details"
                 android:lines="4" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,12 +92,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_todo_btn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/light_blue"
             android:text="Add Todo"
             android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/urgent_checkbox" />
 
 

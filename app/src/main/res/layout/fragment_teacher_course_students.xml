@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="Extend All"
+            android:text="Expand All"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/teacher_students_recycler_view"
             app:layout_constraintEnd_toEndOf="parent"

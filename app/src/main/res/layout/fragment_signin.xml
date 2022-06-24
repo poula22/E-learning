@@ -9,20 +9,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp">
-
-
+        android:background="#FFFDE7"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/lamp_icon"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/lamp"
+            android:src="@mipmap/lamp_foreground"
             app:layout_constraintBottom_toTopOf="@id/title_signin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
             android:id="@+id/title_signin"
@@ -74,6 +72,7 @@
             app:boxCornerRadiusTopEnd="20dp"
             app:boxCornerRadiusTopStart="20dp"
             app:boxStrokeWidth="2dp"
+            app:endIconMode="password_toggle"
             app:layout_constraintBottom_toTopOf="@id/sign_in_layout_type"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +138,6 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginHorizontal="30dp"
-            android:onClick="signIn"
             android:text="LOGIN"
             app:layout_constraintBottom_toTopOf="@id/text_sign_up"
             app:layout_constraintEnd_toEndOf="parent"
@@ -173,11 +171,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_sign_up"
-            style="@style/Widget.Material3.Button.ElevatedButton"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginHorizontal="30dp"
-            android:onClick="signUp"
             android:text="SIGN UP"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

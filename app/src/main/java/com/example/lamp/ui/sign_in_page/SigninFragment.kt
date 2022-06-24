@@ -13,6 +13,7 @@ import androidx.lifecycle.get
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSigninBinding
 import com.example.lamp.ui.parent.ParentContainerFragment
+import com.example.lamp.ui.sign_up_page.SignUpFragment
 import com.example.lamp.ui.student.StudentContainerFragment
 import com.example.lamp.ui.teacher.TeacherContainerFragment
 
@@ -58,6 +59,17 @@ class SigninFragment : Fragment() {
         viewBinding.teacherImg.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, TeacherContainerFragment())
+                .addToBackStack("")
+                .commit()
+        }
+
+        viewBinding.buttonSignin.setOnClickListener{
+            //signin
+        }
+
+        viewBinding.buttonSignUp.setOnClickListener{
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, SignUpFragment())
                 .addToBackStack("")
                 .commit()
         }
