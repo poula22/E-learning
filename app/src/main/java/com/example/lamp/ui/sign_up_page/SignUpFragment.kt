@@ -91,6 +91,7 @@ class SignUpFragment : Fragment() {
             )
         ) {
             viewBinding.emailSignUp.error = "Incorrect email address"
+            isValid = false
         } else {
             viewBinding.emailSignUp.error = null
         }
