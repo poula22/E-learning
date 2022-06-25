@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.commonFunctions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.api.UserWebService
+import com.example.data.model.LoginResponse
 import com.example.data.model.UserResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -27,7 +28,8 @@ class SigninViewModel : ViewModel() {
             viewModelScope.launch {
                 //token = "Bearer ${sessionManager.fetchAuthToken()}"
                 //sessionManager?.saveAuthToken(result.authToken)
-                var result = service.logIn(email, password)
+//                var result = service.logIn(email, password)
+                var result = service.logInTest(LoginResponse(email, password))
                 liveData.value = result
             }
         } catch (t: Throwable) {

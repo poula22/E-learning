@@ -14,7 +14,7 @@ interface CourseWebService {
         suspend fun updateCourse(@Path("id") id: Int, @Body course: CourseResponseDTO): CourseResponse
         @DELETE("api/Courses/{id}")
         suspend fun deleteCourse(@Path("id") id: Int): CourseResponse
-        @GET("api/Courses/JoinCourse/{courseId}/{studentId}")
+        @GET("api/Courses/{courseId}/JoinCourse/{studentId}")
         suspend fun joinCourse(@Path("courseId") courseId: Int, @Path("studentId") studentId: Int): CourseResponse
         @GET("api/Courses/{courseId}/DropCourse/{studentId}")
         suspend fun dropCourse(@Path("courseId") courseId: Int, @Path("studentId") studentId: Int): CourseResponse

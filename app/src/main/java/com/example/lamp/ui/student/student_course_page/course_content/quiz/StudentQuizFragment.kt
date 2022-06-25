@@ -26,7 +26,7 @@ class StudentQuizFragment : Fragment() {
     lateinit var quiz: List<QuizDetailsResponse>
     lateinit var viewModel: StudentQuizViewModel
     lateinit var adapter: StudentQuizAnswersAdapter
-    var quizDuration=-1
+    var quizDuration=1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +61,7 @@ class StudentQuizFragment : Fragment() {
 
     private fun initViews() {
         adapter=StudentQuizAnswersAdapter()
-        viewBinding.durationTime.setText(quizDuration)
+        viewBinding.durationTime.setText(quizDuration.toString())
         adapter = StudentQuizAnswersAdapter()
         viewBinding.questionCard.questionAnswerRecyclerView.adapter = adapter
         adapter.onAnswerSelectedListener =

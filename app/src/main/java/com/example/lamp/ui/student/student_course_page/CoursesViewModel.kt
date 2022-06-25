@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.commonFunctions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
@@ -14,12 +15,16 @@ import retrofit2.HttpException
 class CoursesViewModel:ViewModel() {
     var courseWebService = ApiManager.getCourseApi()
     var coursesLiveData=MutableLiveData<MutableList<CourseResponse>>()
-
+    var flag=false
     fun joinCourse(studentID:Int,courseCode:Int) {
+        flag=true
         viewModelScope.launch {
             try {
-                val course = courseWebService.joinCourse(studentID, courseCode)
-                coursesLiveData.value?.add(course)
+                val course = courseWebService.joinCourse(courseCode,studentID)
+                var courses=coursesLiveData.value
+                courses?.add(course)
+                coursesLiveData.value=courses
+
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
@@ -30,12 +35,13 @@ class CoursesViewModel:ViewModel() {
             }
 
         }
+
     }
 
     fun getAllCourses() {
         viewModelScope.launch {
             try {
-                val courses = courseWebService.getAllCourses()
+                val courses = courseWebService.getCoursesByStudentId(CONSTANTS.user_id)
                 coursesLiveData.value = courses.toMutableList()
             } catch (t: Throwable) {
                 when (t) {

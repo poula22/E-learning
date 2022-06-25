@@ -28,6 +28,7 @@ class CoursesFragment : Fragment() {
     lateinit var studentCoursesBinding: FragmentStudentCoursesBinding
     lateinit var viewModel: CoursesViewModel
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(CoursesViewModel::class.java)
@@ -57,6 +58,10 @@ class CoursesFragment : Fragment() {
                     list.add(it.convertTo(CourseResponseDTO::class.java))
                 }
                 coursesRVAdapter.updateCoursesList(list)
+            }
+            if (viewModel.flag){
+                viewModel.flag=false
+                viewModel.getAllCourses()
             }
         }
     }
@@ -92,12 +97,12 @@ class CoursesFragment : Fragment() {
                     courseCode = join_course.text.toString()
                     if (courseCode.isNullOrEmpty()) {
                         join_course.error = "Please enter course code"
+                    }else{
+                        viewModel.joinCourse(CONSTANTS.user_id,Integer.parseInt(courseCode))
+
                     }
                 }
                 .show()
-            courseCode?.let {
-                viewModel.joinCourse(CONSTANTS.user_id,Integer.parseInt(it))
-            }
 
         }
     }

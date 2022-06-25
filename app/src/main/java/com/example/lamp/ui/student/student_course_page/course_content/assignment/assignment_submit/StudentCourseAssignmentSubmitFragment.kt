@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.commonFunctions.CONSTANTS
 import com.example.commonFunctions.CommonFunctions
 import com.example.data.model.AssignmentAnswerDetailsResponse
+import com.example.data.model.AssignmentDetailsResponse
 import com.example.domain.model.AssignmentAnswerResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseAssignmentSubmitBinding
@@ -44,7 +45,7 @@ class StudentCourseAssignmentSubmitFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var bundle=arguments
-        var assignment=bundle?.getSerializable("assignment") as AssignmentAnswerDetailsResponse
+        var assignment=bundle?.getSerializable("assignment") as AssignmentDetailsResponse
         assignmentId= assignment.id!!
         viewBinding.submitAssignmentBtn.setOnClickListener {
             if(uri!=null){

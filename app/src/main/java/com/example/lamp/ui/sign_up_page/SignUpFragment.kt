@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.data.model.UserResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSignUpBinding
+import com.example.lamp.ui.sign_in_page.SigninFragment
 import java.util.regex.Pattern
 
 class SignUpFragment : Fragment() {
@@ -20,6 +21,7 @@ class SignUpFragment : Fragment() {
     lateinit var viewModel: SignUpViewModel
     lateinit var viewBinding: FragmentSignUpBinding
     var selected: String? = null
+    var verified=true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +41,14 @@ class SignUpFragment : Fragment() {
         viewModel.liveData.observe(
             viewLifecycleOwner
         ) {
-            Log.v("response test::", it.emailAddress!!)
+            Log.v("response test::", it.toString())
         }
 
         viewModel.errorMessage.observe(
             viewLifecycleOwner
         ) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            verified=false
         }
         viewModel.resultFirebase.observe(
             viewLifecycleOwner
@@ -56,6 +59,13 @@ class SignUpFragment : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "Try again", Toast.LENGTH_SHORT)
                     .show()
+            }
+            if (it && verified){
+                Toast.makeText(requireContext(), "Successfully registered", Toast.LENGTH_SHORT)
+                    .show()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, SigninFragment())
+                    .commit()
             }
         }
     }
@@ -110,6 +120,7 @@ class SignUpFragment : Fragment() {
                     )
                 )
                 viewModel.addUserToFirebase(email, password)
+
             }
         }
     }
@@ -172,6 +183,4 @@ class SignUpFragment : Fragment() {
         }
         return isValid
     }
-
-
 }

@@ -9,7 +9,7 @@ import retrofit2.http.*
 
 interface StudentWebService {
     @POST("api/Students")
-    suspend fun addStudent(@Path("student") student: StudentResponseDTO):UserResponse
+    suspend fun addStudent(@Body student: StudentResponseDTO):UserResponse
     @GET("api/Students/GetStudentsByParentId/{parentId}")
     suspend fun updateStudent(@Query("parentId") parentId:Int):StudentResponse
     @GET("api/Students/GetStudentsByCourseId/{courseId}")

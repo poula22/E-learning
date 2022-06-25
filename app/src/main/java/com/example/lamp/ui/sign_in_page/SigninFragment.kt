@@ -1,6 +1,7 @@
 package com.example.lamp.ui.sign_in_page
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.commonFunctions.CONSTANTS
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSigninBinding
 import com.example.lamp.ui.parent.ParentContainerFragment
@@ -42,45 +44,46 @@ class SigninFragment : Fragment() {
     private fun subscribeToLiveData() {
         viewModel.liveData.observe(viewLifecycleOwner) { user ->
             var fragment: Fragment? = null
-            when (user.role) {
-                "parent" -> {
+            Log.v("user", user.toString())
+                if (user.role == "Parent") {
                     fragment = ParentContainerFragment()
                 }
-                "teacher" -> {
+                else if (user.role == "Teacher") {
                     fragment = TeacherContainerFragment()
                 }
-                "student" -> {
+                else if (user.role == "Student") {
                     fragment = StudentContainerFragment()
                 }
-                else -> {
+                else {
                     Toast.makeText(context, "Invalid user", Toast.LENGTH_SHORT).show()
                     return@observe
                 }
-            }
+            CONSTANTS.user_id= user.id!!
             requireActivity().supportFragmentManager.beginTransaction()
                 .addToBackStack("")
                 .replace(R.id.fragment_container, fragment)
+                .commit()
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
-        viewModel.test.observe(viewLifecycleOwner) {
-            if (it) {
-                viewModel.signin(
-                    viewBinding.email.editText?.text.toString(),
-                    viewBinding.password.editText?.text.toString()
-                )
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, StudentContainerFragment())
-                    .commit()
-            } else {
-                if (viewBinding.email.editText?.text.toString() != viewModel.auth.currentUser?.email) {
-                    Toast.makeText(context, "Email does not exist", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "Please verify your email", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+//        viewModel.test.observe(viewLifecycleOwner) {
+//            if (it) {
+//                viewModel.signin(
+//                    viewBinding.email.editText?.text.toString(),
+//                    viewBinding.password.editText?.text.toString()
+//                )
+//                requireActivity().supportFragmentManager.beginTransaction()
+//                    .replace(R.id.fragment_container, StudentContainerFragment())
+//                    .commit()
+//            } else {
+//                if (viewBinding.email.editText?.text.toString() != viewModel.auth.currentUser?.email) {
+//                    Toast.makeText(context, "Email does not exist", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    Toast.makeText(context, "Please verify your email", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
     }
 
     private fun initView() {
@@ -106,10 +109,14 @@ class SigninFragment : Fragment() {
 
         viewBinding.buttonSignin.setOnClickListener {
             if (validate()) {
-                viewModel.loginFirebase(
+                viewModel.signin(
                     viewBinding.email.editText?.text.toString(),
                     viewBinding.password.editText?.text.toString()
                 )
+//                viewModel.loginFirebase(
+//                    viewBinding.email.editText?.text.toString(),
+//                    viewBinding.password.editText?.text.toString()
+//                )
             }
         }
 

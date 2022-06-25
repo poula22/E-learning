@@ -10,6 +10,7 @@ import retrofit2.http.*
 interface ParentWebService {
     @POST("api/Parents")
     suspend fun addParent(@Body parent: ParentResponseDTO): UserResponse
+
     @GET("api/Parents/AddStudentsByEmailToParent/{parentId}/{studentEmail}")
     suspend fun addStudentsByEmailToParent(@Path("parentId") parentId:Int
                                            , @Path("studentEmail") studentEmail:String): List<ParentResponse>
