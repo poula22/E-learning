@@ -16,7 +16,7 @@ interface UserWebService {
                        ,@Body user: UserResponseDTO) : UserResponse
 
     @DELETE("api/Users/{id}")
-    fun deleteUserById(@Path("id") id:Int) : UserResponse
+    suspend fun deleteUserById(@Path("id") id:Int) : UserResponse
 
     @POST("api/Users/login/{email}/{password}")
     suspend fun logIn(@Path("email") email:String

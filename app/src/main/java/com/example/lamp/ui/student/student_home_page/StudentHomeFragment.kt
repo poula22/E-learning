@@ -9,12 +9,10 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentHomeBinding
 import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.student.student_features_page.ocr.OcrFragment
 import com.example.lamp.ui.student.student_features_page.recitation.RecitationFragment
 import com.example.lamp.ui.student.student_features_page.summarization.SummarizationFragment
@@ -22,7 +20,6 @@ import com.example.lamp.ui.student.student_features_page.translation.Translation
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CoursesRVAdapter
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeatureItem
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeaturesRVAdapter
-import com.example.lamp.ui.teacher.home_page.TeacherHomeViewModel
 import com.example.lamp.ui.todo_list.AddTodoBottomSheet
 import com.example.lamp.ui.todo_list.TodoAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView

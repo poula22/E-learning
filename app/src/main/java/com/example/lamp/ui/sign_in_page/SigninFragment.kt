@@ -1,11 +1,10 @@
 package com.example.lamp.ui.sign_in_page
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -36,7 +35,35 @@ class SigninFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initView()
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner){ user->
+            var fragment:Fragment? = null
+            when(user.role){
+                "parent"->{
+                    fragment = ParentContainerFragment()
+                }
+                "teacher"->{
+                    fragment = TeacherContainerFragment()
+                }
+                "student"->{
+                    fragment = StudentContainerFragment()
+                }
+                else->{
+                    Toast.makeText(context, "Invalid user", Toast.LENGTH_SHORT).show()
+                    return@observe
+                }
+            }
+            requireActivity().supportFragmentManager.beginTransaction()
+                .addToBackStack("")
+                .replace(R.id.fragment_container, fragment)
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+            Toast.makeText(context,it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initView() {
@@ -66,8 +93,10 @@ class SigninFragment : Fragment() {
 
 
         viewBinding.buttonSignin.setOnClickListener {
-            //signin
-            validate()
+            if (validate()){
+                viewModel.signin(viewBinding.email.editText?.text.toString()
+                    , viewBinding.password.editText?.text.toString())
+            }
         }
 
         viewBinding.buttonSignUp.setOnClickListener {

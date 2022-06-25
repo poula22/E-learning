@@ -90,7 +90,11 @@ class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
             } else if (item.itemId == R.id.dashboard) {
 
             } else if (item.itemId == R.id.quizzes) {
-                fragment=StudentQuizzesFragment()
+                var bundle=Bundle()
+                bundle.putInt("courseId",course?.id!!)
+                var fragmentSwap= StudentQuizzesFragment()
+                fragmentSwap.arguments=bundle
+                fragment=fragmentSwap
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true

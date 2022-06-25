@@ -147,6 +147,7 @@
         <entry key="..\:/Android_Studio/.gradle/caches/transforms-3/6d013df5b22d785a9ce7e0717098ae99/transformed/android-rteditor-1.7.6/res/layout/rte_toolbar_paragraph.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_done.xml" value="0.191" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.121" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_menu.xml" value="0.152" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_upload.xml" value="0.1415" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/rounded_button.xml" value="0.125" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/rounded_text.xml" value="0.1275" />
@@ -159,6 +160,7 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/app_bar_student_course_container.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/app_bar_teacher_course_container.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fireworks.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_container.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_container_all_tabs.xml" value="0.176" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_feature_recite_paragraph_check.xml" value="0.24947916666666667" />
@@ -176,7 +178,7 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_recite_words.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_recite_words_bottom_sheet.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_recite_words_check.xml" value="0.24615384615384617" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_sign_up.xml" value="0.152" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_sign_up.xml" value="0.2" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_signin.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_container_all_tabs.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_assignment.xml" value="0.24947916666666667" />
@@ -234,6 +236,7 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_teacher_course_quiz_question_answer.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_teacher_students.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/items_student_feature.xml" value="0.16" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/nav_header_teacher_course_details.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/pdf_viewer.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/home_navigation_menu.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/parent_bottom_navigation_menu.xml" value="0.25" />

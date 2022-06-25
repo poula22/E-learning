@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.data.model.UserResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSignUpBinding
 import java.util.regex.Pattern
@@ -39,6 +40,12 @@ class SignUpFragment : Fragment() {
             viewLifecycleOwner
         ) {
             Log.v("response test::", it.emailAddress!!)
+        }
+
+        viewModel.errorMessage.observe(
+            viewLifecycleOwner
+        ) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -73,8 +80,15 @@ class SignUpFragment : Fragment() {
         }
 
         viewBinding.buttonSignUpRegisteration.setOnClickListener {
+
             if (validate()) {
-                viewModel.addUser()
+                var firstName=viewBinding.firstName.editText?.text.toString()
+                var lastName=viewBinding.lastName.editText?.text.toString()
+                var email=viewBinding.email.text.toString()
+                var password=viewBinding.passwordSignUp.editText?.text.toString()
+                var phoneNumber=viewBinding.txtPhone.text.toString()
+
+                viewModel.addUser(UserResponse(firstName,lastName,email,password,selected,phoneNumber))
             }
         }
     }
