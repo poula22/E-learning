@@ -11,18 +11,27 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.data.model.QuestionChoiceResponse
+import com.example.data.model.QuizDetailsResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentQuizBinding
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.answers_recycler_view.StudentQuizAnswersAdapter
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class StudentQuizFragment(var quiz: QuizItem) : Fragment() {
+class StudentQuizFragment : Fragment() {
     lateinit var viewBinding: FragmentStudentQuizBinding
-    var questionList = quiz.questions
-    var studentAnswers = mutableListOf<AnswerItem>()
+    var studentAnswers = mutableListOf<QuestionChoiceResponse>()
     var questionIndex = 0
+    lateinit var quiz: List<QuizDetailsResponse>
+    lateinit var viewModel: StudentQuizViewModel
+    lateinit var adapter: StudentQuizAnswersAdapter
+    var quizDuration=-1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(StudentQuizViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,31 +44,43 @@ class StudentQuizFragment(var quiz: QuizItem) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var quizId=requireArguments().getInt("quizId")
+        subscribeToLiveData()
         initViews()
+        viewModel.getQuizQuestions(quizId)
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner) { list->
+            quiz=list
+            var question = list[questionIndex]
+            viewBinding.questionCard.item = question
+            adapter = StudentQuizAnswersAdapter()
+        }
     }
 
     private fun initViews() {
-        viewBinding.durationTime.setText(quiz.durationMinutes!!)
-        var question = questionList?.get(questionIndex)
-        viewBinding.questionCard.item = question
-        val adapter = StudentQuizAnswersAdapter(question?.answers!!)
+        adapter=StudentQuizAnswersAdapter()
+        viewBinding.durationTime.setText(quizDuration)
+        adapter = StudentQuizAnswersAdapter()
         viewBinding.questionCard.questionAnswerRecyclerView.adapter = adapter
         adapter.onAnswerSelectedListener =
             object : StudentQuizAnswersAdapter.OnAnswerSelectedListener {
-                override fun onAnswerSelected(answer: AnswerItem) {
-                    TODO("Not yet implemented")
+                override fun onAnswerSelected(answer: QuestionChoiceResponse) {
+                    studentAnswers.add(answer)
                 }
 
             }
         viewBinding.nextQuestionBtn.setOnClickListener {
             questionIndex++
-            if (questionIndex < questionList?.size!!) {
-                var question = questionList?.get(questionIndex)
+            if (questionIndex < quiz.size) {
+                var question = quiz[questionIndex]
                 viewBinding.questionCard.item = question
-                adapter.changeData(question?.answers!!)
-                if (questionIndex == questionList?.size!! - 1) {
+                adapter.changeData(question.questionChoices)
+                if (questionIndex == quiz.size - 1) {
                     viewBinding.nextQuestionBtn.setText("submit")
                     viewBinding.nextQuestionBtn.setBackgroundResource(R.color.green)
+
                 } else {
                     viewBinding.nextQuestionBtn.setText("next")
                     viewBinding.nextQuestionBtn.setBackgroundResource(R.color.yellow)
@@ -81,9 +102,9 @@ class StudentQuizFragment(var quiz: QuizItem) : Fragment() {
         viewBinding.previousQuestionBtn.setOnClickListener {
             it.isVisible = (questionIndex != 0)
             questionIndex--
-            var question = questionList?.get(questionIndex)
+            var question = quiz[questionIndex]
             viewBinding.questionCard.item = question
-            adapter.changeData(question?.answers!!)
+            adapter.changeData(question.questionChoices)
         }
 
 

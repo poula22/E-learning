@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem" />
+            type="com.example.data.model.QuestionChoiceResponse" />
     </data>
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:background="@drawable/rounded_btn_blue"
             android:minHeight="40dp"
             android:padding="8dp"
-            android:text="@{item.answer}"
+            android:text="@{item.choice}"
             android:textAlignment="center"
             android:textColor="@color/white"
             tools:text="Answer Choice" />

@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.data.model.QuestionChoiceResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCourseQuizQuestionAnswerBinding
 import com.example.lamp.databinding.ItemTeacherCourseQuizQuestionAnswerBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem
 
-class StudentQuizAnswersAdapter(var answers: MutableList<AnswerItem>) :
+class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceResponse?>?=null) :
     RecyclerView.Adapter<StudentQuizAnswersAdapter.ViewHolder>() {
     var itemSelectedIndex=-1
     class ViewHolder(var viewBinding: ItemStudentCourseQuizQuestionAnswerBinding) :
@@ -33,7 +34,7 @@ class StudentQuizAnswersAdapter(var answers: MutableList<AnswerItem>) :
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var item= answers[position]
+        var item= answers?.get(position)!!
         holder.viewBinding.item=item
 
         holder.viewBinding.answerText.setOnClickListener{
@@ -58,10 +59,10 @@ class StudentQuizAnswersAdapter(var answers: MutableList<AnswerItem>) :
     }
     var onAnswerSelectedListener:OnAnswerSelectedListener?=null
     interface OnAnswerSelectedListener{
-        fun onAnswerSelected(answer:AnswerItem)
+        fun onAnswerSelected(answer:QuestionChoiceResponse)
     }
-    fun changeData(newAnswers:MutableList<AnswerItem>){
-        answers=newAnswers
+    fun changeData(newAnswers: List<QuestionChoiceResponse?>?){
+        answers=newAnswers?.toMutableList()
         notifyDataSetChanged()
     }
 

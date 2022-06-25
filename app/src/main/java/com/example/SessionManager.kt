@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.lamp.R
 
-class SessionManager  {
-    private var context: Context?=null
+class SessionManager(context: Context)  {
     private var prefs: SharedPreferences =
         context?.getSharedPreferences(context?.getString(R.string.app_name), Context.MODE_PRIVATE)!!
     companion object {
@@ -13,8 +12,7 @@ class SessionManager  {
         private var sessionManager: SessionManager? = null
         fun getInstance(context: Context): SessionManager {
             if (sessionManager == null) {
-                sessionManager = SessionManager()
-                sessionManager?.context = context
+                sessionManager = SessionManager(context)
             }
             return sessionManager as SessionManager
         }

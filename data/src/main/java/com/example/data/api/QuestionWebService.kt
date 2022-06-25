@@ -2,6 +2,7 @@ package com.example.data.api
 
 import com.example.data.data_classes.Question
 import com.example.data.model.QuestionResponse
+import com.example.data.model.QuizDetailsResponse
 import com.example.domain.model.QuestionResponseDTO
 import retrofit2.Call
 import retrofit2.http.*
@@ -18,5 +19,5 @@ interface QuestionWebService {
     @GET("api/Questions/{id}")
     suspend fun getQuestion(@Path("id") id: Int): QuestionResponse
     @GET("api/Questions/GetQuestionsByQuizId/{id}")
-    suspend fun getQuestionsByQuizId(@Path("id") id: Int): List<QuestionResponse>
+    suspend fun getQuestionsByQuizId(@Path("id") id: Int): List<QuizDetailsResponse>
 }

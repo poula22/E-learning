@@ -4,23 +4,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.api.ApiManager
-import com.example.data.api.QuizWebService
-import com.example.data.model.QuizResponse
+import com.example.data.model.QuestionResponse
+import com.example.data.model.QuizDetailsResponse
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class StudentCourseQuizzesViewModel:ViewModel() {
-    var webService: QuizWebService =ApiManager.getQuizApi()
-    var liveData=MutableLiveData<List<QuizResponse>>()
-    var errorMessage=MutableLiveData<String>()
-    fun getAllQuizzes(courseId:Int){
+class StudentQuizViewModel:ViewModel() {
+    val liveData=MutableLiveData<List<QuizDetailsResponse>>()
+    val errorMessage=MutableLiveData<String>()
+    private val webService=ApiManager.getQuestionApi()
+    fun getQuizQuestions(quizId:Int){
         viewModelScope.launch {
             try {
-                var result=webService.getQuizzesByCourseId(courseId)
-                liveData.value=result
+
+                liveData.value=webService.getQuestionsByQuizId(quizId)
             }catch (t:Throwable){
                 when(t){
-                    is HttpException->{
+                    is HttpException ->{
                         errorMessage.value=t.response()?.errorBody()?.string()
                     }
                     else->{
@@ -28,7 +28,7 @@ class StudentCourseQuizzesViewModel:ViewModel() {
                     }
                 }
             }
+
         }
     }
-
 }

@@ -9,13 +9,24 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
+import com.example.data.model.QuizResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseQuizzesBinding
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.quizzes_recycler_view.StudentQuizAdapter
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
+import kotlin.properties.Delegates
 
-class StudentQuizzesFragment (var quizzes:MutableList<QuizItem>?=null): Fragment() {
+class StudentQuizzesFragment: Fragment() {
     lateinit var viewBinding: FragmentStudentCourseQuizzesBinding
+    lateinit var viewModel: StudentCourseQuizzesViewModel
+    var courseId:Int=-1
+    val adapter= StudentQuizAdapter()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(StudentCourseQuizzesViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,20 +39,32 @@ class StudentQuizzesFragment (var quizzes:MutableList<QuizItem>?=null): Fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        courseId=requireArguments().getInt("courseId")
+        subscribeToLiveData()
         initViews()
+        viewModel.getAllQuizzes(courseId)
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            adapter.changeData(it)
+        }
     }
 
     private fun initViews() {
-        val adapter= StudentQuizAdapter()
         viewBinding.createDraftRecycler.adapter = adapter
-
         adapter.onStartExamListener=object :StudentQuizAdapter.OnStartExamListener{
-            override fun onStartExam(quiz:QuizItem) {
+            override fun onStartExam(quizId:Int) {
+                var bundle=Bundle()
+                bundle.putInt("courseId",courseId)
+                bundle.putInt("quizId",quizId)
+                var fragmentSwap= StudentQuizFragment()
+                fragmentSwap.arguments=bundle
                 requireActivity()
                     .supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.student_course_content_container
-                        ,StudentQuizFragment(quiz))
+                        , fragmentSwap)
                     .commit()
             }
 
