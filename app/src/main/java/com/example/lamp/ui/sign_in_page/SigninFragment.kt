@@ -40,19 +40,19 @@ class SigninFragment : Fragment() {
     }
 
     private fun subscribeToLiveData() {
-        viewModel.liveData.observe(viewLifecycleOwner){ user->
-            var fragment:Fragment? = null
-            when(user.role){
-                "parent"->{
+        viewModel.liveData.observe(viewLifecycleOwner) { user ->
+            var fragment: Fragment? = null
+            when (user.role) {
+                "parent" -> {
                     fragment = ParentContainerFragment()
                 }
-                "teacher"->{
+                "teacher" -> {
                     fragment = TeacherContainerFragment()
                 }
-                "student"->{
+                "student" -> {
                     fragment = StudentContainerFragment()
                 }
-                else->{
+                else -> {
                     Toast.makeText(context, "Invalid user", Toast.LENGTH_SHORT).show()
                     return@observe
                 }
@@ -61,8 +61,25 @@ class SigninFragment : Fragment() {
                 .addToBackStack("")
                 .replace(R.id.fragment_container, fragment)
         }
-        viewModel.errorMessage.observe(viewLifecycleOwner){
-            Toast.makeText(context,it, Toast.LENGTH_SHORT).show()
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+        viewModel.test.observe(viewLifecycleOwner) {
+            if (it) {
+                viewModel.signin(
+                    viewBinding.email.editText?.text.toString(),
+                    viewBinding.password.editText?.text.toString()
+                )
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, StudentContainerFragment())
+                    .commit()
+            } else {
+                if (viewBinding.email.editText?.text.toString() != viewModel.auth.currentUser?.email) {
+                    Toast.makeText(context, "Email does not exist", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Please verify your email", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
@@ -87,15 +104,12 @@ class SigninFragment : Fragment() {
                 .commit()
         }
 
-
-
-
-
-
         viewBinding.buttonSignin.setOnClickListener {
-            if (validate()){
-                viewModel.signin(viewBinding.email.editText?.text.toString()
-                    , viewBinding.password.editText?.text.toString())
+            if (validate()) {
+                viewModel.loginFirebase(
+                    viewBinding.email.editText?.text.toString(),
+                    viewBinding.password.editText?.text.toString()
+                )
             }
         }
 
@@ -104,6 +118,18 @@ class SigninFragment : Fragment() {
                 .replace(R.id.fragment_container, SignUpFragment())
                 .addToBackStack("")
                 .commit()
+        }
+    }
+
+    private fun destinationProfile(): Fragment {
+        if (viewModel.liveData.value?.role == "Student") {
+            return StudentContainerFragment()
+        } else if (viewModel.liveData.value?.role == "Parent") {
+            return ParentContainerFragment()
+        } else if (viewModel.liveData.value?.role == "Teacher") {
+            return TeacherContainerFragment()
+        } else {
+            return SigninFragment()
         }
     }
 

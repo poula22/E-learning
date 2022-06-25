@@ -47,6 +47,17 @@ class SignUpFragment : Fragment() {
         ) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
+        viewModel.resultFirebase.observe(
+            viewLifecycleOwner
+        ) {
+            if (it) {
+                Toast.makeText(requireContext(), "Verification email sent", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireContext(), "Try again", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,13 +93,23 @@ class SignUpFragment : Fragment() {
         viewBinding.buttonSignUpRegisteration.setOnClickListener {
 
             if (validate()) {
-                var firstName=viewBinding.firstName.editText?.text.toString()
-                var lastName=viewBinding.lastName.editText?.text.toString()
-                var email=viewBinding.email.text.toString()
-                var password=viewBinding.passwordSignUp.editText?.text.toString()
-                var phoneNumber=viewBinding.txtPhone.text.toString()
+                var firstName = viewBinding.firstName.editText?.text.toString()
+                var lastName = viewBinding.lastName.editText?.text.toString()
+                var email = viewBinding.email.text.toString()
+                var password = viewBinding.passwordSignUp.editText?.text.toString()
+                var phoneNumber = viewBinding.txtPhone.text.toString()
 
-                viewModel.addUser(UserResponse(firstName,lastName,email,password,selected,phoneNumber))
+                viewModel.addUser(
+                    UserResponse(
+                        firstName,
+                        lastName,
+                        email,
+                        password,
+                        selected,
+                        phoneNumber
+                    )
+                )
+                viewModel.addUserToFirebase(email, password)
             }
         }
     }
@@ -117,6 +138,7 @@ class SignUpFragment : Fragment() {
         }
         if (!Pattern.matches("^1[0125][0-9]{8}$", viewBinding.txtPhone.text.toString())) {
             viewBinding.txtPhone.error = "Phone number is incorrect"
+            isValid = false
         } else {
             viewBinding.txtPhone.error = null
         }
@@ -150,4 +172,6 @@ class SignUpFragment : Fragment() {
         }
         return isValid
     }
+
+
 }
