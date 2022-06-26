@@ -39,7 +39,7 @@ class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceResponse?
 
         holder.viewBinding.answerText.setOnClickListener{
             if (itemSelectedIndex>-1){
-                notifyItemChanged(itemSelectedIndex)
+                holder.changeColor(R.color.green)
             }
             itemSelectedIndex=holder.absoluteAdapterPosition
             onAnswerSelectedListener?.onAnswerSelected(item)
@@ -52,7 +52,7 @@ class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceResponse?
             }
             else{
                 holder.changeColor(com.workfort.linkpreview.R.color.md_light_blue_100)
-                notifyItemChanged(position)
+//                notifyItemChanged(position)
             }
         }
 

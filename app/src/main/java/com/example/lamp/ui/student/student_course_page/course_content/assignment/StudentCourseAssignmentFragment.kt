@@ -28,7 +28,7 @@ class StudentCourseAssignmentFragment :
     lateinit var adapter: StudentCourseAssignmentAdapter
     lateinit var tabLayout: TabLayout
     lateinit var viewModel: StudentCourseAssignmentViewModel
-    var courseId:Int = -1
+    val courseId:Int = CONSTANTS.courseId
 
     private fun initTabs(
         all: TabLayout.Tab,
@@ -65,7 +65,6 @@ class StudentCourseAssignmentFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        courseId=arguments?.getInt("courseId")!!
         initViews()
         subscribeToLiveData()
         viewModel.getData(courseId)

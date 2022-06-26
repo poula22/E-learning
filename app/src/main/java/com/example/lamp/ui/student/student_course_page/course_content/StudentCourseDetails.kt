@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.commonFunctions.CONSTANTS
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.MainActivity
 import com.example.lamp.R
@@ -47,7 +48,7 @@ class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-
+        CONSTANTS.courseId = course?.id!!
     }
 
     private fun initViews() {
@@ -76,24 +77,18 @@ class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
             viewBinding.studentCourseContainer.toolbar.subtitle =
                 viewBinding.navView.menu.findItem(item.itemId).title
             if (item.itemId == R.id.assignment) {
-                var bundle=Bundle()
-                bundle.putInt("courseId",course?.id!!)
+//                var bundle=Bundle()
+//                bundle.putInt("courseId",course?.id!!)
                 var fragmentSwap= StudentCourseAssignmentFragment()
-                fragmentSwap.arguments=bundle
+//                fragmentSwap.arguments=bundle
                 fragment=fragmentSwap
             } else if (item.itemId == R.id.material) {
-                var bundle=Bundle()
-                bundle.putInt("courseId",course?.id!!)
                 var fragmentSwap= StudentCourseMaterialFragment()
-                fragmentSwap.arguments=bundle
                 fragment=fragmentSwap
             } else if (item.itemId == R.id.dashboard) {
 
             } else if (item.itemId == R.id.quizzes) {
-                var bundle=Bundle()
-                bundle.putInt("courseId",course?.id!!)
                 var fragmentSwap= StudentQuizzesFragment()
-                fragmentSwap.arguments=bundle
                 fragment=fragmentSwap
             }
             drawerLayout.closeDrawer(GravityCompat.START)

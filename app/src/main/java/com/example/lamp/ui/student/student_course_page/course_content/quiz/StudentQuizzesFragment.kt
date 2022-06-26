@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.example.commonFunctions.CONSTANTS
 import com.example.data.model.QuizResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseQuizzesBinding
@@ -21,7 +22,7 @@ import kotlin.properties.Delegates
 class StudentQuizzesFragment: Fragment() {
     lateinit var viewBinding: FragmentStudentCourseQuizzesBinding
     lateinit var viewModel: StudentCourseQuizzesViewModel
-    var courseId:Int=-1
+    var courseId:Int=CONSTANTS.courseId
     val adapter= StudentQuizAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,6 @@ class StudentQuizzesFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        courseId=requireArguments().getInt("courseId")
         subscribeToLiveData()
         initViews()
         viewModel.getAllQuizzes(courseId)

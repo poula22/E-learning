@@ -55,14 +55,13 @@ class StudentQuizFragment : Fragment() {
             quiz=list
             var question = list[questionIndex]
             viewBinding.questionCard.item = question
-            adapter = StudentQuizAnswersAdapter()
+            adapter.changeData(question.questionChoices)
         }
     }
 
     private fun initViews() {
         adapter=StudentQuizAnswersAdapter()
         viewBinding.durationTime.setText(quizDuration.toString())
-        adapter = StudentQuizAnswersAdapter()
         viewBinding.questionCard.questionAnswerRecyclerView.adapter = adapter
         adapter.onAnswerSelectedListener =
             object : StudentQuizAnswersAdapter.OnAnswerSelectedListener {
@@ -87,12 +86,13 @@ class StudentQuizFragment : Fragment() {
                 }
 
             } else {
+//                FragmentStudentQuizFinishedStats(studentAnswers, quiz)
                 requireActivity()
                     .supportFragmentManager
                     .beginTransaction()
                     .replace(
                         R.id.student_course_content_container,
-                        FragmentStudentQuizFinishedStats(studentAnswers, quiz)
+                        StudentQuizzesFragment()
                     )
                     .commit()
 
@@ -127,7 +127,8 @@ class StudentQuizFragment : Fragment() {
                         .show()
 
                 }
-            })
+            }
+        )
 
 
     }

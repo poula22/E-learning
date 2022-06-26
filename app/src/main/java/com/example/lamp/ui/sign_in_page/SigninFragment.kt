@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.binding_adapters.TestConnection
 import com.example.commonFunctions.CONSTANTS
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSigninBinding
@@ -87,7 +88,7 @@ class SigninFragment : Fragment() {
     }
 
     private fun initView() {
-
+        TestConnection.getData()
         viewBinding.childImg.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, StudentContainerFragment())

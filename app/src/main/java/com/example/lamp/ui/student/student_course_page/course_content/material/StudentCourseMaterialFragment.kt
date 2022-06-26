@@ -14,6 +14,7 @@ import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.commonFunctions.CONSTANTS
 import com.example.data.model.LessonResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseMaterialBinding
@@ -28,7 +29,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 class StudentCourseMaterialFragment() : Fragment() {
     lateinit var viewBinding: FragmentStudentCourseMaterialBinding
-    var courseId: Int? = null
+    val courseId: Int = CONSTANTS.courseId
     lateinit var viewModel:StudentCourseMaterialViewModel
     val adapter=StudentCourseLessonsAdapter(mutableListOf(LessonResponse("desc1", 1, "lesson1",1)))
 
@@ -51,10 +52,9 @@ class StudentCourseMaterialFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        courseId = requireArguments().getInt("courseId")
         subscribeToLiveData()
         initViews()
-        viewModel.getCourseLessons(courseId!!)
+        viewModel.getCourseLessons(courseId)
     }
 
     private fun initViews() {

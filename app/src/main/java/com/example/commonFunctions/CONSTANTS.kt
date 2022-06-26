@@ -10,4 +10,5 @@ object CONSTANTS {
         const val VIDEO_REQUEST_CODE = 5
         var user_id=-1
         var sessionManager: SessionManager?=null
+        var courseId=-1
 }

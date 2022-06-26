@@ -36,6 +36,9 @@ class SigninViewModel : ViewModel() {
             when (t) {
                 is HttpException ->
                     errorMessage.value = t.response()?.errorBody()?.string()
+                else ->{
+                    return
+                }
             }
         }
 
