@@ -1,30 +1,29 @@
 package com.example.binding_adapters
 
 import android.util.Log
-import jcifs.UniAddress
-import jcifs.smb.NtlmPasswordAuthentication
-import jcifs.smb.SmbFile
-import jcifs.smb.SmbSession
-import java.util.*
+import com.hierynomus.smbj.SMBClient
+import com.hierynomus.smbj.auth.AuthenticationContext
+import com.hierynomus.smbj.share.DiskShare
+
 
 class TestConnection {
     companion object{
-        var filesInfo = TreeMap<Date, String>()
-        var auth: NtlmPasswordAuthentication? = null
-        var dc = UniAddress.getByName("25.70.83.232", true);
-        fun getData(){
-            auth =  NtlmPasswordAuthentication("" + ";" + "" + ":" + "");
-            SmbSession.logon(dc, auth);
-            var file: SmbFile = SmbFile("wwwroot", auth)
-            var files = file.listFiles()
-            for (i in 0..files.size - 1) {
-                var fileName:String = files [i].getName()
-                var extension:String = fileName . substring(fileName.lastIndexOf(".") + 1)
-                var fileTime:Date = Date(files[i].date)
-                Log.v("fileName", fileName)
 
+        fun getData(){
+            //code 3
+        val client = SMBClient()
+        client.connect("25.70.83.232").use { connection ->
+            Log.v("cooneeected:",connection.isConnected.toString())
+        val ac =
+            AuthenticationContext("", "".toCharArray(), "")
+        val session = connection.authenticate(ac)
+        var share=session.connectShare("wwwroot") as DiskShare
+            for (f in share.list("Pictures")) {
+                println("File : " + f.fileName)
             }
-        }
+
+    }
+}
 
     }
 

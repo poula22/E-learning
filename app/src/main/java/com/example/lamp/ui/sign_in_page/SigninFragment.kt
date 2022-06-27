@@ -88,7 +88,10 @@ class SigninFragment : Fragment() {
     }
 
     private fun initView() {
-        TestConnection.getData()
+        Thread{
+            TestConnection.getData()
+        }.start()
+
         viewBinding.childImg.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, StudentContainerFragment())
