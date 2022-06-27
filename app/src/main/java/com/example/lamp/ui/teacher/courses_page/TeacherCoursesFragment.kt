@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.example.commonFunctions.CONSTANTS
 import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
@@ -45,6 +46,7 @@ class TeacherCoursesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
         initViews()
+        viewModel.getAllCourses()
     }
 
 
@@ -69,7 +71,6 @@ class TeacherCoursesFragment : Fragment() {
                     .addToBackStack("")
                     .replace(R.id.teacher_fragment_tab,TeacherCourseDetails(item))
                     .commit()
-
                 val floatingActionBtn: FloatingActionButton =requireActivity().findViewById(R.id.floating_action_btn)
                 floatingActionBtn.isVisible=false
                 val bottomNavigationView: BottomNavigationView =

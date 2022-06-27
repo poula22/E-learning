@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.commonFunctions.CONSTANTS
 import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
@@ -46,7 +47,7 @@ class TeacherCourseDetails(var course: CourseResponse?) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-
+        CONSTANTS.courseId = course?.id!!
     }
 
     private fun initViews() {

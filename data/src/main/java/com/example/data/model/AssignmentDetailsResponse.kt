@@ -2,7 +2,7 @@ package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-
+//Assignment of student
 data class AssignmentDetailsResponse(
 
 	@field:SerializedName("submitted")
