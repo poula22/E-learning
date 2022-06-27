@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.domain.model.CourseResponseDTO" />
+            type="com.example.data.model.CourseResponse" />
     </data>
 
     <androidx.cardview.widget.CardView

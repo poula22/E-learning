@@ -6,12 +6,13 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCoursesBinding
 import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
 
-class CoursesRVAdapter(var coursesItemsList: List<CourseResponseDTO>? = null, val type: Int) :
+class CoursesRVAdapter(var coursesItemsList: List<CourseResponse>? = null, val type: Int) :
     RecyclerView.Adapter<CoursesRVAdapter.CoursesItemViewHolder>() {
 
     val HOME_SCREEN = R.layout.item_student_home_course_rv
@@ -69,7 +70,7 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseResponseDTO>? = null, va
     override fun getItemCount(): Int {
         return coursesItemsList?.size ?: 0;
     }
-    fun updateCoursesList(list: List<CourseResponseDTO>) {
+    fun updateCoursesList(list: List<CourseResponse>) {
         coursesItemsList = list
         notifyDataSetChanged()
     }
@@ -81,7 +82,7 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseResponseDTO>? = null, va
     var onCourseClickListener: OnCourseClickListener? = null
 
     interface OnCourseClickListener {
-        fun setOnCourseClickListener(item: CourseResponseDTO?)
+        fun setOnCourseClickListener(item: CourseResponse?)
     }
 
 }

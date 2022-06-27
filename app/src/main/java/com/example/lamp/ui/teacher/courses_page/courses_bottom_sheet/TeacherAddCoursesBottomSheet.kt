@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.example.commonFunctions.CONSTANTS
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherAddCourseBinding
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
@@ -13,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
     lateinit var teacherAddCourseBinding: FragmentTeacherAddCourseBinding
+    lateinit var viewModel: TeacherAddCourseViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,6 +31,11 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
         return teacherAddCourseBinding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(TeacherAddCourseViewModel::class.java)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
@@ -39,19 +48,15 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
                 val courseCode = teacherAddCourseBinding.codeLayout.editText?.text.toString()
                 val description =
                     teacherAddCourseBinding.descriptionLayout.editText?.text.toString()
-                val courseImageId = R.drawable.login
-                val startDate = "2020-01-01"
-                val endDate = "2020-01-01"
-                val course =
-                    CourseItem(
-                        courseName,
-                        null,
-                        courseCode,
-                        description,
-                        courseImageId,
-                        startDate,
-                        endDate
+                val courseImageId = R.drawable.login //???
+//                val startDate = "2020-01-01"
+//                val endDate = "2020-01-01"
+                val courseDTO =
+                    CourseResponseDTO(
+                        courseName,"",CONSTANTS.user_id, courseCode.toInt(), description
                     )
+                viewModel.AddCourse(courseDTO)
+                onCourseAddedListener?.OnAddCourse()
                 dismiss()
             }
         }
@@ -78,6 +83,10 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
             teacherAddCourseBinding.descriptionLayout.error = null
         }
         return isValid
+    }
+    var onCourseAddedListener:OnCourseAddedListener?=null
+    interface OnCourseAddedListener{
+        fun OnAddCourse()
     }
 
 }

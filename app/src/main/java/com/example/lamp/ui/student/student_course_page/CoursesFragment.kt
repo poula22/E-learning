@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.commonFunctions.CONSTANTS
+import com.example.data.model.CourseResponse
 import com.example.data.model.convertTo
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
@@ -53,15 +54,7 @@ class CoursesFragment : Fragment() {
     fun subscribeToLiveData() {
         viewModel.coursesLiveData.observe(viewLifecycleOwner){
             it?.let {
-                var list= mutableListOf<CourseResponseDTO>()
-                it.forEach {
-                    list.add(it.convertTo(CourseResponseDTO::class.java))
-                }
-                coursesRVAdapter.updateCoursesList(list)
-            }
-            if (viewModel.flag){
-                viewModel.flag=false
-                viewModel.getAllCourses()
+                coursesRVAdapter.updateCoursesList(it)
             }
         }
     }
@@ -71,7 +64,7 @@ class CoursesFragment : Fragment() {
 
 
         coursesRVAdapter.onCourseClickListener = object : CoursesRVAdapter.OnCourseClickListener {
-            override fun setOnCourseClickListener(item: CourseResponseDTO?) {
+            override fun setOnCourseClickListener(item: CourseResponse?) {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .addToBackStack("")
@@ -99,7 +92,7 @@ class CoursesFragment : Fragment() {
                         join_course.error = "Please enter course code"
                     }else{
                         viewModel.joinCourse(CONSTANTS.user_id,Integer.parseInt(courseCode))
-
+                        viewModel.getAllCourses()
                     }
                 }
                 .show()

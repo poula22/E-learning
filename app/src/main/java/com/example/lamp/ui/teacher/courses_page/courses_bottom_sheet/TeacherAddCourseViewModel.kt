@@ -1,25 +1,22 @@
-package com.example.lamp.ui.teacher.courses_page
+package com.example.lamp.ui.teacher.courses_page.courses_bottom_sheet
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.commonFunctions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class TeacherCoursesViewModel:ViewModel() {
+class TeacherAddCourseViewModel:ViewModel() {
     var courseWebService = ApiManager.getCourseApi()
-    var coursesLiveData= MutableLiveData<MutableList<CourseResponse>>()
     var flag=false
 
-    fun getAllCourses() {
+    fun AddCourse(courseDTO: CourseResponseDTO){
         viewModelScope.launch {
             try {
-                val courses = courseWebService.getCoursesByStudentId(CONSTANTS.user_id)
-                coursesLiveData.value = courses.toMutableList()
+                courseWebService.addCourse(courseDTO)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
@@ -29,9 +26,5 @@ class TeacherCoursesViewModel:ViewModel() {
 
             }
         }
-
     }
-
-
-
 }

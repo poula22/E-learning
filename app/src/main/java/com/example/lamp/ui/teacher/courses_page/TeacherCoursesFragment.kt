@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
+import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCoursesBinding
@@ -21,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class TeacherCoursesFragment : Fragment() {
     lateinit var teacherCoursesBinding: FragmentTeacherCoursesBinding
     lateinit var adapter: TeacherCoursesAdapter
+    lateinit var viewModel: TeacherCoursesViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,17 +36,34 @@ class TeacherCoursesFragment : Fragment() {
 
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(TeacherCoursesViewModel::class.java)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
     }
 
+
+    fun subscribeToLiveData() {
+        viewModel.coursesLiveData.observe(viewLifecycleOwner){
+            adapter.changeData(it)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllCourses()
+    }
 
 
     private fun initViews() {
         adapter = TeacherCoursesAdapter(TestData.COURSES, 1)
         adapter.onCourseClickListener=object :TeacherCoursesAdapter.OnCourseClickListener{
-            override fun setOnCourseClickListener(item: CourseResponseDTO?) {
+            override fun setOnCourseClickListener(item: CourseResponse?) {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .addToBackStack("")
@@ -67,6 +88,12 @@ class TeacherCoursesFragment : Fragment() {
     private fun showAddBottomSheet() {
         val addCourseBottomSheet = TeacherAddCoursesBottomSheet()
         addCourseBottomSheet.show(requireActivity().supportFragmentManager, "")
+        addCourseBottomSheet.onCourseAddedListener=object :TeacherAddCoursesBottomSheet.OnCourseAddedListener{
+            override fun OnAddCourse() {
+                viewModel.getAllCourses()
+            }
+
+        }
     }
 
 }

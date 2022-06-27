@@ -1,5 +1,6 @@
 package com.example.lamp.test_data
 
+import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
 import com.example.extentions.clearTime
 import com.example.lamp.R
@@ -16,7 +17,7 @@ import java.util.*
 
 object TestData {
     val TRANSLATIONAPIKEY = "fdacb2ce0bmshb0a36e2081822c8p1e7ae6jsn82387bc6a932"
-    var COURSES: MutableList<CourseResponseDTO> = initCourses()
+    var COURSES: MutableList<CourseResponse> = initCourses()
     val FEATURES: MutableList<FeatureItem> = mutableListOf(
         FeatureItem("translate", R.drawable.ic_translate),
         FeatureItem("summary", R.drawable.ic_summary),
@@ -122,11 +123,11 @@ object TestData {
         return STUDENTS
     }
 
-    private fun initCourses(): MutableList<CourseResponseDTO> {
+    private fun initCourses(): MutableList<CourseResponse> {
         COURSES = mutableListOf()
         for (i in 1..100) {
             COURSES.add(
-                CourseResponseDTO(
+                CourseResponse(
                     "course " + i,
                     "teacher " + i,
                      i,

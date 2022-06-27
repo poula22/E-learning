@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
@@ -25,7 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 
-class TeacherCourseDetails(var course: CourseResponseDTO?) : Fragment() {
+class TeacherCourseDetails(var course: CourseResponse?) : Fragment() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewBinding: FragmentTeacherCourseDetailsBinding

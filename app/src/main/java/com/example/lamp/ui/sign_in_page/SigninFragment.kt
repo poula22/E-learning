@@ -88,9 +88,6 @@ class SigninFragment : Fragment() {
     }
 
     private fun initView() {
-        Thread{
-            TestConnection.getData()
-        }.start()
 
         viewBinding.childImg.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()

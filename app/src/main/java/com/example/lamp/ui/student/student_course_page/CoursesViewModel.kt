@@ -20,11 +20,7 @@ class CoursesViewModel:ViewModel() {
         flag=true
         viewModelScope.launch {
             try {
-                val course = courseWebService.joinCourse(courseCode,studentID)
-                var courses=coursesLiveData.value
-                courses?.add(course)
-                coursesLiveData.value=courses
-
+                courseWebService.joinCourse(courseCode,studentID)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
