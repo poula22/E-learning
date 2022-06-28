@@ -40,7 +40,6 @@ class StudentHomeFragment : Fragment() {
     }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -91,21 +90,18 @@ class StudentHomeFragment : Fragment() {
         featuresRVAdapter = FeaturesRVAdapter(TestData.FEATURES, type = 0)
         featuresRVAdapter.onFeatureClickListener = object : FeaturesRVAdapter.FeatureClickListener {
             override fun onFeatureClick(pos: Int, item: FeatureItem) {
-                if (pos==0){
+                if (pos == 0) {
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
                         .replace(R.id.student_fragment_tab, TranslationFragment()).commit()
-                }
-                else if(pos==1){
+                } else if (pos == 1) {
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
                         .replace(R.id.student_fragment_tab, SummarizationFragment()).commit()
-                }
-                else if (pos==2){
+                } else if (pos == 2) {
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
                         .replace(R.id.student_fragment_tab, RecitationFragment()).commit()
-                }
-                else if (pos==3){
+                } else if (pos == 3) {
                     requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
-                        .replace(R.id.student_fragment_tab,OcrFragment()).commit()
+                        .replace(R.id.student_fragment_tab, OcrFragment()).commit()
                 }
                 val bottomNavigationView: BottomNavigationView =
                     requireActivity().findViewById(R.id.bottom_navigation_view)
@@ -122,18 +118,18 @@ class StudentHomeFragment : Fragment() {
             calendar.set(Calendar.YEAR, calenderDay.year)
             getTodosListFromDB()
         }
-//        viewBinding.addBtn.setOnClickListener {
-//            showAddBottomSheet()
-//        }
+        viewBinding.addBtn.setOnClickListener {
+            showAddBottomSheet()
+        }
 
 
     }
 
     private fun showAddBottomSheet() {
-        var bundle=Bundle()
-        bundle.putInt("type",1)
+        var bundle = Bundle()
+        bundle.putInt("type", 1)
         val addTodoBottomSheet = AddTodoBottomSheet()
-        addTodoBottomSheet.arguments=bundle
+        addTodoBottomSheet.arguments = bundle
         addTodoBottomSheet.show(requireActivity().supportFragmentManager, "")
         addTodoBottomSheet.onTodoAddedListener = object : AddTodoBottomSheet.OnTodoAddedListener {
             override fun onTodoAdded() {

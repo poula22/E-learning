@@ -7,7 +7,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface LessonWebService {
-    @GET("lesson")
+    @GET("api/Lessons")
     suspend fun getAllLessons(): List<LessonResponse>
     @POST("api/Lessons")
     suspend fun addLesson(@Body lesson: LessonResponseDTO): LessonResponse

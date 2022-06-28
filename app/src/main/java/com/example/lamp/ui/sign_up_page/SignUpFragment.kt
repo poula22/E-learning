@@ -21,7 +21,7 @@ class SignUpFragment : Fragment() {
     lateinit var viewModel: SignUpViewModel
     lateinit var viewBinding: FragmentSignUpBinding
     var selected: String? = null
-    var verified=true
+    var verified = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class SignUpFragment : Fragment() {
             viewLifecycleOwner
         ) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-            verified=false
+            verified = false
         }
         viewModel.resultFirebase.observe(
             viewLifecycleOwner
@@ -60,7 +60,7 @@ class SignUpFragment : Fragment() {
                 Toast.makeText(requireContext(), "Try again", Toast.LENGTH_SHORT)
                     .show()
             }
-            if (it && verified){
+            if (it && verified) {
                 Toast.makeText(requireContext(), "Successfully registered", Toast.LENGTH_SHORT)
                     .show()
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -128,6 +128,16 @@ class SignUpFragment : Fragment() {
 
     fun validate(): Boolean {
         var isValid = true
+
+        if(!Pattern.matches("[A-Z][a-z]*",viewBinding.firstName.editText?.text.toString())){
+            viewBinding.firstName.error = "First Name should be letters only"
+            isValid = false
+            }
+        if(!Pattern.matches("[A-Z][a-z]*",viewBinding.lastName.editText?.text.toString())){
+            viewBinding.lastName.error = "Last Name should be letters only"
+            isValid = false
+        }
+
         if (viewBinding.emailSignUp.editText?.text.toString().isEmpty()) {
             viewBinding.emailSignUp.error = "Email is required"
             isValid = false
@@ -155,6 +165,9 @@ class SignUpFragment : Fragment() {
         }
         if (viewBinding.passwordSignUp.editText?.text.toString().isEmpty()) {
             viewBinding.passwordSignUp.error = "Password is required"
+            isValid = false
+        } else if (viewBinding.passwordSignUp.editText?.text.toString().length < 6) {
+            viewBinding.passwordSignUp.error = "Password must be at least 6 characters"
             isValid = false
         } else {
             viewBinding.passwordSignUp.error = null
