@@ -1,7 +1,7 @@
 package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
-
+// assignment of teacher
 data class AssignmentAnswerDetailsResponse(
 
 	@field:SerializedName("studentLastName")

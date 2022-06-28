@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="String" />
+            type="com.example.data.model.AssignmentResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,7 @@
             android:id="@+id/assignment_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{item}"
+            android:text="@{item.title}"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/number_of_submitted"
@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="24sp"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/number_of_graded"
             app:layout_constraintHorizontal_weight="1"
@@ -52,6 +53,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="24sp"
+            android:text="@{item.grade}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"

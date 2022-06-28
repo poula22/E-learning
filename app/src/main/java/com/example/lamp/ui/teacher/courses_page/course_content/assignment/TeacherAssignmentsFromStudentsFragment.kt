@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.data.model.AssignmentDetailsResponse
+import com.example.data.model.AssignmentResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherAssignmentsFromStudentsBinding
 import com.example.lamp.test_data.TestData
@@ -18,8 +20,8 @@ import com.example.lamp.ui.teacher.courses_page.course_content.assignment.assign
 import java.io.File
 import java.util.*
 
-class TeacherAssignmentsFromStudentsFragment(val item : AssignmentItem?) : Fragment() {
-
+class TeacherAssignmentsFromStudentsFragment(val assignment : AssignmentResponse?=null) : Fragment() {
+    // get assignment id --> request assignment details -> assign assignment details to adapter
     lateinit var viewBinding: FragmentTeacherAssignmentsFromStudentsBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +56,8 @@ class TeacherAssignmentsFromStudentsFragment(val item : AssignmentItem?) : Fragm
 
         }
         viewBinding.assignmentsFromStudentsRv.adapter= adapter
-        viewBinding.item=item
+        //assign assignment details to adapter
+        viewBinding.item=assignment
 
 
     }
