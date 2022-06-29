@@ -1,6 +1,5 @@
 package com.example.lamp.ui.student.student_course_page.course_content
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,16 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
 import com.example.commonFunctions.CONSTANTS
 import com.example.data.model.CourseResponse
-import com.example.domain.model.CourseResponseDTO
-import com.example.lamp.MainActivity
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseDetailsBinding
-import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.StudentCourseAssignmentFragment
+import com.example.lamp.ui.student.student_course_page.course_content.grades.StudentCourseGradesFragment
 import com.example.lamp.ui.student.student_course_page.course_content.material.StudentCourseMaterialFragment
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.StudentQuizzesFragment
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
@@ -32,7 +27,7 @@ class StudentCourseDetails(var course: CourseResponse?) : Fragment() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewBinding: FragmentStudentCourseDetailsBinding
-    private var fragment:Fragment?=null
+    private var fragment: Fragment? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,17 +75,20 @@ class StudentCourseDetails(var course: CourseResponse?) : Fragment() {
             if (item.itemId == R.id.assignment) {
 //                var bundle=Bundle()
 //                bundle.putInt("courseId",course?.id!!)
-                var fragmentSwap= StudentCourseAssignmentFragment()
+                var fragmentSwap = StudentCourseAssignmentFragment()
 //                fragmentSwap.arguments=bundle
-                fragment=fragmentSwap
+                fragment = fragmentSwap
             } else if (item.itemId == R.id.material) {
-                var fragmentSwap= StudentCourseMaterialFragment()
-                fragment=fragmentSwap
+                var fragmentSwap = StudentCourseMaterialFragment()
+                fragment = fragmentSwap
             } else if (item.itemId == R.id.dashboard) {
 
             } else if (item.itemId == R.id.quizzes) {
-                var fragmentSwap= StudentQuizzesFragment()
-                fragment=fragmentSwap
+                var fragmentSwap = StudentQuizzesFragment()
+                fragment = fragmentSwap
+            } else if (item.itemId == R.id.grades) {
+                var fragmentSwap = StudentCourseGradesFragment()
+                fragment = fragmentSwap
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true
@@ -98,7 +96,7 @@ class StudentCourseDetails(var course: CourseResponse?) : Fragment() {
         viewBinding.studentCourseContainer.infoIcon.setOnClickListener {
 
         }
-        drawerLayout.addDrawerListener(object :DrawerLayout.DrawerListener{
+        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
@@ -107,7 +105,7 @@ class StudentCourseDetails(var course: CourseResponse?) : Fragment() {
 
             override fun onDrawerClosed(drawerView: View) {
                 fragment?.let {
-                    Handler(Looper.getMainLooper()).postDelayed( {
+                    Handler(Looper.getMainLooper()).postDelayed({
                         requireActivity().supportFragmentManager
                             .beginTransaction()
                             .replace(
@@ -115,10 +113,10 @@ class StudentCourseDetails(var course: CourseResponse?) : Fragment() {
                                 it
                             )
                             .commit()
-                    },0)
+                    }, 0)
 
                 }
-                fragment=null
+                fragment = null
 
             }
 

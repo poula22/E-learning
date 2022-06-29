@@ -1,4 +1,4 @@
-package com.example.data.repos
+package com.example.data.repos.data_sources_impl
 
 
 import com.example.data.database.DataBase
@@ -9,7 +9,8 @@ import com.example.domain.model.TodoDTO
 import com.example.domain.repos.data_sources.TodoOfflineDataSource
 import java.util.*
 
-class TodoOfflineDataSourceImp(var dataBase: DataBase, var type: Int) : TodoOfflineDataSource {
+class TodoOfflineDataSourceImp(var dataBase: DataBase, var type: Int) :
+    TodoOfflineDataSource {
     override fun addTodo(todo: TodoDTO) {
         if (type == 0) {
             dataBase.teacherTodoDao().addTodo(todo.convertTo(TeacherTodo::class.java))
@@ -78,3 +79,4 @@ class TodoOfflineDataSourceImp(var dataBase: DataBase, var type: Int) : TodoOffl
         return list
     }
 }
+

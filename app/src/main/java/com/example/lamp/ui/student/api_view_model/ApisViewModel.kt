@@ -3,8 +3,8 @@ package com.example.lamp.ui.student.api_view_model
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.repos.OCROnlineDataSourceImp
 import com.example.data.repos.OCRRepositoryImp
+import com.example.data.repos.data_sources_impl.OCROnlineDataSourceImp
 import com.example.domain.repos.OCRRepository
 import com.example.domain.repos.data_sources.OCROnlineDataSource
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult

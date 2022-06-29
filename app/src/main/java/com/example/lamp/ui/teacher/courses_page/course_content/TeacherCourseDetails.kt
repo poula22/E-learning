@@ -13,12 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
 import com.example.commonFunctions.CONSTANTS
 import com.example.data.model.CourseResponse
-import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
 import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.TeacherCourseAssignmentFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.grades.students_page.TeacherCourseStudentsFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.TeacherCourseQuizzesFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
@@ -91,6 +90,9 @@ class TeacherCourseDetails(var course: CourseResponse?) : Fragment() {
                 }
                 R.id.quizzes -> {
                     fragment = TeacherCourseQuizzesFragment()
+                }
+                R.id.grades -> {
+                    fragment = TeacherCourseStudentsFragment()
                 }
             }
 

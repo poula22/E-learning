@@ -1,5 +1,7 @@
 package com.example.domain.repos
 
+import com.example.domain.model.ContentResponseDTO
+import com.example.domain.model.LessonResponseDTO
 import com.example.domain.model.OCRResponseDTO
 import com.example.domain.model.TodoDTO
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
@@ -24,4 +26,22 @@ interface TodoRepository {
     fun getTodoByDate(date: Date): MutableList<TodoDTO>
 }
 
+
+interface MaterialRepository {
+
+    // lesson functions
+    suspend fun getAllLessons(): List<LessonResponseDTO>
+    suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO
+    suspend fun updateLesson(id: Int, lesson: LessonResponseDTO): LessonResponseDTO
+    suspend fun deleteLesson(id: Int): LessonResponseDTO
+    suspend fun getLessonsByCourseId(courseId: Int): List<LessonResponseDTO>
+
+    // content functions
+    suspend fun addContent(content: ContentResponseDTO): ContentResponseDTO
+    suspend fun updateContent(id: Int, content: ContentResponseDTO): ContentResponseDTO
+    suspend fun deleteContent(id: Int): ContentResponseDTO
+    suspend fun getAllContents(): List<ContentResponseDTO>
+    suspend fun getContentById(id: Int): ContentResponseDTO
+    suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
+}
 
