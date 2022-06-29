@@ -1,11 +1,11 @@
 package com.example.data.repos
 
 import com.example.domain.model.TodoDTO
-import com.example.domain.repos.TodoOfflineDataSource
 import com.example.domain.repos.TodoRepository
+import com.example.domain.repos.data_sources.TodoOfflineDataSource
 import java.util.*
 
-class TodoRepositoryImp(var offlineDataSource: TodoOfflineDataSource):TodoRepository {
+class TodoRepositoryImp(var offlineDataSource: TodoOfflineDataSource) : TodoRepository {
     override fun addTodo(todo: TodoDTO) {
         offlineDataSource.addTodo(todo)
     }

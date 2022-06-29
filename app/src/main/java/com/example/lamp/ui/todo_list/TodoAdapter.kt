@@ -32,13 +32,13 @@ class TodoAdapter(var todoList: MutableList<TodoDTO>?) :
         var item = todoList?.get(position)
         holder.title.setText(item?.title)
         holder.description.setText(item?.description)
-        if (item?.isDone == true) {
+        if (item?.done == true) {
             holder.markAsDone.setBackgroundResource(R.drawable.rounded_btn_green)
             holder.line.setBackgroundColor(Color.parseColor("#00FF00"))
             holder.title.setTextColor(Color.parseColor("#3AA523"))
         }
         holder.markAsDone.setOnClickListener {
-            item?.isDone = true
+            item?.done = true
             val dialog =
                 MaterialAlertDialogBuilder(holder.markAsDone.context)
                     .setTitle("Well Done!")

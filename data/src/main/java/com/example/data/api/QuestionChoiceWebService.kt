@@ -28,6 +28,6 @@ interface QuestionChoiceWebService {
     suspend fun getQuestionChoicesByQuestionId(@Path("questionId") questionId: Int): List<QuestionChoiceResponse>
 
     @POST("api/QuestionAnswers/PostMultipleQuestionChoices")
-    suspend fun postMultipleQuestionChoices(@Body questionChoice: QuestionChoiceResponse): QuestionChoiceResponse
+    suspend fun postMultipleQuestionChoices(@Body questionChoice: QuestionChoiceResponseDTO): QuestionChoiceResponse
 
 }

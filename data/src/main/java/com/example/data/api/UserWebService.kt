@@ -24,5 +24,5 @@ interface UserWebService {
               ,@Path("password") password:String) : UserResponse
 
     @POST("api/Users/LoginTest")
-    suspend fun logInTest(@Body user:LoginResponse) : UserResponse
+    suspend fun logInTest(@Body user:UserResponseDTO) : UserResponse
 }

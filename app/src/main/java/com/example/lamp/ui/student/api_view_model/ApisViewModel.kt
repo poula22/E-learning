@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.repos.OCROnlineDataSourceImp
 import com.example.data.repos.OCRRepositoryImp
-import com.example.domain.repos.OCROnlineDataSource
 import com.example.domain.repos.OCRRepository
+import com.example.domain.repos.data_sources.OCROnlineDataSource
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

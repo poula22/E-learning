@@ -10,6 +10,7 @@ import com.example.data.api.ApiManager
 import com.example.data.api.UserWebService
 import com.example.data.model.LoginResponse
 import com.example.data.model.UserResponse
+import com.example.domain.model.UserResponseDTO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -29,7 +30,7 @@ class SigninViewModel : ViewModel() {
                 //token = "Bearer ${sessionManager.fetchAuthToken()}"
                 //sessionManager?.saveAuthToken(result.authToken)
 //                var result = service.logIn(email, password)
-                var result = service.logInTest(LoginResponse(email, password))
+                var result = service.logInTest(UserResponseDTO(emailAddress = email, password = password))
                 liveData.value = result
             }
         } catch (t: Throwable) {

@@ -1,60 +1,59 @@
 package com.example.data.repos
 
 
-import androidx.room.Dao
 import com.example.data.database.DataBase
-import com.example.data.database.dao.TeacherTodoDao
 import com.example.data.model.convertTo
 import com.example.data.model.entities.StudentTodo
 import com.example.data.model.entities.TeacherTodo
 import com.example.domain.model.TodoDTO
-import com.example.domain.repos.TodoOfflineDataSource
+import com.example.domain.repos.data_sources.TodoOfflineDataSource
 import java.util.*
 
-class TodoOfflineDataSourceImp(var dataBase: DataBase,var type:Int):TodoOfflineDataSource {
+class TodoOfflineDataSourceImp(var dataBase: DataBase, var type: Int) : TodoOfflineDataSource {
     override fun addTodo(todo: TodoDTO) {
-        if (type==0){
+        if (type == 0) {
             dataBase.teacherTodoDao().addTodo(todo.convertTo(TeacherTodo::class.java))
-        }else{
+        } else {
             dataBase.studentTodoDao().addTodo(todo.convertTo(StudentTodo::class.java))
         }
 
     }
+
     override fun updateTodo(todo: TodoDTO) {
-        if (type==0){
+        if (type == 0) {
             dataBase.teacherTodoDao().updateTodo(todo.convertTo(TeacherTodo::class.java))
-        }else{
+        } else {
             dataBase.studentTodoDao().updateTodo(todo.convertTo(StudentTodo::class.java))
 
         }
     }
 
     override fun removeTodo(todo: TodoDTO) {
-        if (type==0){
+        if (type == 0) {
             dataBase.teacherTodoDao().removeTodo(todo.convertTo(TeacherTodo::class.java))
-        }else{
+        } else {
             dataBase.studentTodoDao().removeTodo(todo.convertTo(StudentTodo::class.java))
         }
     }
 
     override fun removeAll() {
-        if (type==0){
+        if (type == 0) {
             dataBase.teacherTodoDao().removeAll()
-        }else{
+        } else {
             dataBase.studentTodoDao().removeAll()
         }
     }
 
     override fun getAllTodo(): MutableList<TodoDTO> {
-        var list:MutableList<TodoDTO> = mutableListOf()
-        if (type==0){
+        var list: MutableList<TodoDTO> = mutableListOf()
+        if (type == 0) {
             dataBase.teacherTodoDao().getAllTodo().forEach {
-                var item=it.convertTo(TodoDTO::class.java)
+                var item = it.convertTo(TodoDTO::class.java)
                 list.add(item)
             }
-        }else{
+        } else {
             dataBase.studentTodoDao().getAllTodo().forEach {
-                var item=it.convertTo(TodoDTO::class.java)
+                var item = it.convertTo(TodoDTO::class.java)
                 list.add(item)
             }
         }
@@ -64,15 +63,15 @@ class TodoOfflineDataSourceImp(var dataBase: DataBase,var type:Int):TodoOfflineD
     }
 
     override fun getTodoByDate(date: Date): MutableList<TodoDTO> {
-        var list:MutableList<TodoDTO> = mutableListOf()
-        if (type==0){
+        var list: MutableList<TodoDTO> = mutableListOf()
+        if (type == 0) {
             dataBase.teacherTodoDao().getTodoByDate(date).forEach {
-                var item=it.convertTo(TodoDTO::class.java)
+                var item = it.convertTo(TodoDTO::class.java)
                 list.add(item)
             }
-        }else{
+        } else {
             dataBase.studentTodoDao().getTodoByDate(date).forEach {
-                var item=it.convertTo(TodoDTO::class.java)
+                var item = it.convertTo(TodoDTO::class.java)
                 list.add(item)
             }
         }
