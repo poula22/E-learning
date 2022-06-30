@@ -7,70 +7,95 @@
 
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:elevation="8dp"
-        app:cardCornerRadius="8dp"
-        app:contentPadding="8dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+<!--    <com.zerobranch.layout.SwipeLayout-->
+<!--        android:id="@+id/swipe_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:draggedItem="@id/todo_item_card"-->
+<!--        app:rightItem="@id/right_view"-->
+<!--        app:isContinuousSwipe="true"-->
+<!--        app:isEnabledSwipe="true"-->
+<!--        app:swipeDirection="left">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/right_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:background="@drawable/rounded_btn_blue"-->
+<!--            android:backgroundTint="#CA0808"-->
+<!--            android:gravity="end|center_vertical"-->
+<!--            android:paddingStart="24dp"-->
+<!--            android:paddingEnd="24dp"-->
+<!--            android:src="@drawable/ic_delete" />-->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/todo_item_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/line"
-                android:layout_width="4dp"
-                android:layout_height="80dp"
-                android:layout_marginVertical="12dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/rounded_btn_blue"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/mark_as_done_button"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_btn_blue"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="8dp"
-            android:src="@drawable/ic_done"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="4dp"
+            android:elevation="8dp"
+            app:cardCornerRadius="8dp"
+            app:contentPadding="8dp">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:textColor="@color/light_blue"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/description"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@id/line"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="android assignment" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/title"
-                app:layout_constraintTop_toBottomOf="@+id/title"
-                tools:text="android assignment" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="4dp"
+                    android:layout_height="80dp"
+                    android:layout_marginVertical="12dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/rounded_btn_blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/mark_as_done_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_btn_blue"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="8dp"
+                    android:src="@drawable/ic_done"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:textColor="@color/light_blue"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/description"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@id/line"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="android assignment" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    tools:text="android assignment" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+<!--    </com.zerobranch.layout.SwipeLayout>-->
 </layout>

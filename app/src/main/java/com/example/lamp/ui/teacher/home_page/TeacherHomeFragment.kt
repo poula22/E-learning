@@ -8,25 +8,30 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherHomeBinding
 import com.example.lamp.ui.teacher.courses_page.TeacherCoursesFragment
-import com.example.lamp.ui.todo_list.TodoAdapter
 import com.example.lamp.ui.teacher.profile_page.TeacherProfileFragment
 import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
 import com.example.lamp.ui.todo_list.AddTodoBottomSheet
+import com.example.lamp.ui.todo_list.TodoAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.util.*
 
 class TeacherHomeFragment : Fragment() {
     lateinit var viewBinding: FragmentTeacherHomeBinding
-//    lateinit var adapter: TeacherCoursesAdapter
-lateinit var viewModel: TeacherHomeViewModel
+
+    //    lateinit var adapter: TeacherCoursesAdapter
+    lateinit var viewModel: TeacherHomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(TeacherHomeViewModel::class.java)
     }
+
     val adapter = TodoAdapter(null)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +44,8 @@ lateinit var viewModel: TeacherHomeViewModel
             container,
             false
         )
+        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+        itemTouchHelper.attachToRecyclerView(viewBinding.todoRecycler)
         return viewBinding.root
     }
 
@@ -115,10 +122,10 @@ lateinit var viewModel: TeacherHomeViewModel
     }
 
     private fun showAddBottomSheet() {
-        var bundle=Bundle()
-        bundle.putInt("type",0)
+        var bundle = Bundle()
+        bundle.putInt("type", 0)
         val addTodoBottomSheet = AddTodoBottomSheet()
-        addTodoBottomSheet.arguments=bundle
+        addTodoBottomSheet.arguments = bundle
         addTodoBottomSheet.show(requireActivity().supportFragmentManager, "")
         addTodoBottomSheet.onTodoAddedListener = object : AddTodoBottomSheet.OnTodoAddedListener {
             override fun onTodoAdded() {
@@ -126,4 +133,39 @@ lateinit var viewModel: TeacherHomeViewModel
             }
         }
     }
+
+
+    val simpleCallback = object : ItemTouchHelper.SimpleCallback(
+        0,
+        ItemTouchHelper.RIGHT
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to delete this todo?")
+                .setPositiveButton("Yes") { dialog, which ->
+
+                    val position = viewHolder.absoluteAdapterPosition
+                    val todo = adapter.todoList?.get(position)
+                    adapter.todoList?.removeAt(position)
+                    viewModel.repository.removeTodo(todo!!)
+                    adapter.notifyItemRemoved(position)
+                }
+                .setNegativeButton("No") { dialog, which ->
+                    adapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
+                }
+                .show()
+
+        }
+    }
+
+
 }

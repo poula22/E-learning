@@ -99,9 +99,12 @@ class TeacherCourseDetails(var course: CourseResponse?) : Fragment() {
                 }
             }
 
-            //????????
+
             viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
-                //????????
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.teacher_course_content_container, TeacherCourseSettingsFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true

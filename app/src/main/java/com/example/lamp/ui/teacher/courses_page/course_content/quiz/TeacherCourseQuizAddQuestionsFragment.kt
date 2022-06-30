@@ -40,8 +40,8 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizItem) : Fragment() {
     }
 
     private fun initViews() {
-        viewBinding.quizEditQuizTitle.setText(quiz.quizName)
-        viewBinding.quizInstructions.setText(quiz.instructions)
+        viewBinding.quizTitleEdit.setText(quiz.quizName)
+        viewBinding.quizInstructionsEdit.setText(quiz.instructions)
         val adapter = TeacherQuizQuestionsAdapter(quiz.questions)
         adapter.onQuestionAddedListener =
             object : TeacherQuizQuestionsAdapter.OnQuestionAddedListener {
