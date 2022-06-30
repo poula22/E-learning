@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.LessonItem" />
+            type="com.example.data.model.LessonResponse" />
 
     </data>
 
@@ -19,7 +19,7 @@
             android:id="@+id/lessson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.lessonName}"
+            android:text="@{item.title}"
             tools:text="lessson"
             android:textSize="28sp"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,14 +41,17 @@
             android:layout_marginTop="8dp"
             android:background="@color/light_green"
             app:layout_constraintTop_toBottomOf="@id/lessson">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/section_recycler_view"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/lesson_description"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_teacher_course_material_lesson_content"
+                android:text="@{item.description}"
+                android:textSize="20sp"
+                tools:text="description"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.Group
             android:id="@+id/card_group"
             android:layout_width="match_parent"
@@ -56,8 +59,6 @@
             android:visibility="gone"
             app:constraint_referenced_ids="lesson_details"
              tools:visibility="visible"/>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

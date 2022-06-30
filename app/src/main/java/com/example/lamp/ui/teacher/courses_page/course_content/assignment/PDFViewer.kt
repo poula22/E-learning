@@ -28,6 +28,7 @@ class PDFViewer:Fragment() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val pdf=requireArguments().getString("pdf")
         try {
             Thread{
                 viewBinding.pdfView.fromStream(resources.openRawResource(R.raw.sheet_2)).load()

@@ -1,6 +1,7 @@
 package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class CourseResponse(
 
@@ -18,4 +19,4 @@ data class CourseResponse(
 
 	@field:SerializedName("courseDescription")
 	val courseDescription: String? = null
-)
+) : Serializable

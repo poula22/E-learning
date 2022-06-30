@@ -23,5 +23,7 @@ data class AssignmentAnswerResponse(
 	val id: Int? = null,
 
 	@field:SerializedName("assignmentId")
-	val assignmentId: Int? = null
+	val assignmentId: Int? = null,
+	@field:SerializedName("assignedGrade")
+	val assignedGrade: Int? = null
 )

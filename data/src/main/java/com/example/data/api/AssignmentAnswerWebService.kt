@@ -1,7 +1,9 @@
 package com.example.data.api
 
+import com.example.data.model.AssignmentAnswerDetailsResponse
 import com.example.data.model.AssignmentAnswerResponse
 import com.example.domain.model.AssignmentAnswerResponseDTO
+import com.example.domain.model.AssignmentResponseDTO
 import retrofit2.http.*
 
 interface AssignmentAnswerWebService {
@@ -17,16 +19,16 @@ interface AssignmentAnswerWebService {
     suspend fun deleteAssignmentAnswer(@Path("id") id: Int): AssignmentAnswerResponse
 
     @GET("api/AssignmentAnswers")
-    fun getAllAssignmentAnswer(): List<AssignmentAnswerResponse>
+    suspend fun getAllAssignmentAnswer(): List<AssignmentAnswerResponse>
 
     @GET("api/AssignmentAnswers/{id}")
-    fun getAssignmentAnswerById(@Path("id") id: Int): AssignmentAnswerResponse
+    suspend fun getAssignmentAnswerById(@Path("id") id: Int): AssignmentAnswerResponse
 
     @GET("api/AssignmentAnswers/GetAssignmentAnswersByAssignmentId/{assignmentId}")
-    fun getAssignmentAnswersByAssignmentId(@Path("assignmentId") assignmentId: Int): List<AssignmentAnswerResponse>
+    suspend fun getAssignmentAnswersByAssignmentId(@Path("assignmentId") assignmentId: Int): List<AssignmentAnswerDetailsResponse>
 
     @GET("api/AssignmentAnswers/GetAssignmentAnswerByStudentIdByAssignmentId/{studentId}/{assignmentId}")
-    fun getAssignmentAnswerByStudentIdByAssignmentId(
+    suspend fun getAssignmentAnswerByStudentIdByAssignmentId(
         @Path("studentId") studentID: Int, @Path("assignmentId") assignmentId: Int
     ): AssignmentAnswerResponse
 

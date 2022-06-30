@@ -2,9 +2,7 @@ package com.example.lamp.ui.teacher.courses_page.course_content.material
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.os.Environment.DIRECTORY_DOWNLOADS
-import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +10,9 @@ import android.widget.MediaController
 import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.commonFunctions.CONSTANTS
+import com.example.data.model.LessonResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseMaterialBinding
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
@@ -25,6 +26,13 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 class TeacherCourseMaterialFragment(var course: CourseItem?) : Fragment() {
     lateinit var viewBinding: FragmentTeacherCourseMaterialBinding
+    lateinit var viewModel: TeacherCourseMaterialViewModel
+    lateinit var adapter: TeacherCourseLessonsAdapter
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TeacherCourseMaterialViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,8 +47,33 @@ class TeacherCourseMaterialFragment(var course: CourseItem?) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subScribeToLiveData()
         initViews()
+        viewModel.getCourseLessons(CONSTANTS.courseId)
     }
+
+    private fun subScribeToLiveData() {
+        viewModel.contentLiveData.observe(viewLifecycleOwner){
+            it?.let { contentResponse->
+                contentResponse.forEach{content ->
+                    if (content.path?.contains("https://www.youtube.com") == true){
+                        playYoutubeVideo(content.path!!)
+                    }else if (content.fileName?.contains(".pdf") == true){
+
+                    }else if (content.fileName?.contains("text")==true){
+
+                    }else{
+                        viewBinding.videoPlayer.setVideoPath(content.path)
+                    }
+                }
+            }
+
+        }
+        viewModel.LessonsLiveData.observe(viewLifecycleOwner){
+            adapter.changeData(it)
+        }
+    }
+
 
     private fun initViews() {
         val mediaController = MediaController(requireContext())
@@ -48,22 +81,32 @@ class TeacherCourseMaterialFragment(var course: CourseItem?) : Fragment() {
         val uri: Uri = Uri.parse(
             "android.resource://" + requireActivity().packageName  + "/"+R.raw.dragon_ball
         )
-        viewBinding.videoPlayer.setMediaController(mediaController);
-        viewBinding.videoPlayer.setVideoURI(uri);
-        viewBinding.videoPlayer.requestFocus();
-        viewBinding.videoPlayer.start();
+        viewBinding.videoPlayer.setMediaController(mediaController)
+        viewBinding.videoPlayer.setVideoURI(uri)
+        viewBinding.videoPlayer.requestFocus()
+
+        viewBinding.videoPlayer.setOnPreparedListener{
+            //preparing
+            it.start()
+        }
+
         // youtube player
         playYoutubeVideo()
-        viewBinding.lessonsRecyclerView.adapter=TeacherCourseLessonsAdapter(mutableListOf(
-            LessonItem("lesson1", mutableListOf(SectionItem("link1","videoP1","att1","ppp","sec")))
-        ))
+        adapter=TeacherCourseLessonsAdapter()
+        adapter.onItemClickListener=object :TeacherCourseLessonsAdapter.OnItemClickListener{
+            override fun onItemClick(lesson: LessonResponse) {
+                lesson.id?.let { viewModel.getLessonContent(it) }
+            }
+
+        }
+        viewBinding.lessonsRecyclerView.adapter=adapter
     //        viewBinding.contentTextHtml.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
 
 
     }
 
 
-    private fun playYoutubeVideo() {
+    private fun playYoutubeVideo(path:String?=null) {
         val youTubePlayerView: YouTubePlayerView = viewBinding.youtubePlayerView
         lifecycle.addObserver(youTubePlayerView)
         val videoId =

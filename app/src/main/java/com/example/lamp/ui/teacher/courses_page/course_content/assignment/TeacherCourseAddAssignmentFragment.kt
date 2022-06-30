@@ -12,10 +12,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
+import com.example.commonFunctions.CONSTANTS
 
 import com.example.commonFunctions.CommonFunctions
 import com.example.commonFunctions.CommonFunctions.Companion.calendar
 import com.example.commonFunctions.DocumentAccessFragment
+import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddAssignmentBinding
 import com.example.lamp.test_data.TestData
@@ -27,7 +31,8 @@ import java.util.*
 
 class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
     lateinit var viewBinding: FragmentTeacherCourseAddAssignmentBinding
-
+    lateinit var viewModel: TeacherCourseAddAssignmentViewModel
+    var path:String?=null
     override fun showProgressBar() {
         return
     }
@@ -36,6 +41,16 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
        //send file path to backend
         requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(TeacherCourseAddAssignmentViewModel::class.java)
+    }
+    fun subscribeToLiveData(){
+        viewModel.liveData.observe(viewLifecycleOwner){
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     override fun onCreateView(
@@ -112,9 +127,16 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
 
                 Toast.makeText(context, "saved succesful", Toast.LENGTH_SHORT).show()
                 //insert in database
-                TestData.ASSIGNMENTS.add(AssignmentItem(title,description,startDate,endDate,points,100,
-                    TestData.ASSIGNMENT_FROM_STUDENT))
-                requireActivity().supportFragmentManager.popBackStack()
+                val assignment=AssignmentResponseDTO(
+                    filePath,points.toInt()
+                    ,description
+                    ,null
+                    , endDate?.toString()
+                    ,title,CONSTANTS.courseId
+                    ,startDate?.toString()
+                )
+
+                viewModel.addAssignment(assignment)
             }
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())

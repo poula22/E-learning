@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.commonFunctions.CommonFunctions
 import com.example.commonFunctions.CommonFunctions.Companion.calendar
+import com.example.data.model.CourseResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseSettingsBinding
 import java.util.*
@@ -18,7 +19,7 @@ import java.util.*
 class TeacherCourseSettingsFragment : Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseSettingsBinding
-
+    lateinit var course:CourseResponse
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,6 +36,7 @@ class TeacherCourseSettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        course=requireArguments().getSerializable("course") as CourseResponse
         initViews()
     }
 

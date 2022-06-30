@@ -30,7 +30,7 @@ class TeacherCourseAssignmentAdapter(var assignmentList: List<AssignmentResponse
         var item = assignmentList?.get(position)
         holder.itemViewBinding.item= item
         holder.itemViewBinding.assignmentTxt.setOnClickListener {
-            assignmentList?.let { it1 -> onAssignmentClickListener?.setOnAssignmentClickListener(it1?.get(position)) }
+            assignmentList?.let { it1 -> onAssignmentClickListener?.setOnAssignmentClickListener(it1.get(position)) }
         }
 
     }

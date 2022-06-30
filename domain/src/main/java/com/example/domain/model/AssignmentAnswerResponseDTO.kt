@@ -9,5 +9,6 @@ data class AssignmentAnswerResponseDTO(
 	val submitTime: String? = null,
 	val submitDate: String? = null,
 	val id: Int? = null,
-	val assignmentId: Int? = null
+	val assignmentId: Int? = null,
+	val grade:Int?=null
 )

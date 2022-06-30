@@ -83,7 +83,10 @@ class TeacherCourseDetails(var course: CourseResponse?) : Fragment() {
                     fragment = TeacherCourseMaterialFragment(null)
                 }
                 R.id.edit_course -> {
+                    val bundle=Bundle()
+                    bundle.putSerializable("course",course)
                     fragment = TeacherCourseSettingsFragment()
+                    fragment?.arguments=bundle
                 }
                 R.id.students -> {
                     fragment = TeacherStudentsFragment(TestData.STUDENTS)

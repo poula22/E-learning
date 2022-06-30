@@ -28,6 +28,7 @@
 
 
         <TextView
+            android:id="@+id/score_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{String.valueOf(item.grade)}"
@@ -35,6 +36,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="30" />
+
         <TextView
             android:id="@+id/deadline"
             android:layout_width="wrap_content"
@@ -53,7 +55,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deadline"
             tools:listitem="@layout/item_teacher_assignments_from_students" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
