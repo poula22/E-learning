@@ -9,6 +9,8 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentHomeBinding
@@ -23,6 +25,7 @@ import com.example.lamp.ui.student.student_home_page.features_recycler_view.Feat
 import com.example.lamp.ui.todo_list.AddTodoBottomSheet
 import com.example.lamp.ui.todo_list.TodoAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.util.*
 
@@ -54,6 +57,43 @@ class StudentHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+
+
+
+        val simpleCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Delete")
+                    .setMessage("Are you sure you want to delete this todo?")
+                    .setPositiveButton("Yes") { dialog, which ->
+
+                        val position = viewHolder.adapterPosition
+                        val todo = adapter.todoList?.get(position)
+                        adapter.todoList?.removeAt(position)
+                        viewModel.repository.removeTodo(todo!!)
+                        adapter.notifyItemRemoved(position)
+                    }
+                    .setNegativeButton("No") { dialog, which ->
+                        adapter.notifyItemChanged(viewHolder.adapterPosition)
+                    }
+                    .show()
+
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+        itemTouchHelper.attachToRecyclerView(viewBinding.todoRecycler)
         subscirbeToLiveData()
         viewModel.getData()
         Log.v("data:::", viewModel.liveData.value.toString())
@@ -137,4 +177,9 @@ class StudentHomeFragment : Fragment() {
             }
         }
     }
+
+
+
+
+
 }

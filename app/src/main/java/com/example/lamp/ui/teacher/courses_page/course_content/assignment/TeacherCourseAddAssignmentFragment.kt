@@ -8,11 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
-
 import com.example.commonFunctions.CommonFunctions
 import com.example.commonFunctions.CommonFunctions.Companion.calendar
 import com.example.commonFunctions.DocumentAccessFragment
@@ -20,9 +16,7 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddAssignmentBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
-
 import java.text.SimpleDateFormat
-
 import java.util.*
 
 class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
@@ -33,7 +27,7 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
     }
 
     override fun resultListener(byteArray: ByteArray) {
-       //send file path to backend
+        //send file path to backend
         requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
     }
@@ -59,24 +53,26 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
     }
 
     private fun initViews() {
-        if (calendar.get(Calendar.MONTH).plus(1)<10){
+        if (calendar.get(Calendar.MONTH).plus(1) < 10) {
             viewBinding.startDateTxt.setText(
-                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/" +"0"+ calendar.get(Calendar.MONTH).plus(1)+ "/"
+                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + "0" + calendar.get(Calendar.MONTH)
+                    .plus(1) + "/"
                         + calendar.get(Calendar.YEAR)
             )
             viewBinding.endDateTxt.setText(
-                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/" +"0"+ calendar.get(Calendar.MONTH).plus(1) + "/"
+                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + "0" + calendar.get(Calendar.MONTH)
+                    .plus(1) + "/"
                         + calendar.get(Calendar.YEAR)
             )
-        }
-        else
-        {
+        } else {
             viewBinding.startDateTxt.setText(
-                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/"+ calendar.get(Calendar.MONTH).plus(1)+ "/"
+                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH)
+                    .plus(1) + "/"
                         + calendar.get(Calendar.YEAR)
             )
             viewBinding.endDateTxt.setText(
-                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/"+ calendar.get(Calendar.MONTH).plus(1) + "/"
+                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH)
+                    .plus(1) + "/"
                         + calendar.get(Calendar.YEAR)
             )
         }
@@ -90,17 +86,17 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
         }
 
         viewBinding.addAttachmentBtn.setOnClickListener {
-           uploadDoc()
-            Log.v("fragment",this.view.toString())
+            uploadDoc()
+            Log.v("fragment", this.view.toString())
         }
 
 
         viewBinding.saveBtn.setOnClickListener {
-            if(validateForm()){
-                var title=viewBinding.title.text.toString()
-                var description=viewBinding.description.text.toString()
-                var points=viewBinding.pointsTxt.text.toString()
-                var datePattern=SimpleDateFormat("dd/MM/yyyy")
+            if (validateForm()) {
+                var title = viewBinding.title.text.toString()
+                var description = viewBinding.description.text.toString()
+                var points = viewBinding.pointsTxt.text.toString()
+                var datePattern = SimpleDateFormat("dd/MM/yyyy")
 
                 val startDate = datePattern.parse(
                     viewBinding.startDateTxt.text.toString()
@@ -108,17 +104,32 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
 
 
                 val endDate = datePattern.parse(
-                    viewBinding.endDateTxt.text.toString())
+                    viewBinding.endDateTxt.text.toString()
+                )
 
                 Toast.makeText(context, "saved succesful", Toast.LENGTH_SHORT).show()
                 //insert in database
-                TestData.ASSIGNMENTS.add(AssignmentItem(title,description,startDate,endDate,points,100,
-                    TestData.ASSIGNMENT_FROM_STUDENT))
+                TestData.ASSIGNMENTS.add(
+                    AssignmentItem(
+                        title, description, startDate, endDate, points, 100,
+                        TestData.ASSIGNMENT_FROM_STUDENT
+                    )
+                )
                 requireActivity().supportFragmentManager.popBackStack()
             }
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
     }
+
+//    // Intent for openning files
+//    fun selectPdf() {
+//        val pdfIntent = Intent(Intent.ACTION_GET_CONTENT)
+//        pdfIntent.type = "application/pdf"
+//        pdfIntent.addCategory(Intent.CATEGORY_OPENABLE)
+//        startActivityForResult(pdfIntent, 12)
+//
+//
+//    }
 
 
     fun validateForm(): Boolean {

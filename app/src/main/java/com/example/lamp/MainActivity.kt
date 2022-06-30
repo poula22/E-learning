@@ -2,11 +2,15 @@ package com.example.lamp
 
 import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.speech.RecognizerIntent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.commonFunctions.CONSTANTS
+import com.example.internet_connection.ConnectionLiveData
 import com.example.lamp.ui.sign_in_page.SigninFragment
 import com.github.dhaval2404.imagepicker.ImagePicker
 
@@ -25,14 +29,50 @@ class MainActivity : AppCompatActivity() {
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+//        } else if (resultCode == 12) {
+//            val uri: Uri = data?.data!!
+//            val uriString: String = uri.toString()
+//            var pdfName: String? = null
+//            if (uriString.startsWith("content://")) {
+//                var myCursor: Cursor? = null
+//                try {
+//                    myCursor =
+//                        applicationContext!!.contentResolver.query(uri, null, null, null, null)
+//                    if (myCursor != null && myCursor.moveToFirst()) {
+//                        pdfName =
+//                            myCursor.getString(myCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+//                    }
+//                } finally {
+//                    myCursor?.close()
+//                }
+//            }
         } else {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
     }
 
+
+    lateinit var connectionLiveData: ConnectionLiveData
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        connectionLiveData = ConnectionLiveData(this)
+//        connectionLiveData.observe(this) { isNetworkAvailable ->
+//            isNetworkAvailable?.let {
+//                if (it) {
+//
+//                } else {
+//                    supportFragmentManager.beginTransaction()
+//                        .replace(R.id.fragment_container, NoInternetFragment())
+//                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                        .commit()
+//                }
+//            }
+//        }
+
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, SigninFragment()).commit()
         //OnBoarding Screen

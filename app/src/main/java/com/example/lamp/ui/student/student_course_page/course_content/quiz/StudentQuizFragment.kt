@@ -1,9 +1,12 @@
 package com.example.lamp.ui.student.student_course_page.course_content.quiz
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
@@ -19,6 +22,7 @@ import com.example.lamp.databinding.FragmentStudentQuizBinding
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.answers_recycler_view.StudentQuizAnswersAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
+
 class StudentQuizFragment : Fragment() {
     lateinit var viewBinding: FragmentStudentQuizBinding
     var studentAnswers = mutableListOf<QuestionChoiceResponse>()
@@ -26,12 +30,13 @@ class StudentQuizFragment : Fragment() {
     lateinit var quiz: List<QuizDetailsResponse>
     lateinit var viewModel: StudentQuizViewModel
     lateinit var adapter: StudentQuizAnswersAdapter
-    var quizDuration=1
+    var quizDuration = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel=ViewModelProvider(this).get(StudentQuizViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(StudentQuizViewModel::class.java)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,15 +49,15 @@ class StudentQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var quizId=requireArguments().getInt("quizId")
+        var quizId = requireArguments().getInt("quizId")
         subscribeToLiveData()
         initViews()
         viewModel.getQuizQuestions(quizId)
     }
 
     private fun subscribeToLiveData() {
-        viewModel.liveData.observe(viewLifecycleOwner) { list->
-            quiz=list
+        viewModel.liveData.observe(viewLifecycleOwner) { list ->
+            quiz = list
             var question = list[questionIndex]
             viewBinding.questionCard.item = question
             adapter.changeData(question.questionChoices)
@@ -60,7 +65,8 @@ class StudentQuizFragment : Fragment() {
     }
 
     private fun initViews() {
-        adapter=StudentQuizAnswersAdapter()
+        startCountDownTimer(quizDuration * 60, viewBinding.durationTime)
+        adapter = StudentQuizAnswersAdapter()
         viewBinding.durationTime.setText(quizDuration.toString())
         viewBinding.questionCard.questionAnswerRecyclerView.adapter = adapter
         adapter.onAnswerSelectedListener =
@@ -87,14 +93,27 @@ class StudentQuizFragment : Fragment() {
 
             } else {
 //                FragmentStudentQuizFinishedStats(studentAnswers, quiz)
-                requireActivity()
-                    .supportFragmentManager
-                    .beginTransaction()
-                    .replace(
-                        R.id.student_course_content_container,
-                        StudentQuizzesFragment()
-                    )
-                    .commit()
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Are you Sure you want to Submit Answers?")
+                    .setMessage("If you clicked on back button, you will NOT be able to enter exam again")
+                    .setNeutralButton("Cancel") { dialog, which ->
+                        // Respond to neutral button press
+                    }
+                    .setNegativeButton("Submit and exit") { dialog, which ->
+                        Toast.makeText(context, "Answers Submitted", Toast.LENGTH_SHORT)
+                            .show()
+                        requireActivity().supportFragmentManager.popBackStack()
+                        requireActivity()
+                            .supportFragmentManager
+                            .beginTransaction()
+                            .replace(
+                                R.id.student_course_content_container,
+                                StudentQuizzesFragment()
+                            )
+                            .commit()
+                    }
+                    .show()
+
 
             }
 
@@ -133,11 +152,46 @@ class StudentQuizFragment : Fragment() {
 
     }
 
+
+    fun startCountDownTimer(Seconds: Int, tv: TextView) {
+        object : CountDownTimer((Seconds * 1000 + 1000).toLong(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                var seconds = (millisUntilFinished / 1000).toInt()
+                val hours = seconds / (60 * 60)
+                val tempMint = seconds - hours * 60 * 60
+                val minutes = tempMint / 60
+                if (minutes < 2) {
+                    tv.setTextColor(Color.RED)
+                }
+                seconds = tempMint - minutes * 60
+                tv.text = "TIME : " + String.format("%02d", hours) + ":" + String.format(
+                    "%02d",
+                    minutes
+                ) + ":" + String.format("%02d", seconds)
+            }
+
+            override fun onFinish() {
+                tv.text = "Completed"
+                requireActivity()
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .replace(
+                        R.id.student_course_content_container,
+                        StudentQuizzesFragment()
+                    )
+                    .commit()
+            }
+        }.start()
+    }
+
+
     override fun onStart() {
         super.onStart()
         var toolbar: Toolbar = requireActivity().findViewById(R.id.toolbar)
         toolbar.isVisible = false
         var drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
+
     }
 }

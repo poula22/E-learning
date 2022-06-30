@@ -28,6 +28,7 @@
             android:textColor="#CE007BFF"
             android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/assignment_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,8 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-
-            app:boxBackgroundColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/assignment_tv">
 
             <EditText
@@ -53,7 +52,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            app:boxBackgroundColor="@color/white"
             app:boxBackgroundMode="outline"
             app:layout_constraintTop_toBottomOf="@id/title_layout">
 
@@ -138,6 +136,20 @@
             app:icon="@drawable/ic_attachment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/end_date_txt" />
+
+        <TextView
+            android:id="@+id/attachment"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_btn_blue"
+            android:backgroundTint="#EDEDED"
+            android:gravity="center"
+            android:text="No Attachment"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_attachment_btn" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
