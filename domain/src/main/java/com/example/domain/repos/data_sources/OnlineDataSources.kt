@@ -24,9 +24,9 @@ interface AssignmentAnswerOnlineDataSource {
 
     suspend fun deleteAssignmentAnswer(id: Int): AssignmentAnswerResponseDTO
     suspend fun getAllAssignmentAnswer(): List<AssignmentAnswerResponseDTO>
-    fun getAssignmentAnswerById(id: Int): AssignmentAnswerResponseDTO
-    fun getAssignmentAnswersByAssignmentId(assignmentId: Int): List<AssignmentAnswerResponseDTO>
-    fun getAssignmentAnswerByStudentIdByAssignmentId(
+    suspend fun getAssignmentAnswerById(id: Int): AssignmentAnswerResponseDTO
+    suspend fun getAssignmentAnswersByAssignmentId(assignmentId: Int): List<AssignmentAnswerResponseDTO>
+    suspend fun getAssignmentAnswerByStudentIdByAssignmentId(
         studentID: Int,
         assignmentId: Int
     ): AssignmentAnswerResponseDTO

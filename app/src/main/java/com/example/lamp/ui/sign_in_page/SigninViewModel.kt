@@ -14,6 +14,7 @@ import com.example.domain.model.UserResponseDTO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -25,22 +26,25 @@ class SigninViewModel : ViewModel() {
     var test = MutableLiveData<Boolean>()
     val auth: FirebaseAuth = Firebase.auth
     fun signin(email: String, password: String) {
-        try {
+
             viewModelScope.launch {
                 //token = "Bearer ${sessionManager.fetchAuthToken()}"
                 //sessionManager?.saveAuthToken(result.authToken)
 //                var result = service.logIn(email, password)
-                var result = service.logInTest(UserResponseDTO(emailAddress = email, password = password))
-                liveData.value = result
+                try {
+                liveData.value = service.logInTest(UserResponseDTO(emailAddress = email, password = password))
+
+                } catch (t: Throwable) {
+                    when (t) {
+                        is HttpException ->
+                            errorMessage.value = t.response()?.errorBody()?.string()
+                        else ->{
+                            return@launch
+                        }
+                    }
+
             }
-        } catch (t: Throwable) {
-            when (t) {
-                is HttpException ->
-                    errorMessage.value = t.response()?.errorBody()?.string()
-                else ->{
-                    return
-                }
-            }
+
         }
 
     }

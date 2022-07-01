@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem" />
+            type="com.example.data.model.QuizResponse" />
     </data>
 
 
@@ -38,7 +38,7 @@
                 android:gravity="center"
                 android:maxLines="4"
                 android:scrollHorizontally="false"
-                android:text="@{item.quizName}"
+                android:text="@{item.title}"
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"

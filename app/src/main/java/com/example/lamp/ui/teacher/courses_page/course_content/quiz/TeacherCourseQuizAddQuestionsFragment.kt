@@ -10,16 +10,28 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.commonFunctions.CommonFunctions
+import com.example.data.model.QuestionResponse
+import com.example.data.model.QuizResponse
+import com.example.data.model.convertTo
+import com.example.domain.model.QuestionResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizAddQuestionsBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
 
-class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizItem) : Fragment() {
+class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponse) : Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseQuizAddQuestionsBinding
+    lateinit var viewModel: FragmentTeacherCourseQuizAddQuestionsViewModel
+    lateinit var adapter: TeacherQuizQuestionsAdapter
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(FragmentTeacherCourseQuizAddQuestionsViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,17 +48,28 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizItem) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
     }
 
+    private fun subscribeToLiveData() {
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+
+        }
+        viewModel.liveData.observe(viewLifecycleOwner){
+            //pass answers to adapter
+            adapter.changeAnswers(it)
+        }
+    }
+
     private fun initViews() {
-        viewBinding.quizTitleEdit.setText(quiz.quizName)
+        viewBinding.quizTitleEdit.setText(quiz.title)
         viewBinding.quizInstructionsEdit.setText(quiz.instructions)
-        val adapter = TeacherQuizQuestionsAdapter(quiz.questions)
+        val adapter = TeacherQuizQuestionsAdapter()
         adapter.onQuestionAddedListener =
             object : TeacherQuizQuestionsAdapter.OnQuestionAddedListener {
-                override fun onQuestionAdded(question: QuestionItem) {
-                    quiz.questions?.add(question)
+                override fun onQuestionAdded(question: QuestionResponse) {
+                    viewModel.addQuiz(question.convertTo(QuestionResponseDTO::class.java))
                 }
 
             }
@@ -76,7 +99,7 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizItem) : Fragment() {
             viewBinding.createQuestionLayout.visibility = View.GONE
             viewBinding.quizEditQuestionsList.visibility = View.VISIBLE
         }
-        var question: QuestionItem = QuestionItem(null, null, null)
+        var question = QuestionResponse(null, null, null)
         adapter.addQuestion(question)
     }
 

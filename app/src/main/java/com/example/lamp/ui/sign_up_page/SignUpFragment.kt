@@ -129,11 +129,11 @@ class SignUpFragment : Fragment() {
     fun validate(): Boolean {
         var isValid = true
 
-        if(!Pattern.matches("[A-Z][a-z]*",viewBinding.firstName.editText?.text.toString())){
+        if(!Pattern.matches("[a-zA-Z]*",viewBinding.firstName.editText?.text.toString())){
             viewBinding.firstName.error = "First Name should be letters only"
             isValid = false
             }
-        if(!Pattern.matches("[A-Z][a-z]*",viewBinding.lastName.editText?.text.toString())){
+        if(!Pattern.matches("[a-zA-Z]*",viewBinding.lastName.editText?.text.toString())){
             viewBinding.lastName.error = "Last Name should be letters only"
             isValid = false
         }

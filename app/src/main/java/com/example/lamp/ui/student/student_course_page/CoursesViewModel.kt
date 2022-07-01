@@ -1,26 +1,34 @@
 package com.example.lamp.ui.student.student_course_page
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.commonFunctions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.model.CourseResponse
-import com.example.domain.model.CourseResponseDTO
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import retrofit2.Response
 
 class CoursesViewModel:ViewModel() {
     var courseWebService = ApiManager.getCourseApi()
     var coursesLiveData=MutableLiveData<MutableList<CourseResponse>>()
     var flag=false
+    var course=MutableLiveData<Response<*>>()
+
+    fun deleteCourse(id:Int){
+        viewModelScope.launch {
+            courseWebService.dropCourse(id,CONSTANTS.user_id)
+        }
+    }
     fun joinCourse(studentID:Int,courseCode:Int) {
         flag=true
         viewModelScope.launch {
             try {
-                courseWebService.joinCourse(courseCode,studentID)
+                course.value=courseWebService.joinCourse(courseCode, studentID).body() as Response<*>
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
@@ -31,7 +39,6 @@ class CoursesViewModel:ViewModel() {
             }
 
         }
-
     }
 
     fun getAllCourses() {

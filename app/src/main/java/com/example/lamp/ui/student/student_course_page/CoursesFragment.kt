@@ -3,6 +3,7 @@ package com.example.lamp.ui.student.student_course_page
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.InputType.TYPE_CLASS_NUMBER
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +58,12 @@ class CoursesFragment : Fragment() {
                 coursesRVAdapter.updateCoursesList(it)
             }
         }
+        viewModel.course.observe(viewLifecycleOwner){
+            Log.e("taaaaaa",it.code().toString())
+            if(it.code()==200){
+                viewModel.getAllCourses()
+            }
+        }
     }
 
     private fun initViews() {
@@ -70,10 +77,9 @@ class CoursesFragment : Fragment() {
                     .addToBackStack("")
                     .replace(R.id.student_fragment_tab, StudentCourseDetails(item))
                     .commit()
-
-                val bottomNavigationView: BottomNavigationView =
-                    requireActivity().findViewById(R.id.bottom_navigation_view)
-                bottomNavigationView.isVisible = false
+                    val bottomNavigationView: BottomNavigationView =
+                        requireActivity().findViewById(R.id.bottom_navigation_view)
+                    bottomNavigationView.isVisible = false
             }
         }
         studentCoursesBinding.studentCoursesRecyclerView.adapter = coursesRVAdapter
@@ -92,7 +98,6 @@ class CoursesFragment : Fragment() {
                         join_course.error = "Please enter course code"
                     }else{
                         viewModel.joinCourse(CONSTANTS.user_id,Integer.parseInt(courseCode))
-                        viewModel.getAllCourses()
                     }
                 }
                 .show()

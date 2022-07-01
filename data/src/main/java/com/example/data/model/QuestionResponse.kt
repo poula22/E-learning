@@ -11,11 +11,11 @@ data class QuestionResponse(
 	val id: Int? = null,
 
 	@field:SerializedName("title")
-	val title: String? = null,
+	var title: String? = null,
 
 	@field:SerializedName("correctAnswer")
-	val correctAnswer: String? = null,
+	var correctAnswer: String? = null,
 
 	@field:SerializedName("showDate")
-	val showDate: String? = null
+	var showDate: String? = null
 )

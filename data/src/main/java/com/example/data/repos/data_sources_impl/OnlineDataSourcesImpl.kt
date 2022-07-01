@@ -133,7 +133,7 @@ class AssignmentAnswerOnlineDataSourceImpl(val service: AssignmentAnswerWebServi
         }
     }
 
-    override fun getAssignmentAnswerById(id: Int): AssignmentAnswerResponseDTO {
+    override suspend fun getAssignmentAnswerById(id: Int): AssignmentAnswerResponseDTO {
         try {
             val response = service.getAssignmentAnswerById(id)
             return response.convertTo(AssignmentAnswerResponseDTO::class.java)
@@ -142,7 +142,7 @@ class AssignmentAnswerOnlineDataSourceImpl(val service: AssignmentAnswerWebServi
         }
     }
 
-    override fun getAssignmentAnswersByAssignmentId(assignmentId: Int): List<AssignmentAnswerResponseDTO> {
+    override suspend fun getAssignmentAnswersByAssignmentId(assignmentId: Int): List<AssignmentAnswerResponseDTO> {
         try {
             val response = service.getAssignmentAnswersByAssignmentId(assignmentId)
             return response.map { it.convertTo(AssignmentAnswerResponseDTO::class.java) }
@@ -151,7 +151,7 @@ class AssignmentAnswerOnlineDataSourceImpl(val service: AssignmentAnswerWebServi
         }
     }
 
-    override fun getAssignmentAnswerByStudentIdByAssignmentId(
+    override suspend fun getAssignmentAnswerByStudentIdByAssignmentId(
         studentID: Int,
         assignmentId: Int
     ): AssignmentAnswerResponseDTO {

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.data.model.QuestionChoiceResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizQuestionAnswerBinding
 
@@ -67,11 +68,23 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
     }
 
 
-    private fun removeItem(position: Int, item: AnswerItem) {
+    fun changeAnswers(questionAnswer: List<QuestionChoiceResponse>?) {
+        answers?.clear()
+
+        questionAnswer?.forEach {
+            answers?.add(AnswerItem(it))
+        }
+
+        notifyDataSetChanged()
+    }
+
+    private fun removeItem(position: Int, item: AnswerItem?) {
         answers?.remove(item)
         if (selectedItem==position){
             selectedItem=-1
         }
+
         notifyItemRemoved(position)
     }
+
 }

@@ -4,25 +4,31 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.data.model.QuestionChoiceResponse
+import com.example.data.model.QuestionResponse
 import com.example.lamp.R
-import com.example.lamp.databinding.ItemStudentCourseQuizQuestionCardBinding
 import com.example.lamp.databinding.ItemTeacherCourseQuizCreateQuestionBinding
-import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.sections_recycler_view.TeacherCourseLessonsSectionsAdapter
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.TeacherQuizAnswersAdapter
 
 
-class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = null) :
+class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionResponse>? = null
+                                  ,var answersChoices:MutableList<QuestionChoiceResponse>?=null) :
     RecyclerView.Adapter<TeacherQuizQuestionsAdapter.ViewHolder>() {
+    var answers: MutableList<AnswerItem> = mutableListOf()
+
     init {
-        if ( questions==null){
-            questions= mutableListOf()
+        answersChoices?.forEach {
+            answers.add(AnswerItem(it))
         }
     }
+    val answerAdapter = TeacherQuizAnswersAdapter(
+        answers
+    )
+
     private val viewPool = RecyclerView.RecycledViewPool()
     private var counter=0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,7 +46,6 @@ class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = nu
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item=questions?.get(position)
         holder.viewBinding.item=item
-        var answers=item?.answers
         holder.viewBinding.createQuestionQuestionText.addTextChangedListener{
             Log.v("pos:::",item.toString())
         }
@@ -50,10 +55,8 @@ class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = nu
             false
         )
 
-        layoutManager.initialPrefetchItemCount = item?.answers?.size ?:0
-        val answerAdapter = TeacherQuizAnswersAdapter(
-            answers
-        )
+        layoutManager.initialPrefetchItemCount = answersChoices?.size ?:0
+
         holder.viewBinding.createQuestionAnswerList.layoutManager = layoutManager
         holder.viewBinding.createQuestionAnswerList.adapter = answerAdapter
         holder.viewBinding.createQuestionAnswerList.setRecycledViewPool(viewPool)
@@ -68,17 +71,22 @@ class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = nu
 
     override fun getItemCount(): Int = questions?.size ?: 0
 
-    fun addQuestion(question: QuestionItem) {
+    fun addQuestion(question: QuestionResponse) {
         questions?.add(question)
         notifyItemInserted(questions?.size?.minus(1)!!)
     }
-    private fun removeQuestion(position: Int, item: QuestionItem) {
+    private fun removeQuestion(position: Int, item: QuestionResponse) {
         questions?.remove(item)
         notifyItemRemoved(position)
     }
+
+    fun changeAnswers(questionChoices: List<QuestionChoiceResponse>?) {
+        answerAdapter.changeAnswers(questionChoices)
+    }
+
     var onQuestionAddedListener:OnQuestionAddedListener?=null
     interface OnQuestionAddedListener{
-        fun onQuestionAdded(question: QuestionItem)
+        fun onQuestionAdded(question: QuestionResponse)
     }
 
     class ViewHolder(val viewBinding: ItemTeacherCourseQuizCreateQuestionBinding) :

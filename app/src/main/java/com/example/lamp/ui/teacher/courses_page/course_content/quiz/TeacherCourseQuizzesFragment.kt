@@ -9,6 +9,8 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.data.model.QuizResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizzesBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizAdapter
@@ -17,6 +19,12 @@ import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recy
 class TeacherCourseQuizzesFragment(var quizzes:MutableList<QuizItem>?=null) : Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseQuizzesBinding
+    lateinit var viewModel: TeacherCourseQuizzesViewModel
+    lateinit var adapter: TeacherQuizAdapter
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TeacherCourseQuizzesViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,7 +32,7 @@ class TeacherCourseQuizzesFragment(var quizzes:MutableList<QuizItem>?=null) : Fr
     ): View {
         viewBinding = DataBindingUtil.inflate(
             inflater,
-            com.example.lamp.R.layout.fragment_teacher_course_quizzes,
+            R.layout.fragment_teacher_course_quizzes,
             container,
             false
         )
@@ -33,7 +41,14 @@ class TeacherCourseQuizzesFragment(var quizzes:MutableList<QuizItem>?=null) : Fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner){
+            adapter.changeData(it)
+        }
     }
 
     private fun initViews() {
@@ -44,9 +59,9 @@ class TeacherCourseQuizzesFragment(var quizzes:MutableList<QuizItem>?=null) : Fr
         viewBinding.createQuizButton.setOnClickListener {
             createQuiz()
         }
-        val adapter=TeacherQuizAdapter()
+        adapter=TeacherQuizAdapter()
         adapter.onEditQuizListener=object :TeacherQuizAdapter.OnEditQuizListener{
-            override fun onEditQuiz(quiz:QuizItem) {
+            override fun onEditQuiz(quiz: QuizResponse) {
                 requireActivity()
                     .supportFragmentManager
                     .beginTransaction()
@@ -67,7 +82,7 @@ class TeacherCourseQuizzesFragment(var quizzes:MutableList<QuizItem>?=null) : Fr
         if(quizzes==null){
             quizzes= mutableListOf()
         }
-        var item=QuizItem(null,null,null,null,null,null,null)
+        var item=QuizResponse(null,null,null,null,null,null,null)
         requireActivity()
             .supportFragmentManager
             .beginTransaction()

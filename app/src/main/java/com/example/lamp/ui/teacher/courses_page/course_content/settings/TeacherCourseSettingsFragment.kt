@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.commonFunctions.CommonFunctions
 import com.example.commonFunctions.CommonFunctions.Companion.calendar
 import com.example.data.model.CourseResponse
@@ -20,6 +21,13 @@ class TeacherCourseSettingsFragment : Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseSettingsBinding
     lateinit var course:CourseResponse
+    lateinit var viewModel: TeacherCourseSettingsViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(TeacherCourseSettingsViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,7 +35,7 @@ class TeacherCourseSettingsFragment : Fragment() {
     ): View? {
         viewBinding = DataBindingUtil.inflate(
             inflater,
-            com.example.lamp.R.layout.fragment_teacher_course_settings,
+            R.layout.fragment_teacher_course_settings,
             container,
             false
         )

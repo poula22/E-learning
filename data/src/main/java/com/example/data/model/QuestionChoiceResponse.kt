@@ -11,5 +11,5 @@ data class QuestionChoiceResponse(
 	val id: Int? = null,
 
 	@field:SerializedName("choice")
-	val choice: String? = null
+	var choice: String? = null
 )
