@@ -9,7 +9,7 @@ import android.view.WindowManager
 
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.ExternalStorageWithMicAccessFragment
+import com.example.common_functions.ExternalStorageWithMicAccessFragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureReciteParagraphBinding
 

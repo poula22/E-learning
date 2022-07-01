@@ -11,6 +11,7 @@ import com.microsoft.azure.cognitiveservices.vision.computervision.implementatio
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHeaders
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadInStreamHeaders
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
+import okhttp3.MultipartBody
 
 // ML APIs
 class OCROnlineDataSourceImp(private val webService: MicrosoftOCRWebService = ApiManager.getOCRApi()) :
@@ -90,8 +91,6 @@ class OCROnlineDataSourceImp(private val webService: MicrosoftOCRWebService = Ap
 }
 
 
-
-
 class AssignmentAnswerOnlineDataSourceImpl(val service: AssignmentAnswerWebService) :
     AssignmentAnswerOnlineDataSource {
     override suspend fun addAssignmentAnswer(assignmentAnswer: AssignmentAnswerResponseDTO): AssignmentAnswerResponseDTO {
@@ -158,6 +157,36 @@ class AssignmentAnswerOnlineDataSourceImpl(val service: AssignmentAnswerWebServi
         try {
             val response =
                 service.getAssignmentAnswerByStudentIdByAssignmentId(studentID, assignmentId)
+            return response.convertTo(AssignmentAnswerResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(
+        id: Int,
+        file: MultipartBody.Part
+    ): AssignmentAnswerResponseDTO {
+        try {
+            val response = service.updateAssignmentAnswerFileByAssignmentAnswerId(id, file)
+            return response.convertTo(AssignmentAnswerResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun updateMultipleAssignedGrades(grades: List<AssignmentAnswerResponseDTO>): AssignmentAnswerResponseDTO {
+        try {
+            val response = service.updateMultipleAssignedGrades(grades)
+            return response.convertTo(AssignmentAnswerResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun updateAssignmentGrade(grade: AssignmentAnswerResponseDTO): AssignmentAnswerResponseDTO {
+        try {
+            val response = service.updateAssignmentGrade(grade)
             return response.convertTo(AssignmentAnswerResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
@@ -240,6 +269,18 @@ class AssignmentOnlineDataSourceImpl(val service: AssignmentWebService) :
         }
     }
 
+    override suspend fun updateAssignmentFileByAssignmentId(
+        assignmentId: Int,
+        file: MultipartBody.Part
+    ): AssignmentResponseDTO {
+        try {
+            val response = service.updateAssignmentFileByAssignmentId(assignmentId, file)
+            return response.convertTo(AssignmentResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
 }
 
 class ContentOnlineDataSourceImpl(val service: ContentWebService) :
@@ -293,6 +334,18 @@ class ContentOnlineDataSourceImpl(val service: ContentWebService) :
         try {
             val response = service.getContentsByLessonId(lessonId)
             return response.map { it.convertTo(ContentResponseDTO::class.java) }
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun updateContentFileByContentId(
+        contentId: Int,
+        file: MultipartBody.Part
+    ): ContentResponseDTO {
+        try {
+            val response = service.updateContentFileByContentId(contentId, file)
+            return response.convertTo(ContentResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -367,6 +420,27 @@ class CourseOnlineDataSourceImpl(val service: CourseWebService) :
         }
     }
 
+    override suspend fun getCourse(courseId: Int): CourseResponseDTO {
+        try {
+            val response = service.getCourse(courseId)
+            return response.convertTo(CourseResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun updateCourseImageByCourseId(
+        courseId: Int,
+        image: MultipartBody.Part
+    ): CourseResponseDTO {
+        try {
+            val response = service.updateCourseImageByCourseId(courseId, image)
+            return response.convertTo(CourseResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
     override suspend fun getAllCourses(): List<CourseResponseDTO> {
         try {
             val response = service.getAllCourses()
@@ -435,6 +509,15 @@ class LessonOnlineDataSourceImpl(val service: LessonWebService) :
     override suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO {
         try {
             val response = service.addLesson(lesson)
+            return response.convertTo(LessonResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun getLesson(id: Int): LessonResponseDTO {
+        try {
+            val response = service.getLesson(id)
             return response.convertTo(LessonResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable

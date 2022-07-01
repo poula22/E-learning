@@ -6,22 +6,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CONSTANTS
-import com.example.commonFunctions.CommonFunctions
-import com.example.data.model.AssignmentAnswerDetailsResponse
+import com.example.common_functions.CONSTANTS
+import com.example.common_functions.CommonFunctions
 import com.example.data.model.AssignmentDetailsResponse
 import com.example.domain.model.AssignmentAnswerResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseAssignmentSubmitBinding
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.github.dhaval2404.imagepicker.ImagePicker
 
 class StudentCourseAssignmentSubmitFragment:Fragment() {

@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherAddCourseBinding
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 

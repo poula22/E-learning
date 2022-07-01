@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.commonFunctions.CONSTANTS
-import com.example.commonFunctions.CommonFunctions.Companion.calendar
-import com.example.commonFunctions.CommonFunctions.Companion.showDatePicker
+import com.example.common_functions.CONSTANTS
+import com.example.common_functions.CommonFunctions.Companion.calendar
+import com.example.common_functions.CommonFunctions.Companion.showDatePicker
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddSectionBinding
 import java.util.*

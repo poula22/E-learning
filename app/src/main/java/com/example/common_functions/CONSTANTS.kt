@@ -1,4 +1,4 @@
-package com.example.commonFunctions
+package com.example.common_functions
 
 import com.example.SessionManager
 

@@ -8,14 +8,10 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import com.example.commonFunctions.CONSTANTS
 import com.example.data.model.CourseResponse
-import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCoursesBinding
 import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.TeacherCourseDetails
 import com.example.lamp.ui.teacher.courses_page.courses_bottom_sheet.TeacherAddCoursesBottomSheet
 import com.example.lamp.ui.teacher.courses_page.courses_recycler_view.TeacherCoursesAdapter

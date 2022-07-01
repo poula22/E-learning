@@ -1,5 +1,7 @@
 package com.example.lamp.ui.sign_up_page
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,15 +10,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.ExternalStorageAccessFragment
 import com.example.data.model.UserResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSignUpBinding
 import com.example.lamp.ui.sign_in_page.SigninFragment
 import java.util.regex.Pattern
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : ExternalStorageAccessFragment() {
     //comment test
     lateinit var viewModel: SignUpViewModel
     lateinit var viewBinding: FragmentSignUpBinding
@@ -79,25 +81,29 @@ class SignUpFragment : Fragment() {
     private fun initViews() {
         viewBinding.childrenLayout.isVisible = false
         viewBinding.imageStudent.setOnClickListener {
-            it.setBackgroundColor(R.color.green)
+            it.setBackgroundResource(R.drawable.rounded_frame_yellow)
             viewBinding.imageParent.setBackgroundResource(R.drawable.rounded_frame)
             viewBinding.imageTeacher.setBackgroundResource(R.drawable.rounded_frame)
             selected = "Student"
             viewBinding.childrenLayout.isVisible = false
         }
         viewBinding.imageTeacher.setOnClickListener {
-            it.setBackgroundColor(R.color.green)
+            it.setBackgroundResource(R.drawable.rounded_frame_yellow)
             viewBinding.imageParent.setBackgroundResource(R.drawable.rounded_frame)
             viewBinding.imageStudent.setBackgroundResource(R.drawable.rounded_frame)
             selected = "Teacher"
             viewBinding.childrenLayout.isVisible = false
         }
         viewBinding.imageParent.setOnClickListener {
-            it.setBackgroundColor(R.color.green)
+            it.setBackgroundResource(R.drawable.rounded_frame_yellow)
             viewBinding.imageTeacher.setBackgroundResource(R.drawable.rounded_frame)
             viewBinding.imageStudent.setBackgroundResource(R.drawable.rounded_frame)
             selected = "Parent"
             viewBinding.childrenLayout.isVisible = true
+        }
+
+        viewBinding.card.setOnClickListener {
+            imagePick()
         }
 
         viewBinding.buttonSignUpRegisteration.setOnClickListener {
@@ -129,11 +135,11 @@ class SignUpFragment : Fragment() {
     fun validate(): Boolean {
         var isValid = true
 
-        if(!Pattern.matches("[a-zA-Z]*",viewBinding.firstName.editText?.text.toString())){
+        if (!Pattern.matches("[A-Z][a-z]*", viewBinding.firstName.editText?.text.toString())) {
             viewBinding.firstName.error = "First Name should be letters only"
             isValid = false
-            }
-        if(!Pattern.matches("[a-zA-Z]*",viewBinding.lastName.editText?.text.toString())){
+        }
+        if (!Pattern.matches("[A-Z][a-z]*", viewBinding.lastName.editText?.text.toString())) {
             viewBinding.lastName.error = "Last Name should be letters only"
             isValid = false
         }
@@ -193,7 +199,30 @@ class SignUpFragment : Fragment() {
         if (selected == null) {
             Toast.makeText(context, "Please select your role", Toast.LENGTH_SHORT).show()
             isValid = false
+        } else if (selected == "Parent") {
+            if (viewBinding.childMail.editText?.text.toString().isEmpty()
+                && viewBinding.childEmail2.editText?.text.toString().isEmpty()
+                && viewBinding.childEmail3.editText?.text.toString().isEmpty()
+                && viewBinding.childEmail4.editText?.text.toString().isEmpty()
+            ) {
+                viewBinding.childMail.error = "At least one child email is required"
+            }
         }
         return isValid
     }
+
+
+    override fun showProgressBar() {
+
+    }
+
+    override fun resultListener(byteArray: ByteArray) {
+        var bmp: Bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+        viewBinding.chooseImageTxt.isVisible = false
+//        viewBinding.profileImageView.setImageBitmap(bmp)
+        Log.v("image", "done")
+        val image = viewBinding.profileImageView
+        image.setImageBitmap(Bitmap.createScaledBitmap(bmp, image.width, image.height, false))
+    }
+
 }

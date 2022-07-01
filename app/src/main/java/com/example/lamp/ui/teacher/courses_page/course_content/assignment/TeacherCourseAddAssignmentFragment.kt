@@ -1,6 +1,7 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.assignment
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,11 +15,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 
-import com.example.commonFunctions.CommonFunctions
-import com.example.commonFunctions.CommonFunctions.Companion.calendar
-import com.example.commonFunctions.DocumentAccessFragment
+import com.example.common_functions.CommonFunctions
+import com.example.common_functions.CommonFunctions.Companion.calendar
+import com.example.common_functions.DocumentAccessFragment
 import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddAssignmentBinding
@@ -107,9 +108,19 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
         }
 
         viewBinding.addAttachmentBtn.setOnClickListener {
-            uploadDoc()
+//           uploadDoc()
+            val x = selectPdf()
+            viewBinding.attachment.text = x
             Log.v("fragment", this.view.toString())
         }
+//        fun Uri.getName(context: Context): String {
+//            val returnCursor = context.contentResolver.query(this, null, null, null, null)
+//            val nameIndex = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+//            returnCursor?.moveToFirst()
+//            val fileName = returnCursor?.getString(nameIndex!!)
+//            returnCursor?.close()
+//            return fileName!!
+//        }
 
 
         viewBinding.saveBtn.setOnClickListener {
@@ -135,7 +146,7 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
                     ,description
                     ,null
                     , endDate?.toString()
-                    ,title,CONSTANTS.courseId
+                    ,title, CONSTANTS.courseId
                     ,startDate?.toString()
                 )
 
@@ -145,15 +156,15 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
     }
 
-//    // Intent for openning files
-//    fun selectPdf() {
-//        val pdfIntent = Intent(Intent.ACTION_GET_CONTENT)
-//        pdfIntent.type = "application/pdf"
-//        pdfIntent.addCategory(Intent.CATEGORY_OPENABLE)
-//        startActivityForResult(pdfIntent, 12)
-//
-//
-//    }
+    // Intent for openning files
+    fun selectPdf() : String?{
+        val pdfIntent = Intent(Intent.ACTION_GET_CONTENT)
+        pdfIntent.type = "application/pdf"
+        pdfIntent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(pdfIntent, 12)
+        return pdfIntent.data?.path
+
+    }
 
 
     fun validateForm(): Boolean {

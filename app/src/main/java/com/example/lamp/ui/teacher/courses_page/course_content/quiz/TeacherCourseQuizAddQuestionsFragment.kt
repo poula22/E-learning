@@ -11,16 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CommonFunctions
+import com.example.common_functions.CommonFunctions
 import com.example.data.model.QuestionResponse
 import com.example.data.model.QuizResponse
 import com.example.data.model.convertTo
 import com.example.domain.model.QuestionResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizAddQuestionsBinding
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
 
 class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponse) : Fragment() {
 
@@ -29,7 +27,8 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponse) : Fragment()
     lateinit var adapter: TeacherQuizQuestionsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FragmentTeacherCourseQuizAddQuestionsViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this).get(FragmentTeacherCourseQuizAddQuestionsViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -53,10 +52,10 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponse) : Fragment()
     }
 
     private fun subscribeToLiveData() {
-        viewModel.errorMessage.observe(viewLifecycleOwner){
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
 
         }
-        viewModel.liveData.observe(viewLifecycleOwner){
+        viewModel.liveData.observe(viewLifecycleOwner) {
             //pass answers to adapter
             adapter.changeAnswers(it)
         }

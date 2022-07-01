@@ -3,13 +3,11 @@ package com.example.lamp.ui.student.student_course_page.course_content.assignmen
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.model.AssignmentDetailsResponse
-import com.example.data.model.AssignmentResponse
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import retrofit2.http.HTTP
 
 //filter
 class StudentCourseAssignmentViewModel:ViewModel() {

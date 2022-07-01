@@ -5,10 +5,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.api.UserWebService
-import com.example.data.model.LoginResponse
 import com.example.data.model.UserResponse
 import com.example.domain.model.UserResponseDTO
 import com.google.firebase.auth.FirebaseAuth

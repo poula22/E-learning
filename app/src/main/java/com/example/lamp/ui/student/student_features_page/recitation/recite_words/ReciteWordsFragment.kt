@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CommonFunctions
-import com.example.commonFunctions.ExternalStorageWithMicAccessFragment
+import com.example.common_functions.ExternalStorageWithMicAccessFragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureReciteWordsBinding
 import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_features_page.recitation.recite_paragraph.ReciteParagraphViewModel
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsAdapter
 
 

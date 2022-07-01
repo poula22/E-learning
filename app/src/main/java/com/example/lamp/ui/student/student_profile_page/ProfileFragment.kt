@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.domain.model.UserResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentProfileBinding

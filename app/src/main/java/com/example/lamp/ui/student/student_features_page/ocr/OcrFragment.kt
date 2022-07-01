@@ -1,28 +1,17 @@
 package com.example.lamp.ui.student.student_features_page.ocr
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CONSTANTS
-import com.example.commonFunctions.CommonFunctions
-import com.example.commonFunctions.ExternalStorageAccessFragment
+import com.example.common_functions.CommonFunctions
+import com.example.common_functions.ExternalStorageAccessFragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureOcrBinding
-import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -84,7 +73,6 @@ class OcrFragment : ExternalStorageAccessFragment() {
     override fun resultListener(byteArray: ByteArray) {
         viewModel.getData(byteArray)
     }
-
 
 
 //    val startForImageResult =

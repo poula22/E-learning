@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CommonFunctions
-import com.example.commonFunctions.CommonFunctions.Companion.calendar
+import com.example.common_functions.CommonFunctions
+import com.example.common_functions.CommonFunctions.Companion.calendar
 import com.example.data.model.CourseResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseSettingsBinding

@@ -4,20 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CONSTANTS
-import com.example.data.model.AssignmentDetailsResponse
+import com.example.common_functions.CONSTANTS
 import com.example.data.model.AssignmentResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAssignmentBinding
-import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.assignment_recycler_view.TeacherCourseAssignmentAdapter
 
 

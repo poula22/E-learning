@@ -3,6 +3,7 @@ package com.example.data.api
 import com.example.data.model.AssignmentDetailsResponse
 import com.example.data.model.AssignmentResponse
 import com.example.domain.model.AssignmentResponseDTO
+import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface AssignmentWebService {
@@ -32,4 +33,12 @@ interface AssignmentWebService {
         @Path("courseId") courseId: Int,
         @Path("studentId") studentId: Int
     ): List<AssignmentDetailsResponse>
+
+    @PUT("api/Assignments/update-file/{id}")
+    suspend fun updateAssignmentFileByAssignmentId(
+        @Path("id") assignmentId: Int,
+        @Part file: MultipartBody.Part
+    ): AssignmentResponse
+
+
 }

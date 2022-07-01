@@ -2,7 +2,7 @@ package com.example.domain.repos.data_sources
 
 import com.example.domain.model.*
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
-import retrofit2.http.Body
+import okhttp3.MultipartBody
 
 // ALL ONLINE DATA SOURCES SHOULD BE HERE
 
@@ -31,6 +31,16 @@ interface AssignmentAnswerOnlineDataSource {
         assignmentId: Int
     ): AssignmentAnswerResponseDTO
 
+    suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(
+        id: Int,
+        file: MultipartBody.Part
+    ): AssignmentAnswerResponseDTO
+
+    suspend fun updateMultipleAssignedGrades(grades: List<AssignmentAnswerResponseDTO>): AssignmentAnswerResponseDTO
+
+    suspend fun updateAssignmentGrade(grade: AssignmentAnswerResponseDTO): AssignmentAnswerResponseDTO
+
+
 }
 
 //interface AssignmentGradeOnlineDataSource {
@@ -47,7 +57,11 @@ interface AssignmentAnswerOnlineDataSource {
 
 interface AssignmentOnlineDataSource {
     suspend fun addAssignment(assignment: AssignmentResponseDTO): AssignmentResponseDTO
-    suspend fun updateAssignment(id: Int,@Body assignment: AssignmentResponseDTO): AssignmentResponseDTO
+    suspend fun updateAssignment(
+        id: Int,
+        assignment: AssignmentResponseDTO
+    ): AssignmentResponseDTO
+
     suspend fun deleteAssignment(id: Int): AssignmentResponseDTO
     suspend fun getAllAssignment(): List<AssignmentResponseDTO>
     suspend fun getAssignmentById(id: Int): AssignmentResponseDTO
@@ -56,6 +70,11 @@ interface AssignmentOnlineDataSource {
         courseId: Int,
         studentId: Int
     ): List<AssignmentDetailsResponseDTO>
+
+    suspend fun updateAssignmentFileByAssignmentId(
+        assignmentId: Int,
+        file: MultipartBody.Part
+    ): AssignmentResponseDTO
 
 }
 
@@ -67,6 +86,10 @@ interface ContentOnlineDataSource {
     suspend fun getAllContents(): List<ContentResponseDTO>
     suspend fun getContentById(id: Int): ContentResponseDTO
     suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
+    suspend fun updateContentFileByContentId(
+        contentId: Int,
+        file: MultipartBody.Part
+    ): ContentResponseDTO
 }
 
 interface CourseOnlineDataSource {
@@ -78,6 +101,11 @@ interface CourseOnlineDataSource {
     suspend fun dropCourse(courseId: Int, studentId: Int): CourseResponseDTO
     suspend fun getCoursesByTeacherId(teacherId: Int): List<CourseResponseDTO>
     suspend fun getCoursesByStudentId(studentId: Int): List<CourseResponseDTO>
+    suspend fun getCourse(courseId: Int): CourseResponseDTO
+    suspend fun updateCourseImageByCourseId(
+        courseId: Int,
+        image: MultipartBody.Part
+    ): CourseResponseDTO
 }
 
 interface FeatureOnlineDataSource {
@@ -91,6 +119,7 @@ interface FeatureOnlineDataSource {
 interface LessonOnlineDataSource {
     suspend fun getAllLessons(): List<LessonResponseDTO>
     suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO
+    suspend fun getLesson(id: Int): LessonResponseDTO
     suspend fun updateLesson(id: Int, lesson: LessonResponseDTO): LessonResponseDTO
     suspend fun deleteLesson(id: Int): LessonResponseDTO
     suspend fun getLessonsByCourseId(courseId: Int): List<LessonResponseDTO>

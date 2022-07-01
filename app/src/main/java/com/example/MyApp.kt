@@ -1,7 +1,7 @@
 package com.example
 
 import android.app.Application
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.data.database.DataBase
 
 class MyApp:Application() {

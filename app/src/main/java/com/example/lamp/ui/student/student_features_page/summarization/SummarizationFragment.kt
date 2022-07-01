@@ -1,7 +1,6 @@
 package com.example.lamp.ui.student.student_features_page.summarization
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Build
@@ -11,16 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.ExternalStorageWithMicAccessFragment
+import com.example.common_functions.ExternalStorageWithMicAccessFragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureSummarizationBinding
-import com.example.lamp.ui.student.student_features_page.recitation.recite_words.ReciteWordsViewModel
-import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SummarizationFragment:ExternalStorageWithMicAccessFragment() {

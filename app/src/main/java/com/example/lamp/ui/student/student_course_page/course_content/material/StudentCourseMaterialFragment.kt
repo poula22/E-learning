@@ -2,9 +2,6 @@ package com.example.lamp.ui.student.student_course_page.course_content.material
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.os.Environment.DIRECTORY_DOWNLOADS
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +11,11 @@ import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.data.model.LessonResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseMaterialBinding
 import com.example.lamp.ui.student.student_course_page.course_content.material.lessons_recycler_view.StudentCourseLessonsAdapter
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
-import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.LessonItem
-import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.SectionItem
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView

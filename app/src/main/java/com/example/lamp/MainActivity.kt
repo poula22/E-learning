@@ -9,7 +9,7 @@ import android.provider.OpenableColumns
 import android.speech.RecognizerIntent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.internet_connection.ConnectionLiveData
 import com.example.lamp.ui.sign_in_page.SigninFragment
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -29,23 +29,31 @@ class MainActivity : AppCompatActivity() {
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-//        } else if (resultCode == 12) {
-//            val uri: Uri = data?.data!!
-//            val uriString: String = uri.toString()
-//            var pdfName: String? = null
-//            if (uriString.startsWith("content://")) {
-//                var myCursor: Cursor? = null
-//                try {
-//                    myCursor =
-//                        applicationContext!!.contentResolver.query(uri, null, null, null, null)
-//                    if (myCursor != null && myCursor.moveToFirst()) {
-//                        pdfName =
-//                            myCursor.getString(myCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-//                    }
-//                } finally {
-//                    myCursor?.close()
-//                }
-//            }
+        } else if (resultCode == 12) {
+            val uri: Uri = data?.data!!
+            val uriString: String = uri.toString()
+            var pdfName: String? = null
+            if (uriString.startsWith("content://")) {
+                var myCursor: Cursor? = null
+                try {
+                    myCursor =
+                        applicationContext!!.contentResolver.query(uri, null, null, null, null)
+                    if (myCursor != null && myCursor.moveToFirst()) {
+                        pdfName =
+                            myCursor.getString(myCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                    }
+                } finally {
+                    myCursor?.close()
+                }
+            } else if (uriString.startsWith("file://")) {
+                pdfName = uri.lastPathSegment
+            }
+            if (pdfName != null) {
+                Toast.makeText(this, pdfName, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Unable to get file name", Toast.LENGTH_SHORT).show()
+            }
+
         } else {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
         }

@@ -1,6 +1,5 @@
 package com.example.lamp.ui.student.student_course_page
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.InputType.TYPE_CLASS_NUMBER
 import android.util.Log
@@ -12,15 +11,12 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.data.model.CourseResponse
-import com.example.data.model.convertTo
-import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCoursesBinding
 import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_course_page.course_content.StudentCourseDetails
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CoursesRVAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -35,6 +31,7 @@ class CoursesFragment : Fragment() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(CoursesViewModel::class.java)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,17 +49,16 @@ class CoursesFragment : Fragment() {
         initViews()
         viewModel.getAllCourses()
     }
+
     fun subscribeToLiveData() {
-        viewModel.coursesLiveData.observe(viewLifecycleOwner){
+        viewModel.coursesLiveData.observe(viewLifecycleOwner) {
             it?.let {
                 coursesRVAdapter.updateCoursesList(it)
             }
         }
-        viewModel.course.observe(viewLifecycleOwner){
-            Log.e("taaaaaa",it.code().toString())
-            if(it.code()==200){
-                viewModel.getAllCourses()
-            }
+        viewModel.course.observe(viewLifecycleOwner) {
+            Log.e("taaaaaa", it.toString())
+            viewModel.getAllCourses()
         }
     }
 
@@ -77,17 +73,17 @@ class CoursesFragment : Fragment() {
                     .addToBackStack("")
                     .replace(R.id.student_fragment_tab, StudentCourseDetails(item))
                     .commit()
-                    val bottomNavigationView: BottomNavigationView =
-                        requireActivity().findViewById(R.id.bottom_navigation_view)
-                    bottomNavigationView.isVisible = false
+                val bottomNavigationView: BottomNavigationView =
+                    requireActivity().findViewById(R.id.bottom_navigation_view)
+                bottomNavigationView.isVisible = false
             }
         }
         studentCoursesBinding.studentCoursesRecyclerView.adapter = coursesRVAdapter
         studentCoursesBinding.joinCourseButton.setOnClickListener {
-            var courseCode:String?=null
+            var courseCode: String? = null
             val join_course = EditText(requireContext())
-            join_course.hint="Enter course code"
-            join_course.inputType=TYPE_CLASS_NUMBER
+            join_course.hint = "Enter course code"
+            join_course.inputType = TYPE_CLASS_NUMBER
             MaterialAlertDialogBuilder(requireContext())
                 // Add customization options here
                 .setTitle("Join Course")
@@ -96,8 +92,8 @@ class CoursesFragment : Fragment() {
                     courseCode = join_course.text.toString()
                     if (courseCode.isNullOrEmpty()) {
                         join_course.error = "Please enter course code"
-                    }else{
-                        viewModel.joinCourse(CONSTANTS.user_id,Integer.parseInt(courseCode))
+                    } else {
+                        viewModel.joinCourse(CONSTANTS.user_id, Integer.parseInt(courseCode))
                     }
                 }
                 .show()

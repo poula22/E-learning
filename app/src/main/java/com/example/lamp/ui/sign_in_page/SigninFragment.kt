@@ -9,8 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.binding_adapters.TestConnection
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentSigninBinding
 import com.example.lamp.ui.parent.ParentContainerFragment

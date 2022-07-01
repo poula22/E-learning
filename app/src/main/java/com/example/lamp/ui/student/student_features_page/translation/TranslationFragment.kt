@@ -1,7 +1,5 @@
 package com.example.lamp.ui.student.student_features_page.translation
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,16 +9,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.ExternalStorageWithMicAccessFragment
+import com.example.common_functions.ExternalStorageWithMicAccessFragment
 import com.example.data.api.translateapi.Language
 import com.example.data.api.translateapi.TranslateAPI
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureTranslationBinding
-import com.example.lamp.ui.student.student_features_page.summarization.SummarizationViewModel
-import com.github.dhaval2404.imagepicker.ImagePicker
-import com.github.dhaval2404.imagepicker.ImagePicker.Companion.REQUEST_CODE
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

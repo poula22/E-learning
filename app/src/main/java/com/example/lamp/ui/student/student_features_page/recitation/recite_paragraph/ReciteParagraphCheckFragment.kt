@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.commonFunctions.CommonFunctions
+import com.example.common_functions.CommonFunctions
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureReciteParagraphCheckBinding
 

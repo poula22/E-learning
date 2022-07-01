@@ -10,14 +10,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import com.example.commonFunctions.CONSTANTS
-import com.example.data.model.QuizResponse
+import com.example.common_functions.CONSTANTS
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseQuizzesBinding
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.quizzes_recycler_view.StudentQuizAdapter
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
-import kotlin.properties.Delegates
 
 class StudentQuizzesFragment: Fragment() {
     lateinit var viewBinding: FragmentStudentCourseQuizzesBinding

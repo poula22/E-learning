@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.data.model.CourseResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding

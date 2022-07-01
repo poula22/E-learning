@@ -1,8 +1,7 @@
-package com.example.commonFunctions
+package com.example.common_functions
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -13,27 +12,18 @@ import android.media.MediaRecorder
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.os.Bundle
 import android.os.Environment
-import android.view.View
-import android.view.WindowManager
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.example.lamp.R
-import com.example.lamp.ui.student.student_features_page.ocr.OcrViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
@@ -43,14 +33,14 @@ class CommonFunctions {
 
     companion object {
 
-        fun imagePick(fragment: Fragment
-                      ,startForResult: ActivityResultLauncher<Intent>
-                      ) {
-            ImagePicker.with(fragment)
-                .crop()                    //Crop image(Optional), Check Customization for more option
-                .saveDir(fragment.requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
-                .createIntent(startForResult::launch)
-        }
+//        fun imagePick(fragment: Fragment
+//                      ,startForResult: ActivityResultLauncher<Intent>
+//                      ) {
+//            ImagePicker.with(fragment)
+//                .crop()                    //Crop image(Optional), Check Customization for more option
+//                .saveDir(fragment.requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
+//                .createIntent(startForResult::launch)
+//        }
 
 
         fun uploadDoc(activity: FragmentActivity):Intent {

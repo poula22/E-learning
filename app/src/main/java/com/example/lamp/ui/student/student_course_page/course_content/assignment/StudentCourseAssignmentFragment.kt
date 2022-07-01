@@ -8,18 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.data.model.AssignmentDetailsResponse
-import com.example.data.model.AssignmentResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseAssignmentBinding
-import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.assignment_recycler_view.StudentCourseAssignmentAdapter
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.assignment_submit.StudentCourseAssignmentSubmitFragment
-import com.example.lamp.ui.student.student_features_page.recitation.recite_paragraph.ReciteParagraphFragment
-import com.example.lamp.ui.student.student_features_page.recitation.recite_words.ReciteWordsFragment
 import com.google.android.material.tabs.TabLayout
 //filter fun - new json
 class StudentCourseAssignmentFragment :

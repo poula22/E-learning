@@ -2,7 +2,6 @@ package com.example.lamp.ui.teacher.courses_page.course_content.material
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +10,11 @@ import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.commonFunctions.CONSTANTS
+import com.example.common_functions.CONSTANTS
 import com.example.data.model.LessonResponse
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseMaterialBinding
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
-import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.LessonItem
-import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.SectionItem
 import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.TeacherCourseLessonsAdapter
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -53,23 +50,23 @@ class TeacherCourseMaterialFragment(var course: CourseItem?) : Fragment() {
     }
 
     private fun subScribeToLiveData() {
-        viewModel.contentLiveData.observe(viewLifecycleOwner){
-            it?.let { contentResponse->
-                contentResponse.forEach{content ->
-                    if (content.path?.contains("https://www.youtube.com") == true){
+        viewModel.contentLiveData.observe(viewLifecycleOwner) {
+            it?.let { contentResponse ->
+                contentResponse.forEach { content ->
+                    if (content.path?.contains("https://www.youtube.com") == true) {
                         playYoutubeVideo(content.path!!)
-                    }else if (content.fileName?.contains(".pdf") == true){
+                    } else if (content.fileName?.contains(".pdf") == true) {
 
-                    }else if (content.fileName?.contains("text")==true){
+                    } else if (content.fileName?.contains("text") == true) {
 
-                    }else{
+                    } else {
                         viewBinding.videoPlayer.setVideoPath(content.path)
                     }
                 }
             }
 
         }
-        viewModel.LessonsLiveData.observe(viewLifecycleOwner){
+        viewModel.LessonsLiveData.observe(viewLifecycleOwner) {
             adapter.changeData(it)
         }
     }
@@ -79,34 +76,34 @@ class TeacherCourseMaterialFragment(var course: CourseItem?) : Fragment() {
         val mediaController = MediaController(requireContext())
         mediaController.setAnchorView(viewBinding.videoPlayer)
         val uri: Uri = Uri.parse(
-            "android.resource://" + requireActivity().packageName  + "/"+R.raw.dragon_ball
+            "android.resource://" + requireActivity().packageName + "/" + R.raw.dragon_ball
         )
         viewBinding.videoPlayer.setMediaController(mediaController)
         viewBinding.videoPlayer.setVideoURI(uri)
         viewBinding.videoPlayer.requestFocus()
 
-        viewBinding.videoPlayer.setOnPreparedListener{
+        viewBinding.videoPlayer.setOnPreparedListener {
             //preparing
             it.start()
         }
 
         // youtube player
         playYoutubeVideo()
-        adapter=TeacherCourseLessonsAdapter()
-        adapter.onItemClickListener=object :TeacherCourseLessonsAdapter.OnItemClickListener{
+        adapter = TeacherCourseLessonsAdapter()
+        adapter.onItemClickListener = object : TeacherCourseLessonsAdapter.OnItemClickListener {
             override fun onItemClick(lesson: LessonResponse) {
                 lesson.id?.let { viewModel.getLessonContent(it) }
             }
 
         }
-        viewBinding.lessonsRecyclerView.adapter=adapter
-    //        viewBinding.contentTextHtml.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+        viewBinding.lessonsRecyclerView.adapter = adapter
+        //        viewBinding.contentTextHtml.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
 
 
     }
 
 
-    private fun playYoutubeVideo(path:String?=null) {
+    private fun playYoutubeVideo(path: String? = null) {
         val youTubePlayerView: YouTubePlayerView = viewBinding.youtubePlayerView
         lifecycle.addObserver(youTubePlayerView)
         val videoId =
