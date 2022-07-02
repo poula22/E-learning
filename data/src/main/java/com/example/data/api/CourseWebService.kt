@@ -39,6 +39,7 @@ interface CourseWebService {
     @GET("api/Courses/GetCoursesByStudentId/{studentId}")
     suspend fun getCoursesByStudentId(@Path("studentId") studentId: Int): List<CourseResponse>
 
+    @Multipart
     @PUT("api/Courses/update-photo/{id}")
     suspend fun updateCourseImageByCourseId(
         @Path("id") courseId: Int,

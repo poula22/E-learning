@@ -27,6 +27,7 @@ interface ContentWebService {
     @GET("api/Contents/GetContentsByLessonId/{lessonId}")
     suspend fun getContentsByLessonId(@Path("lessonId") lessonId: Int): List<ContentResponse>
 
+    @Multipart
     @PUT("api/Contents/update-file/{id}")
     suspend fun updateContentFileByContentId(
         @Path("id") contentId: Int,

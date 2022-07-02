@@ -34,6 +34,7 @@ interface AssignmentWebService {
         @Path("studentId") studentId: Int
     ): List<AssignmentDetailsResponse>
 
+    @Multipart
     @PUT("api/Assignments/update-file/{id}")
     suspend fun updateAssignmentFileByAssignmentId(
         @Path("id") assignmentId: Int,
