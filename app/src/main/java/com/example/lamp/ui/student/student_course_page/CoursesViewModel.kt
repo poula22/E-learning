@@ -6,14 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common_functions.CONSTANTS
 import com.example.data.api.ApiManager
-import com.example.data.model.CourseResponse
+import com.example.data.repos.data_sources_impl.CourseOnlineDataSourceImpl
+import com.example.domain.model.CourseResponseDTO
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
 
 class CoursesViewModel : ViewModel() {
     var courseWebService = ApiManager.getCourseApi()
-    var coursesLiveData = MutableLiveData<MutableList<CourseResponse>>()
+    var courseOnlineDataSource = CourseOnlineDataSourceImpl(courseWebService)
+    var coursesLiveData = MutableLiveData<MutableList<CourseResponseDTO>>()
     var flag = false
     var course = MutableLiveData<Response<Void>?>()
     var errorMessage = MutableLiveData<String>()
@@ -21,7 +23,7 @@ class CoursesViewModel : ViewModel() {
     fun deleteCourse(id: Int) {
         viewModelScope.launch {
             try {
-                course.value = courseWebService.dropCourse(id, CONSTANTS.user_id)
+                course.value = courseOnlineDataSource.dropCourse(id, CONSTANTS.user_id)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
@@ -39,7 +41,7 @@ class CoursesViewModel : ViewModel() {
         flag = true
         viewModelScope.launch {
             try {
-                course.value = courseWebService.joinCourse(courseCode, studentID)
+                course.value = courseOnlineDataSource.joinCourse(courseCode, studentID)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
@@ -57,7 +59,7 @@ class CoursesViewModel : ViewModel() {
     fun getAllCourses() {
         viewModelScope.launch {
             try {
-                val courses = courseWebService.getCoursesByStudentId(CONSTANTS.user_id)
+                val courses = courseOnlineDataSource.getCoursesByStudentId(CONSTANTS.user_id)
                 coursesLiveData.value = courses.toMutableList()
             } catch (t: Throwable) {
                 when (t) {

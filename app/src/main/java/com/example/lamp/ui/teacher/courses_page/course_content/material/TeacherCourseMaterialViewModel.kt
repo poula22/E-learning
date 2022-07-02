@@ -4,27 +4,30 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.api.ApiManager
-import com.example.data.model.ContentResponse
-import com.example.data.model.LessonResponse
+import com.example.data.repos.data_sources_impl.ContentOnlineDataSourceImpl
+import com.example.data.repos.data_sources_impl.LessonOnlineDataSourceImpl
+import com.example.domain.model.ContentResponseDTO
+import com.example.domain.model.LessonResponseDTO
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class TeacherCourseMaterialViewModel:ViewModel() {
-    var errorMessage= MutableLiveData<String>()
-    val lessonWebService= ApiManager.getLessonApi()
-    val contentWebService= ApiManager.getContentApi()
+class TeacherCourseMaterialViewModel : ViewModel() {
+    var errorMessage = MutableLiveData<String>()
+    val lessonWebService = ApiManager.getLessonApi()
+    val contentWebService = ApiManager.getContentApi()
+    val lessonOnlineDataSource = LessonOnlineDataSourceImpl(lessonWebService)
+    val contentOnlineDataSource = ContentOnlineDataSourceImpl(contentWebService)
+    var LessonsLiveData = MutableLiveData<List<LessonResponseDTO>>()
+    var contentLiveData = MutableLiveData<List<ContentResponseDTO>>()
 
-    var LessonsLiveData= MutableLiveData<List<LessonResponse>>()
-    var contentLiveData= MutableLiveData<List<ContentResponse>>()
-
-    fun getCourseLessons(courseId:Int){
+    fun getCourseLessons(courseId: Int) {
         viewModelScope.launch {
             try {
-                LessonsLiveData.value=lessonWebService.getLessonsByCourseId(courseId)
-            }catch (t:Throwable){
-                when(t){
-                    is HttpException ->{
-                        errorMessage.value=t.response()?.errorBody()?.string()
+                LessonsLiveData.value = lessonOnlineDataSource.getLessonsByCourseId(courseId)
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.response()?.errorBody()?.string()
                     }
                 }
             }
@@ -32,14 +35,14 @@ class TeacherCourseMaterialViewModel:ViewModel() {
         }
     }
 
-    fun getLessonContent(lessonId:Int){
+    fun getLessonContent(lessonId: Int) {
         viewModelScope.launch {
             try {
-                contentLiveData.value=contentWebService.getContentsByLessonId(lessonId)
-            }catch (t:Throwable){
-                when(t){
-                    is HttpException ->{
-                        errorMessage.value=t.response()?.errorBody()?.string()
+                contentLiveData.value = contentOnlineDataSource.getContentsByLessonId(lessonId)
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.response()?.errorBody()?.string()
                     }
                 }
             }

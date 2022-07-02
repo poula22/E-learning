@@ -4,16 +4,17 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.api.ApiManager
-import com.example.data.api.AssignmentAnswerWebService
+import com.example.data.repos.data_sources_impl.AssignmentAnswerOnlineDataSourceImpl
 import com.example.domain.model.AssignmentAnswerResponseDTO
 import kotlinx.coroutines.launch
 
-class StudentCourseAssignmentSubmitViewModel:ViewModel() {
+class StudentCourseAssignmentSubmitViewModel : ViewModel() {
     val assignmentAnswerWebService = ApiManager.getAssignmentAnswerApi()
-    fun submitAssignment(assignmentAnswer:AssignmentAnswerResponseDTO) {
+    val assignmentAnswerOnlineDataSource = AssignmentAnswerOnlineDataSourceImpl(assignmentAnswerWebService)
+    fun submitAssignment(assignmentAnswer: AssignmentAnswerResponseDTO) {
         viewModelScope.launch {
-            var test=assignmentAnswerWebService.addAssignmentAnswer(assignmentAnswer)
-            Log.v("test",test.toString())
+            var test = assignmentAnswerOnlineDataSource.addAssignmentAnswer(assignmentAnswer)
+            Log.v("test", test.toString())
         }
     }
 }

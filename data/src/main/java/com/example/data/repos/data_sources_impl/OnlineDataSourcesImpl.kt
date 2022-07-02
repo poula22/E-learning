@@ -15,7 +15,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 
 // ML APIs
-class OCROnlineDataSourceImp(private val webService: MicrosoftOCRWebService = ApiManager.getOCRApi()) :
+class OCROnlineDataSourceImp(val webService: MicrosoftOCRWebService ) :
     OCROnlineDataSource {
     override suspend fun getTextFromImage(language: String, url: String): OCRResponseDTO {
         var u = URLOCR(url = url)

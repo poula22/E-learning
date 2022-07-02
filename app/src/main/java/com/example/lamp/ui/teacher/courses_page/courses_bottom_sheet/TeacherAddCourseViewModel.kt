@@ -1,22 +1,22 @@
 package com.example.lamp.ui.teacher.courses_page.courses_bottom_sheet
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.api.ApiManager
-import com.example.data.model.CourseResponse
+import com.example.data.repos.data_sources_impl.CourseOnlineDataSourceImpl
 import com.example.domain.model.CourseResponseDTO
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class TeacherAddCourseViewModel:ViewModel() {
+class TeacherAddCourseViewModel : ViewModel() {
     var courseWebService = ApiManager.getCourseApi()
-    var flag=false
+    var courseOnlineDataSource = CourseOnlineDataSourceImpl(courseWebService)
+    var flag = false
 
-    fun AddCourse(courseDTO: CourseResponseDTO){
+    fun AddCourse(courseDTO: CourseResponseDTO) {
         viewModelScope.launch {
             try {
-                courseWebService.addCourse(courseDTO)
+                courseOnlineDataSource.addCourse(courseDTO)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {

@@ -4,28 +4,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.api.ApiManager
-import com.example.data.model.QuestionAnswerResponse
-import com.example.data.model.QuestionChoiceResponse
+import com.example.data.repos.data_sources_impl.QuestionChoiceOnlineDataSourceImpl
+import com.example.data.repos.data_sources_impl.QuestionOnlineDataSourceImpl
+import com.example.domain.model.QuestionChoiceResponseDTO
 import com.example.domain.model.QuestionResponseDTO
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class FragmentTeacherCourseQuizAddQuestionsViewModel:ViewModel() {
+class FragmentTeacherCourseQuizAddQuestionsViewModel : ViewModel() {
 
-    val errorMessage= MutableLiveData<String>()
-    val liveData= MutableLiveData<List<QuestionChoiceResponse>>()
-    val questionService= ApiManager.getQuestionApi()
-    val answerService= ApiManager.getQuestionChoiceApi()
-    fun addQuiz(questionResponse: QuestionResponseDTO){
+    val errorMessage = MutableLiveData<String>()
+    val liveData = MutableLiveData<List<QuestionChoiceResponseDTO>>()
+    val questionService = ApiManager.getQuestionApi()
+    val answerService = ApiManager.getQuestionChoiceApi()
+    val questionOnlineDataSource = QuestionOnlineDataSourceImpl(questionService)
+    val answerOnlineDataSource = QuestionChoiceOnlineDataSourceImpl(answerService)
+    fun addQuiz(questionResponse: QuestionResponseDTO) {
         viewModelScope.launch {
             try {
-                questionService.addQuestion(questionResponse)
-            }catch (t:Throwable){
-                when(t){
-                    is HttpException ->{
-                        errorMessage.value=t.response()?.errorBody()?.string()
+                questionOnlineDataSource.addQuestion(questionResponse)
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.response()?.errorBody()?.string()
                     }
-                    else ->{
+                    else -> {
                         println("unknown error")
                     }
                 }
@@ -33,16 +36,16 @@ class FragmentTeacherCourseQuizAddQuestionsViewModel:ViewModel() {
         }
     }
 
-    fun getQuestionAnswers(questionId:Int){
+    fun getQuestionAnswers(questionId: Int) {
         viewModelScope.launch {
             try {
-                liveData.value=answerService.getQuestionChoicesByQuestionId(questionId)
-            }catch (t:Throwable){
-                when(t){
-                    is HttpException ->{
-                        errorMessage.value=t.response()?.errorBody()?.string()
+                liveData.value = answerOnlineDataSource.getQuestionChoicesByQuestionId(questionId)
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.response()?.errorBody()?.string()
                     }
-                    else ->{
+                    else -> {
                         println("unknown error")
                     }
                 }
