@@ -32,6 +32,7 @@
                     android:id="@+id/video_player"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:elevation="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/content_text_html"
@@ -51,6 +52,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lessons_recycler_view"
+            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

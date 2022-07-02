@@ -3,6 +3,7 @@ package com.example.data.api
 import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
 import okhttp3.MultipartBody
+import retrofit2.Response
 import retrofit2.http.*
 
 interface CourseWebService {
@@ -25,13 +26,13 @@ interface CourseWebService {
     suspend fun joinCourse(
         @Path("courseId") courseId: Int,
         @Path("studentId") studentId: Int
-    ): CourseResponse
+    ): Response<Void>
 
     @DELETE("api/Courses/{courseId}/DropCourse/{studentId}")
     suspend fun dropCourse(
         @Path("courseId") courseId: Int,
         @Path("studentId") studentId: Int
-    ): CourseResponse
+    ): Response<Void>
 
     @GET("api/Courses/GetCoursesByTeacherId/{teacherId}")
     suspend fun getCoursesByTeacherId(@Path("teacherId") teacherId: Int): List<CourseResponse>

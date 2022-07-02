@@ -1,5 +1,6 @@
 package com.example.lamp.ui.student.student_course_page
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.InputType.TYPE_CLASS_NUMBER
 import android.util.Log
@@ -73,9 +74,10 @@ class CoursesFragment : Fragment() {
                     .addToBackStack("")
                     .replace(R.id.student_fragment_tab, StudentCourseDetails(item))
                     .commit()
-                val bottomNavigationView: BottomNavigationView =
-                    requireActivity().findViewById(R.id.bottom_navigation_view)
-                bottomNavigationView.isVisible = false
+//                viewModel.deleteCourse(item?.id!!)
+                    val bottomNavigationView: BottomNavigationView =
+                        requireActivity().findViewById(R.id.bottom_navigation_view)
+                    bottomNavigationView.isVisible = false
             }
         }
         studentCoursesBinding.studentCoursesRecyclerView.adapter = coursesRVAdapter

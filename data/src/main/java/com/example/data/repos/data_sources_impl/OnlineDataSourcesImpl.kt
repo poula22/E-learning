@@ -12,6 +12,7 @@ import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHe
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadInStreamHeaders
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import okhttp3.MultipartBody
+import retrofit2.Response
 
 // ML APIs
 class OCROnlineDataSourceImp(private val webService: MicrosoftOCRWebService = ApiManager.getOCRApi()) :
@@ -384,19 +385,19 @@ class CourseOnlineDataSourceImpl(val service: CourseWebService) :
         }
     }
 
-    override suspend fun joinCourse(courseId: Int, studentId: Int): CourseResponseDTO {
+    override suspend fun joinCourse(courseId: Int, studentId: Int): Response<Void> {
         try {
             val response = service.joinCourse(courseId, studentId)
-            return response.convertTo(CourseResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
     }
 
-    override suspend fun dropCourse(courseId: Int, studentId: Int): CourseResponseDTO {
+    override suspend fun dropCourse(courseId: Int, studentId: Int): Response<Void> {
         try {
             val response = service.dropCourse(courseId, studentId)
-            return response.convertTo(CourseResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }

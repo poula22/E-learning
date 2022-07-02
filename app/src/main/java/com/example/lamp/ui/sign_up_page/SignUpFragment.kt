@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -133,17 +134,8 @@ class SignUpFragment : ExternalStorageAccessFragment() {
 
 
     fun validate(): Boolean {
+
         var isValid = true
-
-        if (!Pattern.matches("[A-Z][a-z]*", viewBinding.firstName.editText?.text.toString())) {
-            viewBinding.firstName.error = "First Name should be letters only"
-            isValid = false
-        }
-        if (!Pattern.matches("[A-Z][a-z]*", viewBinding.lastName.editText?.text.toString())) {
-            viewBinding.lastName.error = "Last Name should be letters only"
-            isValid = false
-        }
-
         if (viewBinding.emailSignUp.editText?.text.toString().isEmpty()) {
             viewBinding.emailSignUp.error = "Email is required"
             isValid = false
@@ -185,16 +177,34 @@ class SignUpFragment : ExternalStorageAccessFragment() {
             viewBinding.confirmPasswordSignUp.error = null
         }
         if (viewBinding.firstName.editText?.text.toString().isEmpty()) {
+
             viewBinding.firstName.error = "First Name is required"
             isValid = false
+
+        }else if (!Pattern.matches("[a-zA-Z]+", viewBinding.firstName.editText?.text.toString())) {
+
+            viewBinding.firstName.error = "First Name should be letters only"
+            isValid = false
+
         } else {
+
             viewBinding.firstName.error = null
+
         }
         if (viewBinding.lastName.editText?.text.toString().isEmpty()) {
+
             viewBinding.lastName.error = "Last Name is required"
             isValid = false
+
+        }else if (!Pattern.matches("[a-zA-Z]+", viewBinding.lastName.editText?.text.toString())) {
+
+            viewBinding.lastName.error = "Last Name should be letters only"
+            isValid = false
+
         } else {
+
             viewBinding.lastName.error = null
+
         }
         if (selected == null) {
             Toast.makeText(context, "Please select your role", Toast.LENGTH_SHORT).show()
@@ -223,6 +233,7 @@ class SignUpFragment : ExternalStorageAccessFragment() {
         Log.v("image", "done")
         val image = viewBinding.profileImageView
         image.setImageBitmap(Bitmap.createScaledBitmap(bmp, image.width, image.height, false))
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
 }

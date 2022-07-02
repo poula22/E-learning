@@ -1,5 +1,6 @@
 package com.example.lamp.ui.student.student_course_page
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,11 +15,23 @@ class CoursesViewModel : ViewModel() {
     var courseWebService = ApiManager.getCourseApi()
     var coursesLiveData = MutableLiveData<MutableList<CourseResponse>>()
     var flag = false
-    var course = MutableLiveData<CourseResponse>()
+    var course = MutableLiveData<Response<Void>?>()
+    var errorMessage = MutableLiveData<String>()
 
     fun deleteCourse(id: Int) {
         viewModelScope.launch {
-            courseWebService.dropCourse(id, CONSTANTS.user_id)
+            try {
+                course.value = courseWebService.dropCourse(id, CONSTANTS.user_id)
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.message
+                    }
+                    else -> {
+                        Log.e("Error", t.message.toString())
+                    }
+                }
+            }
         }
     }
 
@@ -26,15 +39,16 @@ class CoursesViewModel : ViewModel() {
         flag = true
         viewModelScope.launch {
             try {
-                course.value =
-                    courseWebService.joinCourse(courseCode, studentID)
+                course.value = courseWebService.joinCourse(courseCode, studentID)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
-//                        Toast.makeText(,t.response()?.errorBody().toString(), Toast.LENGTH_SHORT).show()
+                        errorMessage.value = t.message
+                    }
+                    else -> {
+                        Log.e("Error", t.message.toString())
                     }
                 }
-
             }
 
         }
@@ -48,14 +62,17 @@ class CoursesViewModel : ViewModel() {
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
-
+                        errorMessage.value = t.message
                     }
-                }
+                    else -> {
+                        Log.e("Error", t.message.toString())
+                    }
 
+                }
             }
+
         }
 
+
     }
-
-
 }
