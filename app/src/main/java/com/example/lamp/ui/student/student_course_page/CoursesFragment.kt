@@ -1,6 +1,5 @@
 package com.example.lamp.ui.student.student_course_page
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.InputType.TYPE_CLASS_NUMBER
 import android.util.Log
@@ -13,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
-import com.example.data.model.CourseResponse
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCoursesBinding
 import com.example.lamp.test_data.TestData
@@ -68,7 +67,7 @@ class CoursesFragment : Fragment() {
 
 
         coursesRVAdapter.onCourseClickListener = object : CoursesRVAdapter.OnCourseClickListener {
-            override fun setOnCourseClickListener(item: CourseResponse?) {
+            override fun setOnCourseClickListener(item: CourseResponseDTO?) {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .addToBackStack("")

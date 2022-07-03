@@ -7,7 +7,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.data.model.CourseResponse" />
+            type="com.example.domain.model.CourseResponseDTO" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

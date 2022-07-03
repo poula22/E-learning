@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.QuestionChoiceResponse
+import com.example.domain.model.QuestionChoiceResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizQuestionAnswerBinding
 
@@ -68,7 +68,7 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
     }
 
 
-    fun changeAnswers(questionAnswer: List<QuestionChoiceResponse>?) {
+    fun changeAnswers(questionAnswer: List<QuestionChoiceResponseDTO>?) {
         answers?.clear()
 
         questionAnswer?.forEach {

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.data.model.LessonResponse" />
+            type="com.example.domain.model.LessonResponseDTO" />
 
     </data>
 

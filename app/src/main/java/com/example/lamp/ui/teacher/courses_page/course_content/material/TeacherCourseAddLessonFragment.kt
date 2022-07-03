@@ -18,7 +18,7 @@ import com.example.lamp.databinding.FragmentTeacherCourseAddSectionBinding
 import java.util.*
 
 
-class TeacherCourseAddSectionFragment : Fragment() {
+class TeacherCourseAddLessonFragment : Fragment() {
     lateinit var viewBinding: FragmentTeacherCourseAddSectionBinding
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -1,6 +1,8 @@
 package com.example.domain.model
 
-class AssignmentDetailsResponseDTO {
+import java.io.Serializable
+
+class AssignmentDetailsResponseDTO:Serializable {
     val submitted: Boolean? = null
     val assignedGrade: Int? = null
     val id: Int? = null

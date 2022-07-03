@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.data.model.AssignmentResponse
-import com.example.data.model.QuizResponse
-import com.example.data.model.StudentResponse
+import com.example.domain.model.AssignmentResponseDTO
+import com.example.domain.model.QuizResponseDTO
+import com.example.domain.model.StudentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseGradesStudentsBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.grades.student_grades_page.TeacherCourseGradesFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.grades.students_page.students_rv.TeacherStudentsOverallGradesAdapter
 
-class TeacherCourseStudentsFragment(var studentsList: MutableList<StudentResponse>? = null) :
+class TeacherCourseStudentsFragment(var studentsList: MutableList<StudentResponseDTO>? = null) :
     Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseGradesStudentsBinding
@@ -49,8 +49,8 @@ class TeacherCourseStudentsFragment(var studentsList: MutableList<StudentRespons
         adapter.onStudentClickListener =
             object : TeacherStudentsOverallGradesAdapter.OnStudentClickListener {
                 override fun setOnStudentClickListener(
-                    assignment: MutableList<AssignmentResponse>,
-                    quiz: MutableList<QuizResponse>
+                    assignment: MutableList<AssignmentResponseDTO>,
+                    quiz: MutableList<QuizResponseDTO>
                 ) {
                     requireActivity().supportFragmentManager
                         .beginTransaction()

@@ -19,10 +19,10 @@ class FragmentTeacherCourseQuizAddQuestionsViewModel : ViewModel() {
     val answerService = ApiManager.getQuestionChoiceApi()
     val questionOnlineDataSource = QuestionOnlineDataSourceImpl(questionService)
     val answerOnlineDataSource = QuestionChoiceOnlineDataSourceImpl(answerService)
-    fun addQuiz(questionResponse: QuestionResponseDTO) {
+    fun addQuiz(questionResponseDTO: QuestionResponseDTO) {
         viewModelScope.launch {
             try {
-                questionOnlineDataSource.addQuestion(questionResponse)
+                questionOnlineDataSource.addQuestion(questionResponseDTO)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {

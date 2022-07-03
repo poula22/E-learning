@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.data.model.AssignmentResponse
-import com.example.data.model.QuizResponse
+import com.example.domain.model.AssignmentResponseDTO
+import com.example.domain.model.QuizResponseDTO
 import com.example.lamp.databinding.FragmentStudentCourseGradesContentBinding
 import com.example.lamp.ui.student.student_course_page.course_content.grades.assignments_rv.AssignmentsGradesAdapter
 import com.example.lamp.ui.student.student_course_page.course_content.grades.quizzes_rv.QuizzesGradesAdapter
 
 class StudentCourseGradesFragment(
-    var assignmentsList: MutableList<AssignmentResponse>? = null,
-    var quizzesList: MutableList<QuizResponse>? = null
+    var assignmentsList: MutableList<AssignmentResponseDTO>? = null,
+    var quizzesList: MutableList<QuizResponseDTO>? = null
 ) : Fragment() {
 
     lateinit var viewBinding: FragmentStudentCourseGradesContentBinding

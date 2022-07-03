@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
-import com.example.data.model.LessonResponse
+import com.example.domain.model.LessonResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseMaterialBinding
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
@@ -21,7 +21,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 
-class TeacherCourseMaterialFragment(var course: CourseItem?) : Fragment() {
+class TeacherCourseMaterialFragment : Fragment() {
     lateinit var viewBinding: FragmentTeacherCourseMaterialBinding
     lateinit var viewModel: TeacherCourseMaterialViewModel
     lateinit var adapter: TeacherCourseLessonsAdapter
@@ -51,8 +51,8 @@ class TeacherCourseMaterialFragment(var course: CourseItem?) : Fragment() {
 
     private fun subScribeToLiveData() {
         viewModel.contentLiveData.observe(viewLifecycleOwner) {
-            it?.let { contentResponse ->
-                contentResponse.forEach { content ->
+            it?.let { contentResponseDTO ->
+                contentResponseDTO.forEach { content ->
                     if (content.path?.contains("https://www.youtube.com") == true) {
                         playYoutubeVideo(content.path!!)
                     } else if (content.fileName?.contains(".pdf") == true) {
@@ -91,7 +91,7 @@ class TeacherCourseMaterialFragment(var course: CourseItem?) : Fragment() {
         playYoutubeVideo()
         adapter = TeacherCourseLessonsAdapter()
         adapter.onItemClickListener = object : TeacherCourseLessonsAdapter.OnItemClickListener {
-            override fun onItemClick(lesson: LessonResponse) {
+            override fun onItemClick(lesson: LessonResponseDTO) {
                 lesson.id?.let { viewModel.getLessonContent(it) }
             }
 

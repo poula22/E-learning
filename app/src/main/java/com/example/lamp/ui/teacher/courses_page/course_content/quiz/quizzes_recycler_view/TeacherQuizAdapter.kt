@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.QuizResponse
+import com.example.domain.model.QuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizCardBinding
 
-class TeacherQuizAdapter(var quizzes: MutableList<QuizResponse>? = null) :
+class TeacherQuizAdapter(var quizzes: MutableList<QuizResponseDTO>? = null) :
     RecyclerView.Adapter<TeacherQuizAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,11 +36,11 @@ class TeacherQuizAdapter(var quizzes: MutableList<QuizResponse>? = null) :
     var onEditQuizListener:OnEditQuizListener?=null
 
     interface OnEditQuizListener{
-        fun onEditQuiz(quiz:QuizResponse)
+        fun onEditQuiz(quiz:QuizResponseDTO)
     }
 
     override fun getItemCount(): Int = quizzes?.size ?: 0
-    fun changeData(quizList: List<QuizResponse>?) {
+    fun changeData(quizList: List<QuizResponseDTO>?) {
         quizzes?.clear()
         quizzes=quizList?.toMutableList()
     }

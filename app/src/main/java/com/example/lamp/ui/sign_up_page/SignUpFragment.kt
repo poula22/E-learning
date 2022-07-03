@@ -41,10 +41,21 @@ class SignUpFragment : ExternalStorageAccessFragment() {
     }
 
     private fun subscirbeToLiveData() {
+
+        viewModel.test.observe(viewLifecycleOwner){
+            Log.d("test",it.toString())
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, SigninFragment())
+                .commit()
+        }
+
         viewModel.liveData.observe(
             viewLifecycleOwner
         ) {
             Log.v("response test::", it.toString())
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, SigninFragment())
+                .commit()
         }
 
         viewModel.errorMessage.observe(
@@ -66,9 +77,7 @@ class SignUpFragment : ExternalStorageAccessFragment() {
             if (it && verified) {
                 Toast.makeText(requireContext(), "Successfully registered", Toast.LENGTH_SHORT)
                     .show()
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, SigninFragment())
-                    .commit()
+
             }
         }
     }

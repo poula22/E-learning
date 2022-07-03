@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
 import com.example.common_functions.CommonFunctions
-import com.example.data.model.AssignmentDetailsResponse
 import com.example.domain.model.AssignmentAnswerResponseDTO
+import com.example.domain.model.AssignmentDetailsResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseAssignmentSubmitBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -41,11 +41,11 @@ class StudentCourseAssignmentSubmitFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var bundle=arguments
-        var assignment=bundle?.getSerializable("assignment") as AssignmentDetailsResponse
+        var assignment=bundle?.getSerializable("assignment") as AssignmentDetailsResponseDTO
         assignmentId= assignment.id!!
         viewBinding.submitAssignmentBtn.setOnClickListener {
             if(uri!=null){
-                var studentAnswer=AssignmentAnswerResponseDTO(CONSTANTS.user_id,uri.toString(),uri.toString(),null,null,null, assignmentId)
+                var studentAnswer= AssignmentAnswerResponseDTO(CONSTANTS.user_id,uri.toString(),uri.toString(),null,null,null, assignmentId)
                 studentCourseAssignmentSubmitViewModel.submitAssignment(studentAnswer)
             }
         }

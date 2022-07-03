@@ -19,4 +19,4 @@ data class CourseResponse(
 
 	@field:SerializedName("courseDescription")
 	val courseDescription: String? = null
-) : Serializable
+)

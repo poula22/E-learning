@@ -7,6 +7,6 @@ data class TeacherResponseDTO(
 	val password: String? = null,
 	val role: String? = null,
 	val phone: String? = null,
-	val profilePic: String? = null,
+	var profilePic: String? = null,
 	val id: Int? = null
 )

@@ -1,26 +1,23 @@
 package com.example.lamp.ui.student.student_course_page.course_content.quiz.answers_recycler_view
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.QuestionChoiceResponse
+import com.example.domain.model.QuestionChoiceResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCourseQuizQuestionAnswerBinding
-import com.example.lamp.databinding.ItemTeacherCourseQuizQuestionAnswerBinding
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem
 
-class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceResponse?>?=null) :
+class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceResponseDTO?>? = null) :
     RecyclerView.Adapter<StudentQuizAnswersAdapter.ViewHolder>() {
-    var itemSelectedIndex=-1
+    var itemSelectedIndex = -1
+
     class ViewHolder(var viewBinding: ItemStudentCourseQuizQuestionAnswerBinding) :
-        RecyclerView.ViewHolder(viewBinding.root){
-            fun changeColor(resId:Int){
-                this.viewBinding.answerText.setBackgroundResource(resId)
-            }
+        RecyclerView.ViewHolder(viewBinding.root) {
+        fun changeColor(resId: Int) {
+            this.viewBinding.answerText.setBackgroundResource(resId)
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewBinding: ItemStudentCourseQuizQuestionAnswerBinding = DataBindingUtil.inflate(
@@ -34,38 +31,40 @@ class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceResponse?
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var item= answers?.get(position)!!
-        holder.viewBinding.item=item
+        var item = answers?.get(position)!!
+        holder.viewBinding.item = item
 
-        holder.viewBinding.answerText.setOnClickListener{
-            if (itemSelectedIndex>-1){
+        holder.viewBinding.answerText.setOnClickListener {
+            if (itemSelectedIndex > -1) {
                 holder.changeColor(R.color.green)
             }
-            itemSelectedIndex=holder.absoluteAdapterPosition
+            itemSelectedIndex = holder.absoluteAdapterPosition
             onAnswerSelectedListener?.onAnswerSelected(item)
 
         }
 
-        if (itemSelectedIndex>-1){
-            if (position==itemSelectedIndex){
+        if (itemSelectedIndex > -1) {
+            if (position == itemSelectedIndex) {
                 holder.changeColor(R.color.green)
-            }
-            else{
+            } else {
                 holder.changeColor(com.workfort.linkpreview.R.color.md_light_blue_100)
 //                notifyItemChanged(position)
             }
         }
 
     }
-    var onAnswerSelectedListener:OnAnswerSelectedListener?=null
-    interface OnAnswerSelectedListener{
-        fun onAnswerSelected(answer:QuestionChoiceResponse)
+
+    var onAnswerSelectedListener: OnAnswerSelectedListener? = null
+
+    interface OnAnswerSelectedListener {
+        fun onAnswerSelected(answer: QuestionChoiceResponseDTO)
     }
-    fun changeData(newAnswers: List<QuestionChoiceResponse?>?){
-        answers=newAnswers?.toMutableList()
+
+    fun changeData(newAnswers: List<QuestionChoiceResponseDTO?>?) {
+        answers = newAnswers?.toMutableList()
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = answers?.size ?:0
+    override fun getItemCount(): Int = answers?.size ?: 0
 
 }

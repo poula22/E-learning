@@ -10,13 +10,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.data.model.QuizResponse
+import com.example.domain.model.QuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizzesBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizAdapter
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
 
-class TeacherCourseQuizzesFragment(var quizzes:MutableList<QuizItem>?=null) : Fragment() {
+class TeacherCourseQuizzesFragment: Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseQuizzesBinding
     lateinit var viewModel: TeacherCourseQuizzesViewModel
@@ -61,7 +60,7 @@ class TeacherCourseQuizzesFragment(var quizzes:MutableList<QuizItem>?=null) : Fr
         }
         adapter=TeacherQuizAdapter()
         adapter.onEditQuizListener=object :TeacherQuizAdapter.OnEditQuizListener{
-            override fun onEditQuiz(quiz: QuizResponse) {
+            override fun onEditQuiz(quiz: QuizResponseDTO) {
                 requireActivity()
                     .supportFragmentManager
                     .beginTransaction()
@@ -79,10 +78,7 @@ class TeacherCourseQuizzesFragment(var quizzes:MutableList<QuizItem>?=null) : Fr
         if(viewBinding.createQuizLayout.isVisible){
             viewBinding.createQuizLayout.visibility=View.GONE
         }
-        if(quizzes==null){
-            quizzes= mutableListOf()
-        }
-        var item=QuizResponse(null,null,null,null,null,null,null)
+        var item=QuizResponseDTO(null,null,null,null,null,null,null)
         requireActivity()
             .supportFragmentManager
             .beginTransaction()

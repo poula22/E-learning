@@ -21,7 +21,7 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        teacherAddCourseBinding = DataBindingUtil.inflate<FragmentTeacherAddCourseBinding>(
+        teacherAddCourseBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_teacher_add_course,
             container,

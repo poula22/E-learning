@@ -4,15 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.LessonResponse
+import com.example.domain.model.LessonResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCourseMaterialBinding
-import com.example.lamp.ui.student.student_course_page.course_content.material.lessons_recycler_view.sections_recycler_view.StudentCourseLessonsSectionsAdapter
-import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.LessonItem
 
-class StudentCourseLessonsAdapter(var lessonList:List<LessonResponse?>):RecyclerView.Adapter<StudentCourseLessonsAdapter.ViewHolder>(){
+class StudentCourseLessonsAdapter(var lessonList:List<LessonResponseDTO?>):RecyclerView.Adapter<StudentCourseLessonsAdapter.ViewHolder>(){
 
     private val viewPool = RecyclerView.RecycledViewPool()
     class ViewHolder(var viewBinding: ItemStudentCourseMaterialBinding):RecyclerView.ViewHolder(viewBinding.root){
@@ -68,7 +65,7 @@ class StudentCourseLessonsAdapter(var lessonList:List<LessonResponse?>):Recycler
         holder.expandCollapseView()
 
     }
-    fun updateLessonsList(lessonList:List<LessonResponse>){
+    fun updateLessonsList(lessonList:List<LessonResponseDTO>){
         this.lessonList=lessonList
         notifyDataSetChanged()
     }

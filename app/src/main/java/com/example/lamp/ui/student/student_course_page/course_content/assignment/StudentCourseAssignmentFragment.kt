@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
-import com.example.data.model.AssignmentDetailsResponse
+import com.example.domain.model.AssignmentDetailsResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseAssignmentBinding
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.assignment_recycler_view.StudentCourseAssignmentAdapter
@@ -80,7 +80,7 @@ class StudentCourseAssignmentFragment :
         adapter.onStudentAssignmentClickedListener=object :StudentCourseAssignmentAdapter.OnStudentAssignmentClickedListener{
             override fun onAssignmentClick(postion: Int) {
                 var bundle=Bundle()
-                var assignment: AssignmentDetailsResponse? =viewModel.liveData.value?.get(postion)
+                var assignment: AssignmentDetailsResponseDTO? =viewModel.liveData.value?.get(postion)
                 bundle.putSerializable("assignment",assignment)
                 var fragment=StudentCourseAssignmentSubmitFragment()
                 fragment.arguments=bundle

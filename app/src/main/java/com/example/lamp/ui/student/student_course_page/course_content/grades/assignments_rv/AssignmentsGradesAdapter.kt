@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.AssignmentResponse
+import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemGradeBinding
 
-class AssignmentsGradesAdapter(var assignmentsGrades: MutableList<AssignmentResponse>? = null) :
+class AssignmentsGradesAdapter(var assignmentsGrades: MutableList<AssignmentResponseDTO>? = null) :
     RecyclerView.Adapter<AssignmentsGradesAdapter.AssignmentsGradesViewHolder>() {
 
     lateinit var viewBinding: ItemGradeBinding

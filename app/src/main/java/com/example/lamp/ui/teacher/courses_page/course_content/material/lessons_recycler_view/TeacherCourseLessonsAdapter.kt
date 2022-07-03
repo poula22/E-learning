@@ -4,15 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.ContentResponse
-import com.example.data.model.LessonResponse
+import com.example.domain.model.LessonResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseMaterialBinding
-import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.sections_recycler_view.TeacherCourseLessonsSectionsAdapter
 
-class TeacherCourseLessonsAdapter(var lessonList:MutableList<LessonResponse>?=null):RecyclerView.Adapter<TeacherCourseLessonsAdapter.ViewHolder>(){
+class TeacherCourseLessonsAdapter(var lessonList:MutableList<LessonResponseDTO>?=null):RecyclerView.Adapter<TeacherCourseLessonsAdapter.ViewHolder>(){
 
     class ViewHolder(var viewBinding:ItemTeacherCourseMaterialBinding):RecyclerView.ViewHolder(viewBinding.root){
         fun expandCollapseView() {
@@ -57,7 +54,7 @@ class TeacherCourseLessonsAdapter(var lessonList:MutableList<LessonResponse>?=nu
     override fun getItemCount(): Int =lessonList?.size ?:0
 
     var onItemClickListener:OnItemClickListener?=null
-    fun changeData(lessonContent: List<LessonResponse>?) {
+    fun changeData(lessonContent: List<LessonResponseDTO>?) {
         lessonList?.clear()
         lessonContent?.let {
             lessonList?.addAll(lessonContent)
@@ -67,7 +64,7 @@ class TeacherCourseLessonsAdapter(var lessonList:MutableList<LessonResponse>?=nu
 
 
     interface OnItemClickListener{
-        fun onItemClick(lesson: LessonResponse)
+        fun onItemClick(lesson: LessonResponseDTO)
     }
 
 

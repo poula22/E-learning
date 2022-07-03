@@ -7,19 +7,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.data.model.AssignmentAnswerDetailsResponse
-import com.example.data.model.AssignmentAnswerResponse
-import com.example.data.model.AssignmentResponse
+import com.example.domain.model.AssignmentAnswerDetailsResponseDTO
 import com.example.domain.model.AssignmentAnswerResponseDTO
+import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherAssignmentsFromStudentsBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.assignments_from_students.TeacherAssignmentsFromStudentsAdapter
 
-class TeacherAssignmentsFromStudentsFragment(val assignment : AssignmentResponse?=null) : Fragment() {
+class TeacherAssignmentsFromStudentsFragment(val assignment : AssignmentResponseDTO?=null) : Fragment() {
     lateinit var viewBinding: FragmentTeacherAssignmentsFromStudentsBinding
     lateinit var adapter: TeacherAssignmentsFromStudentsAdapter
     lateinit var viewModel: TeacherAssignmentsFromStudentsViewModel
-    lateinit var answersMutableList:MutableList<AssignmentAnswerResponse>
+    lateinit var answersMutableList:MutableList<AssignmentAnswerResponseDTO>
     val assignmentId=assignment?.id!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +75,7 @@ class TeacherAssignmentsFromStudentsFragment(val assignment : AssignmentResponse
         }
         adapter.onGradesSubmitListener=object :TeacherAssignmentsFromStudentsAdapter.OnGradesSubmitListener{
             override fun onGradeSubmit(
-                assignmentAnswerDetails: AssignmentAnswerDetailsResponse,
+                assignmentAnswerDetails: AssignmentAnswerDetailsResponseDTO,
                 grade: Int
             ) {
                 val assignmentAnswer= AssignmentAnswerResponseDTO(

@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
-import com.example.data.model.AssignmentResponse
+import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAssignmentBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.assignment_recycler_view.TeacherCourseAssignmentAdapter
@@ -19,7 +19,7 @@ class TeacherCourseAssignmentFragment : Fragment() {
     lateinit var viewBinding: FragmentTeacherCourseAssignmentBinding
     lateinit var viewModel: TeacherCourseAssignmentViewModel
     lateinit var adapter: TeacherCourseAssignmentAdapter
-    val courseId=CONSTANTS.courseId
+    val courseId = CONSTANTS.courseId
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(TeacherCourseAssignmentViewModel::class.java)
@@ -40,7 +40,7 @@ class TeacherCourseAssignmentFragment : Fragment() {
     }
 
     private fun subscribeToViewModel() {
-        viewModel.liveData.observe(viewLifecycleOwner){
+        viewModel.liveData.observe(viewLifecycleOwner) {
             adapter.changeData(it)
         }
     }
@@ -62,12 +62,12 @@ class TeacherCourseAssignmentFragment : Fragment() {
 //        TestData.ASSIGNMENTS.forEach {
 //            dataList.add(it.title)
 //        }
-        adapter=TeacherCourseAssignmentAdapter()
+        adapter = TeacherCourseAssignmentAdapter()
         viewBinding.assignmentRecyclerView.adapter = adapter
         val adapter = viewBinding.assignmentRecyclerView.adapter as TeacherCourseAssignmentAdapter
         adapter.onAssignmentClickListener =
             object : TeacherCourseAssignmentAdapter.OnAssignmentClickListener {
-                override fun setOnAssignmentClickListener(assignment: AssignmentResponse) {
+                override fun setOnAssignmentClickListener(assignment: AssignmentResponseDTO) {
                     requireActivity().supportFragmentManager
                         .beginTransaction()
                         .addToBackStack("")

@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.AssignmentAnswerDetailsResponse
+import com.example.domain.model.AssignmentAnswerDetailsResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherAssignmentsFromStudentsBinding
 
-class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentAnswerDetailsResponse>?=null
+class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentAnswerDetailsResponseDTO>?=null
     ,val totalPoints:Int) : RecyclerView.Adapter<TeacherAssignmentsFromStudentsAdapter.ViewHolder>() {
     class ViewHolder(var itemViewBinding: ItemTeacherAssignmentsFromStudentsBinding) :
         RecyclerView.ViewHolder(itemViewBinding.root)
@@ -49,7 +49,7 @@ class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentA
     }
 
     override fun getItemCount(): Int = assignmentList?.size ?: 0
-    fun changeData(assignmentList: List<AssignmentAnswerDetailsResponse>) {
+    fun changeData(assignmentList: List<AssignmentAnswerDetailsResponseDTO>) {
         this.assignmentList=assignmentList
     }
 
@@ -60,7 +60,7 @@ class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentA
         fun onPdfOpen(pdf:String?)
     }
     interface OnGradesSubmitListener{
-        fun onGradeSubmit(assignmentAnswerDetails: AssignmentAnswerDetailsResponse, Grade: Int)
+        fun onGradeSubmit(assignmentAnswerDetails: AssignmentAnswerDetailsResponseDTO, Grade: Int)
     }
 }
 

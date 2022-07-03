@@ -17,7 +17,7 @@ import java.util.*
 
 object TestData {
     val TRANSLATIONAPIKEY = "fdacb2ce0bmshb0a36e2081822c8p1e7ae6jsn82387bc6a932"
-    var COURSES: MutableList<CourseResponse> = initCourses()
+    var COURSES: MutableList<CourseResponseDTO> = initCourses()
     val FEATURES: MutableList<FeatureItem> = mutableListOf(
         FeatureItem("translate", R.drawable.ic_translate),
         FeatureItem("summary", R.drawable.ic_summary),
@@ -123,11 +123,11 @@ object TestData {
         return STUDENTS
     }
 
-    private fun initCourses(): MutableList<CourseResponse> {
+    private fun initCourses(): MutableList<CourseResponseDTO> {
         COURSES = mutableListOf()
         for (i in 1..100) {
             COURSES.add(
-                CourseResponse(
+                CourseResponseDTO(
                     "course " + i,
                     "teacher " + i,
                      i,

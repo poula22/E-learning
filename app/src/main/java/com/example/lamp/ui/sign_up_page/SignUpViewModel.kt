@@ -8,14 +8,17 @@ import com.example.data.api.ParentWebService
 import com.example.data.api.StudentWebService
 import com.example.data.api.TeacherWebService
 import com.example.data.model.UserResponse
+import com.example.data.repos.data_sources_impl.TeacherOnlineDataSourceImpl
 import com.example.domain.model.ParentResponseDTO
 import com.example.domain.model.StudentResponseDTO
 import com.example.domain.model.TeacherResponseDTO
+import com.example.domain.repos.data_sources.TeacherOnlineDataSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import retrofit2.Response
 
 
 class SignUpViewModel : ViewModel() {
@@ -23,7 +26,10 @@ class SignUpViewModel : ViewModel() {
     var teacherService: TeacherWebService = ApiManager.getTeacherApi()
     var parentService: ParentWebService = ApiManager.getParentApi()
     var liveData = MutableLiveData<UserResponse>()
+    var test = MutableLiveData<Response<Void>>()
     var errorMessage = MutableLiveData<String>()
+
+    val teacherDataSource:TeacherOnlineDataSource=TeacherOnlineDataSourceImpl(teacherService)
 
     val auth: FirebaseAuth = Firebase.auth
     var verifiedMessage: String = ""
@@ -45,7 +51,7 @@ class SignUpViewModel : ViewModel() {
 //                    )
 //                )
                 if (userDTO.role == "Teacher") {
-                    liveData.value = teacherService.addTeacher(
+                    test.value = teacherDataSource.addTeacher(
                         TeacherResponseDTO(
                             userDTO.firstName,
                             userDTO.lastName,

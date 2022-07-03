@@ -7,16 +7,16 @@ import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.QuestionChoiceResponse
-import com.example.data.model.QuestionResponse
+import com.example.domain.model.QuestionChoiceResponseDTO
+import com.example.domain.model.QuestionResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizCreateQuestionBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.AnswerItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recycler_view.TeacherQuizAnswersAdapter
 
 
-class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionResponse>? = null
-                                  ,var answersChoices:MutableList<QuestionChoiceResponse>?=null) :
+class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionResponseDTO>? = null
+                                  ,var answersChoices:MutableList<QuestionChoiceResponseDTO>?=null) :
     RecyclerView.Adapter<TeacherQuizQuestionsAdapter.ViewHolder>() {
     var answers: MutableList<AnswerItem> = mutableListOf()
 
@@ -71,22 +71,22 @@ class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionResponse>? 
 
     override fun getItemCount(): Int = questions?.size ?: 0
 
-    fun addQuestion(question: QuestionResponse) {
+    fun addQuestion(question: QuestionResponseDTO) {
         questions?.add(question)
         notifyItemInserted(questions?.size?.minus(1)!!)
     }
-    private fun removeQuestion(position: Int, item: QuestionResponse) {
+    private fun removeQuestion(position: Int, item: QuestionResponseDTO) {
         questions?.remove(item)
         notifyItemRemoved(position)
     }
 
-    fun changeAnswers(questionChoices: List<QuestionChoiceResponse>?) {
+    fun changeAnswers(questionChoices: List<QuestionChoiceResponseDTO>?) {
         answerAdapter.changeAnswers(questionChoices)
     }
 
     var onQuestionAddedListener:OnQuestionAddedListener?=null
     interface OnQuestionAddedListener{
-        fun onQuestionAdded(question: QuestionResponse)
+        fun onQuestionAdded(question: QuestionResponseDTO)
     }
 
     class ViewHolder(val viewBinding: ItemTeacherCourseQuizCreateQuestionBinding) :

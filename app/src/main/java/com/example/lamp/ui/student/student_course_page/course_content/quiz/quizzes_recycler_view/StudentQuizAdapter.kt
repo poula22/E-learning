@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.QuizResponse
+import com.example.domain.model.QuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCourseQuizCardBinding
-import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.QuizItem
 
-class StudentQuizAdapter(var quizzes:List<QuizResponse>? = null) :
+class StudentQuizAdapter(var quizzes:List<QuizResponseDTO>? = null) :
     RecyclerView.Adapter<StudentQuizAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,7 +36,7 @@ class StudentQuizAdapter(var quizzes:List<QuizResponse>? = null) :
     }
 
     override fun getItemCount(): Int = quizzes?.size ?: 0
-    fun changeData(it: List<QuizResponse>?) {
+    fun changeData(it: List<QuizResponseDTO>?) {
         quizzes = it
         notifyDataSetChanged()
     }

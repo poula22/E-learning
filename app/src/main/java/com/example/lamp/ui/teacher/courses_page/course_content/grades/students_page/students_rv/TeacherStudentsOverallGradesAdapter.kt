@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.AssignmentResponse
-import com.example.data.model.QuizResponse
-import com.example.data.model.StudentResponse
+import com.example.domain.model.AssignmentResponseDTO
+import com.example.domain.model.QuizResponseDTO
+import com.example.domain.model.StudentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemGradeBinding
 
-class TeacherStudentsOverallGradesAdapter(var studentsOverallGrades: MutableList<StudentResponse>? = null) :
+class TeacherStudentsOverallGradesAdapter(var studentsOverallGrades: MutableList<StudentResponseDTO>? = null) :
     RecyclerView.Adapter<TeacherStudentsOverallGradesAdapter.StudentsOverallGradesViewHolder>() {
 
     lateinit var viewBinding: ItemGradeBinding
@@ -51,8 +51,8 @@ class TeacherStudentsOverallGradesAdapter(var studentsOverallGrades: MutableList
 
     interface OnStudentClickListener {
         fun setOnStudentClickListener(
-            assignment: MutableList<AssignmentResponse>,
-            quiz: MutableList<QuizResponse>
+            assignment: MutableList<AssignmentResponseDTO>,
+            quiz: MutableList<QuizResponseDTO>
         )
     }
 

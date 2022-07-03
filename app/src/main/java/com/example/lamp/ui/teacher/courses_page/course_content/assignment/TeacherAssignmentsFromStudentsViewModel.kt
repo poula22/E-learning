@@ -4,19 +4,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.api.ApiManager
-import com.example.data.model.AssignmentAnswerDetailsResponse
+import com.example.data.repos.data_sources_impl.AssignmentAnswerOnlineDataSourceImpl
+import com.example.domain.model.AssignmentAnswerDetailsResponseDTO
 import com.example.domain.model.AssignmentAnswerResponseDTO
 import com.example.domain.model.AssignmentResponseDTO
+import com.example.domain.repos.data_sources.AssignmentAnswerOnlineDataSource
 import kotlinx.coroutines.launch
 
 class TeacherAssignmentsFromStudentsViewModel:ViewModel() {
     val service=ApiManager.getAssignmentAnswerApi()
-    var liveData=MutableLiveData<List<AssignmentAnswerDetailsResponse>>()
+    var liveData=MutableLiveData<List<AssignmentAnswerDetailsResponseDTO>>()
+    val dataSource:AssignmentAnswerOnlineDataSource=AssignmentAnswerOnlineDataSourceImpl(service)
 
     fun getAllAssignmentAnswers(assignmentId:Int){
         viewModelScope.launch {
             try{
-                liveData.value=service.getAssignmentAnswersByAssignmentId(assignmentId)
+                liveData.value=dataSource.getAssignmentAnswersByAssignmentId(assignmentId)
             }catch (ex:Exception){
                 throw ex
 

@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
-import com.example.data.model.LessonResponse
+import com.example.domain.model.LessonResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseMaterialBinding
 import com.example.lamp.ui.student.student_course_page.course_content.material.lessons_recycler_view.StudentCourseLessonsAdapter
@@ -25,7 +25,7 @@ class StudentCourseMaterialFragment() : Fragment() {
     lateinit var viewBinding: FragmentStudentCourseMaterialBinding
     val courseId: Int = CONSTANTS.courseId
     lateinit var viewModel:StudentCourseMaterialViewModel
-    val adapter=StudentCourseLessonsAdapter(mutableListOf(LessonResponse("desc1", 1, "lesson1",1)))
+    val adapter=StudentCourseLessonsAdapter(mutableListOf(LessonResponseDTO("desc1", 1, "lesson1",1)))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,8 +84,8 @@ class StudentCourseMaterialFragment() : Fragment() {
             }
         }
         viewModel.contentLiveData.observe(viewLifecycleOwner){
-            it?.let { contentResponse->
-                contentResponse.forEach{content ->
+            it?.let { contentResponseDTO->
+                contentResponseDTO.forEach{content ->
                     if (content.path?.contains("https://www.youtube.com") == true){
                         playYoutubeVideo(content.path!!)
                     }else if (content.fileName?.contains(".pdf") == true){

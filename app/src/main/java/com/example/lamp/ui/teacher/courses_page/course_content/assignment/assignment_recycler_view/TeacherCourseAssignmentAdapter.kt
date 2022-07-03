@@ -4,13 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.model.AssignmentDetailsResponse
-import com.example.data.model.AssignmentResponse
+import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseAssignmentBinding
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 
-class TeacherCourseAssignmentAdapter(var assignmentList: List<AssignmentResponse>?=null) :
+class TeacherCourseAssignmentAdapter(var assignmentList: List<AssignmentResponseDTO>?=null) :
     RecyclerView.Adapter<TeacherCourseAssignmentAdapter.ViewHolder>() {
     class ViewHolder(var itemViewBinding: ItemTeacherCourseAssignmentBinding) :
         RecyclerView.ViewHolder(itemViewBinding.root)
@@ -36,7 +34,7 @@ class TeacherCourseAssignmentAdapter(var assignmentList: List<AssignmentResponse
     }
 
     override fun getItemCount(): Int = assignmentList?.size ?: 0
-    fun changeData(list: List<AssignmentResponse>?) {
+    fun changeData(list: List<AssignmentResponseDTO>?) {
         if (list != null) {
             assignmentList=list
             notifyDataSetChanged()
@@ -46,7 +44,7 @@ class TeacherCourseAssignmentAdapter(var assignmentList: List<AssignmentResponse
     var onAssignmentClickListener: OnAssignmentClickListener? = null
 
     interface OnAssignmentClickListener {
-        fun setOnAssignmentClickListener(assignment:AssignmentResponse)
+        fun setOnAssignmentClickListener(assignment:AssignmentResponseDTO)
     }
 
 }

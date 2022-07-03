@@ -62,7 +62,7 @@ class ProfileFragment : Fragment() {
         }
 
         viewBinding.editProfileSubmit.setOnClickListener {
-            val user=UserResponseDTO(
+            val user= UserResponseDTO(
                 viewBinding.firstName.editText?.text.toString(),
                 viewBinding.lastName.editText?.text.toString(),
                 email,

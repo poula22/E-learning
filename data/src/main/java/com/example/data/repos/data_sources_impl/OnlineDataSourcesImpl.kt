@@ -1,5 +1,6 @@
 package com.example.data.repos.data_sources_impl
 
+import android.util.Log
 import com.example.data.api.*
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRApiManager
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
@@ -11,8 +12,13 @@ import com.microsoft.azure.cognitiveservices.vision.computervision.implementatio
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHeaders
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadInStreamHeaders
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Response
+import java.io.File
 
 // ML APIs
 class OCROnlineDataSourceImp(val webService: MicrosoftOCRWebService ) :
@@ -142,10 +148,10 @@ class AssignmentAnswerOnlineDataSourceImpl(val service: AssignmentAnswerWebServi
         }
     }
 
-    override suspend fun getAssignmentAnswersByAssignmentId(assignmentId: Int): List<AssignmentAnswerResponseDTO> {
+    override suspend fun getAssignmentAnswersByAssignmentId(assignmentId: Int): List<AssignmentAnswerDetailsResponseDTO> {
         try {
             val response = service.getAssignmentAnswersByAssignmentId(assignmentId)
-            return response.map { it.convertTo(AssignmentAnswerResponseDTO::class.java) }
+            return response.map { it.convertTo(AssignmentAnswerDetailsResponseDTO::class.java) }
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -360,6 +366,7 @@ class CourseOnlineDataSourceImpl(val service: CourseWebService) :
     CourseOnlineDataSource {
     override suspend fun addCourse(course: CourseResponseDTO): CourseResponseDTO {
         try {
+
             val response = service.addCourse(course)
             return response.convertTo(CourseResponseDTO::class.java)
         } catch (throwable: Throwable) {
@@ -1012,10 +1019,42 @@ class StudentOnlineDataSourceImpl(val service: StudentWebService) :
 
 class TeacherOnlineDataSourceImpl(val service: TeacherWebService) :
     TeacherOnlineDataSource {
-    override suspend fun addTeacher(teacher: TeacherResponseDTO): UserResponseDTO {
+    override suspend fun addTeacher(teacher: TeacherResponseDTO): Response<Void> {
         try {
-            val response = service.addTeacher(teacher)
-            return response.convertTo(UserResponseDTO::class.java)
+
+            if (teacher.profilePic==null){
+                teacher.profilePic=""
+            }
+
+            val response = service.addTeacher(teacher.firstName?.let {
+                MultipartBody.Part.createFormData("firstName",
+                    it
+                )
+            },teacher.lastName?.let {
+                MultipartBody.Part.createFormData("lastName",
+                    it
+                )
+            },teacher.phone?.let {
+                MultipartBody.Part.createFormData("phone",
+                    it
+                )
+            },MultipartBody.Part.createFormData("profilePic",
+                teacher.profilePic!!
+            )
+                ,teacher.role?.let {
+                    MultipartBody.Part.createFormData("role",
+                        it
+                    )
+                },teacher.emailAddress?.let {
+                    MultipartBody.Part.createFormData("emailAddress",
+                        it
+                    )
+                },teacher.password?.let {
+                    MultipartBody.Part.createFormData("password",
+                        it
+                    )
+                })
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }

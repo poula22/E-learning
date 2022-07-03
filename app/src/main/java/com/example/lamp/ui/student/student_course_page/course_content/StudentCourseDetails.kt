@@ -12,7 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
 import com.example.common_functions.CONSTANTS
-import com.example.data.model.CourseResponse
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseDetailsBinding
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.StudentCourseAssignmentFragment
@@ -23,7 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 
-class StudentCourseDetails(var course: CourseResponse?) : Fragment() {
+class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewBinding: FragmentStudentCourseDetailsBinding

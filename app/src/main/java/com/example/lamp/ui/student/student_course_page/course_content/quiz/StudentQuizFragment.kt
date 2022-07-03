@@ -15,8 +15,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.data.model.QuestionChoiceResponse
-import com.example.data.model.QuizDetailsResponse
+import com.example.domain.model.QuestionChoiceResponseDTO
+import com.example.domain.model.QuizDetailsResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentQuizBinding
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.answers_recycler_view.StudentQuizAnswersAdapter
@@ -25,9 +25,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class StudentQuizFragment : Fragment() {
     lateinit var viewBinding: FragmentStudentQuizBinding
-    var studentAnswers = mutableListOf<QuestionChoiceResponse>()
+    var studentAnswers = mutableListOf<QuestionChoiceResponseDTO>()
     var questionIndex = 0
-    lateinit var quiz: List<QuizDetailsResponse>
+    lateinit var quiz: List<QuizDetailsResponseDTO>
     lateinit var viewModel: StudentQuizViewModel
     lateinit var adapter: StudentQuizAnswersAdapter
     var quizDuration = 1
@@ -71,14 +71,14 @@ class StudentQuizFragment : Fragment() {
         viewBinding.questionCard.questionAnswerRecyclerView.adapter = adapter
         adapter.onAnswerSelectedListener =
             object : StudentQuizAnswersAdapter.OnAnswerSelectedListener {
-                override fun onAnswerSelected(answer: QuestionChoiceResponse) {
+                override fun onAnswerSelected(answer: QuestionChoiceResponseDTO) {
                     studentAnswers.add(answer)
                 }
 
             }
         viewBinding.nextQuestionBtn.setOnClickListener {
             questionIndex++
-            if (questionIndex < quiz.size) {
+            if (questionIndex < quiz.size-1 ||questionIndex >-1) {
                 var question = quiz[questionIndex]
                 viewBinding.questionCard.item = question
                 adapter.changeData(question.questionChoices)

@@ -19,7 +19,7 @@ class TeacherCoursesViewModel : ViewModel() {
     fun getAllCourses() {
         viewModelScope.launch {
             try {
-                val courses = courseOnlineDataSource.getCoursesByStudentId(CONSTANTS.user_id)
+                val courses = courseOnlineDataSource.getCoursesByTeacherId(CONSTANTS.user_id)
                 coursesLiveData.value = courses.toMutableList()
             } catch (t: Throwable) {
                 when (t) {

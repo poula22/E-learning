@@ -12,15 +12,14 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CommonFunctions
-import com.example.data.model.QuestionResponse
-import com.example.data.model.QuizResponse
 import com.example.data.model.convertTo
 import com.example.domain.model.QuestionResponseDTO
+import com.example.domain.model.QuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizAddQuestionsBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
 
-class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponse) : Fragment() {
+class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseQuizAddQuestionsBinding
     lateinit var viewModel: FragmentTeacherCourseQuizAddQuestionsViewModel
@@ -67,7 +66,7 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponse) : Fragment()
         val adapter = TeacherQuizQuestionsAdapter()
         adapter.onQuestionAddedListener =
             object : TeacherQuizQuestionsAdapter.OnQuestionAddedListener {
-                override fun onQuestionAdded(question: QuestionResponse) {
+                override fun onQuestionAdded(question: QuestionResponseDTO) {
                     viewModel.addQuiz(question.convertTo(QuestionResponseDTO::class.java))
                 }
 
@@ -98,7 +97,7 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponse) : Fragment()
             viewBinding.createQuestionLayout.visibility = View.GONE
             viewBinding.quizEditQuestionsList.visibility = View.VISIBLE
         }
-        var question = QuestionResponse(null, null, null)
+        var question = QuestionResponseDTO(null, null, null)
         adapter.addQuestion(question)
     }
 

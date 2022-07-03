@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.data.model.CourseResponse
+import com.example.data.model.convertTo
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCoursesBinding
@@ -13,7 +14,7 @@ import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 
 
-class TeacherCoursesAdapter(var coursesItemsList: List<CourseResponse>? = null, val type: Int) :
+class TeacherCoursesAdapter(var coursesItemsList: List<CourseResponseDTO>? = null, val type: Int) :
     RecyclerView.Adapter<TeacherCoursesAdapter.CoursesItemViewHolder>() {
 
     val HOME_SCREEN = R.layout.item_student_home_course_rv
@@ -67,7 +68,7 @@ class TeacherCoursesAdapter(var coursesItemsList: List<CourseResponse>? = null, 
 
     override fun getItemCount(): Int = coursesItemsList?.size ?: 0
 
-    fun changeData(coursesItemsList: List<CourseResponse>) {
+    fun changeData(coursesItemsList: List<CourseResponseDTO>) {
         this.coursesItemsList = coursesItemsList
         notifyDataSetChanged()
     }
@@ -77,7 +78,7 @@ class TeacherCoursesAdapter(var coursesItemsList: List<CourseResponse>? = null, 
 
     var onCourseClickListener:OnCourseClickListener?=null
     interface OnCourseClickListener{
-        fun setOnCourseClickListener(item: CourseResponse?)
+        fun setOnCourseClickListener(item: CourseResponseDTO?)
     }
 
 }
