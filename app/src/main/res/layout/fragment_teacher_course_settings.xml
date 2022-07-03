@@ -73,7 +73,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <!--  Media  -->
-                <ImageView
+                 <ImageView
                     android:id="@+id/course_image_view"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
@@ -144,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#5C00BCD4"
-                android:text="@{item.id}"
+                android:text="@{item.id.toString()}"
                 android:textColor="@color/black"
                 android:textSize="40sp"
                 tools:text="S5H22M" />

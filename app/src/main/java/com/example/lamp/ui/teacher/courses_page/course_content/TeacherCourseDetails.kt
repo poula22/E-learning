@@ -101,8 +101,12 @@ class TeacherCourseDetails(var course: CourseResponseDTO?) : Fragment() {
 
 
             viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
+                val bundle=Bundle()
+                bundle.putSerializable("course",course)
+                fragment = TeacherCourseSettingsFragment()
+                fragment?.arguments=bundle
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.teacher_course_content_container, TeacherCourseSettingsFragment())
+                    .replace(R.id.teacher_course_content_container, fragment!!)
                     .addToBackStack(null)
                     .commit()
             }
