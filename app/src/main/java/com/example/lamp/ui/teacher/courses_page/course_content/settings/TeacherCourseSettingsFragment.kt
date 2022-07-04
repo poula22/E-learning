@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.request.RequestOptions
 import com.example.binding_adapters.TestConnection
 import com.example.common_functions.CommonFunctions
 import com.example.common_functions.ExternalStorageAccessFragment
@@ -21,6 +25,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.apache.commons.io.FileUtils
 import java.io.File
+import java.net.URL
 
 
 class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
@@ -33,7 +38,12 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
     }
 
     override fun resultListener(byteArray: ByteArray) {
-        val file= filePath?.let { File(it) }
+        val file= filePath?.let {
+            File(it)
+        }
+        filePath?.let {
+            Log.e("filePath of image", it)
+        }
         if (file != null) {
             viewModel.changeCourseImage(file)
         }
@@ -78,8 +88,10 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
             course=it
             Log.e("course",course.courseImage.toString())
             viewBinding.item=it
-            Glide.with(this@TeacherCourseSettingsFragment)
-                .load(it.courseImage)
+            var serverUrl="25.70.83.232"
+            Glide.with(this)
+                .load("https://thumbs.dreamstime.com/b/lonely-elephant-against-sunset-beautiful-sun-clouds-savannah-serengeti-national-park-africa-tanzania-artistic-imag-image-106950644.jpg".toUri())
+                .centerCrop()
                 .into(viewBinding.courseImageView)
 //            var image=course.courseImage?.let { it1 -> TestConnection.getData(it1) }
 //            val img= course.courseImage?.let { it1 -> File(it1) }
