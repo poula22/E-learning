@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.binding_adapters.TestConnection
 import com.example.common_functions.CommonFunctions
 import com.example.common_functions.ExternalStorageAccessFragment
@@ -32,7 +33,10 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
     }
 
     override fun resultListener(byteArray: ByteArray) {
-        viewModel.changeCourseImage(course)
+        val file= filePath?.let { File(it) }
+        if (file != null) {
+            viewModel.changeCourseImage(file)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,19 +63,37 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
         course=requireArguments().getSerializable("course") as CourseResponseDTO
         subscribeToLiveData()
         initViews()
+        viewModel.getCourseById()
+//        viewModel.callResult=object :TeacherCourseSettingsViewModel.CallResult{
+//            override fun getDTOData(data: CourseResponseDTO) {
+//
+//            }
+//
+//        }
     }
 
     private fun subscribeToLiveData() {
-        viewModel.fileLiveData.observe(viewLifecycleOwner){
-            viewModel.getCourseById()
-        }
 
         viewModel.liveData.observe(viewLifecycleOwner){
             course=it
+            Log.e("course",course.courseImage.toString())
             viewBinding.item=it
-            var image=course.courseImage?.let { it1 -> TestConnection.getData(it1) }
-            val img= course.courseImage?.let { it1 -> File(it1) }
-            Log.e("image",img?.exists().toString())
+            Glide.with(this@TeacherCourseSettingsFragment)
+                .load(it.courseImage)
+                .into(viewBinding.courseImageView)
+//            var image=course.courseImage?.let { it1 -> TestConnection.getData(it1) }
+//            val img= course.courseImage?.let { it1 -> File(it1) }
+//            Log.e("image",img?.exists().toString())
+        }
+
+        viewModel.dropLiveData.observe(viewLifecycleOwner) {
+            if (it.code() == 200) {
+                Toast.makeText(requireContext(), "Course Dropped", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+            else{
+                Toast.makeText(requireContext(), "Course Not Dropped", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -99,6 +121,9 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
                 viewBinding.courseCodeTextView.text.toString(),
                 requireContext()
             )
+        }
+        viewBinding.dropBtn.setOnClickListener{
+            viewModel.dropCourse()
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
     }

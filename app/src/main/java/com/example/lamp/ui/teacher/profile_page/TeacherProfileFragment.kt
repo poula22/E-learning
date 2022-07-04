@@ -38,7 +38,9 @@ class TeacherProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+        viewModel.getUserInfo()
     }
 
     private fun initViews() {

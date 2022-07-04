@@ -27,14 +27,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-                <VideoView
-                    android:id="@+id/video_player"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <FrameLayout
+                    android:id="@+id/video_frame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/youtube_player_view"
-                    />
+                    app:layout_constraintTop_toBottomOf="@+id/youtube_player_view">
+
+                    <VideoView
+                        android:id="@+id/video_player"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </FrameLayout>
+
+
                 <TextView
                     android:id="@+id/youtube_link"
                     android:layout_width="wrap_content"
@@ -59,8 +69,8 @@
             android:id="@+id/lessons_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:background="@color/dark_green"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/material_content_container" />
 

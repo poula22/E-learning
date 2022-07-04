@@ -73,13 +73,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <!--  Media  -->
-                 <ImageView
+                <ImageView
                     android:id="@+id/course_image_view"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/login" />
-
+                    android:scaleType="centerCrop" />
+                <!--                 app:srcCompat="@drawable/login"-->
 
                 <LinearLayout
                     android:id="@+id/change_image_btn"
@@ -156,6 +155,16 @@
                 android:src="@drawable/ic_copy" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/drop_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Drop Course"
+            android:textSize="20sp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
 import com.example.common_functions.CONSTANTS
 import com.example.domain.model.CourseResponseDTO
@@ -28,6 +30,12 @@ class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewBinding: FragmentStudentCourseDetailsBinding
     private var fragment: Fragment? = null
+    private lateinit var viewModel: StudentCourseDetailsViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(StudentCourseDetailsViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,8 +51,22 @@ class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
         CONSTANTS.courseId = course?.id!!
+        subscribeToLiveData()
+        initViews()
+
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            if (it.code() == 200) {
+                Toast.makeText(requireContext(), "Course Dropped", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+            else{
+                Toast.makeText(requireContext(), "Course Not Dropped", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun initViews() {
@@ -130,6 +152,10 @@ class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
 
         viewBinding.studentCourseContainer.infoIcon.setOnClickListener {
             viewBinding.studentCourseContainer.toolbar.subtitle = "Course Info"
+        }
+
+        viewBinding.studentCourseContainer.infoIcon.setOnClickListener {
+            viewModel.dropCourse()
         }
     }
 

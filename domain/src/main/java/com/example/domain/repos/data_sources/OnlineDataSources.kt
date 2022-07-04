@@ -3,6 +3,7 @@ package com.example.domain.repos.data_sources
 import com.example.domain.model.*
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import okhttp3.MultipartBody
+import retrofit2.Call
 import retrofit2.Response
 
 // ALL ONLINE DATA SOURCES SHOULD BE HERE
@@ -95,7 +96,7 @@ interface ContentOnlineDataSource {
 
 interface CourseOnlineDataSource {
     suspend fun getAllCourses(): List<CourseResponseDTO>
-    suspend fun addCourse(course: CourseResponseDTO): CourseResponseDTO
+    suspend fun addCourse(course: CourseResponseDTO): Response<Void>
     suspend fun updateCourse(id: Int, course: CourseResponseDTO): CourseResponseDTO
     suspend fun deleteCourse(id: Int): CourseResponseDTO
     suspend fun joinCourse(courseId: Int, studentId: Int): Response<Void>
@@ -103,10 +104,14 @@ interface CourseOnlineDataSource {
     suspend fun getCoursesByTeacherId(teacherId: Int): List<CourseResponseDTO>
     suspend fun getCoursesByStudentId(studentId: Int): List<CourseResponseDTO>
     suspend fun getCourse(courseId: Int): CourseResponseDTO
-    suspend fun updateCourseImageByCourseId(
+    fun updateCourseImageByCourseId(
         courseId: Int,
         image: MultipartBody.Part
-    ): CourseResponseDTO
+    )
+    var callResult:CallResult?
+    interface CallResult{
+        fun getDTOData(data: CourseResponseDTO)
+    }
 }
 
 interface FeatureOnlineDataSource {

@@ -37,7 +37,15 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner){
+            onCourseAddedListener?.OnAddCourse()
+            dismiss()
+        }
     }
 
     fun initViews() {
@@ -55,8 +63,7 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
                         courseName,"",CONSTANTS.user_id, courseCode.toInt(), description
                     )
                 viewModel.AddCourse(courseDTO)
-                onCourseAddedListener?.OnAddCourse()
-                dismiss()
+
             }
         }
     }

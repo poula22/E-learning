@@ -5,6 +5,7 @@ import com.example.data.api.*
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRApiManager
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
 import com.example.data.data_classes.URLOCR
+import com.example.data.model.CourseResponse
 import com.example.data.model.convertTo
 import com.example.domain.model.*
 import com.example.domain.repos.data_sources.*
@@ -17,7 +18,10 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.await
 import java.io.File
 
 // ML APIs
@@ -362,13 +366,15 @@ class ContentOnlineDataSourceImpl(val service: ContentWebService) :
 }
 
 
-class CourseOnlineDataSourceImpl(val service: CourseWebService) :
+class CourseOnlineDataSourceImpl(val service: CourseWebService,
+                                 override var callResult: CourseOnlineDataSource.CallResult?=null
+) :
     CourseOnlineDataSource {
-    override suspend fun addCourse(course: CourseResponseDTO): CourseResponseDTO {
+    override suspend fun addCourse(course: CourseResponseDTO): Response<Void> {
         try {
 
             val response = service.addCourse(course)
-            return response.convertTo(CourseResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -437,17 +443,36 @@ class CourseOnlineDataSourceImpl(val service: CourseWebService) :
         }
     }
 
-    override suspend fun updateCourseImageByCourseId(
+    override  fun updateCourseImageByCourseId(
         courseId: Int,
-        image: MultipartBody.Part
-    ): CourseResponseDTO {
+        image: MultipartBody.Part,
+    ) {
+        //callback
         try {
             val response = service.updateCourseImageByCourseId(courseId, image)
-            return response.convertTo(CourseResponseDTO::class.java)
+            response.enqueue(
+                object :Callback<CourseResponse>{
+                    override fun onResponse(
+                        call: Call<CourseResponse>,
+                        response: Response<CourseResponse>
+                    ) {
+                        response.body()?.convertTo(CourseResponseDTO::class.java)
+                            ?.let { callResult?.getDTOData(it) }
+                    }
+
+                    override fun onFailure(call: Call<CourseResponse>, t: Throwable) {
+
+                    }
+
+                }
+            )
         } catch (throwable: Throwable) {
             throw throwable
         }
     }
+
+
+
 
     override suspend fun getAllCourses(): List<CourseResponseDTO> {
         try {
