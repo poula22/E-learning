@@ -4,6 +4,7 @@ import com.example.data.model.AssignmentDetailsResponse
 import com.example.data.model.AssignmentResponse
 import com.example.domain.model.AssignmentResponseDTO
 import okhttp3.MultipartBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface AssignmentWebService {
@@ -36,10 +37,10 @@ interface AssignmentWebService {
 
     @Multipart
     @PUT("api/Assignments/update-file/{id}")
-    suspend fun updateAssignmentFileByAssignmentId(
+    fun updateAssignmentFileByAssignmentId(
         @Path("id") assignmentId: Int,
         @Part file: MultipartBody.Part
-    ): AssignmentResponse
+    ): Call<AssignmentResponse>
 
 
 }

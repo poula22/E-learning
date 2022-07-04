@@ -1,31 +1,23 @@
 package com.example.data.repos.data_sources_impl
 
-import android.util.Log
 import com.example.data.api.*
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRApiManager
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
 import com.example.data.data_classes.URLOCR
-import com.example.data.model.CourseResponse
-import com.example.data.model.convertTo
+import com.example.data.model.*
 import com.example.domain.model.*
 import com.example.domain.repos.data_sources.*
 import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionImpl
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHeaders
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadInStreamHeaders
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.await
-import java.io.File
 
 // ML APIs
-class OCROnlineDataSourceImp(val webService: MicrosoftOCRWebService ) :
+class OCROnlineDataSourceImp(val webService: MicrosoftOCRWebService) :
     OCROnlineDataSource {
     override suspend fun getTextFromImage(language: String, url: String): OCRResponseDTO {
         var u = URLOCR(url = url)
@@ -102,7 +94,10 @@ class OCROnlineDataSourceImp(val webService: MicrosoftOCRWebService ) :
 }
 
 
-class AssignmentAnswerOnlineDataSourceImpl(val service: AssignmentAnswerWebService) :
+class AssignmentAnswerOnlineDataSourceImpl(
+    val service: AssignmentAnswerWebService,
+    override var callResult: AssignmentAnswerOnlineDataSource.CallResult? = null
+) :
     AssignmentAnswerOnlineDataSource {
     override suspend fun addAssignmentAnswer(assignmentAnswer: AssignmentAnswerResponseDTO): AssignmentAnswerResponseDTO {
         try {
@@ -174,17 +169,31 @@ class AssignmentAnswerOnlineDataSourceImpl(val service: AssignmentAnswerWebServi
         }
     }
 
-    override suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(
-        id: Int,
-        file: MultipartBody.Part
-    ): AssignmentAnswerResponseDTO {
+    override fun updateAssignmentAnswerFileByAssignmentAnswerId(id: Int, file: MultipartBody.Part) {
+        //callback
         try {
             val response = service.updateAssignmentAnswerFileByAssignmentAnswerId(id, file)
-            return response.convertTo(AssignmentAnswerResponseDTO::class.java)
+            response.enqueue(
+                object : Callback<AssignmentAnswerResponse> {
+                    override fun onResponse(
+                        call: Call<AssignmentAnswerResponse>,
+                        response: Response<AssignmentAnswerResponse>
+                    ) {
+                        response.body()?.convertTo(AssignmentAnswerResponseDTO::class.java)
+                            ?.let { callResult?.getDTOData(it) }
+                    }
+
+                    override fun onFailure(call: Call<AssignmentAnswerResponse>, t: Throwable) {
+
+                    }
+
+                }
+            )
         } catch (throwable: Throwable) {
             throw throwable
         }
     }
+
 
     override suspend fun updateMultipleAssignedGrades(grades: List<AssignmentAnswerResponseDTO>): AssignmentAnswerResponseDTO {
         try {
@@ -208,7 +217,10 @@ class AssignmentAnswerOnlineDataSourceImpl(val service: AssignmentAnswerWebServi
 }
 
 
-class AssignmentOnlineDataSourceImpl(val service: AssignmentWebService) :
+class AssignmentOnlineDataSourceImpl(
+    val service: AssignmentWebService,
+    override var callResult: AssignmentOnlineDataSource.CallResult? = null
+) :
     AssignmentOnlineDataSource {
     override suspend fun addAssignment(assignment: AssignmentResponseDTO): AssignmentResponseDTO {
         try {
@@ -280,13 +292,29 @@ class AssignmentOnlineDataSourceImpl(val service: AssignmentWebService) :
         }
     }
 
-    override suspend fun updateAssignmentFileByAssignmentId(
+    override fun updateAssignmentFileByAssignmentId(
         assignmentId: Int,
         file: MultipartBody.Part
-    ): AssignmentResponseDTO {
+    ) {
+        //callback
         try {
             val response = service.updateAssignmentFileByAssignmentId(assignmentId, file)
-            return response.convertTo(AssignmentResponseDTO::class.java)
+            response.enqueue(
+                object : Callback<AssignmentResponse> {
+                    override fun onResponse(
+                        call: Call<AssignmentResponse>,
+                        response: Response<AssignmentResponse>
+                    ) {
+                        response.body()?.convertTo(AssignmentResponseDTO::class.java)
+                            ?.let { callResult?.getDTOData(it) }
+                    }
+
+                    override fun onFailure(call: Call<AssignmentResponse>, t: Throwable) {
+
+                    }
+
+                }
+            )
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -294,7 +322,10 @@ class AssignmentOnlineDataSourceImpl(val service: AssignmentWebService) :
 
 }
 
-class ContentOnlineDataSourceImpl(val service: ContentWebService) :
+class ContentOnlineDataSourceImpl(
+    val service: ContentWebService,
+    override var callResult: ContentOnlineDataSource.CallResult?=null
+) :
     ContentOnlineDataSource {
     override suspend fun addContent(content: ContentResponseDTO): ContentResponseDTO {
         try {
@@ -350,13 +381,26 @@ class ContentOnlineDataSourceImpl(val service: ContentWebService) :
         }
     }
 
-    override suspend fun updateContentFileByContentId(
-        contentId: Int,
-        file: MultipartBody.Part
-    ): ContentResponseDTO {
+    override fun updateContentFileByContentId(contentId: Int, file: MultipartBody.Part) {
+        //callback
         try {
             val response = service.updateContentFileByContentId(contentId, file)
-            return response.convertTo(ContentResponseDTO::class.java)
+            response.enqueue(
+                object : Callback<ContentResponse> {
+                    override fun onResponse(
+                        call: Call<ContentResponse>,
+                        response: Response<ContentResponse>
+                    ) {
+                        response.body()?.convertTo(ContentResponseDTO::class.java)
+                            ?.let { callResult?.getDTOData(it) }
+                    }
+
+                    override fun onFailure(call: Call<ContentResponse>, t: Throwable) {
+
+                    }
+
+                }
+            )
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -366,8 +410,9 @@ class ContentOnlineDataSourceImpl(val service: ContentWebService) :
 }
 
 
-class CourseOnlineDataSourceImpl(val service: CourseWebService,
-                                 override var callResult: CourseOnlineDataSource.CallResult?=null
+class CourseOnlineDataSourceImpl(
+    val service: CourseWebService,
+    override var callResult: CourseOnlineDataSource.CallResult? = null
 ) :
     CourseOnlineDataSource {
     override suspend fun addCourse(course: CourseResponseDTO): Response<Void> {
@@ -443,7 +488,7 @@ class CourseOnlineDataSourceImpl(val service: CourseWebService,
         }
     }
 
-    override  fun updateCourseImageByCourseId(
+    override fun updateCourseImageByCourseId(
         courseId: Int,
         image: MultipartBody.Part,
     ) {
@@ -451,7 +496,7 @@ class CourseOnlineDataSourceImpl(val service: CourseWebService,
         try {
             val response = service.updateCourseImageByCourseId(courseId, image)
             response.enqueue(
-                object :Callback<CourseResponse>{
+                object : Callback<CourseResponse> {
                     override fun onResponse(
                         call: Call<CourseResponse>,
                         response: Response<CourseResponse>
@@ -470,8 +515,6 @@ class CourseOnlineDataSourceImpl(val service: CourseWebService,
             throw throwable
         }
     }
-
-
 
 
     override suspend fun getAllCourses(): List<CourseResponseDTO> {
@@ -1047,38 +1090,44 @@ class TeacherOnlineDataSourceImpl(val service: TeacherWebService) :
     override suspend fun addTeacher(teacher: TeacherResponseDTO): Response<Void> {
         try {
 
-            if (teacher.profilePic==null){
-                teacher.profilePic=""
+            if (teacher.profilePic == null) {
+                teacher.profilePic = ""
             }
 
             val response = service.addTeacher(teacher.firstName?.let {
-                MultipartBody.Part.createFormData("firstName",
+                MultipartBody.Part.createFormData(
+                    "firstName",
                     it
                 )
-            },teacher.lastName?.let {
-                MultipartBody.Part.createFormData("lastName",
+            }, teacher.lastName?.let {
+                MultipartBody.Part.createFormData(
+                    "lastName",
                     it
                 )
-            },teacher.phone?.let {
-                MultipartBody.Part.createFormData("phone",
+            }, teacher.phone?.let {
+                MultipartBody.Part.createFormData(
+                    "phone",
                     it
                 )
-            },MultipartBody.Part.createFormData("profilePic",
+            }, MultipartBody.Part.createFormData(
+                "profilePic",
                 teacher.profilePic!!
-            )
-                ,teacher.role?.let {
-                    MultipartBody.Part.createFormData("role",
-                        it
-                    )
-                },teacher.emailAddress?.let {
-                    MultipartBody.Part.createFormData("emailAddress",
-                        it
-                    )
-                },teacher.password?.let {
-                    MultipartBody.Part.createFormData("password",
-                        it
-                    )
-                })
+            ), teacher.role?.let {
+                MultipartBody.Part.createFormData(
+                    "role",
+                    it
+                )
+            }, teacher.emailAddress?.let {
+                MultipartBody.Part.createFormData(
+                    "emailAddress",
+                    it
+                )
+            }, teacher.password?.let {
+                MultipartBody.Part.createFormData(
+                    "password",
+                    it
+                )
+            })
             return response
         } catch (throwable: Throwable) {
             throw throwable

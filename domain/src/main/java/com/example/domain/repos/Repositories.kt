@@ -5,6 +5,7 @@ import com.example.domain.model.LessonResponseDTO
 import com.example.domain.model.OCRResponseDTO
 import com.example.domain.model.TodoDTO
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
+import okhttp3.MultipartBody
 import java.util.*
 
 
@@ -32,6 +33,7 @@ interface MaterialRepository {
     // lesson functions
     suspend fun getAllLessons(): List<LessonResponseDTO>
     suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO
+    suspend fun getLesson(id: Int): LessonResponseDTO
     suspend fun updateLesson(id: Int, lesson: LessonResponseDTO): LessonResponseDTO
     suspend fun deleteLesson(id: Int): LessonResponseDTO
     suspend fun getLessonsByCourseId(courseId: Int): List<LessonResponseDTO>
@@ -43,5 +45,15 @@ interface MaterialRepository {
     suspend fun getAllContents(): List<ContentResponseDTO>
     suspend fun getContentById(id: Int): ContentResponseDTO
     suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
+    fun updateContentFileByContentId(
+        contentId: Int,
+        file: MultipartBody.Part
+    )
+
+    var callResult: CallResult?
+
+    interface CallResult {
+        fun getDTOData(data: ContentResponseDTO)
+    }
 }
 

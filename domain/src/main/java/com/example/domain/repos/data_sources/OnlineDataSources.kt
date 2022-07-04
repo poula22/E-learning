@@ -3,7 +3,6 @@ package com.example.domain.repos.data_sources
 import com.example.domain.model.*
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import okhttp3.MultipartBody
-import retrofit2.Call
 import retrofit2.Response
 
 // ALL ONLINE DATA SOURCES SHOULD BE HERE
@@ -33,10 +32,16 @@ interface AssignmentAnswerOnlineDataSource {
         assignmentId: Int
     ): AssignmentAnswerResponseDTO
 
-    suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(
+    fun updateAssignmentAnswerFileByAssignmentAnswerId(
         id: Int,
         file: MultipartBody.Part
-    ): AssignmentAnswerResponseDTO
+    )
+
+    var callResult: CallResult?
+
+    interface CallResult {
+        fun getDTOData(data: AssignmentAnswerResponseDTO)
+    }
 
     suspend fun updateMultipleAssignedGrades(grades: List<AssignmentAnswerResponseDTO>): AssignmentAnswerResponseDTO
 
@@ -73,10 +78,16 @@ interface AssignmentOnlineDataSource {
         studentId: Int
     ): List<AssignmentDetailsResponseDTO>
 
-    suspend fun updateAssignmentFileByAssignmentId(
+    fun updateAssignmentFileByAssignmentId(
         assignmentId: Int,
         file: MultipartBody.Part
-    ): AssignmentResponseDTO
+    )
+
+    var callResult: CallResult?
+
+    interface CallResult {
+        fun getDTOData(data: AssignmentResponseDTO)
+    }
 
 }
 
@@ -88,10 +99,16 @@ interface ContentOnlineDataSource {
     suspend fun getAllContents(): List<ContentResponseDTO>
     suspend fun getContentById(id: Int): ContentResponseDTO
     suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
-    suspend fun updateContentFileByContentId(
+    fun updateContentFileByContentId(
         contentId: Int,
         file: MultipartBody.Part
-    ): ContentResponseDTO
+    )
+
+    var callResult: CallResult?
+
+    interface CallResult {
+        fun getDTOData(data: ContentResponseDTO)
+    }
 }
 
 interface CourseOnlineDataSource {
@@ -108,8 +125,10 @@ interface CourseOnlineDataSource {
         courseId: Int,
         image: MultipartBody.Part
     )
-    var callResult:CallResult?
-    interface CallResult{
+
+    var callResult: CallResult?
+
+    interface CallResult {
         fun getDTOData(data: CourseResponseDTO)
     }
 }

@@ -3,6 +3,7 @@ package com.example.data.api
 import com.example.data.model.ContentResponse
 import com.example.domain.model.ContentResponseDTO
 import okhttp3.MultipartBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface ContentWebService {
@@ -29,8 +30,8 @@ interface ContentWebService {
 
     @Multipart
     @PUT("api/Contents/update-file/{id}")
-    suspend fun updateContentFileByContentId(
+    fun updateContentFileByContentId(
         @Path("id") contentId: Int,
-        @Part file : MultipartBody.Part
-    ) : ContentResponse
+        @Part file: MultipartBody.Part
+    ): Call<ContentResponse>
 }

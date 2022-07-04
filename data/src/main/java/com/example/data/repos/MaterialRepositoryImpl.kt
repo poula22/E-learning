@@ -5,10 +5,12 @@ import com.example.domain.model.LessonResponseDTO
 import com.example.domain.repos.MaterialRepository
 import com.example.domain.repos.data_sources.ContentOnlineDataSource
 import com.example.domain.repos.data_sources.LessonOnlineDataSource
+import okhttp3.MultipartBody
 
 class MaterialRepositoryImpl(
     val lessonOnlineDataSource: LessonOnlineDataSource,
-    val contentOnlineDataSource: ContentOnlineDataSource
+    val contentOnlineDataSource: ContentOnlineDataSource,
+    override var callResult: MaterialRepository.CallResult? = null
 ) : MaterialRepository {
     override suspend fun getAllLessons(): List<LessonResponseDTO> {
         try {
@@ -21,6 +23,14 @@ class MaterialRepositoryImpl(
     override suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO {
         try {
             return lessonOnlineDataSource.addLesson(lesson)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun getLesson(id: Int): LessonResponseDTO {
+        try {
+            return lessonOnlineDataSource.getLesson(id)
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -93,6 +103,14 @@ class MaterialRepositoryImpl(
     override suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO> {
         try {
             return contentOnlineDataSource.getContentsByLessonId(lessonId)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override fun updateContentFileByContentId(contentId: Int, file: MultipartBody.Part) {
+        try {
+            contentOnlineDataSource.updateContentFileByContentId(contentId, file)
         } catch (throwable: Throwable) {
             throw throwable
         }
