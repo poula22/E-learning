@@ -12,6 +12,7 @@ import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHe
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadInStreamHeaders
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -95,13 +96,10 @@ class OCROnlineDataSourceImp(val webService: MicrosoftOCRWebService) :
 
 
 class AssignmentAnswerOnlineDataSourceImpl(
-    val service: AssignmentAnswerWebService,
-    override var callResult: AssignmentAnswerOnlineDataSource.CallResult? = null
-) :
-    AssignmentAnswerOnlineDataSource {
-    override suspend fun addAssignmentAnswer(assignmentAnswer: AssignmentAnswerResponseDTO): AssignmentAnswerResponseDTO {
+    val service: AssignmentAnswerWebService) : AssignmentAnswerOnlineDataSource {
+    override suspend fun addAssignmentAnswer(body: RequestBody): AssignmentAnswerResponseDTO {
         try {
-            val response = service.addAssignmentAnswer(assignmentAnswer)
+            val response = service.addAssignmentAnswer(body)
             return response.convertTo(AssignmentAnswerResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
@@ -169,26 +167,11 @@ class AssignmentAnswerOnlineDataSourceImpl(
         }
     }
 
-    override fun updateAssignmentAnswerFileByAssignmentAnswerId(id: Int, file: MultipartBody.Part) {
+    override suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(id: Int, body: RequestBody):AssignmentAnswerResponseDTO {
         //callback
         try {
-            val response = service.updateAssignmentAnswerFileByAssignmentAnswerId(id, file)
-            response.enqueue(
-                object : Callback<AssignmentAnswerResponse> {
-                    override fun onResponse(
-                        call: Call<AssignmentAnswerResponse>,
-                        response: Response<AssignmentAnswerResponse>
-                    ) {
-                        response.body()?.convertTo(AssignmentAnswerResponseDTO::class.java)
-                            ?.let { callResult?.getDTOData(it) }
-                    }
-
-                    override fun onFailure(call: Call<AssignmentAnswerResponse>, t: Throwable) {
-
-                    }
-
-                }
-            )
+            val response = service.updateAssignmentAnswerFileByAssignmentAnswerId(id, body)
+            return response.convertTo(AssignmentAnswerResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -411,10 +394,8 @@ class ContentOnlineDataSourceImpl(
 
 
 class CourseOnlineDataSourceImpl(
-    val service: CourseWebService,
-    override var callResult: CourseOnlineDataSource.CallResult? = null
-) :
-    CourseOnlineDataSource {
+    val service: CourseWebService
+) : CourseOnlineDataSource {
     override suspend fun addCourse(course: CourseResponseDTO): Response<Void> {
         try {
 
@@ -488,29 +469,14 @@ class CourseOnlineDataSourceImpl(
         }
     }
 
-    override fun updateCourseImageByCourseId(
+    override suspend fun updateCourseImageByCourseId(
         courseId: Int,
-        image: MultipartBody.Part,
-    ) {
+        body: RequestBody
+    ):CourseResponseDTO {
         //callback
         try {
-            val response = service.updateCourseImageByCourseId(courseId, image)
-            response.enqueue(
-                object : Callback<CourseResponse> {
-                    override fun onResponse(
-                        call: Call<CourseResponse>,
-                        response: Response<CourseResponse>
-                    ) {
-                        response.body()?.convertTo(CourseResponseDTO::class.java)
-                            ?.let { callResult?.getDTOData(it) }
-                    }
-
-                    override fun onFailure(call: Call<CourseResponse>, t: Throwable) {
-
-                    }
-
-                }
-            )
+            val response = service.updateCourseImageByCourseId(courseId, body)
+            return response.convertTo(CourseResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
         }

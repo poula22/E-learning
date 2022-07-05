@@ -3,6 +3,7 @@ package com.example.domain.repos.data_sources
 import com.example.domain.model.*
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 
 // ALL ONLINE DATA SOURCES SHOULD BE HERE
@@ -18,7 +19,7 @@ interface OCROnlineDataSource {
 
 
 interface AssignmentAnswerOnlineDataSource {
-    suspend fun addAssignmentAnswer(assignmentAnswer: AssignmentAnswerResponseDTO): AssignmentAnswerResponseDTO
+    suspend fun addAssignmentAnswer(body: RequestBody): AssignmentAnswerResponseDTO
     suspend fun updateAssignmentAnswer(
         id: Int, assignmentAnswer: AssignmentAnswerResponseDTO
     ): AssignmentAnswerResponseDTO
@@ -32,16 +33,11 @@ interface AssignmentAnswerOnlineDataSource {
         assignmentId: Int
     ): AssignmentAnswerResponseDTO
 
-    fun updateAssignmentAnswerFileByAssignmentAnswerId(
+   suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(
         id: Int,
-        file: MultipartBody.Part
-    )
+        body: RequestBody
+    ):AssignmentAnswerResponseDTO
 
-    var callResult: CallResult?
-
-    interface CallResult {
-        fun getDTOData(data: AssignmentAnswerResponseDTO)
-    }
 
     suspend fun updateMultipleAssignedGrades(grades: List<AssignmentAnswerResponseDTO>): AssignmentAnswerResponseDTO
 
@@ -121,16 +117,11 @@ interface CourseOnlineDataSource {
     suspend fun getCoursesByTeacherId(teacherId: Int): List<CourseResponseDTO>
     suspend fun getCoursesByStudentId(studentId: Int): List<CourseResponseDTO>
     suspend fun getCourse(courseId: Int): CourseResponseDTO
-    fun updateCourseImageByCourseId(
+    suspend fun updateCourseImageByCourseId(
         courseId: Int,
-        image: MultipartBody.Part
-    )
+        body: RequestBody
+    ):CourseResponseDTO
 
-    var callResult: CallResult?
-
-    interface CallResult {
-        fun getDTOData(data: CourseResponseDTO)
-    }
 }
 
 interface FeatureOnlineDataSource {

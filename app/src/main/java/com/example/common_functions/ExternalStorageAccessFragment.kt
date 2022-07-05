@@ -7,7 +7,6 @@ abstract class ExternalStorageAccessFragment : DocumentAccessFragment() {
     fun imagePick() {
         ImagePicker.with(this)
             .crop()                    //Crop image(Optional), Check Customization for more option
-            .saveDir(requireActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM)!!)
             .createIntent(startForImageResult::launch)
     }
 

@@ -1,8 +1,11 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.settings
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +13,13 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
-import com.bumptech.glide.request.RequestOptions
-import com.example.binding_adapters.TestConnection
+import com.bumptech.glide.Glide.with
 import com.example.common_functions.CommonFunctions
 import com.example.common_functions.ExternalStorageAccessFragment
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseSettingsBinding
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import com.example.lamp.ui.teacher.courses_page.course_content.assignment.PDFViewer
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.apache.commons.io.FileUtils
@@ -42,7 +41,7 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
             File(it)
         }
         filePath?.let {
-            Log.e("filePath of image", it)
+            Log.v("filePath of image", it)
         }
         if (file != null) {
             viewModel.changeCourseImage(file)
@@ -88,11 +87,26 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
             course=it
             Log.e("course",course.courseImage.toString())
             viewBinding.item=it
-            var serverUrl="25.70.83.232"
-            Glide.with(this)
-                .load("https://thumbs.dreamstime.com/b/lonely-elephant-against-sunset-beautiful-sun-clouds-savannah-serengeti-national-park-africa-tanzania-artistic-imag-image-106950644.jpg".toUri())
-                .centerCrop()
-                .into(viewBinding.courseImageView)
+            var serverUrl="https://25.70.83.232"
+
+            val thumbnail: Bitmap? =
+                course.courseImage?.toUri()?.let { it1 ->
+                    requireContext().contentResolver.loadThumbnail(
+                        it1, Size(640, 480), null)
+                }
+            viewBinding.courseImageView.setImageBitmap(thumbnail)
+
+            viewModel.fileLiveData.observe(viewLifecycleOwner){
+                viewModel.getCourseById()
+            }
+
+//            with(this)
+//            .load("file:///"+it.courseImage?.substring(2)?.replace("\\","/"))
+//            .centerCrop()
+//            .into(viewBinding.courseImageView)
+
+
+
 //            var image=course.courseImage?.let { it1 -> TestConnection.getData(it1) }
 //            val img= course.courseImage?.let { it1 -> File(it1) }
 //            Log.e("image",img?.exists().toString())
@@ -106,6 +120,9 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
             else{
                 Toast.makeText(requireContext(), "Course Not Dropped", Toast.LENGTH_SHORT).show()
             }
+        }
+        viewModel.testLiveData.observe(viewLifecycleOwner){
+            viewBinding.courseImageView.setImageBitmap(BitmapFactory.decodeStream(it.byteStream()))
         }
     }
 
