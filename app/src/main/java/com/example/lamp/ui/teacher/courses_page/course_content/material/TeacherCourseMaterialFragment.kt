@@ -99,6 +99,12 @@ class TeacherCourseMaterialFragment : Fragment() {
         viewBinding.lessonsRecyclerView.adapter = adapter
         //        viewBinding.contentTextHtml.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
 
+        viewBinding.addLessonButton.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.teacher_course_content_container, TeacherCourseAddLessonFragment())
+                .addToBackStack("")
+                .commit()
+        }
 
     }
 
