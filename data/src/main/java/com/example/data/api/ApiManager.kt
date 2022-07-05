@@ -90,7 +90,9 @@ class ApiManager {
         }
 
 
-
+        fun getFileTransferApi(): FileTransferService {
+            return getBackendInstance().create(FileTransferService::class.java)
+        }
         fun getAssignmentGradeApi(): AssignmentGradeWebService {
             return getBackendInstance().create(AssignmentGradeWebService::class.java)
         }

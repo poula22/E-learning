@@ -60,7 +60,7 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
 //                val endDate = "2020-01-01"
                 val courseDTO =
                     CourseResponseDTO(
-                        courseName,"",CONSTANTS.user_id, courseCode.toInt(), description
+                        courseName,"",CONSTANTS.user_id,null, description
                     )
                 viewModel.AddCourse(courseDTO)
 

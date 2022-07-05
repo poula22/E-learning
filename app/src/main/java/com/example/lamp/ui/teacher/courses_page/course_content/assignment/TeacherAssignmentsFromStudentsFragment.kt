@@ -59,7 +59,7 @@ class TeacherAssignmentsFromStudentsFragment(val assignment : AssignmentResponse
         //"android.resource://" + requireActivity().packageName  + "/"+R.raw.dragon_ball,)
 //        var uri=Uri.parse("android.resource://"+resources.getResourceName(R.raw.teacher_profile_25_4))
         answersMutableList= mutableListOf()
-        adapter = TeacherAssignmentsFromStudentsAdapter(totalPoints = assignment?.grade!!)
+        adapter = TeacherAssignmentsFromStudentsAdapter(totalPoints = assignment?.grade ?:0)
         adapter.onPdfOpenListener=object :TeacherAssignmentsFromStudentsAdapter.OnPdfOpenListener{
             override fun onPdfOpen(pdf:String?) {
                 val bundle=Bundle()

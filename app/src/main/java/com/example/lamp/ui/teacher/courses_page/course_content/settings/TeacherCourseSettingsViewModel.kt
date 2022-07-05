@@ -14,35 +14,35 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import kotlin.concurrent.thread
 import kotlin.coroutines.suspendCoroutine
 
 class TeacherCourseSettingsViewModel : ViewModel() {
     private val  service=ApiManager.getCourseApi()
     val liveData= MutableLiveData<CourseResponseDTO>()
     val dropLiveData=MutableLiveData<Response<Void>>()
-    private val dataSource:CourseOnlineDataSource=CourseOnlineDataSourceImpl(service,object :CourseOnlineDataSource.CallResult{
-        override fun getDTOData(data: CourseResponseDTO) {
-            Log.e("dataaaaaa",data.toString())
-            getCourseById()
-        }
-
-    })
+    val fileLiveData=MutableLiveData<CourseResponseDTO>()
+    val testLiveData=MutableLiveData<ResponseBody>()
+    val testService=ApiManager.getFileTransferApi()
+    private val dataSource:CourseOnlineDataSource=CourseOnlineDataSourceImpl(service)
     fun changeCourseImage(image:File){
 
-                    try {
-                        val originalFile = image
-                        originalFile.name.let { Log.e("file", it) }
-                        val filePart= originalFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                        val file=
-                            filePart.let { MultipartBody.Part.createFormData("file", originalFile.name, it) }
-                        Log.e("file", file.body.contentType().toString())
-                        file.let {
-                            dataSource.updateCourseImageByCourseId(CONSTANTS.courseId, it)
+        runBlocking {
+            try {
+//                val originalFile = image
+//                originalFile.name.let { Log.e("file", it) }
+//                val filePart= originalFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+//                val file=
+//                    filePart.let { MultipartBody.Part.createFormData("file", originalFile.name, it) }
+//                Log.e("file", file.body.contentType().toString())
+//                file.let {
 //                             .enqueue(
 //                             object : Callback<CourseResponseDTO>{
 //                                 override fun onResponse(
@@ -60,10 +60,22 @@ class TeacherCourseSettingsViewModel : ViewModel() {
 //
 //                             }
 //                         )
-                        }
-                    }catch (t:Throwable){
-                        throw t
-                    }
+//                }
+
+                val requestBody: RequestBody = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", image.name,image.asRequestBody("image/jpeg".toMediaTypeOrNull()))
+                    .build()
+                fileLiveData.value=dataSource.updateCourseImageByCourseId(CONSTANTS.courseId, requestBody)
+
+
+            }catch (t:Throwable){
+                throw t
+            }
+
+        }
+
+
 
 
     }
@@ -88,4 +100,16 @@ class TeacherCourseSettingsViewModel : ViewModel() {
             dropLiveData.value=dataSource.dropCourse(CONSTANTS.courseId,CONSTANTS.user_id)
         }
     }
+
+    fun getImage(){
+        viewModelScope.launch {
+            try {
+                testLiveData.value= testService.test()
+            }catch (t:Throwable){
+                t.printStackTrace()
+            }
+        }
+    }
+
+
 }

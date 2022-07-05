@@ -4,12 +4,13 @@ import com.example.data.model.AssignmentAnswerDetailsResponse
 import com.example.data.model.AssignmentAnswerResponse
 import com.example.domain.model.AssignmentAnswerResponseDTO
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface AssignmentAnswerWebService {
     @POST("api/AssignmentAnswers")
-    suspend fun addAssignmentAnswer(@Body assignmentAnswer: AssignmentAnswerResponseDTO): AssignmentAnswerResponse
+    suspend fun addAssignmentAnswer(@Body body: RequestBody): AssignmentAnswerResponse
 
     @PUT("api/AssignmentAnswers/{id}")
     suspend fun updateAssignmentAnswer(
@@ -33,12 +34,11 @@ interface AssignmentAnswerWebService {
         @Path("studentId") studentID: Int, @Path("assignmentId") assignmentId: Int
     ): AssignmentAnswerResponse
 
-    @Multipart
     @PUT("api/AssignmentAnswers/update-file/{id}")
     fun updateAssignmentAnswerFileByAssignmentAnswerId(
         @Path("id") id: Int,
-        @Part file: MultipartBody.Part
-    ): Call<AssignmentAnswerResponse>
+        @Body body: RequestBody
+    ):AssignmentAnswerResponse
 
     @PUT("api/AssignmentAnswers/Add/Update/AssignmentAnswers/MultipleAssignedGrades")
     suspend fun updateMultipleAssignedGrades(
