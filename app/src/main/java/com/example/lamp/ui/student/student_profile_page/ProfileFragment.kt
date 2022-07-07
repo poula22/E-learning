@@ -38,6 +38,10 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
         initViews()
+        getUserInfo()
+    }
+
+    private fun getUserInfo() {
         viewModel.getUserInfo(CONSTANTS.user_id)
     }
 

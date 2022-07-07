@@ -17,6 +17,7 @@ import com.example.domain.model.QuestionResponseDTO
 import com.example.domain.model.QuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizAddQuestionsBinding
+import com.example.lamp.ui.student.student_course_page.course_content.quiz.quizzes_recycler_view.QuestionItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
 
 class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragment() {
@@ -97,7 +98,7 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragmen
             viewBinding.createQuestionLayout.visibility = View.GONE
             viewBinding.quizEditQuestionsList.visibility = View.VISIBLE
         }
-        var question = QuestionResponseDTO(null, null, null)
+        val question = QuestionItem()
         adapter.addQuestion(question)
     }
 

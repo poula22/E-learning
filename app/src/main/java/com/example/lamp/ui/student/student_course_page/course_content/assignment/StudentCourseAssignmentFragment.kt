@@ -62,12 +62,16 @@ class StudentCourseAssignmentFragment :
         super.onViewCreated(view, savedInstanceState)
         initViews()
         subscribeToLiveData()
+        getAllAssignments()
+    }
+
+    private fun getAllAssignments() {
         viewModel.getData(courseId)
     }
 
     private fun subscribeToLiveData() {
         viewModel.liveData.observe(viewLifecycleOwner){
-            adapter.setFilteredList(it.toMutableList())
+            updateAssignmentsList(it)
         }
         viewModel.errorMessage.observe(viewLifecycleOwner){
             viewModel.errorMessage.value=it
@@ -75,22 +79,17 @@ class StudentCourseAssignmentFragment :
         }
     }
 
+    private fun updateAssignmentsList(assignmentsList: List<AssignmentDetailsResponseDTO>) {
+        adapter.setFilteredList(assignmentsList.toMutableList())
+    }
+
     private fun initViews() {
         adapter= StudentCourseAssignmentAdapter()
         adapter.onStudentAssignmentClickedListener=object :StudentCourseAssignmentAdapter.OnStudentAssignmentClickedListener{
             override fun onAssignmentClick(postion: Int) {
-                var bundle=Bundle()
-                var assignment: AssignmentDetailsResponseDTO? =viewModel.liveData.value?.get(postion)
-                bundle.putSerializable("assignment",assignment)
-                var fragment=StudentCourseAssignmentSubmitFragment()
-                fragment.arguments=bundle
-                requireActivity()
-                    .supportFragmentManager
-                    .beginTransaction()
-                    .replace(this@StudentCourseAssignmentFragment.id,fragment)
-                    .addToBackStack("")
-                    .commit()
+                goToAssignmentSubmit(postion)
             }
+
         }
         viewBinding.studentAssignmentsRv.adapter=adapter
         tabLayout = viewBinding.tabLayout
@@ -116,11 +115,7 @@ class StudentCourseAssignmentFragment :
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     Log.v("action;::",tab?.text.toString())
-                    var text=tab?.text.toString()
-                    if (text.isNotEmpty()) {
-                        var list=viewModel.filterList(text)
-                        adapter.setFilteredList(list)
-                    }
+                    getSelectedTabContent(tab)
                 }
             }
         )
@@ -128,8 +123,26 @@ class StudentCourseAssignmentFragment :
 
     }
 
+    private fun getSelectedTabContent(tab: TabLayout.Tab?) {
+        var text=tab?.text.toString()
+        if (text.isNotEmpty()) {
+            var list=viewModel.filterList(text)
+            adapter.setFilteredList(list)
+        }
+    }
 
 
-
-
+    private fun goToAssignmentSubmit(postion: Int) {
+        var bundle=Bundle()
+        var assignment: AssignmentDetailsResponseDTO? =viewModel.liveData.value?.get(postion)
+        bundle.putSerializable("assignment",assignment)
+        var fragment=StudentCourseAssignmentSubmitFragment()
+        fragment.arguments=bundle
+        requireActivity()
+            .supportFragmentManager
+            .beginTransaction()
+            .replace(this@StudentCourseAssignmentFragment.id,fragment)
+            .addToBackStack("")
+            .commit()
+    }
 }

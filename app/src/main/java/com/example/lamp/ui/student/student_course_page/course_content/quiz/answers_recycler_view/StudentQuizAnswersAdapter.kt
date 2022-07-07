@@ -8,7 +8,7 @@ import com.example.domain.model.QuestionChoiceResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCourseQuizQuestionAnswerBinding
 
-class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceResponseDTO?>? = null) :
+class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceItem?>? = null) :
     RecyclerView.Adapter<StudentQuizAnswersAdapter.ViewHolder>() {
     var itemSelectedIndex = -1
 
@@ -39,7 +39,11 @@ class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceResponseD
                 holder.changeColor(R.color.green)
             }
             itemSelectedIndex = holder.absoluteAdapterPosition
-            onAnswerSelectedListener?.onAnswerSelected(item)
+            item.questionChoiceResponseDTO?.let { it1 ->
+                onAnswerSelectedListener?.onAnswerSelected(
+                    it1
+                )
+            }
 
         }
 
@@ -61,7 +65,9 @@ class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceResponseD
     }
 
     fun changeData(newAnswers: List<QuestionChoiceResponseDTO?>?) {
-        answers = newAnswers?.toMutableList()
+        answers = newAnswers?.map {
+                QuestionChoiceItem(it,false)
+        }?.toMutableList()
         notifyDataSetChanged()
     }
 

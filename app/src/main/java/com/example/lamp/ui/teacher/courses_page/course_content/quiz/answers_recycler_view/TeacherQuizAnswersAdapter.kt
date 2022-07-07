@@ -7,10 +7,11 @@ import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.QuestionChoiceResponseDTO
+import com.example.domain.model.QuestionResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizQuestionAnswerBinding
 
-class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
+class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?=null) :
     RecyclerView.Adapter<TeacherQuizAnswersAdapter.ViewHolder>() {
     init {
         if (answers==null){
@@ -62,8 +63,9 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
 
     override fun getItemCount(): Int = answers?.size ?:0
 
-    fun addAnswer(){
-        answers?.add(AnswerItem())
+    fun addAnswer(questionChoiceResponseDTO: QuestionChoiceResponseDTO){
+
+        answers?.add(AnswerItem(questionChoiceResponseDTO))
         notifyItemInserted(answers?.size?.minus(1)!!)
     }
 

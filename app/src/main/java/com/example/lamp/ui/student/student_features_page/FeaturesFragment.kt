@@ -42,27 +42,31 @@ class FeaturesFragment : Fragment() {
         featuresRVAdapter = FeaturesRVAdapter(TestData.FEATURES, type = 1)
         featuresRVAdapter.onFeatureClickListener = object : FeaturesRVAdapter.FeatureClickListener {
             override fun onFeatureClick(pos: Int, item: FeatureItem) {
-                if (pos == 0) {
-                    requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
-                        .replace(R.id.student_fragment_tab, TranslationFragment()).commit()
-                } else if (pos == 1) {
-                    requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
-                        .replace(R.id.student_fragment_tab, SummarizationFragment()).commit()
-                } else if (pos == 2) {
-                    requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
-                        .replace(R.id.student_fragment_tab, RecitationFragment()).commit()
-                } else if (pos == 3) {
-                    requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
-                        .replace(R.id.student_fragment_tab, OcrFragment()).commit()
-                }
-
-
-                val bottomNavigationView: BottomNavigationView =
-                    requireActivity().findViewById(R.id.bottom_navigation_view)
-                bottomNavigationView.isVisible = false
+                goToFeatureFragment(pos,item)
             }
 
         }
         viewBinding.studentFeaturesRecyclerView.adapter = featuresRVAdapter
+    }
+
+    private fun goToFeatureFragment(pos: Int, item: FeatureItem) {
+        if (pos == 0) {
+            requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
+                .replace(R.id.student_fragment_tab, TranslationFragment()).commit()
+        } else if (pos == 1) {
+            requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
+                .replace(R.id.student_fragment_tab, SummarizationFragment()).commit()
+        } else if (pos == 2) {
+            requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
+                .replace(R.id.student_fragment_tab, RecitationFragment()).commit()
+        } else if (pos == 3) {
+            requireActivity().supportFragmentManager.beginTransaction().addToBackStack("")
+                .replace(R.id.student_fragment_tab, OcrFragment()).commit()
+        }
+
+
+        val bottomNavigationView: BottomNavigationView =
+            requireActivity().findViewById(R.id.bottom_navigation_view)
+        bottomNavigationView.isVisible = false
     }
 }

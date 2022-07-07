@@ -10,6 +10,8 @@ import com.example.data.repos.data_sources_impl.LessonOnlineDataSourceImpl
 import com.example.domain.model.ContentResponseDTO
 import com.example.domain.model.LessonResponseDTO
 import com.example.domain.repos.MaterialRepository
+import com.example.domain.repos.data_sources.ContentOnlineDataSource
+import com.example.domain.repos.data_sources.LessonOnlineDataSource
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -17,8 +19,8 @@ class StudentCourseMaterialViewModel : ViewModel() {
     var errorMessage = MutableLiveData<String>()
     val lessonWebService = ApiManager.getLessonApi()
     val contentWebService = ApiManager.getContentApi()
-    val lessonOnlineDataSource = LessonOnlineDataSourceImpl(lessonWebService)
-    val contentOnlineDataSource = ContentOnlineDataSourceImpl(contentWebService)
+    val lessonOnlineDataSource: LessonOnlineDataSource = LessonOnlineDataSourceImpl(lessonWebService)
+    val contentOnlineDataSource: ContentOnlineDataSource = ContentOnlineDataSourceImpl(contentWebService)
     val materialRepository:MaterialRepository=MaterialRepositoryImpl(lessonOnlineDataSource,contentOnlineDataSource)
     var LessonsLiveData = MutableLiveData<List<LessonResponseDTO>>()
     var contentLiveData = MutableLiveData<List<ContentResponseDTO>>()

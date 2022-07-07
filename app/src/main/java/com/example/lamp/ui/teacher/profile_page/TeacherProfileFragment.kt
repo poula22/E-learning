@@ -40,6 +40,10 @@ class TeacherProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
         initViews()
+        getUserInfo()
+    }
+
+    private fun getUserInfo() {
         viewModel.getUserInfo()
     }
 
@@ -59,9 +63,13 @@ class TeacherProfileFragment : Fragment() {
                 profilePictuerURL,
                 CONSTANTS.user_id
             )
-            viewModel.updateUserInfo(CONSTANTS.user_id,user)
+            updateUserInfo(user)
 
         }
+    }
+
+    private fun updateUserInfo(user: UserResponseDTO) {
+        viewModel.updateUserInfo(CONSTANTS.user_id,user)
     }
 
     private fun subscribeToLiveData() {

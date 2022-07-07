@@ -8,13 +8,14 @@ import com.example.common_functions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.repos.data_sources_impl.CourseOnlineDataSourceImpl
 import com.example.domain.model.CourseResponseDTO
+import com.example.domain.repos.data_sources.CourseOnlineDataSource
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
 
 class CoursesViewModel : ViewModel() {
     var courseWebService = ApiManager.getCourseApi()
-    var courseOnlineDataSource = CourseOnlineDataSourceImpl(courseWebService)
+    var courseOnlineDataSource: CourseOnlineDataSource = CourseOnlineDataSourceImpl(courseWebService)
     var coursesLiveData = MutableLiveData<MutableList<CourseResponseDTO>>()
     var flag = false
     var course = MutableLiveData<Response<Void>?>()

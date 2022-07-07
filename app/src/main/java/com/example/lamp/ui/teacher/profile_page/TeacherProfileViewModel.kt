@@ -6,6 +6,7 @@ import com.example.common_functions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.repos.data_sources_impl.UserOnlineDataSourceImpl
 import com.example.domain.model.UserResponseDTO
+import com.example.domain.repos.data_sources.UserOnlineDataSource
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -13,7 +14,7 @@ class TeacherProfileViewModel : ViewModel() {
     var liveData = MutableLiveData<UserResponseDTO>()
     var errorMessage = MutableLiveData<String>()
     val userWebService = ApiManager.getUserApi()
-    val userOnlineDataSource = UserOnlineDataSourceImpl(userWebService)
+    val userOnlineDataSource: UserOnlineDataSource = UserOnlineDataSourceImpl(userWebService)
     fun getUserInfo() {
         viewModelScope.launch {
             try {

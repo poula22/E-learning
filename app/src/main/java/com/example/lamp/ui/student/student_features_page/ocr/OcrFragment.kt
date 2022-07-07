@@ -40,8 +40,8 @@ class OcrFragment : ExternalStorageAccessFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
         subscirbeToLiveData()
+        initViews()
     }
 
     private fun initViews() {

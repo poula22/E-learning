@@ -51,8 +51,12 @@ class StudentCourseAssignmentSubmitFragment:ExternalStorageAccessFragment() {
         var assignment=bundle?.getSerializable("assignment") as AssignmentDetailsResponseDTO
         assignmentId= assignment.id!!
         subscribeToLiveData()
+        initViews()
+    }
+
+    private fun initViews() {
         viewBinding.submitAssignmentBtn.setOnClickListener {
-           upDoc()
+            uploadDoc()
         }
         viewBinding.uploadFile.setOnClickListener {
             startForImageResult.launch(CommonFunctions.uploadDoc(this.requireActivity()))
@@ -99,16 +103,6 @@ class StudentCourseAssignmentSubmitFragment:ExternalStorageAccessFragment() {
 
     }
 
-    fun openDirectory(pickerInitialUri: Uri) {
-        // Choose a directory using the system's file picker.
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
-            // Optionally, specify a URI for the directory that should be opened in
-            // the system file picker when it loads.
-            putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
-
-        }
-        startActivity(intent)
-    }
 
 //    val startForImageResult =
 //        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->

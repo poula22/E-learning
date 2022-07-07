@@ -8,6 +8,7 @@ import com.example.data.api.ApiManager
 import com.example.data.repos.data_sources_impl.AssignmentOnlineDataSourceImpl
 import com.example.domain.model.AssignmentAnswerResponseDTO
 import com.example.domain.model.AssignmentDetailsResponseDTO
+import com.example.domain.repos.data_sources.AssignmentOnlineDataSource
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -16,7 +17,7 @@ class StudentCourseAssignmentViewModel : ViewModel() {
     var errorMessage = MutableLiveData<String>()
     var liveData = MutableLiveData<List<AssignmentDetailsResponseDTO>>()
     val assignmentWebService = ApiManager.getAssignmentApi()
-    val assignmentOnlineDataSource = AssignmentOnlineDataSourceImpl(assignmentWebService)
+    val assignmentOnlineDataSource: AssignmentOnlineDataSource = AssignmentOnlineDataSourceImpl(assignmentWebService)
     fun getData(courseId: Int) {
         viewModelScope.launch {
             try {

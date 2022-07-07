@@ -108,16 +108,7 @@ class SigninFragment : Fragment() {
         }
 
         viewBinding.buttonSignin.setOnClickListener {
-            if (validate()) {
-                viewModel.signin(
-                    viewBinding.email.editText?.text.toString(),
-                    viewBinding.password.editText?.text.toString()
-                )
-//                viewModel.loginFirebase(
-//                    viewBinding.email.editText?.text.toString(),
-//                    viewBinding.password.editText?.text.toString()
-//                )
-            }
+            signIn()
         }
 
         viewBinding.buttonSignUp.setOnClickListener {
@@ -162,5 +153,18 @@ class SigninFragment : Fragment() {
             viewBinding.email.error = null
         }
         return isValid
+    }
+    private fun signIn(){
+        if (validate()) {
+            viewModel.signin(
+                viewBinding.email.editText?.text.toString(),
+                viewBinding.password.editText?.text.toString()
+            )
+//                viewModel.loginFirebase(
+//                    viewBinding.email.editText?.text.toString(),
+//                    viewBinding.password.editText?.text.toString()
+//                )
+        }
+
     }
 }

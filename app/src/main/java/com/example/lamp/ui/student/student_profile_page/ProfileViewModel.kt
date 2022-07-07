@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.api.ApiManager
 import com.example.data.repos.data_sources_impl.UserOnlineDataSourceImpl
 import com.example.domain.model.UserResponseDTO
+import com.example.domain.repos.data_sources.UserOnlineDataSource
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -14,7 +15,7 @@ class ProfileViewModel : ViewModel() {
     var liveData = MutableLiveData<UserResponseDTO>()
     var errorMessage = MutableLiveData<String>()
     val userWebService = ApiManager.getUserApi()
-    var userOnlineSource = UserOnlineDataSourceImpl(userWebService)
+    var userOnlineSource: UserOnlineDataSource = UserOnlineDataSourceImpl(userWebService)
     fun getUserInfo(id: Int) {
         viewModelScope.launch {
             try {

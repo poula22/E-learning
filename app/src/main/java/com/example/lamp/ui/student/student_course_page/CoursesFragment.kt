@@ -44,22 +44,31 @@ class CoursesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        subscribeToLiveData()
         //get student id from previous fragment
         initViews()
+        subscribeToLiveData()
+        getAllCourses()
+    }
+
+    private fun getAllCourses() {
         viewModel.getAllCourses()
     }
 
     fun subscribeToLiveData() {
         viewModel.coursesLiveData.observe(viewLifecycleOwner) {
             it?.let {
-                coursesRVAdapter.updateCoursesList(it)
+                updateCoursesList(it)
             }
+
         }
         viewModel.course.observe(viewLifecycleOwner) {
             Log.e("taaaaaa", it.toString())
-            viewModel.getAllCourses()
+            getAllCourses()
         }
+    }
+
+    private fun updateCoursesList(coursesList: MutableList<CourseResponseDTO>) {
+        coursesRVAdapter.updateCoursesList(coursesList)
     }
 
     private fun initViews() {
@@ -68,37 +77,50 @@ class CoursesFragment : Fragment() {
 
         coursesRVAdapter.onCourseClickListener = object : CoursesRVAdapter.OnCourseClickListener {
             override fun setOnCourseClickListener(item: CourseResponseDTO?) {
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .addToBackStack("")
-                    .replace(R.id.student_fragment_tab, StudentCourseDetails(item))
-                    .commit()
-//                viewModel.deleteCourse(item?.id!!)
-                    val bottomNavigationView: BottomNavigationView =
-                        requireActivity().findViewById(R.id.bottom_navigation_view)
-                    bottomNavigationView.isVisible = false
+                goToCourseDetails(item)
             }
         }
         studentCoursesBinding.studentCoursesRecyclerView.adapter = coursesRVAdapter
         studentCoursesBinding.joinCourseButton.setOnClickListener {
-            var courseCode: String? = null
-            val join_course = EditText(requireContext())
-            join_course.hint = "Enter course code"
-            join_course.inputType = TYPE_CLASS_NUMBER
-            MaterialAlertDialogBuilder(requireContext())
-                // Add customization options here
-                .setTitle("Join Course")
-                .setView(join_course)
-                .setPositiveButton("Join") { dialog, which ->
-                    courseCode = join_course.text.toString()
-                    if (courseCode.isNullOrEmpty()) {
-                        join_course.error = "Please enter course code"
-                    } else {
-                        viewModel.joinCourse(CONSTANTS.user_id, Integer.parseInt(courseCode))
-                    }
-                }
-                .show()
-
+            joinCourse()
         }
     }
+
+    private fun goToCourseDetails(item: CourseResponseDTO?) {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .addToBackStack("")
+            .replace(R.id.student_fragment_tab, StudentCourseDetails(item))
+            .commit()
+//                viewModel.deleteCourse(item?.id!!)
+        val bottomNavigationView: BottomNavigationView =
+            requireActivity().findViewById(R.id.bottom_navigation_view)
+        bottomNavigationView.isVisible = false
+    }
+
+    private fun joinCourse() {
+        var courseCode: String? = null
+        val joinCourse = EditText(requireContext())
+        joinCourse.hint = "Enter course code"
+        joinCourse.inputType = TYPE_CLASS_NUMBER
+        MaterialAlertDialogBuilder(requireContext())
+            // Add customization options here
+            .setTitle("Join Course")
+            .setView(joinCourse)
+            .setPositiveButton("Join") { dialog, which ->
+                courseCode = joinCourse.text.toString()
+                if (courseCode.isNullOrEmpty()) {
+                    joinCourse.error = "Please enter course code"
+                } else {
+                    courseCode?.let { Integer.parseInt(it) }?.let {
+                        viewModel.joinCourse(CONSTANTS.user_id,
+                            it
+                        )
+                    }
+                }
+            }
+            .show()
+    }
+
+
 }

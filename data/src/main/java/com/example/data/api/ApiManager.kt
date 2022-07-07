@@ -16,14 +16,14 @@ import javax.net.ssl.*
 
 class ApiManager {
     companion object {
-        var logging: HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(
+        private val logging: HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(
             HttpLoggingInterceptor.Level.BASIC
         )
-        var client: OkHttpClient = OkHttpClient.Builder()
+        private val client: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(logging)
             .build()
 
-        var unSafeClient = getUnsafeOkHttpClient()?.addInterceptor(logging)?.build()
+        private val unSafeClient = getUnsafeOkHttpClient()?.addInterceptor(logging)?.build()
         private const val BASEURL_BACKEND: String = "https://25.70.83.232:7097/"
         //192.168.8.186:7097/
         //25.70.83.232:7097/
@@ -149,6 +149,7 @@ class ApiManager {
         }
         //user
         fun getUserApi(): UserWebService {
+
             return getBackendInstance().create(UserWebService::class.java)
         }
 

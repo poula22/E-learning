@@ -16,6 +16,7 @@ import com.example.data.api.translateapi.TranslateAPI
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureTranslationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 
 
 class TranslationFragment : ExternalStorageWithMicAccessFragment() {
@@ -34,8 +35,13 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
     }
 
     override fun resultListener(byteArray: ByteArray) {
+        OCRData(byteArray)
+    }
+
+    private fun OCRData(byteArray: ByteArray) {
         viewModel.getData(byteArray)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -150,33 +156,48 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
         viewBinding.autoComplete.setAdapter(arrayAdapter)
 
         viewBinding.translateBtn.setOnClickListener {
-            val translateApi = TranslateAPI(
-                Language.AUTO_DETECT,
-                languages[arrayAdapter.getPosition(viewBinding.autoComplete.text.toString())],
-                viewBinding.textInputText.text.toString()
-            )
-            translateApi.setTranslateListener(object : TranslateAPI.TranslateListener {
-                override fun onSuccess(result: String) {
-                    viewBinding.textOutputText.setText(result)
-                }
-
-                override fun onFailure(error: String) {
-                    Toast.makeText(requireContext(), "Please Enter Text", Toast.LENGTH_SHORT).show()
-                }
-            })
-
+           translateData(languages,arrayAdapter)
         }
     }
-    override fun sendText(text: String){
-       viewBinding.textInputText.setText(text)
+
+    private fun translateData(languages: Array<String>, arrayAdapter: ArrayAdapter<String>) {
+        val translateApi = TranslateAPI(
+            Language.AUTO_DETECT,
+            languages[arrayAdapter.getPosition(viewBinding.autoComplete.text.toString())],
+            viewBinding.textInputText.text.toString()
+        )
+        translateApi.setTranslateListener(object : TranslateAPI.TranslateListener {
+            override fun onSuccess(result: String) {
+                viewBinding.textOutputText.setText(result)
+            }
+
+            override fun onFailure(error: String) {
+                Toast.makeText(requireContext(), "Please Enter Text", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
+
+    override fun sendText(text: String){
+       tranlateText(text)
+    }
+
+    private fun tranlateText(text: String) {
+        viewBinding.textInputText.setText(text)
+    }
+
     private fun subscribeToLiveData() {
-        try{
+
         viewModel.liveData.observe(
             viewLifecycleOwner
         ) {
+            getTextFromResult(it)
+        }
+    }
+
+    private fun getTextFromResult(result: ReadOperationResult) {
+        try{
             val builder = StringBuilder()
-            for (pageResult in it.analyzeResult().readResults()) {
+            for (pageResult in result.analyzeResult().readResults()) {
                 for (line in pageResult.lines()) {
                     builder.append(line.text())
                     builder.append("\n")
@@ -188,8 +209,7 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
             viewBinding.progressBar.visibility = View.GONE
             requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             viewBinding.textInputText.setText(builder)
-        }}catch (e:Exception){
+        }catch (e:Exception){
             Toast.makeText(requireContext(), "Please Enter Text", Toast.LENGTH_SHORT).show()
-        }
-    }
+        }    }
 }

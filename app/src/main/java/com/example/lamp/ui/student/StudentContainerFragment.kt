@@ -2,6 +2,7 @@ package com.example.lamp.ui.student
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -36,35 +37,39 @@ class StudentContainerFragment:Fragment() {
 
     private fun initView() {
         viewBinding.bottomNavigationView.setOnItemSelectedListener {    menuItem->
-            if(menuItem.itemId==R.id.home){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(viewBinding.studentFragmentTab.id,StudentHomeFragment())
-                    .commit()
-            }else if(menuItem.itemId==R.id.courses){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(viewBinding.studentFragmentTab.id,CoursesFragment())
-                    .commit()
-            }else if(menuItem.itemId==R.id.features){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(viewBinding.studentFragmentTab.id, FeaturesFragment())
-                    .commit()
-            }else if(menuItem.itemId==R.id.websites){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(viewBinding.studentFragmentTab.id, WebSitesFragment())
-                    .commit()
-            } else if(menuItem.itemId==R.id.profile){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(viewBinding.studentFragmentTab.id, ProfileFragment())
-                    .commit()
-            }
+            goToFragment(menuItem)
             return@setOnItemSelectedListener true
         }
         //home menu
        viewBinding.bottomNavigationView.selectedItemId=R.id.home
+    }
+
+    private fun goToFragment(menuItem: MenuItem) {
+        if(menuItem.itemId==R.id.home){
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(viewBinding.studentFragmentTab.id,StudentHomeFragment())
+                .commit()
+        }else if(menuItem.itemId==R.id.courses){
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(viewBinding.studentFragmentTab.id,CoursesFragment())
+                .commit()
+        }else if(menuItem.itemId==R.id.features){
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(viewBinding.studentFragmentTab.id, FeaturesFragment())
+                .commit()
+        }else if(menuItem.itemId==R.id.websites){
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(viewBinding.studentFragmentTab.id, WebSitesFragment())
+                .commit()
+        } else if(menuItem.itemId==R.id.profile){
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(viewBinding.studentFragmentTab.id, ProfileFragment())
+                .commit()
+        }
     }
 }

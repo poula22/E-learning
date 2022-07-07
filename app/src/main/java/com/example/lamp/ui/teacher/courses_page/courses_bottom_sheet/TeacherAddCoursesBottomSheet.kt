@@ -62,10 +62,14 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
                     CourseResponseDTO(
                         courseName,"",CONSTANTS.user_id,null, description
                     )
-                viewModel.AddCourse(courseDTO)
+                addCourse(courseDTO)
 
             }
         }
+    }
+
+    private fun addCourse(courseDTO: CourseResponseDTO) {
+        viewModel.AddCourse(courseDTO)
     }
 
     fun validateForm(): Boolean {

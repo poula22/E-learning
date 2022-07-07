@@ -51,6 +51,10 @@ class StudentCourseMaterialFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
         initViews()
+        getCoursesLessons()
+    }
+
+    private fun getCoursesLessons() {
         viewModel.getCourseLessons(courseId)
     }
 
@@ -61,11 +65,15 @@ class StudentCourseMaterialFragment() : Fragment() {
         playYoutubeVideo()
         adapter.onLessonClickListener = object : StudentCourseLessonsAdapter.OnLessonClickListener {
             override fun onLessonClick(lessonId: Int) {
-                viewModel.getLessonContent(lessonId)
+                getCourseLessonContent(lessonId)
             }
         }
         viewBinding.lessonsRecyclerView.adapter = adapter
         //        viewBinding.contentTextHtml.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+    }
+
+    private fun getCourseLessonContent(lessonId: Int) {
+        viewModel.getLessonContent(lessonId)
     }
 
     private fun playTeacherVideo(path: String? = null) {
@@ -94,7 +102,7 @@ class StudentCourseMaterialFragment() : Fragment() {
     private fun subscribeToLiveData() {
         viewModel.LessonsLiveData.observe(viewLifecycleOwner) {
             it?.let {
-                adapter.updateLessonsList(it)
+                updateLessonsList(it)
             }
         }
         viewModel.contentLiveData.observe(viewLifecycleOwner) {
@@ -118,6 +126,10 @@ class StudentCourseMaterialFragment() : Fragment() {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun updateLessonsList(it: List<LessonResponseDTO>) {
+        adapter.updateLessonsList(it)
     }
 
 
