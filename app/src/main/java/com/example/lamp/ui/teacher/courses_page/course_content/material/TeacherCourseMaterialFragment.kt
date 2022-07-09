@@ -19,6 +19,8 @@ import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import org.apache.commons.io.FileUtils
+import java.io.File
 
 
 class TeacherCourseMaterialFragment : Fragment() {
@@ -57,12 +59,31 @@ class TeacherCourseMaterialFragment : Fragment() {
                 contentResponseDTO.forEach { content ->
                     Log.v("contentResponseDTO", contentResponseDTO.toString())
                     content.link?.let { it1 -> loadVideo(it1) }
+                    content.videoPath?.let { it1 ->
+                        var str=it1.replace("\\\\Abanoub\\wwwroot\\"," https://25.70.83.232:7097/")
+                        str=str.replace("\\","/")
+                        Log.e("str",str)
+                        //63508411-35e9-4cc3-ad23-11df33cad213.mp4
+                        //str.substring(str.lastIndexOf("/"))
+                        viewModel.getVideo("63508411-35e9-4cc3-ad23-11df33cad213.mp4")
+                         }
                 }
             }
 
         }
         viewModel.LessonsLiveData.observe(viewLifecycleOwner) {
             adapter.changeData(it)
+        }
+        viewModel.VideoLiveData.observe(viewLifecycleOwner){
+            Log.e("VideoLiveData",it.toString())
+            val file =
+                File.createTempFile(
+                    "test",
+                    ".mp4",
+                    requireContext().cacheDir
+                )
+            FileUtils.copyInputStreamToFile(it.byteStream(), file)
+            viewBinding.videoPlayer.setVideoPath(file.absolutePath)
         }
     }
 
@@ -96,7 +117,7 @@ class TeacherCourseMaterialFragment : Fragment() {
         adapter = TeacherCourseLessonsAdapter()
         adapter.onItemClickListener = object : TeacherCourseLessonsAdapter.OnItemClickListener {
             override fun onItemClick(lesson: LessonResponseDTO) {
-                lesson.id?.let { viewModel.getLessonContent(21) }
+                lesson.id?.let { viewModel.getLessonContent(7) }
             }
 
         }
@@ -105,9 +126,10 @@ class TeacherCourseMaterialFragment : Fragment() {
 
         viewBinding.addLessonButton.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.teacher_course_content_container, TeacherCourseAddLessonFragment())
                 .addToBackStack("")
+                .replace(R.id.teacher_fragment_tab, TeacherCourseAddLessonFragment())
                 .commit()
+            //                .addToBackStack("")
         }
 
     }

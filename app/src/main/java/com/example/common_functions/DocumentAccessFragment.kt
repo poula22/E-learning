@@ -31,6 +31,20 @@ abstract class DocumentAccessFragment:Fragment() {
         )
 
     }
+    fun uploadVideo() {
+        startForImageResult.launch(
+            Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "video/*"
+                putExtra(
+                    Intent.EXTRA_MIME_TYPES, arrayOf(
+                        "video/*"
+                    )
+                )
+            }
+        )
+
+    }
 
     fun upDoc(){
 

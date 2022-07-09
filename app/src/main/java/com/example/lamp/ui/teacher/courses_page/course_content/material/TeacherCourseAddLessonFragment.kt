@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -29,11 +30,12 @@ import java.util.*
 class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
     lateinit var viewBinding: FragmentTeacherCourseAddSectionBinding
     lateinit var viewModel: TeacherCourseAddLessonViewModel
-    var flag:Boolean=false
-    var lessonId =-1
-    var file:File?=null
+    private var flag:Boolean=false
+    private var lessonId =-1
+    private var pdfFile:File?=null
+    private var Videoile:File?=null
     override fun showProgressBar() {
-        TODO("Not yet implemented")
+
     }
 
     override fun resultListener(byteArray: ByteArray) {
@@ -42,13 +44,18 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
             val file =
                 File.createTempFile(
                     "test",
-                    ".pdf",
+                    filePath?.lastIndexOf(".")?.let { filePath?.substring(it-1) },
                     requireContext().cacheDir
                 )
             FileUtils.copyInputStreamToFile(inputStream, file)
-            if (file.exists() == true) {
-                this.file = file
+            if (file.exists()) {
+                if (file.extension=="pdf"){
+                    pdfFile=file
+                }else{
+                    Videoile=file
+                }
             }
+            requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         }catch (e:Exception){
             Log.v("Exception",e.toString())
         }
@@ -87,17 +94,17 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
                 "",
                 "",
                 link = viewBinding.youtubeLink.text.toString(),
-                21,
+                7,
                 0,
                 "",
                 "2022-07-05T15:42:32.723Z"
             )
 
-            viewModel.addContent(content,file)
+            viewModel.addContent(content,pdfFile,Videoile)
         }
         viewModel.contentLiveData.observe(viewLifecycleOwner){
             Toast.makeText(requireContext(), "added successfully", Toast.LENGTH_SHORT).show()
-            requireActivity().supportFragmentManager.popBackStack()
+//            requireActivity().supportFragmentManager.popBackStack()
         }
         viewModel.errorMessage.observe(viewLifecycleOwner){
             Toast.makeText(context,it,Toast.LENGTH_LONG).show()
@@ -107,19 +114,14 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
     @SuppressLint("SetTextI18n")
     private fun initViews() {
         viewBinding.addVideoBtn.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "video/*"
-            startActivityForResult(intent, CONSTANTS.VIDEO_REQUEST_CODE)
+//            val intent = Intent(Intent.ACTION_PICK)
+//            intent.type = "video/*"
+//            startActivityForResult(intent, CONSTANTS.VIDEO_REQUEST_CODE)
+            uploadVideo()
         }
 
         viewBinding.attachFileBtn.setOnClickListener {
-            val intent = Intent()
-                .setType("*/*")
-                .setAction(Intent.ACTION_GET_CONTENT)
-            startActivityForResult(
-                Intent.createChooser(intent, "Select a file"),
-                CONSTANTS.FILE_REQUEST_CODE
-            )
+           uploadDoc()
         }
 
         viewBinding.createBtn.setOnClickListener {
@@ -144,7 +146,7 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
                 "2022-07-05T15:42:32.723Z"
                 )
 
-                viewModel.addContent(content,file)
+                viewModel.addContent(content,pdfFile,Videoile)
             }
 
 

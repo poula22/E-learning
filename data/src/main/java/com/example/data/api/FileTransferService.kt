@@ -12,5 +12,6 @@ interface FileTransferService {
     @GET("Images/{name}")
     suspend fun getFile(@Path("name") fileName:String): ResponseBody
 
-
+    @GET("Videos/{name}")
+    suspend fun getVideo(@Path("name") fileName:String): ResponseBody
 }

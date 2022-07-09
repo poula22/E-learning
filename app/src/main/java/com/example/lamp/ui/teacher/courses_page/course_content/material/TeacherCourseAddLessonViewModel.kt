@@ -14,6 +14,7 @@ import com.example.domain.repos.MaterialRepository
 import com.example.domain.repos.data_sources.ContentOnlineDataSource
 import com.example.domain.repos.data_sources.LessonOnlineDataSource
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -49,28 +50,30 @@ class TeacherCourseAddLessonViewModel:ViewModel() {
         }
     }
 
-    fun addContent(contentResponseDTO: ContentResponseDTO,file:File?){
-        viewModelScope.launch {
+    fun addContent(contentResponseDTO: ContentResponseDTO,pdfFile:File?,videoFile:File?){
+        runBlocking {
             try {
                 val part = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("link", contentResponseDTO.link ?: "")
                     .addFormDataPart("lessonId",contentResponseDTO.lessonId.toString())
                     .addFormDataPart("showDate",contentResponseDTO.showDate ?: "")
-                if (file!=null){
-                    part.addFormDataPart("pdf",file.name,file.asRequestBody("application/pdf".toMediaTypeOrNull()))
+                if (pdfFile!=null){
+                    part.addFormDataPart("pdfPath",pdfFile.name,pdfFile.asRequestBody("application/pdf".toMediaTypeOrNull()))
                 }
-                val requestBody: RequestBody=part.build()
+                if (videoFile!=null){
+                    part.addFormDataPart("videoPath",videoFile.name,videoFile.asRequestBody("video/*".toMediaTypeOrNull()))
+                }
 
+                val requestBody: RequestBody=part.build()
                 contentLiveData.value = materialRepository.addContent(requestBody)
+
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
                         errorMessage.value = t.response()?.errorBody()?.string()
                     }
-                    else -> {
-                        println("unknown error")
-                    }
+
                 }
             }
         }
