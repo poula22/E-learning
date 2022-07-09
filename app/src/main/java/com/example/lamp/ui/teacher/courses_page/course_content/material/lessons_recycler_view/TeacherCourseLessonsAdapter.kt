@@ -10,7 +10,11 @@ import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseMaterialBinding
 
 class TeacherCourseLessonsAdapter(var lessonList:MutableList<LessonResponseDTO>?=null):RecyclerView.Adapter<TeacherCourseLessonsAdapter.ViewHolder>(){
-
+    init {
+        if (lessonList == null) {
+            lessonList = mutableListOf()
+        }
+    }
     class ViewHolder(var viewBinding:ItemTeacherCourseMaterialBinding):RecyclerView.ViewHolder(viewBinding.root){
         fun expandCollapseView() {
             viewBinding.detailsBtn.setOnClickListener {

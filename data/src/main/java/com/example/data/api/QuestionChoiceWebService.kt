@@ -2,6 +2,7 @@ package com.example.data.api
 
 import com.example.data.model.QuestionChoiceResponse
 import com.example.domain.model.QuestionChoiceResponseDTO
+import retrofit2.Response
 import retrofit2.http.*
 
 interface QuestionChoiceWebService {
@@ -10,7 +11,7 @@ interface QuestionChoiceWebService {
     suspend fun getAllQuestionChoices(): List<QuestionChoiceResponse>
 
     @POST("api/QuestionChoices")
-    suspend fun addQuestionChoices(@Body questionChoice: QuestionChoiceResponseDTO): QuestionChoiceResponse
+    suspend fun addQuestionChoices(@Body questionChoices: QuestionChoiceResponseDTO): Response<Void>
 
     @PUT("api/QuestionChoices/{id}")
     suspend fun updateQuestionChoices(
@@ -28,6 +29,6 @@ interface QuestionChoiceWebService {
     suspend fun getQuestionChoicesByQuestionId(@Path("questionId") questionId: Int): List<QuestionChoiceResponse>
 
     @POST("api/QuestionAnswers/PostMultipleQuestionChoices")
-    suspend fun postMultipleQuestionChoices(@Body questionChoice: QuestionChoiceResponseDTO): QuestionChoiceResponse
+    suspend fun postMultipleQuestionChoices(@Body questionChoices: List<QuestionChoiceResponseDTO>): Response<Void>
 
 }

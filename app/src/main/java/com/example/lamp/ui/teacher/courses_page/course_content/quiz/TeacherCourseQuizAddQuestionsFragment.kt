@@ -1,6 +1,7 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.quiz
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.CONSTANTS
 import com.example.common_functions.CommonFunctions
-import com.example.data.model.convertTo
-import com.example.domain.model.QuestionResponseDTO
+import com.example.domain.model.QuestionChoiceResponseDTO
 import com.example.domain.model.QuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizAddQuestionsBinding
@@ -55,9 +56,24 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragmen
         viewModel.errorMessage.observe(viewLifecycleOwner) {
 
         }
-        viewModel.liveData.observe(viewLifecycleOwner) {
-            //pass answers to adapter
-            adapter.changeAnswers(it)
+        viewModel.quizLiveData.observe(viewLifecycleOwner) {
+            Log.d("quiz", it.toString())
+
+            viewModel.postAllQuestions(adapter.questions,it)
+
+        }
+        viewModel.questionLiveData.observe(viewLifecycleOwner) {
+//            Toast.makeText(requireContext(), "quiz added successfully", Toast.LENGTH_SHORT).show()
+            //get question answers from adapter
+            val answers = adapter.getQuestion(it)?.answers
+            val postedAnswers=answers?.map { answerItem ->
+                answerItem.questionChoiceResponseDTO?.id=it.id
+                answerItem.questionChoiceResponseDTO
+            }
+            viewModel.addChoices(postedAnswers as List<QuestionChoiceResponseDTO>)
+        }
+        viewModel.choicesLiveData.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it.code(), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -65,13 +81,13 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragmen
         viewBinding.quizTitleEdit.setText(quiz.title)
         viewBinding.quizInstructionsEdit.setText(quiz.instructions)
         val adapter = TeacherQuizQuestionsAdapter()
-        adapter.onQuestionAddedListener =
-            object : TeacherQuizQuestionsAdapter.OnQuestionAddedListener {
-                override fun onQuestionAdded(question: QuestionResponseDTO) {
-                    viewModel.addQuiz(question.convertTo(QuestionResponseDTO::class.java))
-                }
-
-            }
+//        adapter.onQuestionAddedListener =
+//            object : TeacherQuizQuestionsAdapter.OnQuestionAddedListener {
+//                override fun onQuestionAdded(question: QuestionResponseDTO) {
+//                    viewModel.addQuiz(question.convertTo(QuestionResponseDTO::class.java))
+//                }
+//
+//            }
         viewBinding.quizEditQuestionsList.adapter = adapter
 
         if (adapter.itemCount == 0) {
@@ -86,9 +102,17 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragmen
         }
 
         viewBinding.saveBtn.setOnClickListener {
-            Toast.makeText(context, "Saved successfully", Toast.LENGTH_SHORT).show()
-            //insert in database
-            requireActivity().supportFragmentManager.popBackStack()
+            val quiz=QuizResponseDTO(
+                id=8,
+                title = viewBinding.quizTitleEdit.text.toString(),
+                instructions = viewBinding.quizInstructionsEdit.text.toString(),
+                courseId = CONSTANTS.courseId
+
+            )
+            viewModel.updateQuiz(quiz)
+
+            //add quiz
+//            requireActivity().supportFragmentManager.popBackStack()
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
     }

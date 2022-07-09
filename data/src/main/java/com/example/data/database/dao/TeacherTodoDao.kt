@@ -2,6 +2,7 @@ package com.example.data.database.dao
 
 import androidx.room.*
 import com.example.data.model.entities.TeacherTodo
+import com.example.domain.model.TodoDTO
 import java.util.*
 
 @Dao

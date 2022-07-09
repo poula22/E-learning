@@ -2,6 +2,7 @@ package com.example.data.api
 
 import com.example.data.model.LessonResponse
 import com.example.domain.model.LessonResponseDTO
+import retrofit2.Response
 import retrofit2.http.*
 
 interface LessonWebService {
@@ -9,7 +10,7 @@ interface LessonWebService {
     suspend fun getAllLessons(): List<LessonResponse>
 
     @POST("api/Lessons")
-    suspend fun addLesson(@Body lesson: LessonResponseDTO): LessonResponse
+    suspend fun addLesson(@Body lesson: LessonResponseDTO): Response<Void>
 
     @GET("api/Lessons/{id}")
     suspend fun getLesson(@Path("id") id: Int): LessonResponse

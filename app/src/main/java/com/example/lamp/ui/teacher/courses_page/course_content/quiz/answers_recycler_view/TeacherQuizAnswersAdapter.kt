@@ -10,6 +10,7 @@ import com.example.domain.model.QuestionChoiceResponseDTO
 import com.example.domain.model.QuestionResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizQuestionAnswerBinding
+import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
 
 class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?=null) :
     RecyclerView.Adapter<TeacherQuizAnswersAdapter.ViewHolder>() {
@@ -36,8 +37,17 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?=null) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item=answers?.get(position)
+        val call=object :TeacherQuizQuestionsAdapter.GetAnswersListener{
+            override fun getAnswers(): MutableList<AnswerItem>? {
+                return this@TeacherQuizAnswersAdapter.answers
+            }
+
+        }
+        TeacherQuizQuestionsAdapter.getAnswersListener=call
         holder.viewBinding.item=item
         holder.viewBinding.answerListItemAnswerText.addTextChangedListener {
+            if (item!=null)
+                answers?.set(position,item)
             Log.v("pos:::",item.toString())
         }
         holder.viewBinding.answerListItemDelete.setOnClickListener {

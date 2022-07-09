@@ -17,13 +17,15 @@ import retrofit2.HttpException
 
 class StudentCourseMaterialViewModel : ViewModel() {
     var errorMessage = MutableLiveData<String>()
-    val lessonWebService = ApiManager.getLessonApi()
-    val contentWebService = ApiManager.getContentApi()
-    val lessonOnlineDataSource: LessonOnlineDataSource = LessonOnlineDataSourceImpl(lessonWebService)
-    val contentOnlineDataSource: ContentOnlineDataSource = ContentOnlineDataSourceImpl(contentWebService)
-    val materialRepository:MaterialRepository=MaterialRepositoryImpl(lessonOnlineDataSource,contentOnlineDataSource)
     var LessonsLiveData = MutableLiveData<List<LessonResponseDTO>>()
     var contentLiveData = MutableLiveData<List<ContentResponseDTO>>()
+
+    private val lessonWebService = ApiManager.getLessonApi()
+    private val contentWebService = ApiManager.getContentApi()
+    private val lessonOnlineDataSource: LessonOnlineDataSource = LessonOnlineDataSourceImpl(lessonWebService)
+    private val contentOnlineDataSource: ContentOnlineDataSource = ContentOnlineDataSourceImpl(contentWebService)
+    private val materialRepository:MaterialRepository=MaterialRepositoryImpl(lessonOnlineDataSource,contentOnlineDataSource)
+
 
     fun getCourseLessons(courseId: Int) {
         viewModelScope.launch {

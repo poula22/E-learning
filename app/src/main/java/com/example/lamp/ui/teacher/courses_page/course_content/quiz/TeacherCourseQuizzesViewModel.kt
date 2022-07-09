@@ -13,13 +13,30 @@ import retrofit2.HttpException
 class TeacherCourseQuizzesViewModel : ViewModel() {
 
     val liveData = MutableLiveData<List<QuizResponseDTO>>()
+    val quizLiveData = MutableLiveData<QuizResponseDTO>()
     val errorMessage = MutableLiveData<String>()
-    val quizService = ApiManager.getQuizApi()
-    val quizOnlineDataSource = QuizOnlineDataSourceImpl(quizService)
+    private val quizService = ApiManager.getQuizApi()
+    private val quizOnlineDataSource = QuizOnlineDataSourceImpl(quizService)
     fun getAllQuizzes() {
         viewModelScope.launch {
             try {
                 liveData.value = quizOnlineDataSource.getQuizzesByCourseId(CONSTANTS.courseId)
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.response()?.errorBody()?.string()
+                    }
+                    else -> {
+                        println("unknown error")
+                    }
+                }
+            }
+        }
+    }
+    fun addQuiz(quiz: QuizResponseDTO) {
+        viewModelScope.launch {
+            try {
+                quizLiveData.value = quizOnlineDataSource.createQuiz(quiz)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {

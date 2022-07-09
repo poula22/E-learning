@@ -4,22 +4,60 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
 import com.example.common_functions.CommonFunctions.Companion.calendar
 import com.example.common_functions.CommonFunctions.Companion.showDatePicker
+import com.example.common_functions.DocumentAccessFragment
+import com.example.domain.model.AssignmentAnswerResponseDTO
+import com.example.domain.model.ContentResponseDTO
+import com.example.domain.model.LessonResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddSectionBinding
+import org.apache.commons.io.FileUtils
+import java.io.File
 import java.util.*
 
 
-class TeacherCourseAddLessonFragment : Fragment() {
+class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
     lateinit var viewBinding: FragmentTeacherCourseAddSectionBinding
+    lateinit var viewModel: TeacherCourseAddLessonViewModel
+    var flag:Boolean=false
+    var lessonId =-1
+    var file:File?=null
+    override fun showProgressBar() {
+        TODO("Not yet implemented")
+    }
+
+    override fun resultListener(byteArray: ByteArray) {
+        try {
+            val inputStream=fileUri?.let { requireActivity().contentResolver.openInputStream(it) }
+            val file =
+                File.createTempFile(
+                    "test",
+                    ".pdf",
+                    requireContext().cacheDir
+                )
+            FileUtils.copyInputStreamToFile(inputStream, file)
+            if (file.exists() == true) {
+                this.file = file
+            }
+        }catch (e:Exception){
+            Log.v("Exception",e.toString())
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TeacherCourseAddLessonViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,7 +74,34 @@ class TeacherCourseAddLessonFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.lessonLiveData.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), "added successfully", Toast.LENGTH_SHORT).show()
+            flag=true
+            //change 21 to lessonId
+            val content= ContentResponseDTO(
+                "",
+                "",
+                link = viewBinding.youtubeLink.text.toString(),
+                21,
+                0,
+                "",
+                "2022-07-05T15:42:32.723Z"
+            )
+
+            viewModel.addContent(content,file)
+        }
+        viewModel.contentLiveData.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), "added successfully", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+            Toast.makeText(context,it,Toast.LENGTH_LONG).show()
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -60,7 +125,29 @@ class TeacherCourseAddLessonFragment : Fragment() {
         viewBinding.createBtn.setOnClickListener {
             Toast.makeText(context, "saved successfully", Toast.LENGTH_SHORT).show()
             //insert in database
-            requireActivity().supportFragmentManager.popBackStack()
+            if (!flag){
+                val lesson=LessonResponseDTO(
+                    viewBinding.description.text.toString(),
+                    0,
+                    viewBinding.sectionTitle.text.toString(),
+                    CONSTANTS.courseId)
+                viewModel.addLesson(lesson)
+            }
+            if (lessonId!=-1){
+                val content= ContentResponseDTO(
+                    "",
+                    "",
+                link = viewBinding.youtubeLink.text.toString(),
+                lessonId,
+                0,
+                "",
+                "2022-07-05T15:42:32.723Z"
+                )
+
+                viewModel.addContent(content,file)
+            }
+
+
         }
 
         viewBinding.publishDate.setText(

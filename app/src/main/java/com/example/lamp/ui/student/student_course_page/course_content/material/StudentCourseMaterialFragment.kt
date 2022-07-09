@@ -2,6 +2,7 @@ package com.example.lamp.ui.student.student_course_page.course_content.material
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -107,17 +108,7 @@ class StudentCourseMaterialFragment() : Fragment() {
         }
         viewModel.contentLiveData.observe(viewLifecycleOwner) {
             it?.let { contentResponseDTO ->
-                contentResponseDTO.forEach { content ->
-                    if (content.path?.contains("https://www.youtube.com") == true) {
-                        playYoutubeVideo(content.path!!)
-                    } else if (content.fileName?.contains(".pdf") == true) {
-
-                    } else if (content.fileName?.contains("text") == true) {
-
-                    } else {
-                        playTeacherVideo(content.path!!)
-                    }
-                }
+                Log.v("contentResponseDTO", contentResponseDTO.toString())
             }
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {

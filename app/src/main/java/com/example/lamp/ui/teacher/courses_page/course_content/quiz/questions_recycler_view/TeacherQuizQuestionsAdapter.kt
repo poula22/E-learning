@@ -21,7 +21,9 @@ import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recy
 class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = null) :
     RecyclerView.Adapter<TeacherQuizQuestionsAdapter.ViewHolder>() {
 //    var answers: MutableList<AnswerItem> = mutableListOf()
-
+    companion object{
+        var getAnswersListener: GetAnswersListener? = null
+    }
     init {
         if (questions==null){
             questions= mutableListOf()
@@ -46,8 +48,14 @@ class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = nu
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item=questions?.get(position)
+        if (item?.question==null){
+            item?.question=QuestionResponseDTO()
+        }
         holder.viewBinding.item=item?.question
         holder.viewBinding.createQuestionQuestionText.addTextChangedListener{
+            if (item!=null)
+                questions?.set(position, item!!)
+
             Log.v("pos:::",item.toString())
         }
 
@@ -91,14 +99,24 @@ class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = nu
 //        answerAdapter.notifyDataSetChanged()
     }
 
-    fun changeAnswers(questionChoices: List<QuestionChoiceResponseDTO>?) {
-//        answerAdapter.changeAnswers(questionChoices)
+    fun getQuestion(questionResponseDTO: QuestionResponseDTO): QuestionItem? {
+        var questionItem:QuestionItem?=null
+        questions?.forEach {
+            if (it.question==questionResponseDTO){
+                questionItem=it
+            }
+        }
+        return questionItem
     }
 
-    var onQuestionAddedListener:OnQuestionAddedListener?=null
-    interface OnQuestionAddedListener{
-        fun onQuestionAdded(question: QuestionResponseDTO)
-    }
+interface GetAnswersListener{
+    fun getAnswers():MutableList<AnswerItem>?
+}
+
+//    var onQuestionAddedListener:OnQuestionAddedListener?=null
+//    interface OnQuestionAddedListener{
+//        fun onQuestionAdded(question: QuestionResponseDTO)
+//    }
 
     class ViewHolder(val viewBinding: ItemTeacherCourseQuizCreateQuestionBinding) :
         RecyclerView.ViewHolder(viewBinding.root)

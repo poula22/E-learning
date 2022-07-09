@@ -14,8 +14,8 @@ class TodoRepositoryImp(var offlineDataSource: TodoOfflineDataSource) : TodoRepo
         offlineDataSource.updateTodo(todo)
     }
 
-    override fun removeTodo(todo: TodoDTO) {
-        offlineDataSource.removeTodo(todo)
+    override fun removeTodo(todo: TodoDTO):TodoDTO {
+       return offlineDataSource.removeTodo(todo)
     }
 
     override fun removeAll() {

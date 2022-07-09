@@ -2,6 +2,7 @@ package com.example.lamp.ui.teacher.courses_page.course_content.material
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,6 @@ import com.example.common_functions.CONSTANTS
 import com.example.domain.model.LessonResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseMaterialBinding
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.TeacherCourseLessonsAdapter
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -29,6 +29,8 @@ class TeacherCourseMaterialFragment : Fragment() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(TeacherCourseMaterialViewModel::class.java)
     }
+    lateinit var listener:AbstractYouTubePlayerListener
+    lateinit var youTubePlayer: YouTubePlayer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,15 +55,8 @@ class TeacherCourseMaterialFragment : Fragment() {
         viewModel.contentLiveData.observe(viewLifecycleOwner) {
             it?.let { contentResponseDTO ->
                 contentResponseDTO.forEach { content ->
-                    if (content.path?.contains("https://www.youtube.com") == true) {
-                        playYoutubeVideo(content.path!!)
-                    } else if (content.fileName?.contains(".pdf") == true) {
-
-                    } else if (content.fileName?.contains("text") == true) {
-
-                    } else {
-                        viewBinding.videoPlayer.setVideoPath(content.path)
-                    }
+                    Log.v("contentResponseDTO", contentResponseDTO.toString())
+                    content.link?.let { it1 -> loadVideo(it1) }
                 }
             }
 
@@ -86,13 +81,22 @@ class TeacherCourseMaterialFragment : Fragment() {
             //preparing
             it.start()
         }
+        val youTubePlayerView: YouTubePlayerView = viewBinding.youtubePlayerView
+        lifecycle.addObserver(youTubePlayerView)
+        listener=object : AbstractYouTubePlayerListener() {
+            override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
+                setVideoLoader(youTubePlayer)
+                loadVideo("https://www.youtube.com/watch?v=BGkL2Pq-g3A&list=RDBGkL2Pq-g3A&start_radio=1")
+            }
+        }
+        youTubePlayerView.addYouTubePlayerListener(listener)
 
         // youtube player
-        playYoutubeVideo()
+
         adapter = TeacherCourseLessonsAdapter()
         adapter.onItemClickListener = object : TeacherCourseLessonsAdapter.OnItemClickListener {
             override fun onItemClick(lesson: LessonResponseDTO) {
-                lesson.id?.let { viewModel.getLessonContent(it) }
+                lesson.id?.let { viewModel.getLessonContent(21) }
             }
 
         }
@@ -108,17 +112,24 @@ class TeacherCourseMaterialFragment : Fragment() {
 
     }
 
+    private fun loadVideo(path: String) {
+        youTubePlayer.loadVideo(playYoutubeVideo(path), 0f)
+    }
 
-    private fun playYoutubeVideo(path: String? = null) {
-        val youTubePlayerView: YouTubePlayerView = viewBinding.youtubePlayerView
-        lifecycle.addObserver(youTubePlayerView)
-        val videoId =
-            getYoutubeVideoId("https://www.youtube.com/watch?v=TiGgOmRBap4&list=RDCLAK5uy_m5j6nB_IPvvtoiErZo8aUsj_8pcUHLqUQ&index=27")
-        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(videoId, 0f)
-            }
-        })
+    private fun setVideoLoader(youTubePlayer: YouTubePlayer,) {
+        this.youTubePlayer = youTubePlayer
+    }
+
+
+
+    private fun playYoutubeVideo(path: String? = null):String {
+        if (path!=null){
+            Log.e("path",path)
+            val videoId =
+                getYoutubeVideoId(path)
+            return videoId
+        }
+        return ""
     }
 
     private fun getYoutubeVideoId(youtubeUrl: String): String {

@@ -43,6 +43,7 @@ class TeacherQuizAdapter(var quizzes: MutableList<QuizResponseDTO>? = null) :
     fun changeData(quizList: List<QuizResponseDTO>?) {
         quizzes?.clear()
         quizzes=quizList?.toMutableList()
+        notifyDataSetChanged()
     }
 
     class ViewHolder(val viewBinding: ItemTeacherCourseQuizCardBinding) :

@@ -6,11 +6,12 @@ import com.example.domain.repos.MaterialRepository
 import com.example.domain.repos.data_sources.ContentOnlineDataSource
 import com.example.domain.repos.data_sources.LessonOnlineDataSource
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Response
 
 class MaterialRepositoryImpl(
-    val lessonOnlineDataSource: LessonOnlineDataSource,
-    val contentOnlineDataSource: ContentOnlineDataSource,
-    override var callResult: MaterialRepository.CallResult? = null
+    private val lessonOnlineDataSource: LessonOnlineDataSource,
+    private val contentOnlineDataSource: ContentOnlineDataSource
 ) : MaterialRepository {
     override suspend fun getAllLessons(): List<LessonResponseDTO> {
         try {
@@ -20,7 +21,7 @@ class MaterialRepositoryImpl(
         }
     }
 
-    override suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO {
+    override suspend fun addLesson(lesson: LessonResponseDTO): Response<Void> {
         try {
             return lessonOnlineDataSource.addLesson(lesson)
         } catch (throwable: Throwable) {
@@ -60,9 +61,9 @@ class MaterialRepositoryImpl(
         }
     }
 
-    override suspend fun addContent(content: ContentResponseDTO): ContentResponseDTO {
+    override suspend fun addContent(body: RequestBody): Response<Void> {
         try {
-            return contentOnlineDataSource.addContent(content)
+            return contentOnlineDataSource.addContent(body)
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -108,9 +109,9 @@ class MaterialRepositoryImpl(
         }
     }
 
-    override fun updateContentFileByContentId(contentId: Int, file: MultipartBody.Part) {
+    override suspend fun updateContentFileByContentId(body: RequestBody) :ContentResponseDTO {
         try {
-            contentOnlineDataSource.updateContentFileByContentId(contentId, file)
+            return contentOnlineDataSource.updateContentFileByContentId(body)
         } catch (throwable: Throwable) {
             throw throwable
         }

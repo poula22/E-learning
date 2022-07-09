@@ -12,8 +12,8 @@ import retrofit2.HttpException
 class StudentQuizViewModel : ViewModel() {
     val liveData = MutableLiveData<List<QuizDetailsResponseDTO>>()
     val errorMessage = MutableLiveData<String>()
-    val webService = ApiManager.getQuestionApi()
-    val onlineDataSource = QuestionOnlineDataSourceImpl(webService)
+    private val webService = ApiManager.getQuestionApi()
+    private val onlineDataSource = QuestionOnlineDataSourceImpl(webService)
     fun getQuizQuestions(quizId: Int) {
         viewModelScope.launch {
             try {

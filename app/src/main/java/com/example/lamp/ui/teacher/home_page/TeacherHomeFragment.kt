@@ -61,12 +61,23 @@ class TeacherHomeFragment : Fragment() {
         viewModel.liveData.observe(
             viewLifecycleOwner
         ) {
-
             Log.v(
                 "poula: ",
                 it.toString()
             )
+            adapter.changeData(it)
+        }
 
+        viewModel.removeLiveData.observe(
+            viewLifecycleOwner
+        ) {
+            Log.v(
+                "poula: ","removed"
+            )
+        }
+        viewModel.coursesLiveData.observe(viewLifecycleOwner){
+            Log.v("poula: ",it.toString())
+            viewBinding.coursesCode.setText(it.size)
         }
     }
 
@@ -76,9 +87,10 @@ class TeacherHomeFragment : Fragment() {
     }
 
     var calendar = Calendar.getInstance()
+
     fun getTodosListFromDB() {
-        val todoList = viewModel.repository.getTodoByDate(calendar.clearTime().time)
-        adapter.changeData(todoList)
+        viewModel.getTodoByDate(calendar.clearTime().time)
+
     }
 
     private fun initViews() {
@@ -156,7 +168,7 @@ class TeacherHomeFragment : Fragment() {
                     val position = viewHolder.absoluteAdapterPosition
                     val todo = adapter.todoList?.get(position)
                     adapter.todoList?.removeAt(position)
-                    viewModel.repository.removeTodo(todo!!)
+                    viewModel.removeTodo(todo!!)
                     adapter.notifyItemRemoved(position)
                 }
                 .setNegativeButton("No") { dialog, which ->

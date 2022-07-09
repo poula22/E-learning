@@ -305,15 +305,11 @@ class AssignmentOnlineDataSourceImpl(
 
 }
 
-class ContentOnlineDataSourceImpl(
-    val service: ContentWebService,
-    override var callResult: ContentOnlineDataSource.CallResult?=null
-) :
-    ContentOnlineDataSource {
-    override suspend fun addContent(content: ContentResponseDTO): ContentResponseDTO {
+class ContentOnlineDataSourceImpl(val service: ContentWebService) : ContentOnlineDataSource {
+    override suspend fun addContent(body: RequestBody): Response<Void> {
         try {
-            val response = service.addContent(content)
-            return response.convertTo(ContentResponseDTO::class.java)
+            val response = service.addContent(body)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -364,26 +360,11 @@ class ContentOnlineDataSourceImpl(
         }
     }
 
-    override fun updateContentFileByContentId(contentId: Int, file: MultipartBody.Part) {
+    override suspend fun updateContentFileByContentId(body:RequestBody):ContentResponseDTO {
         //callback
         try {
-            val response = service.updateContentFileByContentId(contentId, file)
-            response.enqueue(
-                object : Callback<ContentResponse> {
-                    override fun onResponse(
-                        call: Call<ContentResponse>,
-                        response: Response<ContentResponse>
-                    ) {
-                        response.body()?.convertTo(ContentResponseDTO::class.java)
-                            ?.let { callResult?.getDTOData(it) }
-                    }
-
-                    override fun onFailure(call: Call<ContentResponse>, t: Throwable) {
-
-                    }
-
-                }
-            )
+            val response = service.updateContentFileByContentId(body)
+            return response.convertTo(ContentResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -548,10 +529,10 @@ class FeatureOnlineDataSourceImpl(val service: FeatureWebService) :
 
 class LessonOnlineDataSourceImpl(val service: LessonWebService) :
     LessonOnlineDataSource {
-    override suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO {
+    override suspend fun addLesson(lesson: LessonResponseDTO): Response<Void> {
         try {
             val response = service.addLesson(lesson)
-            return response.convertTo(LessonResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -738,10 +719,10 @@ class QuestionChoiceOnlineDataSourceImpl(val service: QuestionChoiceWebService) 
         }
     }
 
-    override suspend fun addQuestionChoices(questionChoice: QuestionChoiceResponseDTO): QuestionChoiceResponseDTO {
+    override suspend fun addQuestionChoices(questionChoice: QuestionChoiceResponseDTO): Response<Void> {
         try {
             val response = service.addQuestionChoices(questionChoice)
-            return response.convertTo(QuestionChoiceResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -786,10 +767,10 @@ class QuestionChoiceOnlineDataSourceImpl(val service: QuestionChoiceWebService) 
         }
     }
 
-    override suspend fun postMultipleQuestionChoices(questionChoice: QuestionChoiceResponseDTO): QuestionChoiceResponseDTO {
+    override suspend fun postMultipleQuestionChoices(questionChoices: List<QuestionChoiceResponseDTO>): Response<Void> {
         try {
-            val response = service.postMultipleQuestionChoices(questionChoice)
-            return response.convertTo(QuestionChoiceResponseDTO::class.java)
+            val response = service.postMultipleQuestionChoices(questionChoices)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }

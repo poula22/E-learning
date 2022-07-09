@@ -7,10 +7,7 @@ data class QuizResponse(
 	@field:SerializedName("instructions")
 	val instructions: String? = null,
 
-	@field:SerializedName("postTime")
-	val postTime: String? = null,
-
-	@field:SerializedName("grade")
+	@field:SerializedName("totalPoints")
 	val grade: Int? = null,
 
 	@field:SerializedName("startTime")

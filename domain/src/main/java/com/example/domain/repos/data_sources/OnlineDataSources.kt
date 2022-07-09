@@ -88,24 +88,6 @@ interface AssignmentOnlineDataSource {
 }
 
 
-interface ContentOnlineDataSource {
-    suspend fun addContent(content: ContentResponseDTO): ContentResponseDTO
-    suspend fun updateContent(id: Int, content: ContentResponseDTO): ContentResponseDTO
-    suspend fun deleteContent(id: Int): ContentResponseDTO
-    suspend fun getAllContents(): List<ContentResponseDTO>
-    suspend fun getContentById(id: Int): ContentResponseDTO
-    suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
-    fun updateContentFileByContentId(
-        contentId: Int,
-        file: MultipartBody.Part
-    )
-
-    var callResult: CallResult?
-
-    interface CallResult {
-        fun getDTOData(data: ContentResponseDTO)
-    }
-}
 
 interface CourseOnlineDataSource {
     suspend fun getAllCourses(): List<CourseResponseDTO>
@@ -134,12 +116,26 @@ interface FeatureOnlineDataSource {
 
 interface LessonOnlineDataSource {
     suspend fun getAllLessons(): List<LessonResponseDTO>
-    suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO
+    suspend fun addLesson(lesson: LessonResponseDTO): Response<Void>
     suspend fun getLesson(id: Int): LessonResponseDTO
     suspend fun updateLesson(id: Int, lesson: LessonResponseDTO): LessonResponseDTO
     suspend fun deleteLesson(id: Int): LessonResponseDTO
     suspend fun getLessonsByCourseId(courseId: Int): List<LessonResponseDTO>
 }
+
+interface ContentOnlineDataSource {
+    suspend fun addContent(body: RequestBody): Response<Void>
+    suspend fun updateContent(id: Int, content: ContentResponseDTO): ContentResponseDTO
+    suspend fun deleteContent(id: Int): ContentResponseDTO
+    suspend fun getAllContents(): List<ContentResponseDTO>
+    suspend fun getContentById(id: Int): ContentResponseDTO
+    suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
+    suspend fun updateContentFileByContentId(body: RequestBody) :ContentResponseDTO
+
+
+}
+
+
 
 interface ParentOnlineDataSource {
     suspend fun addParent(parent: ParentResponseDTO): UserResponseDTO
@@ -175,7 +171,7 @@ interface QuestionAnswerOnlineDataSource {
 
 interface QuestionChoiceOnlineDataSource {
     suspend fun getAllQuestionChoices(): List<QuestionChoiceResponseDTO>
-    suspend fun addQuestionChoices(questionChoice: QuestionChoiceResponseDTO): QuestionChoiceResponseDTO
+    suspend fun addQuestionChoices(questionChoice: QuestionChoiceResponseDTO): Response<Void>
     suspend fun updateQuestionChoices(
         id: Int,
         questionChoice: QuestionChoiceResponseDTO
@@ -184,7 +180,7 @@ interface QuestionChoiceOnlineDataSource {
     suspend fun deleteQuestionChoices(id: Int): QuestionChoiceResponseDTO
     suspend fun getQuestionChoices(id: Int): QuestionChoiceResponseDTO
     suspend fun getQuestionChoicesByQuestionId(questionId: Int): List<QuestionChoiceResponseDTO>
-    suspend fun postMultipleQuestionChoices(questionChoice: QuestionChoiceResponseDTO): QuestionChoiceResponseDTO
+    suspend fun postMultipleQuestionChoices(questionChoices: List<QuestionChoiceResponseDTO>): Response<Void>
 }
 
 interface QuestionOnlineDataSource {
