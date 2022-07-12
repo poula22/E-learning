@@ -147,6 +147,18 @@ class ApiManager {
         fun getOCRApi(): MicrosoftOCRWebService {
             return getOCRInstance().create(MicrosoftOCRWebService::class.java)
         }
+
+        //summarization
+        fun getSummarizationApi(): SummarizationWebService {
+            return getBackendInstance().create(SummarizationWebService::class.java)
+        }
+
+        //recitation
+        fun getRecitationApi(): RecitationWebService {
+            return getBackendInstance().create(RecitationWebService::class.java)
+        }
+
+
         //user
         fun getUserApi(): UserWebService {
 
@@ -156,6 +168,21 @@ class ApiManager {
         fun getQuestionChoiceApi(): QuestionChoiceWebService {
             return getBackendInstance().create(QuestionChoiceWebService::class.java)
         }
+
+        fun getStudentsByCourseId() : StudentWebService {
+            return getBackendInstance().create(StudentWebService::class.java)
+        }
+
+        fun getAssignmentsGradesByStudentId() : AssignmentWebService {
+            return getBackendInstance().create(AssignmentWebService::class.java)
+        }
+
+        fun getQuizzesGradesByStudentId() : QuizWebService {
+            return getBackendInstance().create(QuizWebService::class.java)
+        }
+
+
+
 
 
         private fun getUnsafeOkHttpClient(): OkHttpClient.Builder? {

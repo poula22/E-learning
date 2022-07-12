@@ -33,10 +33,10 @@ interface AssignmentAnswerOnlineDataSource {
         assignmentId: Int
     ): AssignmentAnswerResponseDTO
 
-   suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(
+    suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(
         id: Int,
         body: RequestBody
-    ):AssignmentAnswerResponseDTO
+    ): AssignmentAnswerResponseDTO
 
 
     suspend fun updateMultipleAssignedGrades(grades: List<AssignmentAnswerResponseDTO>): AssignmentAnswerResponseDTO
@@ -85,8 +85,12 @@ interface AssignmentOnlineDataSource {
         fun getDTOData(data: AssignmentResponseDTO)
     }
 
-}
+    suspend fun getAssignmentGradesByCourseIdByStudentIdForTeacher(
+        courseId: Int,
+        studentId: Int
+    ): List<AssignmentResponseDTO>
 
+}
 
 
 interface CourseOnlineDataSource {
@@ -102,7 +106,7 @@ interface CourseOnlineDataSource {
     suspend fun updateCourseImageByCourseId(
         courseId: Int,
         body: RequestBody
-    ):CourseResponseDTO
+    ): CourseResponseDTO
 
 }
 
@@ -130,11 +134,10 @@ interface ContentOnlineDataSource {
     suspend fun getAllContents(): List<ContentResponseDTO>
     suspend fun getContentById(id: Int): ContentResponseDTO
     suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
-    suspend fun updateContentFileByContentId(body: RequestBody) :ContentResponseDTO
+    suspend fun updateContentFileByContentId(body: RequestBody): ContentResponseDTO
 
 
 }
-
 
 
 interface ParentOnlineDataSource {
@@ -211,6 +214,10 @@ interface QuizOnlineDataSource {
     suspend fun updateQuiz(id: Int, quiz: QuizResponseDTO): QuizResponseDTO
     suspend fun deleteQuiz(id: Int)
     suspend fun getQuizzesByCourseId(courseId: Int): List<QuizResponseDTO>
+    suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
+        courseId: Int,
+        studentId: Int
+    ): List<QuizResponseDTO>
 
 }
 
@@ -218,7 +225,7 @@ interface QuizOnlineDataSource {
 interface StudentOnlineDataSource {
     suspend fun addStudent(student: StudentResponseDTO): UserResponseDTO
     suspend fun getStudentsByParentId(parentId: Int): StudentResponseDTO
-    suspend fun getStudentByCourseId(courseId: Int): List<StudentResponseDTO>
+    suspend fun getStudentsByCourseId(courseId: Int): List<StudentResponseDTO>
     suspend fun getStudentByEmail(email: String): StudentResponseDTO
 }
 
@@ -245,4 +252,28 @@ interface UserOnlineDataSource {
     suspend fun logInTest(user: UserResponseDTO): UserResponseDTO
 
 }
+
+
+interface SummarizationOnlineDataSource {
+
+    suspend fun getSummarizationForText(
+        summarizationResponseDTO: SummarizationTextRequestDTO
+    ): SummarizationResponseDTO
+
+
+    suspend fun getSummarizationForUrl(
+        summarizationResponseDTO: SummarizationUrlRequestDTO
+    ): SummarizationResponseDTO
+
+}
+
+interface RecitationParagraphOnlineDataSource {
+
+    suspend fun getSimilarity(
+        request: RecitationParagraphRequestDTO
+    ): RecitationParagraphResponseDTO
+
+}
+
+
 

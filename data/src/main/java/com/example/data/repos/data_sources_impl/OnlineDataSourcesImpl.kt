@@ -4,7 +4,8 @@ import com.example.data.api.*
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRApiManager
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
 import com.example.data.data_classes.URLOCR
-import com.example.data.model.*
+import com.example.data.model.AssignmentResponse
+import com.example.data.model.convertTo
 import com.example.domain.model.*
 import com.example.domain.repos.data_sources.*
 import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionImpl
@@ -96,7 +97,8 @@ class OCROnlineDataSourceImp(val webService: MicrosoftOCRWebService) :
 
 
 class AssignmentAnswerOnlineDataSourceImpl(
-    val service: AssignmentAnswerWebService) : AssignmentAnswerOnlineDataSource {
+    val service: AssignmentAnswerWebService
+) : AssignmentAnswerOnlineDataSource {
     override suspend fun addAssignmentAnswer(body: RequestBody): AssignmentAnswerResponseDTO {
         try {
             val response = service.addAssignmentAnswer(body)
@@ -167,7 +169,10 @@ class AssignmentAnswerOnlineDataSourceImpl(
         }
     }
 
-    override suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(id: Int, body: RequestBody):AssignmentAnswerResponseDTO {
+    override suspend fun updateAssignmentAnswerFileByAssignmentAnswerId(
+        id: Int,
+        body: RequestBody
+    ): AssignmentAnswerResponseDTO {
         //callback
         try {
             val response = service.updateAssignmentAnswerFileByAssignmentAnswerId(id, body)
@@ -303,6 +308,19 @@ class AssignmentOnlineDataSourceImpl(
         }
     }
 
+    override suspend fun getAssignmentGradesByCourseIdByStudentIdForTeacher(
+        courseId: Int,
+        studentId: Int
+    ): List<AssignmentResponseDTO> {
+        try {
+            val response =
+                service.getAssignmentGradesByCourseIdByStudentIdForTeacher(courseId, studentId)
+            return response.map { it.convertTo(AssignmentResponseDTO::class.java) }
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
 }
 
 class ContentOnlineDataSourceImpl(val service: ContentWebService) : ContentOnlineDataSource {
@@ -360,7 +378,7 @@ class ContentOnlineDataSourceImpl(val service: ContentWebService) : ContentOnlin
         }
     }
 
-    override suspend fun updateContentFileByContentId(body:RequestBody):ContentResponseDTO {
+    override suspend fun updateContentFileByContentId(body: RequestBody): ContentResponseDTO {
         //callback
         try {
             val response = service.updateContentFileByContentId(body)
@@ -453,7 +471,7 @@ class CourseOnlineDataSourceImpl(
     override suspend fun updateCourseImageByCourseId(
         courseId: Int,
         body: RequestBody
-    ):CourseResponseDTO {
+    ): CourseResponseDTO {
         //callback
         try {
             val response = service.updateCourseImageByCourseId(courseId, body)
@@ -986,6 +1004,19 @@ class QuizOnlineDataSourceImpl(val service: QuizWebService) :
         }
     }
 
+    override suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
+        courseId: Int,
+        studentId: Int
+    ): List<QuizResponseDTO> {
+        try {
+            val response =
+                service.getQuizGradesByCourseIdAndStudentIdForTeacher(courseId, studentId)
+            return response.map { it.convertTo(QuizResponseDTO::class.java) }
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
 
 }
 
@@ -1010,7 +1041,7 @@ class StudentOnlineDataSourceImpl(val service: StudentWebService) :
         }
     }
 
-    override suspend fun getStudentByCourseId(courseId: Int): List<StudentResponseDTO> {
+    override suspend fun getStudentsByCourseId(courseId: Int): List<StudentResponseDTO> {
         try {
             val response = service.getStudentByCourseId(courseId)
             return response.map { it.convertTo(StudentResponseDTO::class.java) }
@@ -1143,6 +1174,48 @@ class UserOnlineDataSourceImpl(val service: UserWebService) :
 
 }
 
+
+class SummarizationOnlineDataSourceImpl(val service: SummarizationWebService) :
+    SummarizationOnlineDataSource {
+    override suspend fun getSummarizationForText(
+        summarizationResponse: SummarizationTextRequestDTO
+    ): SummarizationResponseDTO {
+        try {
+            val response = service.getSummarizationForText(summarizationResponse)
+            return response.convertTo(SummarizationResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun getSummarizationForUrl(
+        summarizationResponse: SummarizationUrlRequestDTO
+    ): SummarizationResponseDTO {
+        try {
+            val response = service.getSummarizationForUrl(summarizationResponse)
+            return response.convertTo(SummarizationResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+
+}
+
+
+class RecitationParagraphOnlineDataSourceImpl(val service: RecitationWebService) :
+    RecitationParagraphOnlineDataSource {
+    override suspend fun getSimilarity(request: RecitationParagraphRequestDTO)
+            : RecitationParagraphResponseDTO {
+        try {
+            val response = service.getSimilarity(request)
+            return response.convertTo(RecitationParagraphResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+}
 
 
 

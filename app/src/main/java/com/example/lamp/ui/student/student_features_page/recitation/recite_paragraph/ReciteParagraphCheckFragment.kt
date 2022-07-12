@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.common_functions.CommonFunctions
+import com.example.domain.model.RecitationParagraphRequestDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureReciteParagraphCheckBinding
 
 class ReciteParagraphCheckFragment(var paragraph: String) : Fragment() {
     lateinit var viewBinding: FragmentFeatureReciteParagraphCheckBinding
     lateinit var mediaRecorder: MediaRecorder
+    lateinit var viewModel: ReciteParagraphViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,7 +30,19 @@ class ReciteParagraphCheckFragment(var paragraph: String) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.recitationLiveData.observe(viewLifecycleOwner) {
+            viewBinding.resultPercentage.text = it.similarity?.times(100).toString() + "%"
+            if (it.similarity?.times(100).toString().toDouble() > 50) {
+                viewBinding.resultPercentage.setTextColor(resources.getColor(R.color.green, null))
+            } else {
+                viewBinding.resultPercentage.setTextColor(resources.getColor(R.color.red, null))
+            }
+        }
     }
 
     private fun initViews() {
@@ -55,6 +70,13 @@ class ReciteParagraphCheckFragment(var paragraph: String) : Fragment() {
         viewBinding.cardDocument.setOnClickListener {
             CommonFunctions.uploadDoc(requireActivity())
         }
+
+        viewBinding.btnCheck.setOnClickListener {
+            var request =
+                RecitationParagraphRequestDTO(paragraph, viewBinding.paragraphInput.text.toString())
+            viewModel.getSimilarity(request)
+        }
+
 
     }
 

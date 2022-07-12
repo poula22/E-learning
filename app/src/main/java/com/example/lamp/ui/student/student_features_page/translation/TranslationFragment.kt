@@ -66,7 +66,8 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
         initViews()
         subscribeToLiveData()
     }
-    private fun initViews(){
+
+    private fun initViews() {
         viewBinding.cardImage.setOnClickListener {
 //            ImagePicker.with(this)
 //                .crop()                    //Crop image(Optional), Check Customization for more option
@@ -104,59 +105,77 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
 
 
         val languages = arrayOf(
+            Language.AFRIKAANS,
+            Language.ALBANIAN,
             Language.ARABIC,
-            Language.ENGLISH,
-            Language.FRENCH,
-            Language.GERMAN,
-            Language.HINDI,
-            Language.INDONESIAN,
-            Language.ITALIAN,
-            Language.JAPANESE,
-            Language.KOREAN,
-            Language.PORTUGUESE,
-            Language.RUSSIAN,
-            Language.SPANISH,
-            Language.TURKISH,
-            Language.VIETNAMESE,
-            Language.CHINESE_SIMPLIFIED,
-            Language.CHINESE_TRADITIONAL,
-            Language.THAI,
-            Language.INDONESIAN,
-            Language.MALAY,
-            Language.POLISH,
-            Language.PORTUGUESE,
-            Language.ROMANIAN,
+            Language.ARMENIAN,
+            Language.AZERBAIJANI,
+            Language.BASQUE,
+            Language.BELARUSIAN,
+            Language.BENGALI,
             Language.BULGARIAN,
             Language.CATALAN,
+            Language.CHINESE,
             Language.CROATIAN,
             Language.CZECH,
             Language.DANISH,
             Language.DUTCH,
+            Language.ENGLISH,
+            Language.ESTONIAN,
+            Language.FILIPINO,
             Language.FINNISH,
+            Language.FRENCH,
+            Language.GALICIAN,
+            Language.GEORGIAN,
+            Language.GERMAN,
             Language.GREEK,
+            Language.GUJARATI,
+            Language.HAITIAN_CREOLE,
+            Language.HEBREW,
+            Language.HINDI,
             Language.HUNGARIAN,
+            Language.ICELANDIC,
+            Language.INDONESIAN,
+            Language.IRISH,
+            Language.ITALIAN,
+            Language.JAPANESE,
+            Language.KANNADA,
+            Language.KOREAN,
+            Language.LATIN,
             Language.LATVIAN,
             Language.LITHUANIAN,
+            Language.MACEDONIAN,
+            Language.MALAY,
+            Language.MALTESE,
             Language.NORWEGIAN,
             Language.PERSIAN,
+            Language.POLISH,
+            Language.PORTUGUESE,
             Language.ROMANIAN,
+            Language.RUSSIAN,
+            Language.SERBIAN,
             Language.SLOVAK,
             Language.SLOVENIAN,
+            Language.SPANISH,
+            Language.SWAHILI,
             Language.SWEDISH,
+            Language.TAMIL,
+            Language.TELUGU,
+            Language.THAI,
+            Language.TURKISH,
             Language.UKRAINIAN,
+            Language.URDU,
+            Language.VIETNAMESE,
             Language.WELSH,
             Language.YIDDISH,
-            Language.BASQUE,
-            Language.BENGALI,
-            Language.CATALAN,
-            Language.CROATIAN,
         )
+
         val arrayAdapter =
             ArrayAdapter(requireContext(), R.layout.item_language, languages)
         viewBinding.autoComplete.setAdapter(arrayAdapter)
 
         viewBinding.translateBtn.setOnClickListener {
-           translateData(languages,arrayAdapter)
+            translateData(languages, arrayAdapter)
         }
     }
 
@@ -177,8 +196,8 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
         })
     }
 
-    override fun sendText(text: String){
-       tranlateText(text)
+    override fun sendText(text: String) {
+        tranlateText(text)
     }
 
     private fun tranlateText(text: String) {
@@ -195,7 +214,7 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
     }
 
     private fun getTextFromResult(result: ReadOperationResult) {
-        try{
+        try {
             val builder = StringBuilder()
             for (pageResult in result.analyzeResult().readResults()) {
                 for (line in pageResult.lines()) {
@@ -209,7 +228,8 @@ class TranslationFragment : ExternalStorageWithMicAccessFragment() {
             viewBinding.progressBar.visibility = View.GONE
             requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             viewBinding.textInputText.setText(builder)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Toast.makeText(requireContext(), "Please Enter Text", Toast.LENGTH_SHORT).show()
-        }    }
+        }
+    }
 }

@@ -14,11 +14,13 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.ExternalStorageWithMicAccessFragment
+import com.example.domain.model.SummarizationTextRequestDTO
+import com.example.domain.model.SummarizationUrlRequestDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureSummarizationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class SummarizationFragment:ExternalStorageWithMicAccessFragment() {
+class SummarizationFragment : ExternalStorageWithMicAccessFragment() {
     lateinit var viewBinding: FragmentFeatureSummarizationBinding
     lateinit var mediaRecorder: MediaRecorder
     lateinit var viewModel: SummarizationViewModel
@@ -42,8 +44,9 @@ class SummarizationFragment:ExternalStorageWithMicAccessFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding=DataBindingUtil.inflate(inflater, R.layout.fragment_feature_summarization
-            ,container,false)
+        viewBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_feature_summarization, container, false
+        )
         return viewBinding.root
     }
 
@@ -52,7 +55,8 @@ class SummarizationFragment:ExternalStorageWithMicAccessFragment() {
         initViews()
         subscribeToLiveData()
     }
-    override fun sendText(text: String){
+
+    override fun sendText(text: String) {
         viewBinding.paragraphInput.setText(text)
     }
 
@@ -74,6 +78,15 @@ class SummarizationFragment:ExternalStorageWithMicAccessFragment() {
             requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             viewBinding.paragraphInput.setText(builder)
         }
+        var outputText = ""
+        viewModel.SummarizationLiveData.observe(viewLifecycleOwner) {
+            for (x in it.sentences!!.indices) {
+                outputText += it.sentences!![x]
+                outputText += "\n"
+            }
+            viewBinding.textOutputText.setText(outputText)
+        }
+
 
     }
 
@@ -95,7 +108,7 @@ class SummarizationFragment:ExternalStorageWithMicAccessFragment() {
 
         }
 
-        var isRecording=false
+        var isRecording = false
         viewBinding.cardVoice.setOnClickListener {
 
 //            var colorRose=viewBinding.cardVoice.getContext().getResources().getColor(R.color.light_rose);
@@ -138,7 +151,35 @@ class SummarizationFragment:ExternalStorageWithMicAccessFragment() {
             uploadDoc()
         }
 
+        viewBinding.summarizeBtn.setOnClickListener {
+            if (viewBinding.paragraphInput.text.toString().isNotEmpty() &&
+                viewBinding.url.text.toString().isNotEmpty()
+            ) {
+                viewBinding.url.error = "You Should only enter Text or Url"
+            } else if (viewBinding.paragraphInput.text.toString().isEmpty() &&
+                viewBinding.url.text.toString().isEmpty()
+            ) {
+                viewBinding.paragraphInput.error = "You Should enter Text or Url"
+            } else {
+                var text = SummarizationTextRequestDTO(
+                    viewBinding.paragraphInput.text.toString(),
+                    viewBinding.sentenceNumber.text.toString()
+                )
+                var url = SummarizationUrlRequestDTO(
+                    viewBinding.url.text.toString(),
+                    viewBinding.sentenceNumber.text.toString()
+                )
+                if (viewBinding.paragraphInput.text.toString().isNotEmpty()) {
+                    viewModel.getSummarizationFromText(text)
+                } else {
+                    viewModel.getSummarizationFromUrl(url)
+                }
+            }
+        }
+
+
     }
+
     private fun stopRecording() {
         mediaRecorder.stop()
         mediaRecorder.release()
@@ -146,19 +187,19 @@ class SummarizationFragment:ExternalStorageWithMicAccessFragment() {
     }
 
     private fun startRecording() {
-        var recordPath:String?=requireActivity().getExternalFilesDir("/")?.absolutePath
-        var recordFile="fileName.3gp"
-        mediaRecorder= MediaRecorder()
+        var recordPath: String? = requireActivity().getExternalFilesDir("/")?.absolutePath
+        var recordFile = "fileName.3gp"
+        mediaRecorder = MediaRecorder()
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        mediaRecorder.setOutputFile(recordPath+"/"+recordFile)
+        mediaRecorder.setOutputFile(recordPath + "/" + recordFile)
         mediaRecorder.prepare()
         mediaRecorder.start()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    fun checkPermissions():Boolean{
-        return context?.checkSelfPermission(Manifest.permission.RECORD_AUDIO)== PackageManager.PERMISSION_GRANTED
+    fun checkPermissions(): Boolean {
+        return context?.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
     }
 }
