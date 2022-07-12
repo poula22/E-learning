@@ -8,11 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherContainerAllTabsBinding
-import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.teacher.courses_page.TeacherCoursesFragment
 import com.example.lamp.ui.teacher.home_page.TeacherHomeFragment
 import com.example.lamp.ui.teacher.profile_page.TeacherProfileFragment
-import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
 import com.example.lamp.ui.teacher.tools_page.TeacherToolsFragment
 
 class TeacherContainerFragment : Fragment() {
@@ -52,14 +50,6 @@ class TeacherContainerFragment : Fragment() {
                     .replace(
                         teacherContainerAllTabsBinding.teacherFragmentTab.id,
                         TeacherCoursesFragment()
-                    )
-                    .commit()
-            } else if (menuItem.itemId == R.id.students) {
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(
-                        teacherContainerAllTabsBinding.teacherFragmentTab.id,
-                        TeacherStudentsFragment(TestData.STUDENTS)
                     )
                     .commit()
             } else if (menuItem.itemId == R.id.tools) {

@@ -13,18 +13,12 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide.with
 import com.example.common_functions.CommonFunctions
 import com.example.common_functions.ExternalStorageAccessFragment
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseSettingsBinding
-import com.example.lamp.ui.teacher.courses_page.course_content.assignment.PDFViewer
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import org.apache.commons.io.FileUtils
 import java.io.File
-import java.net.URL
 
 
 class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
@@ -37,7 +31,7 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
     }
 
     override fun resultListener(byteArray: ByteArray) {
-        val file= filePath?.let {
+        val file = filePath?.let {
             File(it)
         }
         filePath?.let {
@@ -50,7 +44,7 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel=ViewModelProvider(this).get(TeacherCourseSettingsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TeacherCourseSettingsViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -69,7 +63,7 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        course=requireArguments().getSerializable("course") as CourseResponseDTO
+        course = requireArguments().getSerializable("course") as CourseResponseDTO
         subscribeToLiveData()
         initViews()
         viewModel.getCourseById()
@@ -83,20 +77,21 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
 
     private fun subscribeToLiveData() {
 
-        viewModel.liveData.observe(viewLifecycleOwner){
-            course=it
-            Log.e("course",course.courseImage.toString())
-            viewBinding.item=it
-            var serverUrl="https://25.70.83.232"
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            course = it
+            Log.e("course", course.courseImage.toString())
+            viewBinding.item = it
+            var serverUrl = "https://25.70.83.232"
 
             val thumbnail: Bitmap? =
                 course.courseImage?.toUri()?.let { it1 ->
                     requireContext().contentResolver.loadThumbnail(
-                        it1, Size(640, 480), null)
+                        it1, Size(640, 480), null
+                    )
                 }
             viewBinding.courseImageView.setImageBitmap(thumbnail)
 
-            viewModel.fileLiveData.observe(viewLifecycleOwner){
+            viewModel.fileLiveData.observe(viewLifecycleOwner) {
                 viewModel.getCourseById()
             }
 
@@ -104,7 +99,6 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
 //            .load("file:///"+it.courseImage?.substring(2)?.replace("\\","/"))
 //            .centerCrop()
 //            .into(viewBinding.courseImageView)
-
 
 
 //            var image=course.courseImage?.let { it1 -> TestConnection.getData(it1) }
@@ -116,19 +110,18 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
             if (it.code() == 200) {
                 Toast.makeText(requireContext(), "Course Dropped", Toast.LENGTH_SHORT).show()
                 requireActivity().supportFragmentManager.popBackStack()
-            }
-            else{
+            } else {
                 Toast.makeText(requireContext(), "Course Not Dropped", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel.testLiveData.observe(viewLifecycleOwner){
+        viewModel.testLiveData.observe(viewLifecycleOwner) {
             viewBinding.courseImageView.setImageBitmap(BitmapFactory.decodeStream(it.byteStream()))
         }
     }
 
     @SuppressLint("SetTextI18n")
     private fun initViews() {
-        viewBinding.item=course
+        viewBinding.item = course
         viewBinding.changeImageBtn.setOnClickListener {
             imagePick()
         }
@@ -151,12 +144,11 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
                 requireContext()
             )
         }
-        viewBinding.dropBtn.setOnClickListener{
+        viewBinding.dropBtn.setOnClickListener {
             viewModel.dropCourse()
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
     }
-
 
 
 }

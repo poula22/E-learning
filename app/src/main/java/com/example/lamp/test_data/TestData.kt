@@ -1,6 +1,5 @@
 package com.example.lamp.test_data
 
-import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
 import com.example.extentions.clearTime
 import com.example.lamp.R
@@ -9,9 +8,8 @@ import com.example.lamp.ui.parent.parent_courses_page.course_recycler_view.Paren
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentFromStudentItem
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsItem
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.student.student_home_page.features_recycler_view.FeatureItem
-import com.example.lamp.ui.teacher.students_page.students_recycler_view.StudentItem
+import com.example.lamp.ui.teacher.courses_page.course_content.students.students_recycler_view.StudentItem
 import java.util.*
 
 

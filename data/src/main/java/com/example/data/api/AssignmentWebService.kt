@@ -42,5 +42,11 @@ interface AssignmentWebService {
         @Part file: MultipartBody.Part
     ): Call<AssignmentResponse>
 
+    @GET("api/Assignments/GetAssignmentGrades/ByCourseId/ByStudentId/ForTeacher/{courseId}/{studentId}")
+    suspend fun getAssignmentGradesByCourseIdByStudentIdForTeacher(
+        @Path("courseId") courseId: Int,
+        @Path("studentId") studentId: Int
+    ): List<AssignmentResponse>
+
 
 }

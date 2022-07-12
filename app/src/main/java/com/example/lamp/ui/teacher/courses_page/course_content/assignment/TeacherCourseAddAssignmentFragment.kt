@@ -9,31 +9,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.example.common_functions.CONSTANTS
-
 import com.example.common_functions.CommonFunctions
 import com.example.common_functions.CommonFunctions.Companion.calendar
 import com.example.common_functions.DocumentAccessFragment
 import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddAssignmentBinding
-import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
-
 import java.text.SimpleDateFormat
-
 import java.util.*
 
 class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
     lateinit var viewBinding: FragmentTeacherCourseAddAssignmentBinding
     lateinit var viewModel: TeacherCourseAddAssignmentViewModel
-    var path:String?=null
+    var path: String? = null
     override fun showProgressBar() {
         return
     }
@@ -46,10 +37,11 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel=ViewModelProvider(this).get(TeacherCourseAddAssignmentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TeacherCourseAddAssignmentViewModel::class.java)
     }
-    fun subscribeToLiveData(){
-        viewModel.liveData.observe(viewLifecycleOwner){
+
+    fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner) {
             requireActivity().supportFragmentManager.popBackStack()
         }
     }
@@ -139,15 +131,17 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
                     viewBinding.endDateTxt.text.toString()
                 )
 
-                Toast.makeText(context, "saved succesful", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "saved successfully", Toast.LENGTH_SHORT).show()
                 //insert in database
-                val assignment=AssignmentResponseDTO(
-                    filePath,points.toInt()
-                    ,description
-                    ,null
-                    , endDate?.toString()
-                    ,title, CONSTANTS.courseId
-                    ,startDate?.toString()
+                val assignment = AssignmentResponseDTO(
+                    filePath,
+                    points.toInt(),
+                    description,
+                    null,
+                    endDate?.toString(),
+                    title,
+                    CONSTANTS.courseId,
+                    startDate?.toString()
                 )
 
                 viewModel.addAssignment(assignment)
@@ -157,7 +151,7 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
     }
 
     // Intent for openning files
-    fun selectPdf() : String?{
+    fun selectPdf(): String? {
         val pdfIntent = Intent(Intent.ACTION_GET_CONTENT)
         pdfIntent.type = "application/pdf"
         pdfIntent.addCategory(Intent.CATEGORY_OPENABLE)

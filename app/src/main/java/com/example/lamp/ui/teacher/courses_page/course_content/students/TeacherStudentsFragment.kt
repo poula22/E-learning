@@ -1,4 +1,4 @@
-package com.example.lamp.ui.teacher.students_page
+package com.example.lamp.ui.teacher.courses_page.course_content.students
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,15 +7,23 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.domain.model.StudentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherStudentsBinding
-import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.teacher.students_page.students_recycler_view.StudentItem
-import com.example.lamp.ui.teacher.students_page.students_recycler_view.TeacherStudentsAdapter
+import com.example.lamp.ui.teacher.courses_page.course_content.students.students_recycler_view.TeacherStudentsAdapter
 
-class TeacherStudentsFragment(var itemList: MutableList<StudentItem>?=null) : Fragment() {
+class TeacherStudentsFragment(var itemList: MutableList<StudentResponseDTO>? = null) : Fragment() {
     lateinit var teacherStudentsBinding: FragmentTeacherStudentsBinding
     lateinit var adapter: TeacherStudentsAdapter
+    lateinit var viewModel: TeacherStudentsViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TeacherStudentsViewModel::class.java)
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,14 +36,23 @@ class TeacherStudentsFragment(var itemList: MutableList<StudentItem>?=null) : Fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+        viewModel.getTeacherCourseStudents()
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            adapter.changeData(it)
+        }
     }
 
 
     private fun initViews() {
-        adapter = TeacherStudentsAdapter(itemList)
+        adapter = TeacherStudentsAdapter()
         teacherStudentsBinding.teacherStudentsRecyclerView.adapter = adapter
-        teacherStudentsBinding.studentsSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        teacherStudentsBinding.studentsSearch.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
@@ -53,14 +70,15 @@ class TeacherStudentsFragment(var itemList: MutableList<StudentItem>?=null) : Fr
     fun filterList(text: String) {
         teacherStudentsBinding.teacherStudentsRecyclerView.visibility = View.VISIBLE
         teacherStudentsBinding.noStudentsFound.visibility = View.GONE
-        if (text.isEmpty()){
+        if (text.isEmpty()) {
             adapter.setFilteredList(itemList!!)
         }
         //filter list here
-        var filteredList = mutableListOf<StudentItem>()
+        var filteredList = mutableListOf<StudentResponseDTO>()
         itemList?.let {
             for (item in it) {
-                if (item.studentName.lowercase().contains(text.lowercase())) {
+                var studentName = item.firstName + " " + item.lastName
+                if (studentName.lowercase().contains(text.lowercase())) {
                     filteredList.add(item)
                 }
             }

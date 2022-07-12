@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.domain.model.AssignmentResponseDTO
-import com.example.domain.model.QuizResponseDTO
+import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.CONSTANTS
 import com.example.domain.model.StudentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseGradesStudentsBinding
@@ -18,7 +18,13 @@ class TeacherCourseStudentsFragment(var studentsList: MutableList<StudentRespons
     Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseGradesStudentsBinding
+    lateinit var viewModel: TeacherCourseStudentsViewModel
     lateinit var teacherStudentsOverallGradesAdapter: TeacherStudentsOverallGradesAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TeacherCourseStudentsViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +42,15 @@ class TeacherCourseStudentsFragment(var studentsList: MutableList<StudentRespons
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+        viewModel.getStudentsByCourseId(CONSTANTS.courseId)
+    }
+
+    fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            teacherStudentsOverallGradesAdapter.changeData(it)
+        }
     }
 
     private fun initViews() {
@@ -48,16 +62,13 @@ class TeacherCourseStudentsFragment(var studentsList: MutableList<StudentRespons
         val adapter = viewBinding.studentsRv.adapter as TeacherStudentsOverallGradesAdapter
         adapter.onStudentClickListener =
             object : TeacherStudentsOverallGradesAdapter.OnStudentClickListener {
-                override fun setOnStudentClickListener(
-                    assignment: MutableList<AssignmentResponseDTO>,
-                    quiz: MutableList<QuizResponseDTO>
-                ) {
+                override fun setOnStudentClickListener(student: StudentResponseDTO) {
                     requireActivity().supportFragmentManager
                         .beginTransaction()
                         .addToBackStack("")
                         .replace(
                             R.id.teacher_course_content_container,
-                            TeacherCourseGradesFragment(assignment, quiz)
+                            TeacherCourseGradesFragment(student)
                         )
                         .commit()
                 }

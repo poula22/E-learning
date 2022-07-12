@@ -6,20 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.domain.model.AssignmentResponseDTO
-import com.example.domain.model.QuizResponseDTO
+import androidx.lifecycle.ViewModelProvider
+import com.example.domain.model.StudentResponseDTO
 import com.example.lamp.databinding.FragmentTeacherCourseGradesStudentContentBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.grades.student_grades_page.assignments_rv.AssignmentsGradesAdapter
 import com.example.lamp.ui.teacher.courses_page.course_content.grades.student_grades_page.quizzes_rv.QuizzesGradesAdapter
 
 class TeacherCourseGradesFragment(
-    var assignmentsList: MutableList<AssignmentResponseDTO>? = null,
-    var quizzesList: MutableList<QuizResponseDTO>? = null
+    val student: StudentResponseDTO
 ) : Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseGradesStudentContentBinding
     lateinit var assignmentsGradesAdapter: AssignmentsGradesAdapter
     lateinit var quizzesGradesAdapter: QuizzesGradesAdapter
+    lateinit var viewModel: TeacherCourseGradesViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TeacherCourseGradesViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +33,7 @@ class TeacherCourseGradesFragment(
     ): View? {
         viewBinding = DataBindingUtil.inflate(
             inflater,
-            com.example.lamp.R.layout.fragment_teacher_course_grades,
+            com.example.lamp.R.layout.fragment_teacher_course_grades_student_content,
             container,
             false
         )
@@ -37,22 +42,44 @@ class TeacherCourseGradesFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+        viewModel.getGradesByStudentId(student.id!!)
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.assignmentsLiveData.observe(viewLifecycleOwner) {
+            assignmentsGradesAdapter.changeData(it)
+        }
+
+        viewModel.quizzesLiveData.observe(viewLifecycleOwner) {
+            quizzesGradesAdapter.changeData(it)
+        }
+
     }
 
     fun initViews() {
-        assignmentsGradesAdapter = AssignmentsGradesAdapter(assignmentsList)
-        quizzesGradesAdapter = QuizzesGradesAdapter(quizzesList)
+        assignmentsGradesAdapter = AssignmentsGradesAdapter()
+        quizzesGradesAdapter = QuizzesGradesAdapter()
         viewBinding.assignmentsRv.adapter = assignmentsGradesAdapter
         viewBinding.quizzesRv.adapter = quizzesGradesAdapter
 
-        // overall grades equals sum of assignments and quizzes grades divided by items count
+//         overall grades equals sum of assignments and quizzes grades divided by items count
         val overallGrades =
-            (assignmentsList?.sumOf { it.grade!! } ?: 0) + (quizzesList?.sumOf { it.grade!! } ?: 0)
-        val itemsCount = (assignmentsList?.size ?: 0) + (quizzesList?.size ?: 0)
-        var overall = overallGrades / itemsCount
-        viewBinding.overallPercentageTxt.text = overall.toString()
+            (assignmentsGradesAdapter.assignmentsGrades?.sumOf { it.grade!! }
+                    )?.plus((quizzesGradesAdapter.quizzesGrades?.sumOf { it.grade!! }!!))
+        val itemsCount = (assignmentsGradesAdapter.assignmentsGrades?.size
+                )?.plus((quizzesGradesAdapter.quizzesGrades?.size!!))
+        if (itemsCount == 0 || overallGrades == null) {
+            viewBinding.progressBar.visibility = View.GONE
+            viewBinding.overallPercentageTxt.text = "No grades"
+        } else {
+            var overall = overallGrades.div(itemsCount!!)
+            viewBinding.overallPercentageTxt.text = overall.toString()
+        }
 
+
+        viewBinding.studentName.text = student.firstName + " " + student.lastName
 
     }
 }

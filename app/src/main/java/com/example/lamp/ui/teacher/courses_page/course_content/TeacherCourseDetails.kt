@@ -21,7 +21,7 @@ import com.example.lamp.ui.teacher.courses_page.course_content.grades.students_p
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.TeacherCourseQuizzesFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
-import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.students.TeacherStudentsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
@@ -89,7 +89,8 @@ class TeacherCourseDetails(var course: CourseResponseDTO?) : Fragment() {
                     fragment?.arguments=bundle
                 }
                 R.id.students -> {
-                    fragment = TeacherStudentsFragment(TestData.STUDENTS)
+                    fragment = TeacherStudentsFragment()
+                    // TestData.STUDENTS
                 }
                 R.id.quizzes -> {
                     fragment = TeacherCourseQuizzesFragment()

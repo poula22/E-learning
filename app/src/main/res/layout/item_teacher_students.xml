@@ -29,7 +29,6 @@
                 android:layout_height="40dp"
                 android:elevation="10dp"
                 app:cardCornerRadius="30dp"
-                app:layout_constraintBottom_toTopOf="@+id/details_area"
                 app:layout_constraintEnd_toStartOf="@id/student_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -61,8 +60,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#C5CAE9"
-                android:textColor="@color/black"
                 android:text="Show Deails"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/rounded_profile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -151,31 +150,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/facebook_linear_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toEndOf="@id/student_pic"
-                    app:layout_constraintTop_toBottomOf="@id/email_linear_layout">
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_facebook"
-                        app:tint="@color/black" />
-
-                    <TextView
-                        android:id="@+id/student_fb_profile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="5dp"
-                        android:text="Hany Fany"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="#000000" />
-
-                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

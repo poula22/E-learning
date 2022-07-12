@@ -2,13 +2,14 @@ package com.example.lamp.ui.teacher.courses_page.course_content.grades.student_g
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemGradeBinding
 
-class AssignmentsGradesAdapter(var assignmentsGrades: MutableList<AssignmentResponseDTO>? = null) :
+class AssignmentsGradesAdapter(var assignmentsGrades: List<AssignmentResponseDTO>? = null) :
     RecyclerView.Adapter<AssignmentsGradesAdapter.AssignmentsGradesViewHolder>() {
 
     lateinit var viewBinding: ItemGradeBinding
@@ -17,7 +18,7 @@ class AssignmentsGradesAdapter(var assignmentsGrades: MutableList<AssignmentResp
         parent: ViewGroup,
         viewType: Int
     ): AssignmentsGradesViewHolder {
-        viewBinding = DataBindingUtil.inflate<ItemGradeBinding>(
+        viewBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_grade,
             parent,
@@ -33,10 +34,21 @@ class AssignmentsGradesAdapter(var assignmentsGrades: MutableList<AssignmentResp
     override fun onBindViewHolder(holder: AssignmentsGradesViewHolder, position: Int) {
         var assignmentGrade = assignmentsGrades?.get(position)
         holder.viewBinding.title.text = assignmentGrade?.title.toString()
-        holder.viewBinding.percentageTxt.text =
-            assignmentGrade?.grade.toString() + "%" // divided by total grade * 100
-        holder.viewBinding.progressPercentage.progress =
-            assignmentGrade?.grade!!.toInt() // divided by total grade * 100
+        if (assignmentGrade?.grade != null) {
+            holder.viewBinding.percentageTxt.text = assignmentGrade.grade.toString() + "%"
+            holder.viewBinding.progressPercentage.progress =
+                assignmentGrade.grade!!.toInt() //TODO: divide by todo * 100
+            holder.viewBinding.notGraded.isVisible = false
+        } else {
+            holder.viewBinding.notGraded.isVisible = true
+            holder.viewBinding.percentageTxt.isVisible = false
+            holder.viewBinding.progressPercentage.isVisible = false
+        }
+
+//        holder.viewBinding.percentageTxt.text =
+//            assignmentGrade?.grade.toString() + "%" // divided by total grade * 100
+//        holder.viewBinding.progressPercentage.progress =
+//            assignmentGrade?.grade?.toInt() ?: 0 // divided by total grade * 100
     }
 
     class AssignmentsGradesViewHolder(val viewBinding: ItemGradeBinding) :
@@ -44,4 +56,11 @@ class AssignmentsGradesAdapter(var assignmentsGrades: MutableList<AssignmentResp
 
 
     }
+
+    fun changeData(assignmentsGrades: List<AssignmentResponseDTO>) {
+        this.assignmentsGrades = assignmentsGrades
+        notifyDataSetChanged()
+    }
+
+
 }

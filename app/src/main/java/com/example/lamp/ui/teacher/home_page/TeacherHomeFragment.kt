@@ -15,7 +15,7 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherHomeBinding
 import com.example.lamp.ui.teacher.courses_page.TeacherCoursesFragment
 import com.example.lamp.ui.teacher.profile_page.TeacherProfileFragment
-import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.students.TeacherStudentsFragment
 import com.example.lamp.ui.todo_list.AddTodoBottomSheet
 import com.example.lamp.ui.todo_list.TodoAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
