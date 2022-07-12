@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CommonFunctions
 import com.example.domain.model.RecitationParagraphRequestDTO
 import com.example.lamp.R
@@ -16,6 +17,11 @@ class ReciteParagraphCheckFragment(var paragraph: String) : Fragment() {
     lateinit var viewBinding: FragmentFeatureReciteParagraphCheckBinding
     lateinit var mediaRecorder: MediaRecorder
     lateinit var viewModel: ReciteParagraphViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(ReciteParagraphViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
