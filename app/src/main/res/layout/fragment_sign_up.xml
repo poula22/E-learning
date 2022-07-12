@@ -264,7 +264,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/confirm_password_sign_up"
-                    app:prefixText="+20">
+                    app:prefixText="+2">
 
                     <EditText
                         android:id="@+id/txt_phone"

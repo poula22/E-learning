@@ -2,13 +2,14 @@ package com.example.lamp.ui.student.student_course_page.course_content.grades.qu
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.QuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemGradeBinding
 
-class QuizzesGradesAdapter(var quizzesGrades: MutableList<QuizResponseDTO>? = null) :
+class QuizzesGradesAdapter(var quizzesGrades: List<QuizResponseDTO>? = null) :
     RecyclerView.Adapter<QuizzesGradesAdapter.QuizzesGradesViewHolder>() {
 
     lateinit var viewBinding: ItemGradeBinding
@@ -33,10 +34,16 @@ class QuizzesGradesAdapter(var quizzesGrades: MutableList<QuizResponseDTO>? = nu
     override fun onBindViewHolder(holder: QuizzesGradesViewHolder, position: Int) {
         var quizGrade = quizzesGrades?.get(position)
         holder.viewBinding.title.text = quizGrade?.title.toString()
-        holder.viewBinding.percentageTxt.text =
-            quizGrade?.grade.toString() + "%"  // divided by total grade * 100
-        holder.viewBinding.progressPercentage.progress =
-            quizGrade?.grade!!.toInt()  // divided by total grade * 100
+        if (quizGrade?.grade != null) {
+            holder.viewBinding.percentageTxt.text = quizGrade.grade.toString() + "%"
+            holder.viewBinding.progressPercentage.progress =
+                quizGrade.grade!!.toInt() //TODO: divide by todo * 100
+            holder.viewBinding.notGraded.isVisible = false
+        } else {
+            holder.viewBinding.notGraded.isVisible = true
+            holder.viewBinding.percentageTxt.isVisible = false
+            holder.viewBinding.progressPercentage.isVisible = false
+        }
     }
 
     class QuizzesGradesViewHolder(val viewBinding: ItemGradeBinding) :
@@ -44,4 +51,11 @@ class QuizzesGradesAdapter(var quizzesGrades: MutableList<QuizResponseDTO>? = nu
 
 
     }
+
+    fun changeData(quizzesGrades: List<QuizResponseDTO>) {
+        this.quizzesGrades = quizzesGrades
+        notifyDataSetChanged()
+    }
+
+
 }

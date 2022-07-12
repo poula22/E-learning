@@ -164,7 +164,7 @@ class SignUpFragment : ExternalStorageAccessFragment() {
         } else {
             viewBinding.txtPhone.error = null
         }
-        if (!Pattern.matches("^1[0125][0-9]{8}$", viewBinding.txtPhone.text.toString())) {
+        if (!Pattern.matches("^01[0125][0-9]{8}$", viewBinding.txtPhone.text.toString())) {
             viewBinding.txtPhone.error = "Phone number is incorrect"
             isValid = false
         } else {

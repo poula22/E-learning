@@ -1,6 +1,4 @@
-package com.example.lamp.ui.teacher.students_page.students_recycler_view
-
-import com.google.android.material.button.MaterialButton
+package com.example.lamp.ui.teacher.courses_page.course_content.students.students_recycler_view
 
 data class StudentItem(
     val studentName: String,
