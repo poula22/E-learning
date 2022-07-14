@@ -15,7 +15,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.ExternalStorageWithMicAccessFragment
 import com.example.domain.model.SummarizationTextRequestDTO
-import com.example.domain.model.SummarizationUrlRequestDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureSummarizationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -162,22 +161,20 @@ class SummarizationFragment : ExternalStorageWithMicAccessFragment() {
                 viewBinding.paragraphInput.error = "You Should enter Text or Url"
             } else {
                 var text = SummarizationTextRequestDTO(
-                    viewBinding.paragraphInput.text.toString(),
-                    viewBinding.sentenceNumber.text.toString()
+                    text = viewBinding.paragraphInput.text.toString().replace("\r\n|\r", "\n"),
+                    sentnum = viewBinding.sentenceNumber.text.toString()
                 )
-                var url = SummarizationUrlRequestDTO(
-                    viewBinding.url.text.toString(),
-                    viewBinding.sentenceNumber.text.toString()
+                var url = SummarizationTextRequestDTO(
+                    url = viewBinding.url.text.toString(),
+                    sentnum = viewBinding.sentenceNumber.text.toString()
                 )
                 if (viewBinding.paragraphInput.text.toString().isNotEmpty()) {
-                    viewModel.getSummarizationFromText(text)
+                    viewModel.getSummarizationFromText("Text", text)
                 } else {
-                    viewModel.getSummarizationFromUrl(url)
+                    viewModel.getSummarizationFromText("URL", url)
                 }
             }
         }
-
-
     }
 
     private fun stopRecording() {

@@ -257,13 +257,10 @@ interface UserOnlineDataSource {
 interface SummarizationOnlineDataSource {
 
     suspend fun getSummarizationForText(
+        type: String,
         summarizationResponseDTO: SummarizationTextRequestDTO
     ): SummarizationResponseDTO
 
-
-    suspend fun getSummarizationForUrl(
-        summarizationResponseDTO: SummarizationUrlRequestDTO
-    ): SummarizationResponseDTO
 
 }
 

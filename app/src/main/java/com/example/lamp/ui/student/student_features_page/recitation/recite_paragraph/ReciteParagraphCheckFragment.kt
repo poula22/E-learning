@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -42,8 +43,10 @@ class ReciteParagraphCheckFragment(var paragraph: String) : Fragment() {
 
     private fun subscribeToLiveData() {
         viewModel.recitationLiveData.observe(viewLifecycleOwner) {
+            viewBinding.resultPercentage.isVisible = true
+            viewBinding.resultText.isVisible = true
             viewBinding.resultPercentage.text = it.similarity?.times(100).toString() + "%"
-            if (it.similarity?.times(100).toString().toDouble() > 50) {
+            if (it.similarity?.times(100).toString().toInt() > 50) {
                 viewBinding.resultPercentage.setTextColor(resources.getColor(R.color.green, null))
             } else {
                 viewBinding.resultPercentage.setTextColor(resources.getColor(R.color.red, null))

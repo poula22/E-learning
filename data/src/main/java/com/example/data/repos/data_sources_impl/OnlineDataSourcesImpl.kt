@@ -1178,28 +1178,16 @@ class UserOnlineDataSourceImpl(val service: UserWebService) :
 class SummarizationOnlineDataSourceImpl(val service: SummarizationWebService) :
     SummarizationOnlineDataSource {
     override suspend fun getSummarizationForText(
+        type: String,
         summarizationResponse: SummarizationTextRequestDTO
     ): SummarizationResponseDTO {
         try {
-            val response = service.getSummarizationForText(summarizationResponse)
+            val response = service.getSummarizationForText(type,summarizationResponse)
             return response.convertTo(SummarizationResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
         }
     }
-
-    override suspend fun getSummarizationForUrl(
-        summarizationResponse: SummarizationUrlRequestDTO
-    ): SummarizationResponseDTO {
-        try {
-            val response = service.getSummarizationForUrl(summarizationResponse)
-            return response.convertTo(SummarizationResponseDTO::class.java)
-        } catch (throwable: Throwable) {
-            throw throwable
-        }
-    }
-
-
 }
 
 
