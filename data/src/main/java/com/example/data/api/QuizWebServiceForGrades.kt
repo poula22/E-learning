@@ -4,7 +4,7 @@ import com.example.data.model.QuizResponse
 import com.example.domain.model.QuizResponseDTO
 import retrofit2.http.*
 
-interface QuizWebService {
+interface QuizWebServiceForGrades {
     @GET("api/Quizes")
     suspend fun getAllQuizzes(): List<QuizResponse>
 

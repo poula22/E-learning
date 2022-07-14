@@ -945,7 +945,7 @@ class QuizGradeOnlineDataSourceImpl(val service: QuizGradeWebService) :
 }
 
 
-class QuizOnlineDataSourceImpl(val service: QuizWebService) :
+class QuizOnlineDataSourceImpl(val service: QuizWebServiceForGrades) :
     QuizOnlineDataSource {
     override suspend fun getAllQuizzes(): List<QuizResponseDTO> {
         try {

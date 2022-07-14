@@ -1,7 +1,6 @@
 package com.example.data.api
 
 import com.example.data.api.microsoft_api.ocr.MicrosoftOCRWebService
-import com.example.data.model.QuestionChoiceResponse
 import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionClientImpl
 import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionImpl
 import okhttp3.OkHttpClient
@@ -79,8 +78,8 @@ class ApiManager {
             return getBackendInstance().create(QuestionWebService::class.java)
         }
 
-        fun getQuizApi(): QuizWebService {
-            return getBackendInstance().create(QuizWebService::class.java)
+        fun getQuizApi(): QuizWebServiceForGrades {
+            return getBackendInstance().create(QuizWebServiceForGrades::class.java)
         }
 
 
@@ -177,8 +176,8 @@ class ApiManager {
             return getBackendInstance().create(AssignmentWebService::class.java)
         }
 
-        fun getQuizzesGradesByStudentId() : QuizWebService {
-            return getBackendInstance().create(QuizWebService::class.java)
+        fun getQuizzesGradesByStudentId() : QuizWebServiceForGrades {
+            return getBackendInstance().create(QuizWebServiceForGrades::class.java)
         }
 
 
