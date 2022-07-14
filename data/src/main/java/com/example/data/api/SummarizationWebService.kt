@@ -11,7 +11,7 @@ interface SummarizationWebService {
     @POST("api/TextSummarization/{type}")
     suspend fun getSummarizationForText(
         @Path("type") type: String,
-        @Body summarizationResponse: SummarizationTextRequestDTO
+        @Body summarizationRequest: SummarizationTextRequestDTO
     ): SummarizationResponse
 
 }

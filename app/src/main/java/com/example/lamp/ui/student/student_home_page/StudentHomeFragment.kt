@@ -13,12 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.CourseResponseDTO
+import com.example.common_functions.CONSTANTS
 import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentHomeBinding
 import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_course_page.CourseItem
 import com.example.lamp.ui.student.student_features_page.ocr.OcrFragment
 import com.example.lamp.ui.student.student_features_page.recitation.RecitationFragment
 import com.example.lamp.ui.student.student_features_page.summarization.SummarizationFragment
@@ -67,44 +66,63 @@ class StudentHomeFragment : Fragment() {
         viewModel.getImage()
 
 
-
     }
 
     fun subscirbeToLiveData() {
         viewModel.liveData.observe(
             viewLifecycleOwner
         ) {
-
-            Log.v(
-                "poula: ",
-                it.toString()
-            )
-
+            Log.v("poula: ", it.toString())
         }
-        viewModel.coursesLiveData.observe(viewLifecycleOwner){
-            Log.v("poula: ",it.toString())
-            if (it.size>4){
-                coursesRVAdapter.changeData(it.subList(it.size-4,it.size))
-            }else{
+        viewModel.coursesLiveData.observe(viewLifecycleOwner) {
+            Log.v("poula: ", it.toString())
+            if (it.size > 4) {
+                coursesRVAdapter.changeData(it.subList(it.size - 4, it.size))
+            } else {
                 coursesRVAdapter.changeData(it)
             }
 
         }
-        viewModel.testLiveData.observe(viewLifecycleOwner){
-            Log.v("poula: ",it.toString())
+        viewModel.testLiveData.observe(viewLifecycleOwner) {
+            Log.v("poula: ", it.toString())
             viewBinding.roundedImageView.setImageBitmap(BitmapFactory.decodeStream(it.byteStream()))
         }
-        viewModel.errorMessage.observe(viewLifecycleOwner){
-            Log.v("poula: ",it.toString())
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            Log.v("poula: ", it.toString())
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
-        viewModel.course.observe(viewLifecycleOwner){
-            Log.v("poula: ",it.toString())
-            if (it?.code()==200){
-                Toast.makeText(requireContext(), "courses added successfully", Toast.LENGTH_SHORT).show()
+        viewModel.course.observe(viewLifecycleOwner) {
+            Log.v("poula: ", it.toString())
+            if (it?.code() == 200) {
+                Toast.makeText(requireContext(), "courses added successfully", Toast.LENGTH_SHORT)
+                    .show()
                 viewModel.getCourses()
-            }else{
+            } else {
                 Toast.makeText(requireContext(), "invalid course code", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        viewModel.parentLiveDateList.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Parent verification")
+                    .setMessage("Is this email your parent's email?" + "\n" + it[0].parentFirstName + " " + it[0].parentLastName)
+                    .setNegativeButton("No") { dialog, which ->
+                        viewModel.rejectParentRequest(it[0].parentId!!, CONSTANTS.user_id)
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton("Yes") { dialog, which ->
+                        viewModel.acceptParentRequest(it[0].parentId!!, CONSTANTS.user_id)
+                        dialog.dismiss()
+                        Toast.makeText(
+                            requireContext(),
+                            "Now parent can follow your progress up",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                    .show()
             }
         }
     }
@@ -122,7 +140,7 @@ class StudentHomeFragment : Fragment() {
 
 
     private fun initViews() {
-        coursesRVAdapter = CoursesRVAdapter( type = 0)
+        coursesRVAdapter = CoursesRVAdapter(type = 0)
         viewBinding.coursesRecyclerView.adapter = coursesRVAdapter
         featuresRVAdapter = FeaturesRVAdapter(TestData.FEATURES, type = 0)
         featuresRVAdapter.onFeatureClickListener = object : FeaturesRVAdapter.FeatureClickListener {
@@ -213,9 +231,6 @@ class StudentHomeFragment : Fragment() {
             }
         }
     }
-
-
-
 
 
 }

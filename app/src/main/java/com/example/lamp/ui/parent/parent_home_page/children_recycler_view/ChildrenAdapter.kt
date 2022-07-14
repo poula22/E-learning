@@ -1,9 +1,11 @@
-package com.example.lamp.ui.parent.parent_children_page.children_recycler_view
+package com.example.lamp.ui.parent.parent_home_page.children_recycler_view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.ParentChildCoursesResponseDTO
+import com.example.domain.model.StudentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemParentChildBinding
 
@@ -32,4 +34,18 @@ class ChildrenAdapter(var children: MutableList<String>? = null) :
     }
 
     override fun getItemCount(): Int = children?.size ?: 0
+
+
+    fun changeData(children: List<StudentResponseDTO>) {
+        this.children = children.map { it.firstName.toString() }.toMutableList()
+        notifyDataSetChanged()
+    }
+
+
+    var onChildClickListener: OnChildClickListener? = null
+
+    interface OnChildClickListener {
+        fun setOnChildClickListener(child : StudentResponseDTO)
+    }
+
 }

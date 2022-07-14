@@ -460,6 +460,15 @@ class CourseOnlineDataSourceImpl(
         }
     }
 
+    override suspend fun getCoursesByStudentIdForParent(studentId: Int): List<ParentChildCoursesResponseDTO> {
+        try {
+            val response = service.getCoursesByStudentIdForParent(studentId)
+            return response.map { it.convertTo(ParentChildCoursesResponseDTO::class.java) }
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
     override suspend fun getCourse(courseId: Int): CourseResponseDTO {
         try {
             val response = service.getCourse(courseId)
@@ -1100,10 +1109,10 @@ class StudentOnlineDataSourceImpl(val service: StudentWebService) :
         }
     }
 
-    override suspend fun getStudentsByParentId(parentId: Int): StudentResponseDTO {
+    override suspend fun getStudentsByParentId(parentId: Int): List<StudentResponseDTO> {
         try {
             val response = service.getStudentsByParentId(parentId)
-            return response.convertTo(StudentResponseDTO::class.java)
+            return response.map { it.convertTo(StudentResponseDTO::class.java) }
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -1259,7 +1268,7 @@ class SummarizationOnlineDataSourceImpl(val service: SummarizationWebService) :
         summarizationResponse: SummarizationTextRequestDTO
     ): SummarizationResponseDTO {
         try {
-            val response = service.getSummarizationForText(type,summarizationResponse)
+            val response = service.getSummarizationForText(type, summarizationResponse)
             return response.convertTo(SummarizationResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
@@ -1279,6 +1288,55 @@ class RecitationParagraphOnlineDataSourceImpl(val service: RecitationWebService)
             throw throwable
         }
     }
+
+}
+
+
+class ParentStudentOnlineDatSourceImpl(val service: ParentStudentWebService) :
+    ParentStudentOnlineDataSource {
+    override suspend fun verifyStudentRequest(student: ParentStudentRequestDTO): ParentStudentResponseDTO {
+        try {
+            val response = service.verifyStudentRequest(student)
+            return response.convertTo(ParentStudentResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+
+    override suspend fun getUnVerifiedParentStudentRequests(studentId: Int): List<ParentStudentResponseDTO> {
+        try {
+            val response = service.getUnVerifiedParentStudentRequests(studentId)
+            return response.map { it.convertTo(ParentStudentResponseDTO::class.java) }
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun verifyParentStudentRequest(
+        parentId: Int,
+        studentId: Int
+    ): ParentStudentResponseDTO {
+        try {
+            val response = service.verifyParentStudentRequest(parentId, studentId)
+            return response.convertTo(ParentStudentResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun dropParentStudentRequest(
+        parentId: Int,
+        studentId: Int
+    ): ParentStudentResponseDTO {
+        try {
+            val response = service.dropParentStudentRequest(parentId, studentId)
+            return response.convertTo(ParentStudentResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
 
 }
 

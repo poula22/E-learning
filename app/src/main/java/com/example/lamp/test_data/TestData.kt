@@ -1,10 +1,10 @@
 package com.example.lamp.test_data
 
 import com.example.domain.model.CourseResponseDTO
+import com.example.domain.model.ParentChildCoursesResponseDTO
 import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.ui.parent.parent_communicate_page.communicate_recycler_view.TeacherItem
-import com.example.lamp.ui.parent.parent_courses_page.course_recycler_view.ParentCourseItem
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentFromStudentItem
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsItem
@@ -38,7 +38,7 @@ object TestData {
         "child 2",
         "child 3"
     )
-    var PARENTCOURSES: MutableList<ParentCourseItem> = initParentCourse()
+    var PARENTCOURSES: MutableList<ParentChildCoursesResponseDTO> = initParentCourse()
 
     val RECITATIONWORD: MutableList<ReciteWordsItem> =
         mutableListOf(ReciteWordsItem("عربي", "english"))
@@ -89,11 +89,11 @@ object TestData {
     }
 
 
-    private fun initParentCourse(): MutableList<ParentCourseItem> {
+    private fun initParentCourse(): MutableList<ParentChildCoursesResponseDTO> {
         PARENTCOURSES = mutableListOf()
         for (i in 1..100) {
             PARENTCOURSES.add(
-                ParentCourseItem("child " + i, "course " + i, "teacher")
+                ParentChildCoursesResponseDTO("child " + i, "course " + i, 1)
             )
         }
         return PARENTCOURSES

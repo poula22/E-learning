@@ -8,9 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentParentContainerAllTabsBinding
-import com.example.lamp.ui.parent.parent_children_page.ChildrenFragment
 import com.example.lamp.ui.parent.parent_communicate_page.CommunicateFragment
-import com.example.lamp.ui.parent.parent_courses_page.CoursesFragment
 import com.example.lamp.ui.parent.parent_home_page.HomeFragment
 
 class ParentContainerFragment:Fragment() {
@@ -35,16 +33,6 @@ class ParentContainerFragment:Fragment() {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.parent_fragment_tab, HomeFragment())
-                    .commit()
-            }else if(menuItem.itemId==R.id.children){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.parent_fragment_tab, ChildrenFragment())
-                    .commit()
-            }else if(menuItem.itemId==R.id.courses){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.parent_fragment_tab, CoursesFragment())
                     .commit()
             }else if(menuItem.itemId==R.id.communicate){
                 requireActivity().supportFragmentManager

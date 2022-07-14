@@ -2,6 +2,7 @@ package com.example.data.api
 
 import com.example.data.model.CourseResponse
 import com.example.domain.model.CourseResponseDTO
+import com.example.domain.model.ParentChildCoursesResponseDTO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -41,6 +42,9 @@ interface CourseWebService {
 
     @GET("api/Courses/GetCoursesByStudentId/{studentId}")
     suspend fun getCoursesByStudentId(@Path("studentId") studentId: Int): List<CourseResponse>
+
+    @GET("api/Courses/GetCoursesByStudentId/{studentId}")
+    suspend fun getCoursesByStudentIdForParent(@Path("studentId") studentId: Int): List<ParentChildCoursesResponseDTO>
 
 //    @Multipart
 //    @PUT("api/Courses/update-photo/{id}")

@@ -183,6 +183,11 @@ class ApiManager {
             return getBackendInstance().create(QuizWebServiceForGrades::class.java)
         }
 
+        fun getParentStudent(): ParentStudentWebService {
+            return getBackendInstance().create(ParentStudentWebService::class.java)
+        }
+
+
 
 
 

@@ -104,6 +104,7 @@ interface CourseOnlineDataSource {
     suspend fun dropCourse(courseId: Int, studentId: Int): Response<Void>
     suspend fun getCoursesByTeacherId(teacherId: Int): List<CourseResponseDTO>
     suspend fun getCoursesByStudentId(studentId: Int): List<CourseResponseDTO>
+    suspend fun getCoursesByStudentIdForParent(studentId: Int): List<ParentChildCoursesResponseDTO>
     suspend fun getCourse(courseId: Int): CourseResponseDTO
     suspend fun updateCourseImageByCourseId(
         courseId: Int,
@@ -136,7 +137,7 @@ interface ContentOnlineDataSource {
     suspend fun getAllContents(): List<ContentResponseDTO>
     suspend fun getContentById(id: Int): ContentResponseDTO
     suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
-    suspend fun updateContentFileByContentId(contentId: Int,body: RequestBody) :ContentResponseDTO
+    suspend fun updateContentFileByContentId(contentId: Int, body: RequestBody): ContentResponseDTO
 
 
 }
@@ -222,7 +223,7 @@ interface QuizOnlineDataSource {
 
 interface StudentOnlineDataSource {
     suspend fun addStudent(student: StudentResponseDTO): UserResponseDTO
-    suspend fun getStudentsByParentId(parentId: Int): StudentResponseDTO
+    suspend fun getStudentsByParentId(parentId: Int): List<StudentResponseDTO>
     suspend fun getStudentsByCourseId(courseId: Int): List<StudentResponseDTO>
     suspend fun getStudentByEmail(email: String): StudentResponseDTO
 }
@@ -273,6 +274,23 @@ interface RecitationParagraphOnlineDataSource {
     ): RecitationParagraphResponseDTO
 
 }
+
+interface ParentStudentOnlineDataSource {
+    suspend fun verifyStudentRequest(student: ParentStudentRequestDTO): ParentStudentResponseDTO
+
+    suspend fun getUnVerifiedParentStudentRequests(studentId: Int): List<ParentStudentResponseDTO>
+
+    suspend fun verifyParentStudentRequest(
+        parentId: Int,
+        studentId: Int
+    ): ParentStudentResponseDTO
+
+    suspend fun dropParentStudentRequest(
+        parentId: Int,
+        studentId: Int
+    ): ParentStudentResponseDTO
+}
+
 
 
 
