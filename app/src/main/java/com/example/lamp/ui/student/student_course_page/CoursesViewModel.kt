@@ -9,7 +9,10 @@ import com.example.data.api.ApiManager
 import com.example.data.repos.data_sources_impl.CourseOnlineDataSourceImpl
 import com.example.domain.model.CourseResponseDTO
 import com.example.domain.repos.data_sources.CourseOnlineDataSource
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -20,6 +23,20 @@ class CoursesViewModel : ViewModel() {
     var flag = false
     var course = MutableLiveData<Response<Void>?>()
     var errorMessage = MutableLiveData<String>()
+    private val testService=ApiManager.getFileTransferApi()
+    val fileLiveData=MutableLiveData<ResponseBody>()
+
+
+    fun getImage(fileName:String){
+        testService.getImageCall(fileName).enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: retrofit2.Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.d("error", it) }
+            }
+            override fun onResponse(call: retrofit2.Call<ResponseBody>, response: retrofit2.Response<ResponseBody>) {
+                fileLiveData.postValue(response.body())
+            }
+        })
+    }
 
     fun deleteCourse(id: Int) {
         viewModelScope.launch {

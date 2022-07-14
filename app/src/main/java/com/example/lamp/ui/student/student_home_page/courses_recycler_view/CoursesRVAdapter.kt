@@ -1,5 +1,7 @@
 package com.example.lamp.ui.student.student_home_page.courses_recycler_view
 
+import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -10,8 +12,9 @@ import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCoursesBinding
 import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
+import com.example.lamp.ui.student.student_course_page.CourseItem
 
-class CoursesRVAdapter(var coursesItemsList: List<CourseResponseDTO>? = null, val type: Int) :
+class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type: Int) :
     RecyclerView.Adapter<CoursesRVAdapter.CoursesItemViewHolder>() {
 
     val HOME_SCREEN = R.layout.item_student_home_course_rv
@@ -45,21 +48,21 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseResponseDTO>? = null, va
         if (type == 0) {
             val view: ItemStudentHomeCourseRvBinding =
                 holder.viewDataBinding as ItemStudentHomeCourseRvBinding
-            view.item = item
-
+            view.item = item?.courseResponseDTO
+//            view.courseImage.setImageBitmap(item?.bitmap)
             if (onCourseClickListener != null) {
                 view.card.setOnClickListener {
-                    onCourseClickListener!!.setOnCourseClickListener(item)
+                    onCourseClickListener!!.setOnCourseClickListener(item?.courseResponseDTO)
                 }
             }
         } else if (type == 1) {
             val view: ItemStudentCoursesBinding =
                 holder.viewDataBinding as ItemStudentCoursesBinding
-            view.item = item
-            view.coursesCourseImage.setImageURI(item?.courseImage?.toUri())
+            view.item = item?.courseResponseDTO
+            view.coursesCourseImage.setImageBitmap(item?.bitmap)
             if (onCourseClickListener != null) {
                 view.card.setOnClickListener {
-                    onCourseClickListener!!.setOnCourseClickListener(item)
+                    onCourseClickListener!!.setOnCourseClickListener(item?.courseResponseDTO)
                 }
             }
         }
@@ -70,7 +73,21 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseResponseDTO>? = null, va
         return coursesItemsList?.size ?: 0;
     }
     fun updateCoursesList(list: List<CourseResponseDTO>) {
-        coursesItemsList = list
+        coursesItemsList = list.map { CourseItem(it) }
+        notifyDataSetChanged()
+    }
+    fun updateCoursesImages(list: HashMap<Int, Bitmap?>){
+        var i=0
+        coursesItemsList?.forEach { courseItem->
+            list.forEach {
+                if (courseItem.courseResponseDTO.id == it.key){
+                    courseItem.bitmap=it.value
+                }
+            }
+            notifyDataSetChanged()
+
+        }
+        Log.e("mark",list.toString())
         notifyDataSetChanged()
     }
 

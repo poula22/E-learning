@@ -9,6 +9,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/pdf_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/pdf_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/assignment_notes_txt"
+            />
+        <TextView
+            android:id="@+id/assignment_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="assignment.pdf"
+            android:textColor="@color/blue"
+            app:layout_constraintStart_toEndOf="@id/pdf_icon"
+            app:layout_constraintTop_toTopOf="@id/pdf_icon"
+            app:layout_constraintBottom_toBottomOf="@id/pdf_icon"/>
 
         <EditText
             android:id="@+id/assignment_notes_txt"
@@ -16,15 +35,16 @@
             android:layout_height="wrap_content"
             android:lines="8"
             android:textSize="24sp"
-            android:hint="write notes here"
+            android:layout_marginTop="5dp"
+            android:hint="there is no description"
             android:gravity="start"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/pdf_icon" />
 
         <TextView
             android:id="@+id/upload_file"
             android:layout_width="wrap_content"
             android:textSize="32sp"
-            android:text="upload_file"
+            android:text="upload file"
             android:gravity="start"
             app:drawableStartCompat="@drawable/ic_upload"
             android:layout_height="wrap_content"

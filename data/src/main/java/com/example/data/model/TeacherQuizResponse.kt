@@ -2,7 +2,7 @@ package com.example.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class QuizResponse(
+data class TeacherQuizResponse(
 
 	@field:SerializedName("instructions")
 	val instructions: String? = null,
@@ -11,7 +11,10 @@ data class QuizResponse(
 	val postTime: String? = null,
 
 	@field:SerializedName("totalPoints")
-	val grade: Int? = null,
+	val totalPoints: Int? = null,
+
+	@field:SerializedName("questions")
+	val questions: List<TeacherQuestionWithChoicesResponse?>? = null,
 
 	@field:SerializedName("startTime")
 	val startTime: String? = null,

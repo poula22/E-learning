@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class TeacherAssignmentsFromStudentsViewModel:ViewModel() {
     val service=ApiManager.getAssignmentAnswerApi()
     var liveData=MutableLiveData<List<AssignmentAnswerDetailsResponseDTO>>()
-    val dataSource:AssignmentAnswerOnlineDataSource=AssignmentAnswerOnlineDataSourceImpl(service)
+    private val dataSource:AssignmentAnswerOnlineDataSource=AssignmentAnswerOnlineDataSourceImpl(service)
 
     fun getAllAssignmentAnswers(assignmentId:Int){
         viewModelScope.launch {

@@ -1,5 +1,6 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.assignment.assignments_from_students
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -27,7 +28,8 @@ class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentA
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = assignmentList?.get(position)
         holder.itemViewBinding.item = item
-        holder.itemViewBinding.points.setText(totalPoints)
+        Log.v("assignmentList",item?.id.toString())
+        holder.itemViewBinding.points.setText(totalPoints.toString())
         holder.itemViewBinding.assignGrade.setOnClickListener {
             if (holder.itemViewBinding.studentGradeTxt.text.toString() == "" ||
                 holder.itemViewBinding.studentGradeTxt.text.toString()
@@ -49,8 +51,9 @@ class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentA
     }
 
     override fun getItemCount(): Int = assignmentList?.size ?: 0
-    fun changeData(assignmentList: List<AssignmentAnswerDetailsResponseDTO>) {
+    fun changeData(assignmentList: List<AssignmentAnswerDetailsResponseDTO>?) {
         this.assignmentList=assignmentList
+        notifyDataSetChanged()
     }
 
     var  onPdfOpenListener:OnPdfOpenListener?=null
@@ -60,7 +63,7 @@ class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentA
         fun onPdfOpen(pdf:String?)
     }
     interface OnGradesSubmitListener{
-        fun onGradeSubmit(assignmentAnswerDetails: AssignmentAnswerDetailsResponseDTO, Grade: Int)
+        fun onGradeSubmit(assignmentAnswerDetails: AssignmentAnswerDetailsResponseDTO, grade: Int)
     }
 }
 

@@ -1,5 +1,7 @@
 package com.example.lamp.ui.student.student_course_page
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.InputType.TYPE_CLASS_NUMBER
 import android.util.Log
@@ -15,7 +17,6 @@ import com.example.common_functions.CONSTANTS
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCoursesBinding
-import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_course_page.course_content.StudentCourseDetails
 import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CoursesRVAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -25,7 +26,10 @@ class CoursesFragment : Fragment() {
     lateinit var coursesRVAdapter: CoursesRVAdapter
     lateinit var studentCoursesBinding: FragmentStudentCoursesBinding
     lateinit var viewModel: CoursesViewModel
-
+    var mapOfCourses: HashMap<Int, Bitmap?> = hashMapOf()
+    var i :MutableList<Int> = mutableListOf()
+    var size=-1
+    var counter=-1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +62,8 @@ class CoursesFragment : Fragment() {
         viewModel.coursesLiveData.observe(viewLifecycleOwner) {
             it?.let {
                 updateCoursesList(it)
+                updateCoursesImages(it)
+
             }
 
         }
@@ -65,6 +71,31 @@ class CoursesFragment : Fragment() {
             Log.e("taaaaaa", it.toString())
             getAllCourses()
         }
+
+        viewModel.fileLiveData.observe(viewLifecycleOwner) {
+            it?.toString()?.let { it1 -> Log.e("taaaaaa", it1) }
+            it?.let {
+                mapOfCourses.put(i.get(counter), BitmapFactory.decodeStream(it.byteStream()))
+            }
+            counter++
+            if (counter < size) {
+                mapOfCourses
+                    .let { it1 -> coursesRVAdapter.updateCoursesImages(it1) }
+            }
+        }
+    }
+
+    private fun updateCoursesImages(it: MutableList<CourseResponseDTO>) {
+        size=it.size
+        counter=0
+        it.forEach {
+            it.courseImage?.let { it1 ->
+                i.add(it.id!!)
+                mapOfCourses.put(it.id!!,null)
+                viewModel.getImage(it1)
+            }
+        }
+
     }
 
     private fun updateCoursesList(coursesList: MutableList<CourseResponseDTO>) {
@@ -72,7 +103,7 @@ class CoursesFragment : Fragment() {
     }
 
     private fun initViews() {
-        coursesRVAdapter = CoursesRVAdapter(TestData.COURSES, type = 1)
+        coursesRVAdapter = CoursesRVAdapter( type = 1)
 
 
         coursesRVAdapter.onCourseClickListener = object : CoursesRVAdapter.OnCourseClickListener {

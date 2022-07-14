@@ -13,7 +13,7 @@ interface CourseWebService {
     suspend fun getAllCourses(): List<CourseResponse>
 
     @POST("api/Courses")
-    suspend fun addCourse(@Body course: CourseResponseDTO): Response<Void>
+    suspend fun addCourse(@Body body: RequestBody): Response<Void>
 
     @GET("api/Courses/{id}")
     suspend fun getCourse(@Path("id") courseId: Int): CourseResponse
@@ -22,7 +22,7 @@ interface CourseWebService {
     suspend fun updateCourse(@Path("id") id: Int, @Body course: CourseResponseDTO): CourseResponse
 
     @DELETE("api/Courses/{id}")
-    suspend fun deleteCourse(@Path("id") id: Int): CourseResponse
+    suspend fun deleteCourse(@Path("id") id: Int): Response<Void>
 
     @GET("api/Courses/{courseId}/JoinCourse/{studentId}")
     suspend fun joinCourse(

@@ -8,7 +8,7 @@ data class AssignmentResponse(
 	@field:SerializedName("filePath")
 	val filePath: String? = null,
 
-	@field:SerializedName("grade")
+	@field:SerializedName("totalPoints")
 	val grade: Int? = null,
 
 	@field:SerializedName("description")

@@ -12,6 +12,8 @@ class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceItem?>? =
     RecyclerView.Adapter<StudentQuizAnswersAdapter.ViewHolder>() {
     var itemSelectedIndex = -1
 
+
+
     class ViewHolder(var viewBinding: ItemStudentCourseQuizQuestionAnswerBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
         fun changeColor(resId: Int) {
@@ -33,28 +35,32 @@ class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceItem?>? =
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = answers?.get(position)!!
         holder.viewBinding.item = item
-
+        holder.changeColor(item.color)
         holder.viewBinding.answerText.setOnClickListener {
             if (itemSelectedIndex > -1) {
-                holder.changeColor(R.color.green)
+                //set color blue
+                answers?.get(itemSelectedIndex)?.color=R.color.light_blue
+                notifyItemChanged(itemSelectedIndex)
             }
+            //set color green
             itemSelectedIndex = holder.absoluteAdapterPosition
+            answers?.get(itemSelectedIndex)?.color=R.color.green
             item.questionChoiceResponseDTO?.let { it1 ->
                 onAnswerSelectedListener?.onAnswerSelected(
                     it1
                 )
             }
-
+            notifyItemChanged(itemSelectedIndex)
         }
 
-        if (itemSelectedIndex > -1) {
-            if (position == itemSelectedIndex) {
-                holder.changeColor(R.color.green)
-            } else {
-                holder.changeColor(com.workfort.linkpreview.R.color.md_light_blue_100)
-//                notifyItemChanged(position)
-            }
-        }
+//        if (itemSelectedIndex > -1) {
+//            if (position == itemSelectedIndex) {
+//                holder.changeColor(R.color.green)
+//            } else {
+//                holder.changeColor(com.workfort.linkpreview.R.color.md_light_blue_100)
+////                notifyItemChanged(position)
+//            }
+//        }
 
     }
 
@@ -66,7 +72,7 @@ class StudentQuizAnswersAdapter(var answers: MutableList<QuestionChoiceItem?>? =
 
     fun changeData(newAnswers: List<QuestionChoiceResponseDTO?>?) {
         answers = newAnswers?.map {
-                QuestionChoiceItem(it,false)
+                QuestionChoiceItem(it)
         }?.toMutableList()
         notifyDataSetChanged()
     }

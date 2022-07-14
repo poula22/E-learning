@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,7 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddSectionBinding
 import org.apache.commons.io.FileUtils
 import java.io.File
+import java.io.InputStream
 import java.util.*
 
 
@@ -32,33 +34,24 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
     lateinit var viewModel: TeacherCourseAddLessonViewModel
     private var flag:Boolean=false
     private var lessonId =-1
-    private var pdfFile:File?=null
-    private var Videoile:File?=null
+    var pdfFile:File?=null
+    private var pdfFlag=false
+    var videofile:File?=null
+    private var videoFlag=false
+    private var inputStream: InputStream?=null
     override fun showProgressBar() {
 
     }
 
     override fun resultListener(byteArray: ByteArray) {
         try {
-            val inputStream=fileUri?.let { requireActivity().contentResolver.openInputStream(it) }
-            val file =
-                File.createTempFile(
-                    "test",
-                    filePath?.lastIndexOf(".")?.let { filePath?.substring(it-1) },
-                    requireContext().cacheDir
-                )
-            FileUtils.copyInputStreamToFile(inputStream, file)
-            if (file.exists()) {
-                if (file.extension=="pdf"){
-                    pdfFile=file
-                }else{
-                    Videoile=file
-                }
-            }
-            requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            inputStream=fileUri?.let { requireActivity().contentResolver.openInputStream(it) }
+
         }catch (e:Exception){
             Log.v("Exception",e.toString())
         }
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,18 +82,19 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
         viewModel.lessonLiveData.observe(viewLifecycleOwner){
             Toast.makeText(requireContext(), "added successfully", Toast.LENGTH_SHORT).show()
             flag=true
+            lessonId=it.id!!
             //change 21 to lessonId
             val content= ContentResponseDTO(
                 "",
                 "",
                 link = viewBinding.youtubeLink.text.toString(),
-                7,
+                it.id,
                 0,
                 "",
                 "2022-07-05T15:42:32.723Z"
             )
-
-            viewModel.addContent(content,pdfFile,Videoile)
+            assignData()
+            viewModel.addContent(content,pdfFile,videofile)
         }
         viewModel.contentLiveData.observe(viewLifecycleOwner){
             Toast.makeText(requireContext(), "added successfully", Toast.LENGTH_SHORT).show()
@@ -117,11 +111,13 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
 //            val intent = Intent(Intent.ACTION_PICK)
 //            intent.type = "video/*"
 //            startActivityForResult(intent, CONSTANTS.VIDEO_REQUEST_CODE)
+            videoFlag=true
             uploadVideo()
         }
 
         viewBinding.attachFileBtn.setOnClickListener {
-           uploadDoc()
+            pdfFlag=true
+            uploadDoc()
         }
 
         viewBinding.createBtn.setOnClickListener {
@@ -145,8 +141,8 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
                 "",
                 "2022-07-05T15:42:32.723Z"
                 )
-
-                viewModel.addContent(content,pdfFile,Videoile)
+                assignData()
+                viewModel.addContent(content,pdfFile,videofile)
             }
 
 
@@ -159,6 +155,33 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
         )
         viewBinding.publishDate.setOnClickListener {
             showDatePicker(viewBinding.publishDate, requireContext())
+        }
+
+        val tab=arguments?.getString("tab")
+        if (tab=="lesson") {
+            viewBinding.addVideoBtn.isVisible=false
+            viewBinding.attachFileBtn.isVisible=false
+            viewBinding.createBtn.isVisible=false
+            viewBinding.youtubeLink.isVisible=false
+
+            viewBinding.sectionTitle.isVisible=true
+            viewBinding.description.isVisible=true
+
+            viewBinding.publishDate.isVisible=false
+            viewBinding.startDate.isVisible=false
+        }else if (tab=="content"){
+            viewBinding.addVideoBtn.isVisible=true
+            viewBinding.addVideoBtn.text="Edit Video"
+            viewBinding.attachFileBtn.isVisible=true
+            viewBinding.attachFileBtn.text="Edit File"
+            viewBinding.createBtn.isVisible=false
+            viewBinding.youtubeLink.isVisible=true
+            viewBinding.youtubeLink.hint="Edit youtube link"
+
+            viewBinding.sectionTitle.isVisible=false
+            viewBinding.description.isVisible=false
+            viewBinding.publishDate.isVisible=false
+            viewBinding.startDate.isVisible=false
         }
 
     }
@@ -177,6 +200,28 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoPath))
         intent.setDataAndType(Uri.parse(videoPath), "video/*")
         startActivity(intent)
+    }
+    fun assignData(){
+        if (pdfFlag){
+            pdfFile =
+                File.createTempFile(
+                    "test",
+                    ".pdf",
+                    requireContext().cacheDir
+                )
+            pdfFlag=false
+            FileUtils.copyInputStreamToFile(inputStream, pdfFile)
+        }
+        if (videoFlag){
+            videofile=
+                File.createTempFile(
+                    "test",
+                    ".mp4",
+                    requireContext().cacheDir
+                )
+            videoFlag=false
+            FileUtils.copyInputStreamToFile(inputStream, videofile)
+        }
     }
 
     //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -204,6 +249,7 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
 //    }
 
 }
+
 
 //class URIPathHelper {
 //

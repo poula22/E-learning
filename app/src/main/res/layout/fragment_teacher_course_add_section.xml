@@ -31,7 +31,7 @@
             android:id="@+id/section_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Section Name"
+            android:hint="Lesson Name"
             android:text="@{item.sectionName}"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"

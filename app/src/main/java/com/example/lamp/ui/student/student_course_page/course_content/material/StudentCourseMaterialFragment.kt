@@ -22,6 +22,8 @@ import com.example.lamp.ui.student.student_course_page.course_content.material.l
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import org.apache.commons.io.FileUtils
+import java.io.File
 
 
 class StudentCourseMaterialFragment() : Fragment() {
@@ -31,6 +33,8 @@ class StudentCourseMaterialFragment() : Fragment() {
     val adapter =
         StudentCourseLessonsAdapter(mutableListOf(LessonResponseDTO("desc1", 1, "lesson1", 1)))
 
+    lateinit var listener:AbstractYouTubePlayerListener
+    lateinit var youTubePlayer: YouTubePlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(StudentCourseMaterialViewModel::class.java)
@@ -62,6 +66,15 @@ class StudentCourseMaterialFragment() : Fragment() {
     private fun initViews() {
         //play teacher video
         playTeacherVideo()
+        val youTubePlayerView: YouTubePlayerView = viewBinding.youtubePlayerView
+        lifecycle.addObserver(youTubePlayerView)
+        listener=object : AbstractYouTubePlayerListener() {
+            override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
+                setVideoLoader(youTubePlayer)
+                loadVideo("https://www.youtube.com/watch?v=BGkL2Pq-g3A&list=RDBGkL2Pq-g3A&start_radio=1")
+            }
+        }
+        youTubePlayerView.addYouTubePlayerListener(listener)
         // youtube player
         playYoutubeVideo()
         adapter.onLessonClickListener = object : StudentCourseLessonsAdapter.OnLessonClickListener {
@@ -108,8 +121,31 @@ class StudentCourseMaterialFragment() : Fragment() {
         }
         viewModel.contentLiveData.observe(viewLifecycleOwner) {
             it?.let { contentResponseDTO ->
-                Log.v("contentResponseDTO", contentResponseDTO.toString())
+                contentResponseDTO.forEach { content ->
+                    Log.v("contentResponseDTO", contentResponseDTO.toString())
+                    content.link?.let { it1 -> loadVideo(it1) }
+                    content.videoPath?.let { it1 ->
+                        var str=it1.replace("\\\\Abanoub\\wwwroot\\"," https://25.70.83.232:7097/")
+                        str=str.replace("\\","/")
+                        Log.e("str",str)
+                        //63508411-35e9-4cc3-ad23-11df33cad213.mp4
+                        //str.substring(str.lastIndexOf("/"))
+                        viewModel.getVideo("63508411-35e9-4cc3-ad23-11df33cad213.mp4")
+                    }
+                }
             }
+
+        }
+        viewModel.VideoLiveData.observe(viewLifecycleOwner){
+            Log.e("VideoLiveData",it.toString())
+            val file =
+                File.createTempFile(
+                    "test",
+                    ".mp4",
+                    requireContext().cacheDir
+                )
+            FileUtils.copyInputStreamToFile(it.byteStream(), file)
+            viewBinding.videoPlayer.setVideoPath(file.absolutePath)
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
             it?.let {
@@ -124,21 +160,26 @@ class StudentCourseMaterialFragment() : Fragment() {
     }
 
 
-    private fun playYoutubeVideo(youtubeUrl: String? = null) {
-        val youTubePlayerView: YouTubePlayerView = viewBinding.youtubePlayerView
-        lifecycle.addObserver(youTubePlayerView)
-        val videoId =
-            getYoutubeVideoId("https://www.youtube.com/watch?v=TiGgOmRBap4&list=RDCLAK5uy_m5j6nB_IPvvtoiErZo8aUsj_8pcUHLqUQ&index=27")
-        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(videoId, 0f)
-            }
-        })
+    private fun playYoutubeVideo(path: String? = null):String {
+        if (path!=null){
+            Log.e("path",path)
+            val videoId =
+                getYoutubeVideoId(path)
+            return videoId
+        }
+        return ""
     }
 
     private fun getYoutubeVideoId(youtubeUrl: String): String {
         var index = youtubeUrl.indexOf("v=")
         return youtubeUrl.substring(index.plus(2), index.plus(13))
+    }
+    private fun loadVideo(path: String) {
+        youTubePlayer.loadVideo(playYoutubeVideo(path), 0f)
+    }
+
+    private fun setVideoLoader(youTubePlayer: YouTubePlayer,) {
+        this.youTubePlayer = youTubePlayer
     }
 
 }

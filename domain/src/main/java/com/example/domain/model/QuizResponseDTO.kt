@@ -6,6 +6,7 @@ data class QuizResponseDTO(
 	val startTime: String? = null,
 	val id: Int? = null,
 	val endTime: String? = null,
+	val postTime: String? = null,
 	val title: String? = null,
 	val courseId: Int? = null
 )

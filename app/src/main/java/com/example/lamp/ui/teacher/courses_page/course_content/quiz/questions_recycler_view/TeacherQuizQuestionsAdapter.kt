@@ -21,9 +21,6 @@ import com.example.lamp.ui.teacher.courses_page.course_content.quiz.answers_recy
 class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = null) :
     RecyclerView.Adapter<TeacherQuizQuestionsAdapter.ViewHolder>() {
 //    var answers: MutableList<AnswerItem> = mutableListOf()
-    companion object{
-        var getAnswersListener: GetAnswersListener? = null
-    }
     init {
         if (questions==null){
             questions= mutableListOf()
@@ -79,8 +76,9 @@ class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = nu
             if(item?.answers==null){
                 item?.answers= mutableListOf()
             }
-//            item?.answers?.add(AnswerItem(answer))
-            answerAdapter.addAnswer(answer)
+            val answerItem=AnswerItem(answer)
+            item?.answers?.add(answerItem)
+            answerAdapter.addAnswer(answerItem)
         }
         holder.viewBinding.createQuestionDeleteQuestion.setOnClickListener{
             removeQuestion(holder.absoluteAdapterPosition,item!!)
@@ -109,9 +107,6 @@ class TeacherQuizQuestionsAdapter(var questions: MutableList<QuestionItem>? = nu
         return questionItem
     }
 
-interface GetAnswersListener{
-    fun getAnswers():MutableList<AnswerItem>?
-}
 
 //    var onQuestionAddedListener:OnQuestionAddedListener?=null
 //    interface OnQuestionAddedListener{

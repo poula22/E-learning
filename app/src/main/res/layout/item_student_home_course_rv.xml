@@ -26,7 +26,6 @@
             android:background="#FF5252"
             android:orientation="vertical"
             android:padding="20dp">
-
             <!-- Title, secondary and supporting text -->
             <TextView
                 android:id="@+id/courses_course_name"

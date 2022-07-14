@@ -7,6 +7,7 @@ import com.example.data.data_classes.URLOCR
 import com.example.data.model.AssignmentResponse
 import com.example.data.model.convertTo
 import com.example.domain.model.*
+import com.example.domain.repos.QuizForGradeOnlineDataSource
 import com.example.domain.repos.data_sources.*
 import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionImpl
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHeaders
@@ -210,10 +211,10 @@ class AssignmentOnlineDataSourceImpl(
     override var callResult: AssignmentOnlineDataSource.CallResult? = null
 ) :
     AssignmentOnlineDataSource {
-    override suspend fun addAssignment(assignment: AssignmentResponseDTO): AssignmentResponseDTO {
+    override suspend fun addAssignment(body: RequestBody): Response<Void> {
         try {
-            val response = service.addAssignment(assignment)
-            return response.convertTo(AssignmentResponseDTO::class.java)
+            val response = service.addAssignment(body)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -232,10 +233,10 @@ class AssignmentOnlineDataSourceImpl(
     }
 
 
-    override suspend fun deleteAssignment(id: Int): AssignmentResponseDTO {
+    override suspend fun deleteAssignment(id: Int): Response<Void> {
         try {
             val response = service.deleteAssignment(id)
-            return response.convertTo(AssignmentResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -378,10 +379,10 @@ class ContentOnlineDataSourceImpl(val service: ContentWebService) : ContentOnlin
         }
     }
 
-    override suspend fun updateContentFileByContentId(body: RequestBody): ContentResponseDTO {
+    override suspend fun updateContentFileByContentId(contentId: Int,body:RequestBody):ContentResponseDTO {
         //callback
         try {
-            val response = service.updateContentFileByContentId(body)
+            val response = service.updateContentFileByContentId(contentId,body)
             return response.convertTo(ContentResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
@@ -395,10 +396,10 @@ class ContentOnlineDataSourceImpl(val service: ContentWebService) : ContentOnlin
 class CourseOnlineDataSourceImpl(
     val service: CourseWebService
 ) : CourseOnlineDataSource {
-    override suspend fun addCourse(course: CourseResponseDTO): Response<Void> {
+    override suspend fun addCourse(body: RequestBody): Response<Void> {
         try {
 
-            val response = service.addCourse(course)
+            val response = service.addCourse(body)
             return response
         } catch (throwable: Throwable) {
             throw throwable
@@ -414,10 +415,10 @@ class CourseOnlineDataSourceImpl(
         }
     }
 
-    override suspend fun deleteCourse(id: Int): CourseResponseDTO {
+    override suspend fun deleteCourse(id: Int): Response<Void> {
         try {
             val response = service.deleteCourse(id)
-            return response.convertTo(CourseResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -547,10 +548,10 @@ class FeatureOnlineDataSourceImpl(val service: FeatureWebService) :
 
 class LessonOnlineDataSourceImpl(val service: LessonWebService) :
     LessonOnlineDataSource {
-    override suspend fun addLesson(lesson: LessonResponseDTO): Response<Void> {
+    override suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO {
         try {
             val response = service.addLesson(lesson)
-            return response
+            return response.convertTo(LessonResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -574,10 +575,10 @@ class LessonOnlineDataSourceImpl(val service: LessonWebService) :
         }
     }
 
-    override suspend fun deleteLesson(id: Int): LessonResponseDTO {
+    override suspend fun deleteLesson(id: Int): Response<Void> {
         try {
             val response = service.deleteLesson(id)
-            return response.convertTo(LessonResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -944,31 +945,109 @@ class QuizGradeOnlineDataSourceImpl(val service: QuizGradeWebService) :
 
 }
 
+class QuizForGradeOnlineDataSourceImpl(val service :QuizWebServiceForGrades): QuizForGradeOnlineDataSource {
 
-class QuizOnlineDataSourceImpl(val service: QuizWebServiceForGrades) :
+        override suspend fun getAllQuizzes(): List<QuizResponseDTO> {
+            try {
+                val response = service.getAllQuizzes()
+                return response.map { it.convertTo(QuizResponseDTO::class.java) }
+            } catch (throwable: Throwable) {
+                throw throwable
+            }
+        }
+
+        override suspend fun createQuiz(quiz: QuizResponseDTO): QuizResponseDTO {
+            try {
+                val response = service.createQuiz(quiz)
+                return response.convertTo(QuizResponseDTO::class.java)
+            } catch (throwable: Throwable) {
+                throw throwable
+            }
+        }
+
+        override suspend fun getQuizById(id: Int): QuizResponseDTO {
+            try {
+                val response = service.getQuizById(id)
+                return response.convertTo(QuizResponseDTO::class.java)
+            } catch (throwable: Throwable) {
+                throw throwable
+            }
+        }
+
+
+        override suspend fun updateQuiz(
+            id: Int,
+            quiz: QuizResponseDTO
+        ): QuizResponseDTO {
+            try {
+                val response = service.updateQuiz(id, quiz)
+                return response.convertTo(QuizResponseDTO::class.java)
+            } catch (throwable: Throwable) {
+                throw throwable
+            }
+        }
+
+        override suspend fun deleteQuiz(id: Int) {
+            try {
+                service.deleteQuiz(id)
+            } catch (throwable: Throwable) {
+                throw throwable
+            }
+        }
+
+        override suspend fun getQuizzesByCourseId(courseId: Int): List<QuizResponseDTO> {
+            try {
+                val response = service.getQuizzesByCourseId(courseId)
+                return response.map { it.convertTo(QuizResponseDTO::class.java) }
+            } catch (throwable: Throwable) {
+                throw throwable
+            }
+        }
+
+        override suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
+            courseId: Int,
+            studentId: Int
+        ): List<QuizResponseDTO> {
+            try {
+                val response =
+                    service.getQuizGradesByCourseIdAndStudentIdForTeacher(courseId, studentId)
+                return response.map { it.convertTo(QuizResponseDTO::class.java) }
+            } catch (throwable: Throwable) {
+                throw throwable
+            }
+        }
+
+
+    }
+
+
+
+
+
+class QuizOnlineDataSourceImpl(val service: QuizWebService) :
     QuizOnlineDataSource {
-    override suspend fun getAllQuizzes(): List<QuizResponseDTO> {
+    override suspend fun getAllQuizzes(): List<TeacherQuizResponseDTO> {
         try {
             val response = service.getAllQuizzes()
-            return response.map { it.convertTo(QuizResponseDTO::class.java) }
+            return response.map { it.convertTo(TeacherQuizResponseDTO::class.java) }
         } catch (throwable: Throwable) {
             throw throwable
         }
     }
 
-    override suspend fun createQuiz(quiz: QuizResponseDTO): QuizResponseDTO {
+    override suspend fun createQuiz(quiz: TeacherQuizResponseDTO): Response<Void> {
         try {
             val response = service.createQuiz(quiz)
-            return response.convertTo(QuizResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }
     }
 
-    override suspend fun getQuizById(id: Int): QuizResponseDTO {
+    override suspend fun getQuizById(id: Int): TeacherQuizResponseDTO {
         try {
             val response = service.getQuizById(id)
-            return response.convertTo(QuizResponseDTO::class.java)
+            return response.convertTo(TeacherQuizResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -977,45 +1056,34 @@ class QuizOnlineDataSourceImpl(val service: QuizWebServiceForGrades) :
 
     override suspend fun updateQuiz(
         id: Int,
-        quiz: QuizResponseDTO
-    ): QuizResponseDTO {
+        quiz: TeacherQuizResponseDTO
+    ): TeacherQuizResponseDTO {
         try {
             val response = service.updateQuiz(id, quiz)
-            return response.convertTo(QuizResponseDTO::class.java)
+            return response.convertTo(TeacherQuizResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
         }
     }
 
-    override suspend fun deleteQuiz(id: Int) {
+    override suspend fun deleteQuiz(id: Int):TeacherQuizResponseDTO {
         try {
-            service.deleteQuiz(id)
+            val result=service.deleteQuiz(id)
+            return result.convertTo(TeacherQuizResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
         }
     }
 
-    override suspend fun getQuizzesByCourseId(courseId: Int): List<QuizResponseDTO> {
+    override suspend fun getQuizzesByCourseId(courseId: Int): List<TeacherQuizResponseDTO> {
         try {
             val response = service.getQuizzesByCourseId(courseId)
-            return response.map { it.convertTo(QuizResponseDTO::class.java) }
+            return response.map { it.convertTo(TeacherQuizResponseDTO::class.java) }
         } catch (throwable: Throwable) {
             throw throwable
         }
     }
 
-    override suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
-        courseId: Int,
-        studentId: Int
-    ): List<QuizResponseDTO> {
-        try {
-            val response =
-                service.getQuizGradesByCourseIdAndStudentIdForTeacher(courseId, studentId)
-            return response.map { it.convertTo(QuizResponseDTO::class.java) }
-        } catch (throwable: Throwable) {
-            throw throwable
-        }
-    }
 
 
 }
@@ -1165,6 +1233,15 @@ class UserOnlineDataSourceImpl(val service: UserWebService) :
     override suspend fun logInTest(user: UserResponseDTO): UserResponseDTO {
         try {
             val response = service.logInTest(user)
+            return response.convertTo(UserResponseDTO::class.java)
+        } catch (throwable: Throwable) {
+            throw throwable
+        }
+    }
+
+    override suspend fun updatePhoto(id: Int, body: RequestBody): UserResponseDTO {
+        try {
+            val response = service.updatePhoto(id, body)
             return response.convertTo(UserResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable

@@ -4,12 +4,14 @@ import com.example.data.model.AssignmentDetailsResponse
 import com.example.data.model.AssignmentResponse
 import com.example.domain.model.AssignmentResponseDTO
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface AssignmentWebService {
     @POST("api/Assignments")
-    suspend fun addAssignment(@Body assignment: AssignmentResponseDTO): AssignmentResponse
+    suspend fun addAssignment(@Body body: RequestBody): Response<Void>
 
     @PUT("api/Assignments/{id}")
     suspend fun updateAssignment(
@@ -18,7 +20,7 @@ interface AssignmentWebService {
     ): AssignmentResponse
 
     @DELETE("api/Assignments/{id}")
-    suspend fun deleteAssignment(@Path("id") id: Int): AssignmentResponse
+    suspend fun deleteAssignment(@Path("id") id: Int): Response<Void>
 
     @GET("api/Assignments")
     suspend fun getAllAssignment(): List<AssignmentResponse>

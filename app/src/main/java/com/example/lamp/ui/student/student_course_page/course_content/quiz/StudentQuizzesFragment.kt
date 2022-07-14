@@ -61,6 +61,7 @@ class StudentQuizzesFragment: Fragment() {
                     .beginTransaction()
                     .replace(R.id.student_course_content_container
                         , fragmentSwap)
+                    .addToBackStack("")
                     .commit()
             }
 

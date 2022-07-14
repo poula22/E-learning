@@ -53,6 +53,9 @@ class TeacherCourseLessonsAdapter(var lessonList:MutableList<LessonResponseDTO>?
         holder.viewBinding.lessson.setOnClickListener {
             onItemClickListener?.onItemClick(item!!)
         }
+        holder.viewBinding.editLessonBtn.setOnClickListener {
+            onItemClickListener?.onEditClick(item!!)
+        }
     }
 
     override fun getItemCount(): Int =lessonList?.size ?:0
@@ -69,6 +72,7 @@ class TeacherCourseLessonsAdapter(var lessonList:MutableList<LessonResponseDTO>?
 
     interface OnItemClickListener{
         fun onItemClick(lesson: LessonResponseDTO)
+        fun onEditClick(lesson: LessonResponseDTO)
     }
 
 

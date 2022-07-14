@@ -51,13 +51,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
             <EditText
                 android:id="@+id/quiz_title_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
-
-
+        <EditText
+            android:id="@+id/grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginStart="15dp"
+            android:hint="grade"
+            app:layout_constraintStart_toEndOf="@id/quiz_edit_quiz_title"
+            app:layout_constraintBottom_toBottomOf="@id/quiz_edit_quiz_title"
+            app:layout_constraintTop_toTopOf="@id/quiz_edit_quiz_title"
+            />
         <TextView
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"

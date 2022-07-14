@@ -1,10 +1,11 @@
-package com.example.lamp.ui.teacher.courses_page.course_content.quiz
+ package com.example.lamp.ui.teacher.courses_page.course_content.quiz
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
 import com.example.domain.model.QuizResponseDTO
+import com.example.domain.model.TeacherQuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizzesBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.quizzes_recycler_view.TeacherQuizAdapter
@@ -54,34 +56,51 @@ class TeacherCourseQuizzesFragment: Fragment() {
         viewModel.liveData.observe(viewLifecycleOwner){
             adapter.changeData(it)
         }
-        viewModel.quizLiveData.observe(viewLifecycleOwner){
+        viewModel.deleteLiveData.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), "quiz deleted successfully", Toast.LENGTH_SHORT).show()
+            viewModel.getAllQuizzes()
+        }
+
+    }
+
+    private fun initViews() {
+        viewBinding.createFab.setOnClickListener {
             requireActivity()
                 .supportFragmentManager
                 .beginTransaction()
                 .addToBackStack("")
                 .replace(R.id.teacher_course_content_container
-                    ,TeacherCourseQuizAddQuestionsFragment(it))
+                    ,TeacherCourseQuizAddQuestionsFragment())
                 .commit()
-        }
-    }
-
-    private fun initViews() {
-        viewBinding.createFab.setOnClickListener {
-            createQuiz()
         }
 
         viewBinding.createQuizButton.setOnClickListener {
-            createQuiz()
+            requireActivity()
+                .supportFragmentManager
+                .beginTransaction()
+                .addToBackStack("")
+                .replace(R.id.teacher_course_content_container
+                    ,TeacherCourseQuizAddQuestionsFragment())
+                .commit()
         }
         adapter=TeacherQuizAdapter()
+
+        ////////////////////////////////////////////////
+        // don't forget to make new quiz edit fragment//
+        ////////////////////////////////////////////////
+
         adapter.onEditQuizListener=object :TeacherQuizAdapter.OnEditQuizListener{
-            override fun onEditQuiz(quiz: QuizResponseDTO) {
+            override fun onEditQuiz(quiz: TeacherQuizResponseDTO) {
                 requireActivity()
                     .supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.teacher_course_container
-                    ,TeacherCourseQuizAddQuestionsFragment(quiz))
+                    ,TeacherCourseQuizAddQuestionsFragment())
                     .commit()
+            }
+
+            override fun onDeleteQuiz(quiz: TeacherQuizResponseDTO) {
+                viewModel.deleteQuiz(quiz)
             }
 
         }
@@ -89,24 +108,7 @@ class TeacherCourseQuizzesFragment: Fragment() {
 
     }
 
-    private fun createQuiz() {
-        if(viewBinding.createQuizLayout.isVisible){
-            viewBinding.createQuizLayout.visibility=View.GONE
-        }
-        val d= SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-        val date=d.format(Date())
-        Log.e("date",date)
-        val item=QuizResponseDTO(null,0,date,0,date,"",CONSTANTS.courseId)
-//        viewModel.addQuiz(item)
-        requireActivity()
-            .supportFragmentManager
-            .beginTransaction()
-            .addToBackStack("")
-            .replace(R.id.teacher_course_content_container
-                ,TeacherCourseQuizAddQuestionsFragment(item))
-            .commit()
-        //show ProgressBar
-    }
+
     override fun onStart() {
         super.onStart()
         var toolbar: Toolbar =requireActivity().findViewById(R.id.toolbar)

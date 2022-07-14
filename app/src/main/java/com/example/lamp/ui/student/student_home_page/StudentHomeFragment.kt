@@ -11,10 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.CourseResponseDTO
 import com.example.extentions.clearTime
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentHomeBinding
 import com.example.lamp.test_data.TestData
+import com.example.lamp.ui.student.student_course_page.CourseItem
 import com.example.lamp.ui.student.student_features_page.ocr.OcrFragment
 import com.example.lamp.ui.student.student_features_page.recitation.RecitationFragment
 import com.example.lamp.ui.student.student_features_page.summarization.SummarizationFragment
@@ -78,8 +80,10 @@ class StudentHomeFragment : Fragment() {
                     .setMessage("Are you sure you want to delete this todo?")
                     .setPositiveButton("Yes") { dialog, which ->
 
-                        val position = viewHolder.adapterPosition
+                        val position = viewHolder.absoluteAdapterPosition
+                        Log.v("position", position.toString())
                         val todo = adapter.todoList?.get(position)
+                        Log.v("todo", todo?.id.toString())
                         adapter.todoList?.removeAt(position)
                         viewModel.repository.removeTodo(todo!!)
                         adapter.notifyItemRemoved(position)
@@ -125,7 +129,7 @@ class StudentHomeFragment : Fragment() {
 
 
     private fun initViews() {
-        coursesRVAdapter = CoursesRVAdapter(TestData.COURSES, type = 0)
+        coursesRVAdapter = CoursesRVAdapter( type = 0)
         viewBinding.coursesRecyclerView.adapter = coursesRVAdapter
         featuresRVAdapter = FeaturesRVAdapter(TestData.FEATURES, type = 0)
         featuresRVAdapter.onFeatureClickListener = object : FeaturesRVAdapter.FeatureClickListener {

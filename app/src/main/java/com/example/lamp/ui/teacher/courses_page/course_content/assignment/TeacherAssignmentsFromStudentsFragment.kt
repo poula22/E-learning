@@ -42,7 +42,7 @@ class TeacherAssignmentsFromStudentsFragment(val assignment : AssignmentResponse
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
         initViews()
-        viewModel.getAllAssignmentAnswers(assignmentId)
+//        viewModel.getAllAssignmentAnswers(assignmentId)
     }
 
     private fun subscribeToLiveData() {
@@ -88,7 +88,7 @@ class TeacherAssignmentsFromStudentsFragment(val assignment : AssignmentResponse
                     assignmentAnswerDetails.assignmentId,
                     grade
                 )
-                viewModel.updateAssignmentAnswer(assignmentId,assignmentAnswer)
+                viewModel.updateAssignmentAnswer(assignmentAnswer.id!!,assignmentAnswer)
                 viewModel.getAllAssignmentAnswers(assignmentId)
             }
 

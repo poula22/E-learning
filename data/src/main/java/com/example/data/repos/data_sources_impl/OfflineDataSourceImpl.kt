@@ -30,10 +30,12 @@ class TodoOfflineDataSourceImp(var dataBase: DataBase, var type: Int) :
     }
 
     override fun removeTodo(todo: TodoDTO):TodoDTO {
-        if (type == 0) {
-            dataBase.teacherTodoDao().removeTodo(todo.convertTo(TeacherTodo::class.java))
-        } else {
-            dataBase.studentTodoDao().removeTodo(todo.convertTo(StudentTodo::class.java))
+        todo.id?.let {
+            if (type == 0) {
+                dataBase.teacherTodoDao().removeTodo(it)
+            } else {
+                dataBase.studentTodoDao().removeTodo(it)
+            }
         }
         return todo
     }

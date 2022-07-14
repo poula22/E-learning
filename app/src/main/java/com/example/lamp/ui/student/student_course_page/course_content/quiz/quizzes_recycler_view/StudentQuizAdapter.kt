@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.QuizResponseDTO
+import com.example.domain.model.TeacherQuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCourseQuizCardBinding
 
-class StudentQuizAdapter(var quizzes:List<QuizResponseDTO>? = null) :
+class StudentQuizAdapter(var quizzes:List<TeacherQuizResponseDTO>? = null) :
     RecyclerView.Adapter<StudentQuizAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,7 +37,7 @@ class StudentQuizAdapter(var quizzes:List<QuizResponseDTO>? = null) :
     }
 
     override fun getItemCount(): Int = quizzes?.size ?: 0
-    fun changeData(it: List<QuizResponseDTO>?) {
+    fun changeData(it: List<TeacherQuizResponseDTO>?) {
         quizzes = it
         notifyDataSetChanged()
     }

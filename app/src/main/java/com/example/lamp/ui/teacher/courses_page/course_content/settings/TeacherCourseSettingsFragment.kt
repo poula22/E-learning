@@ -9,15 +9,17 @@ import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.CONSTANTS
 import com.example.common_functions.CommonFunctions
 import com.example.common_functions.ExternalStorageAccessFragment
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseSettingsBinding
+import org.apache.commons.io.FileUtils
 import java.io.File
 
 
@@ -31,7 +33,7 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
     }
 
     override fun resultListener(byteArray: ByteArray) {
-        val file = filePath?.let {
+        val file= filePath?.let {
             File(it)
         }
         filePath?.let {
@@ -40,11 +42,12 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
         if (file != null) {
             viewModel.changeCourseImage(file)
         }
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(TeacherCourseSettingsViewModel::class.java)
+        viewModel=ViewModelProvider(this).get(TeacherCourseSettingsViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -63,7 +66,7 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        course = requireArguments().getSerializable("course") as CourseResponseDTO
+        course=requireArguments().getSerializable("course") as CourseResponseDTO
         subscribeToLiveData()
         initViews()
         viewModel.getCourseById()
@@ -77,23 +80,21 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
 
     private fun subscribeToLiveData() {
 
-        viewModel.liveData.observe(viewLifecycleOwner) {
-            course = it
-            Log.e("course", course.courseImage.toString())
-            viewBinding.item = it
-            var serverUrl = "https://25.70.83.232"
+        viewModel.liveData.observe(viewLifecycleOwner){
+            course=it
+            Log.e("course",course.courseImage.toString())
+            viewBinding.item=it
+            viewModel.getImage(course.courseImage.toString())
+//            var serverUrl="https://25.70.83.232"
 
-            val thumbnail: Bitmap? =
-                course.courseImage?.toUri()?.let { it1 ->
-                    requireContext().contentResolver.loadThumbnail(
-                        it1, Size(640, 480), null
-                    )
-                }
-            viewBinding.courseImageView.setImageBitmap(thumbnail)
+//            val thumbnail: Bitmap? =
+//                course.courseImage?.toUri()?.let { it1 ->
+//                    requireContext().contentResolver.loadThumbnail(
+//                        it1, Size(640, 480), null)
+//                }
+//            viewBinding.courseImageView.setImageBitmap(thumbnail)
 
-            viewModel.fileLiveData.observe(viewLifecycleOwner) {
-                viewModel.getCourseById()
-            }
+
 
 //            with(this)
 //            .load("file:///"+it.courseImage?.substring(2)?.replace("\\","/"))
@@ -101,41 +102,63 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
 //            .into(viewBinding.courseImageView)
 
 
+
 //            var image=course.courseImage?.let { it1 -> TestConnection.getData(it1) }
 //            val img= course.courseImage?.let { it1 -> File(it1) }
 //            Log.e("image",img?.exists().toString())
+        }
+        viewModel.fileLiveData.observe(viewLifecycleOwner){
+            viewModel.getCourseById()
         }
 
         viewModel.dropLiveData.observe(viewLifecycleOwner) {
             if (it.code() == 200) {
                 Toast.makeText(requireContext(), "Course Dropped", Toast.LENGTH_SHORT).show()
                 requireActivity().supportFragmentManager.popBackStack()
-            } else {
+            }
+            else{
                 Toast.makeText(requireContext(), "Course Not Dropped", Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel.testLiveData.observe(viewLifecycleOwner) {
+        viewModel.testLiveData.observe(viewLifecycleOwner){
             viewBinding.courseImageView.setImageBitmap(BitmapFactory.decodeStream(it.byteStream()))
+        }
+        viewModel.updateLiveData.observe(viewLifecycleOwner){
+            Toast.makeText(context, "saved successfully", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 
     @SuppressLint("SetTextI18n")
     private fun initViews() {
-        viewBinding.item = course
+        viewBinding.item=course
         viewBinding.changeImageBtn.setOnClickListener {
             imagePick()
         }
 
         viewBinding.deleteImageBtn.setOnClickListener {
-            viewBinding.courseImageView.setImageResource(R.drawable.ic_courses)
             //delete image from database
+            var file =
+                File.createTempFile(
+                    "test",
+                    ".png",
+                    requireContext().cacheDir
+                )
+            val inputStream=resources.openRawResource(R.raw.light_bulb)
+            FileUtils.copyInputStreamToFile(inputStream, file)
+
+            viewModel.changeCourseImage(file)
         }
 
 
         viewBinding.saveBtn.setOnClickListener {
-            Toast.makeText(context, "saved successfully", Toast.LENGTH_SHORT).show()
-            //insert in database
-            requireActivity().supportFragmentManager.popBackStack()
+            val course=CourseResponseDTO(
+                courseName = viewBinding.courseTitle.text.toString() ,
+                teacherId = CONSTANTS.user_id,
+                courseDescription = viewBinding.descriptionLayout.editText?.text.toString()
+            )
+            viewModel.updateCourse(course)
+
         }
 
         viewBinding.courseCodeLinearLayout.setOnClickListener {
@@ -144,11 +167,12 @@ class TeacherCourseSettingsFragment : ExternalStorageAccessFragment() {
                 requireContext()
             )
         }
-        viewBinding.dropBtn.setOnClickListener {
+        viewBinding.dropBtn.setOnClickListener{
             viewModel.dropCourse()
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
     }
+
 
 
 }

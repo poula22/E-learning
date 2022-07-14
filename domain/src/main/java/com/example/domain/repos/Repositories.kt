@@ -1,9 +1,6 @@
 package com.example.domain.repos
 
-import com.example.domain.model.ContentResponseDTO
-import com.example.domain.model.LessonResponseDTO
-import com.example.domain.model.OCRResponseDTO
-import com.example.domain.model.TodoDTO
+import com.example.domain.model.*
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -20,6 +17,19 @@ interface OCRRepository {
     ): ReadOperationResult
 }
 
+interface QuizForGradeOnlineDataSource{
+    suspend fun getAllQuizzes(): List<QuizResponseDTO>
+    suspend fun createQuiz(quiz: QuizResponseDTO): QuizResponseDTO
+    suspend fun getQuizById(id: Int): QuizResponseDTO
+    suspend fun updateQuiz(id: Int, quiz: QuizResponseDTO): QuizResponseDTO
+    suspend fun deleteQuiz(id: Int)
+    suspend fun getQuizzesByCourseId(courseId: Int): List<QuizResponseDTO>
+    suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
+        courseId: Int,
+        studentId: Int
+    ): List<QuizResponseDTO>
+}
+
 interface TodoRepository {
     fun addTodo(todo: TodoDTO)
     fun updateTodo(todo: TodoDTO)
@@ -34,10 +44,10 @@ interface MaterialRepository {
 
     // lesson functions
     suspend fun getAllLessons(): List<LessonResponseDTO>
-    suspend fun addLesson(lesson: LessonResponseDTO): Response<Void>
+    suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO
     suspend fun getLesson(id: Int): LessonResponseDTO
     suspend fun updateLesson(id: Int, lesson: LessonResponseDTO): LessonResponseDTO
-    suspend fun deleteLesson(id: Int): LessonResponseDTO
+    suspend fun deleteLesson(id: Int): Response<Void>
     suspend fun getLessonsByCourseId(courseId: Int): List<LessonResponseDTO>
 
     // content functions
@@ -48,6 +58,7 @@ interface MaterialRepository {
     suspend fun getContentById(id: Int): ContentResponseDTO
     suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
     suspend fun updateContentFileByContentId(
+        contentId: Int,
         body: RequestBody
     ):ContentResponseDTO
 

@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.QuizResponseDTO
+import com.example.domain.model.TeacherQuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemGradeBinding
 

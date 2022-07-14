@@ -37,13 +37,6 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?=null) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item=answers?.get(position)
-        val call=object :TeacherQuizQuestionsAdapter.GetAnswersListener{
-            override fun getAnswers(): MutableList<AnswerItem>? {
-                return this@TeacherQuizAnswersAdapter.answers
-            }
-
-        }
-        TeacherQuizQuestionsAdapter.getAnswersListener=call
         holder.viewBinding.item=item
         holder.viewBinding.answerListItemAnswerText.addTextChangedListener {
             if (item!=null)
@@ -73,9 +66,9 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?=null) :
 
     override fun getItemCount(): Int = answers?.size ?:0
 
-    fun addAnswer(questionChoiceResponseDTO: QuestionChoiceResponseDTO){
+    fun addAnswer(answerItem: AnswerItem){
 
-        answers?.add(AnswerItem(questionChoiceResponseDTO))
+        answers?.add(answerItem)
         notifyItemInserted(answers?.size?.minus(1)!!)
     }
 

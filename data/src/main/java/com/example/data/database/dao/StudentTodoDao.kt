@@ -11,8 +11,8 @@ interface StudentTodoDao {
     fun addTodo(studentTodo: StudentTodo)
     @Update
     fun updateTodo(studentTodo: StudentTodo)
-    @Delete
-    fun removeTodo(studentTodo: StudentTodo)
+    @Query("Delete from StudentTodo where studentId = :id")
+    fun removeTodo(id: Int)
     @Query("DELETE FROM StudentTodo")
     fun removeAll()
     @Query("select * from StudentTodo")

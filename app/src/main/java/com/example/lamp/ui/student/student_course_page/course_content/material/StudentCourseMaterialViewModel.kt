@@ -13,13 +13,17 @@ import com.example.domain.repos.MaterialRepository
 import com.example.domain.repos.data_sources.ContentOnlineDataSource
 import com.example.domain.repos.data_sources.LessonOnlineDataSource
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody
 import retrofit2.HttpException
 
 class StudentCourseMaterialViewModel : ViewModel() {
     var errorMessage = MutableLiveData<String>()
+    var VideoLiveData = MutableLiveData<ResponseBody>()
     var LessonsLiveData = MutableLiveData<List<LessonResponseDTO>>()
     var contentLiveData = MutableLiveData<List<ContentResponseDTO>>()
 
+    private val fileService=ApiManager.getFileTransferApi()
     private val lessonWebService = ApiManager.getLessonApi()
     private val contentWebService = ApiManager.getContentApi()
     private val lessonOnlineDataSource: LessonOnlineDataSource = LessonOnlineDataSourceImpl(lessonWebService)
@@ -39,6 +43,19 @@ class StudentCourseMaterialViewModel : ViewModel() {
                 }
             }
 
+        }
+    }
+    fun getVideo(fileName:String){
+        runBlocking{
+            try {
+                VideoLiveData.value=fileService.getVideo(fileName)
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.response()?.errorBody()?.string()
+                    }
+                }
+            }
         }
     }
 

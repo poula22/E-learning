@@ -27,9 +27,11 @@ class TeacherCourseLessonsSectionsAdapter(var sectionsList: List<SectionItem?>?)
         var item = sectionsList?.get(position)
         holder.viewBinding.item = item?.sectionName
         holder.viewBinding.editSection.setOnClickListener {
-            //navigate to edit section screen
+
         }
     }
 
     override fun getItemCount(): Int = sectionsList?.size ?: 0
+    
+
 }

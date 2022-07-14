@@ -112,10 +112,10 @@ class CommonFunctions {
                     calendar.set(Calendar.MONTH, month)
                     calendar.set(Calendar.YEAR, year)
                     if (month.plus(1) <10){
-                        edText.setText("" + dayOfMonth + "/" +"0"+ month.plus(1) + "/" + year)
+                        edText.setText("" + year + "/" +"0"+ month.plus(1) + "/" + dayOfMonth)
                     }
                     else{
-                        edText.setText("" + dayOfMonth + "/" + month.plus(1) + "/" + year)
+                        edText.setText("" + year + "/" + month.plus(1) + "/" + dayOfMonth)
                     }
 
                 },

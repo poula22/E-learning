@@ -44,7 +44,7 @@ class StudentCourseAssignmentAdapter(var assignments: MutableList<AssignmentDeta
     }
     var onStudentAssignmentClickedListener:OnStudentAssignmentClickedListener?=null
     interface OnStudentAssignmentClickedListener{
-        fun onAssignmentClick(pos:Int)
+        fun onAssignmentClick(postion:Int)
     }
 
     override fun getItemCount(): Int = assignments?.size ?: 0

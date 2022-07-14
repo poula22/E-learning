@@ -1,7 +1,5 @@
 package com.example.domain.model
 
-import com.google.gson.annotations.SerializedName
-
 data class AssignmentResponseDTO(
 	val filePath: String? = null,
 	val grade: Int? = null,

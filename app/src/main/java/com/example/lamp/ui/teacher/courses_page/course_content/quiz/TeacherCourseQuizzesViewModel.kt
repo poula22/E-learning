@@ -6,14 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.common_functions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.repos.data_sources_impl.QuizOnlineDataSourceImpl
-import com.example.domain.model.QuizResponseDTO
+import com.example.domain.model.TeacherQuizResponseDTO
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
 class TeacherCourseQuizzesViewModel : ViewModel() {
 
-    val liveData = MutableLiveData<List<QuizResponseDTO>>()
-    val quizLiveData = MutableLiveData<QuizResponseDTO>()
+    val liveData = MutableLiveData<List<TeacherQuizResponseDTO>>()
+    val deleteLiveData = MutableLiveData<TeacherQuizResponseDTO>()
     val errorMessage = MutableLiveData<String>()
     private val quizService = ApiManager.getQuizApi()
     private val quizOnlineDataSource = QuizOnlineDataSourceImpl(quizService)
@@ -33,10 +33,11 @@ class TeacherCourseQuizzesViewModel : ViewModel() {
             }
         }
     }
-    fun addQuiz(quiz: QuizResponseDTO) {
+
+    fun deleteQuiz(quiz: TeacherQuizResponseDTO) {
         viewModelScope.launch {
             try {
-                quizLiveData.value = quizOnlineDataSource.createQuiz(quiz)
+                deleteLiveData.value = quiz.id?.let { quizOnlineDataSource.deleteQuiz(it) }
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {

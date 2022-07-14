@@ -78,11 +78,14 @@ class ApiManager {
             return getBackendInstance().create(QuestionWebService::class.java)
         }
 
-        fun getQuizApi(): QuizWebServiceForGrades {
+
+        fun getQuizForGradesApi(): QuizWebServiceForGrades {
             return getBackendInstance().create(QuizWebServiceForGrades::class.java)
         }
 
-
+        fun getQuizApi(): QuizWebService {
+            return getBackendInstance().create(QuizWebService::class.java)
+        }
 
         fun getQuizGradeApi(): QuizGradeWebService {
             return getBackendInstance().create(QuizGradeWebService::class.java)

@@ -24,7 +24,7 @@ import retrofit2.Response
 import java.io.File
 
 class TeacherCourseAddLessonViewModel:ViewModel() {
-    val lessonLiveData= MutableLiveData<Response<Void>>()
+    val lessonLiveData= MutableLiveData<LessonResponseDTO>()
     val contentLiveData= MutableLiveData<Response<Void>>()
     val errorMessage= MutableLiveData<String>()
     private val lessonWebService=ApiManager.getLessonApi()
@@ -43,7 +43,7 @@ class TeacherCourseAddLessonViewModel:ViewModel() {
                         errorMessage.value = t.response()?.errorBody()?.string()
                     }
                     else -> {
-                        println("unknown error")
+                        throw t
                     }
                 }
             }

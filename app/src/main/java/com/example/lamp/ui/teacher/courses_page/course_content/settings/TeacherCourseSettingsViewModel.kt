@@ -1,6 +1,5 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.settings
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,6 @@ import com.example.data.api.ApiManager
 import com.example.data.repos.data_sources_impl.CourseOnlineDataSourceImpl
 import com.example.domain.model.CourseResponseDTO
 import com.example.domain.repos.data_sources.CourseOnlineDataSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -17,20 +15,17 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import kotlin.concurrent.thread
-import kotlin.coroutines.suspendCoroutine
 
 class TeacherCourseSettingsViewModel : ViewModel() {
+    val updateLiveData= MutableLiveData<CourseResponseDTO>()
     private val  service=ApiManager.getCourseApi()
     val liveData= MutableLiveData<CourseResponseDTO>()
     val dropLiveData=MutableLiveData<Response<Void>>()
     val fileLiveData=MutableLiveData<CourseResponseDTO>()
     val testLiveData=MutableLiveData<ResponseBody>()
-    val testService=ApiManager.getFileTransferApi()
+    private val testService=ApiManager.getFileTransferApi()
     private val dataSource:CourseOnlineDataSource=CourseOnlineDataSourceImpl(service)
     fun changeCourseImage(image:File){
 
@@ -97,14 +92,24 @@ class TeacherCourseSettingsViewModel : ViewModel() {
 
     fun dropCourse(){
         viewModelScope.launch {
-            dropLiveData.value=dataSource.dropCourse(CONSTANTS.courseId,CONSTANTS.user_id)
+            dropLiveData.value=dataSource.deleteCourse(CONSTANTS.courseId)
         }
     }
 
-    fun getImage(){
+    fun getImage(fileName:String){
         viewModelScope.launch {
             try {
-                testLiveData.value= testService.test()
+                testLiveData.value= testService.getImage(fileName)
+            }catch (t:Throwable){
+                t.printStackTrace()
+            }
+        }
+    }
+
+    fun updateCourse(course:CourseResponseDTO){
+        viewModelScope.launch {
+            try {
+                updateLiveData.value=dataSource.updateCourse(CONSTANTS.courseId,course)
             }catch (t:Throwable){
                 t.printStackTrace()
             }

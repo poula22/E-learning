@@ -3,6 +3,7 @@ package com.example.lamp.ui.student.student_course_page.course_content.quiz
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.CONSTANTS
+import com.example.domain.model.QuestionAnswerResponseDTO
 import com.example.domain.model.QuestionChoiceResponseDTO
 import com.example.domain.model.QuizDetailsResponseDTO
 import com.example.lamp.R
@@ -25,7 +28,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class StudentQuizFragment : Fragment() {
     lateinit var viewBinding: FragmentStudentQuizBinding
-    var studentAnswers = mutableListOf<QuestionChoiceResponseDTO>()
+    var studentAnswers :MutableList<QuestionChoiceResponseDTO> = mutableListOf()
     var questionIndex = 0
     lateinit var quiz: List<QuizDetailsResponseDTO>
     lateinit var viewModel: StudentQuizViewModel
@@ -62,6 +65,9 @@ class StudentQuizFragment : Fragment() {
             viewBinding.questionCard.item = question
             adapter.changeData(question.questionChoices)
         }
+        viewModel.answerLiveData.observe(viewLifecycleOwner) { list ->
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     private fun initViews() {
@@ -72,13 +78,17 @@ class StudentQuizFragment : Fragment() {
         adapter.onAnswerSelectedListener =
             object : StudentQuizAnswersAdapter.OnAnswerSelectedListener {
                 override fun onAnswerSelected(answer: QuestionChoiceResponseDTO) {
-                    studentAnswers.add(answer)
+                    if (studentAnswers.size==questionIndex){
+                        studentAnswers.add(answer)
+                        return
+                    }
+                    studentAnswers.set(questionIndex,answer)
                 }
 
             }
         viewBinding.nextQuestionBtn.setOnClickListener {
             questionIndex++
-            if (questionIndex < quiz.size-1 ||questionIndex >-1) {
+            if (questionIndex < quiz.size && questionIndex >-1) {
                 var question = quiz[questionIndex]
                 viewBinding.questionCard.item = question
                 adapter.changeData(question.questionChoices)
@@ -102,15 +112,18 @@ class StudentQuizFragment : Fragment() {
                     .setNegativeButton("Submit and exit") { dialog, which ->
                         Toast.makeText(context, "Answers Submitted", Toast.LENGTH_SHORT)
                             .show()
-                        requireActivity().supportFragmentManager.popBackStack()
-                        requireActivity()
-                            .supportFragmentManager
-                            .beginTransaction()
-                            .replace(
-                                R.id.student_course_content_container,
-                                StudentQuizzesFragment()
+                        val request=studentAnswers.map {
+                            QuestionAnswerResponseDTO(
+                                CONSTANTS.user_id,
+                                it.questionId,
+                                it.choice,
+                                0
                             )
-                            .commit()
+                        }
+                        Log.e("request",request.toString())
+                        viewModel.sendAnswers(
+                            request
+                        )
                     }
                     .show()
 
@@ -120,10 +133,13 @@ class StudentQuizFragment : Fragment() {
         }
         viewBinding.previousQuestionBtn.setOnClickListener {
             it.isVisible = (questionIndex != 0)
-            questionIndex--
-            var question = quiz[questionIndex]
-            viewBinding.questionCard.item = question
-            adapter.changeData(question.questionChoices)
+            if (questionIndex>0){
+                questionIndex--
+                var question = quiz[questionIndex]
+                viewBinding.questionCard.item = question
+                adapter.changeData(question.questionChoices)
+            }
+
         }
 
 
@@ -172,14 +188,16 @@ class StudentQuizFragment : Fragment() {
 
             override fun onFinish() {
                 tv.text = "Completed"
-                requireActivity()
-                    .supportFragmentManager
-                    .beginTransaction()
-                    .replace(
-                        R.id.student_course_content_container,
-                        StudentQuizzesFragment()
-                    )
-                    .commit()
+                viewModel.sendAnswers(
+                    studentAnswers.map {
+                        QuestionAnswerResponseDTO(
+                            CONSTANTS.courseId,
+                            it.questionId,
+                            it.choice,
+                            it.id
+                        )
+                    }
+                )
             }
         }.start()
     }

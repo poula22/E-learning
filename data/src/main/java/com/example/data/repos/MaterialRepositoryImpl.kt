@@ -21,7 +21,7 @@ class MaterialRepositoryImpl(
         }
     }
 
-    override suspend fun addLesson(lesson: LessonResponseDTO): Response<Void> {
+    override suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO {
         try {
             return lessonOnlineDataSource.addLesson(lesson)
         } catch (throwable: Throwable) {
@@ -45,7 +45,7 @@ class MaterialRepositoryImpl(
         }
     }
 
-    override suspend fun deleteLesson(id: Int): LessonResponseDTO {
+    override suspend fun deleteLesson(id: Int): Response<Void> {
         try {
             return lessonOnlineDataSource.deleteLesson(id)
         } catch (throwable: Throwable) {
@@ -109,9 +109,9 @@ class MaterialRepositoryImpl(
         }
     }
 
-    override suspend fun updateContentFileByContentId(body: RequestBody) :ContentResponseDTO {
+    override suspend fun updateContentFileByContentId(contentId: Int,body: RequestBody) :ContentResponseDTO {
         try {
-            return contentOnlineDataSource.updateContentFileByContentId(body)
+            return contentOnlineDataSource.updateContentFileByContentId(contentId,body)
         } catch (throwable: Throwable) {
             throw throwable
         }

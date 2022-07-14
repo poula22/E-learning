@@ -16,16 +16,23 @@ import com.example.common_functions.CONSTANTS
 import com.example.common_functions.CommonFunctions
 import com.example.domain.model.QuestionChoiceResponseDTO
 import com.example.domain.model.QuizResponseDTO
+import com.example.domain.model.TeacherQuestionWithChoicesResponseDTO
+import com.example.domain.model.TeacherQuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseQuizAddQuestionsBinding
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.quizzes_recycler_view.QuestionItem
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
-class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragment() {
+class TeacherCourseQuizAddQuestionsFragment: Fragment() {
 
     lateinit var viewBinding: FragmentTeacherCourseQuizAddQuestionsBinding
     lateinit var viewModel: FragmentTeacherCourseQuizAddQuestionsViewModel
     lateinit var adapter: TeacherQuizQuestionsAdapter
+    lateinit var quizDetails:QuizResponseDTO
+    var questions:MutableList<TeacherQuestionWithChoicesResponseDTO> =mutableListOf()
+    lateinit var teacherQuizResponseDTO: TeacherQuizResponseDTO
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel =
@@ -54,33 +61,20 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragmen
 
     private fun subscribeToLiveData() {
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
         viewModel.quizLiveData.observe(viewLifecycleOwner) {
-            Log.d("quiz", it.toString())
-
-            viewModel.postAllQuestions(adapter.questions,it)
-
-        }
-        viewModel.questionLiveData.observe(viewLifecycleOwner) {
-//            Toast.makeText(requireContext(), "quiz added successfully", Toast.LENGTH_SHORT).show()
-            //get question answers from adapter
-            val answers = adapter.getQuestion(it)?.answers
-            val postedAnswers=answers?.map { answerItem ->
-                answerItem.questionChoiceResponseDTO?.id=it.id
-                answerItem.questionChoiceResponseDTO
+            if (it.code()==200){
+                Log.d("quiz", it.toString())
+                Toast.makeText(requireContext(), "quiz added successfully", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.popBackStack()
             }
-            viewModel.addChoices(postedAnswers as List<QuestionChoiceResponseDTO>)
-        }
-        viewModel.choicesLiveData.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it.code(), Toast.LENGTH_SHORT).show()
+
         }
     }
 
     private fun initViews() {
-        viewBinding.quizTitleEdit.setText(quiz.title)
-        viewBinding.quizInstructionsEdit.setText(quiz.instructions)
-        val adapter = TeacherQuizQuestionsAdapter()
+        adapter = TeacherQuizQuestionsAdapter()
 //        adapter.onQuestionAddedListener =
 //            object : TeacherQuizQuestionsAdapter.OnQuestionAddedListener {
 //                override fun onQuestionAdded(question: QuestionResponseDTO) {
@@ -102,19 +96,57 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragmen
         }
 
         viewBinding.saveBtn.setOnClickListener {
-            val quiz=QuizResponseDTO(
-                id=8,
-                title = viewBinding.quizTitleEdit.text.toString(),
-                instructions = viewBinding.quizInstructionsEdit.text.toString(),
-                courseId = CONSTANTS.courseId
-
-            )
-            viewModel.updateQuiz(quiz)
+            adapter.notifyDataSetChanged()
+            createQuiz()
+            createQuestionsAndAnswers()
+            createResponse()
+            viewModel.addQuiz(teacherQuizResponseDTO)
 
             //add quiz
 //            requireActivity().supportFragmentManager.popBackStack()
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
+    }
+
+    private fun createResponse() {
+
+        teacherQuizResponseDTO= TeacherQuizResponseDTO(
+            quizDetails.instructions,
+            quizDetails.postTime,
+            quizDetails.grade,
+            questions,
+            quizDetails.startTime,
+            0,
+            quizDetails.endTime,
+            quizDetails.title,
+            CONSTANTS.courseId
+        )
+
+        Log.e("quiz", teacherQuizResponseDTO.toString())
+
+    }
+
+    private fun createQuestionsAndAnswers() {
+        adapter.questions?.forEach {
+            var correctAnswer:QuestionChoiceResponseDTO?=null
+            it.answers?.forEach{
+                    if(it.isCorrect){
+                        correctAnswer=it.questionChoiceResponseDTO
+                    }
+            }
+            questions.add(
+                TeacherQuestionWithChoicesResponseDTO(
+                    quizDetails.id,
+                    it.answers?.map { answer ->
+                        answer.questionChoiceResponseDTO
+                    },
+                    0,
+                    it.question?.title,
+                    correctAnswer?.choice,
+                    quizDetails.startTime
+                )
+            )
+        }
     }
 
     private fun createQuestion(adapter: TeacherQuizQuestionsAdapter) {
@@ -124,6 +156,23 @@ class TeacherCourseQuizAddQuestionsFragment(var quiz: QuizResponseDTO) : Fragmen
         }
         val question = QuestionItem()
         adapter.addQuestion(question)
+    }
+
+    private fun createQuiz() {
+
+        val d= SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+        val date=d.format(Date())
+        Log.e("date",date)
+        quizDetails=QuizResponseDTO(
+            viewBinding.quizInstructions.editText?.text.toString()
+            ,viewBinding.grade.text.toString().toInt()
+            ,date
+            ,0
+            ,date
+            ,date
+            ,viewBinding.quizTitleEdit.text.toString()
+            ,CONSTANTS.courseId)
+
     }
 
     override fun onStart() {

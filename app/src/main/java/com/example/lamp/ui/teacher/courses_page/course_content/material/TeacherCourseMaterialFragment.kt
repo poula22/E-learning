@@ -7,15 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.common_functions.CONSTANTS
 import com.example.domain.model.LessonResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseMaterialBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.TeacherCourseLessonsAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -27,12 +31,13 @@ class TeacherCourseMaterialFragment : Fragment() {
     lateinit var viewBinding: FragmentTeacherCourseMaterialBinding
     lateinit var viewModel: TeacherCourseMaterialViewModel
     lateinit var adapter: TeacherCourseLessonsAdapter
+    lateinit var listener:AbstractYouTubePlayerListener
+    lateinit var youTubePlayer: YouTubePlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(TeacherCourseMaterialViewModel::class.java)
     }
-    lateinit var listener:AbstractYouTubePlayerListener
-    lateinit var youTubePlayer: YouTubePlayer
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +55,7 @@ class TeacherCourseMaterialFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subScribeToLiveData()
         initViews()
-        viewModel.getCourseLessons(CONSTANTS.courseId)
+        viewModel.getCourseLessons()
     }
 
     private fun subScribeToLiveData() {
@@ -85,6 +90,10 @@ class TeacherCourseMaterialFragment : Fragment() {
             FileUtils.copyInputStreamToFile(it.byteStream(), file)
             viewBinding.videoPlayer.setVideoPath(file.absolutePath)
         }
+        viewModel.removeLessonLiveData.observe(viewLifecycleOwner) {
+            viewModel.getCourseLessons()
+            Toast.makeText(requireContext(), "deleted successfully", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
@@ -98,10 +107,10 @@ class TeacherCourseMaterialFragment : Fragment() {
         viewBinding.videoPlayer.setVideoURI(uri)
         viewBinding.videoPlayer.requestFocus()
 
-        viewBinding.videoPlayer.setOnPreparedListener {
-            //preparing
-            it.start()
-        }
+//        viewBinding.videoPlayer.setOnPreparedListener {
+//            //preparing
+//            it.start()
+//        }
         val youTubePlayerView: YouTubePlayerView = viewBinding.youtubePlayerView
         lifecycle.addObserver(youTubePlayerView)
         listener=object : AbstractYouTubePlayerListener() {
@@ -117,7 +126,21 @@ class TeacherCourseMaterialFragment : Fragment() {
         adapter = TeacherCourseLessonsAdapter()
         adapter.onItemClickListener = object : TeacherCourseLessonsAdapter.OnItemClickListener {
             override fun onItemClick(lesson: LessonResponseDTO) {
-                lesson.id?.let { viewModel.getLessonContent(7) }
+                lesson.id?.let { viewModel.getLessonContent(it) }
+            }
+
+            override fun onEditClick(lesson: LessonResponseDTO) {
+//                lesson.id?.let { viewModel.updateLesson(it,lesson) }
+                val bundle = Bundle()
+                bundle.putSerializable("lesson", lesson)
+                val fragment = TeacherCourseEditMaterialFragment()
+                fragment.arguments = bundle
+                requireActivity()
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.teacher_fragment_tab,fragment)
+                    .addToBackStack("")
+                    .commit()
             }
 
         }
@@ -129,13 +152,46 @@ class TeacherCourseMaterialFragment : Fragment() {
                 .addToBackStack("")
                 .replace(R.id.teacher_fragment_tab, TeacherCourseAddLessonFragment())
                 .commit()
-            //                .addToBackStack("")
         }
+
+        val simpleCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Delete")
+                    .setMessage("Are you sure you want to delete this todo?")
+                    .setPositiveButton("Yes") { dialog, which ->
+
+                        val position = viewHolder.absoluteAdapterPosition
+                        Log.v("position", position.toString())
+                        val lesson = adapter.lessonList?.get(position)
+                        Log.v("assignment", lesson?.id.toString())
+                        viewModel.removeLesson(lesson)
+                    }
+                    .setNegativeButton("No") { dialog, which ->
+                        adapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
+                    }
+                    .show()
+
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+        itemTouchHelper.attachToRecyclerView(viewBinding.lessonsRecyclerView)
 
     }
 
     private fun loadVideo(path: String) {
-        youTubePlayer.loadVideo(playYoutubeVideo(path), 0f)
+        youTubePlayer.cueVideo(playYoutubeVideo(path), 0f)
     }
 
     private fun setVideoLoader(youTubePlayer: YouTubePlayer,) {
@@ -157,6 +213,11 @@ class TeacherCourseMaterialFragment : Fragment() {
     private fun getYoutubeVideoId(youtubeUrl: String): String {
         var index = youtubeUrl.indexOf("v=")
         return youtubeUrl.substring(index.plus(2), index.plus(13))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        youTubePlayer.removeListener(listener)
     }
 
 }

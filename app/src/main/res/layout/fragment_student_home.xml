@@ -73,7 +73,7 @@
                     app:cardElevation="5dp"
                     app:cardUseCompatPadding="true"
                     app:contentPadding="5dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/courses_recycler_view"
+                    app:layout_constraintBottom_toTopOf="@id/features_home"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/courses_home">
 
@@ -126,7 +126,7 @@
                     android:text="Features"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/courses_recycler_view" />
+                    app:layout_constraintTop_toBottomOf="@id/join_course" />
 
 
                 <androidx.recyclerview.widget.RecyclerView

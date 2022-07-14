@@ -6,10 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.common_functions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.repos.data_sources_impl.AssignmentOnlineDataSourceImpl
+import com.example.data.repos.data_sources_impl.QuizForGradeOnlineDataSourceImpl
 import com.example.data.repos.data_sources_impl.QuizOnlineDataSourceImpl
 import com.example.domain.model.AssignmentDetailsResponseDTO
 import com.example.domain.model.AssignmentResponseDTO
 import com.example.domain.model.QuizResponseDTO
+import com.example.domain.repos.QuizForGradeOnlineDataSource
 import com.example.domain.repos.data_sources.AssignmentOnlineDataSource
 import com.example.domain.repos.data_sources.QuizOnlineDataSource
 import kotlinx.coroutines.launch
@@ -22,7 +24,7 @@ class StudentCourseGradesViewModel : ViewModel() {
     val quizzesLiveData = MutableLiveData<List<QuizResponseDTO>>()
     val assignmentsDataSource: AssignmentOnlineDataSource =
         AssignmentOnlineDataSourceImpl(assignmentsService)
-    val quizzesDataSource: QuizOnlineDataSource = QuizOnlineDataSourceImpl(quizzesService)
+    val quizzesDataSource: QuizForGradeOnlineDataSource = QuizForGradeOnlineDataSourceImpl(quizzesService)
 
     fun getGradesByStudentId() {
         viewModelScope.launch {

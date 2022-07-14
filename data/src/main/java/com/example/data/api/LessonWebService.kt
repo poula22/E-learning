@@ -10,7 +10,7 @@ interface LessonWebService {
     suspend fun getAllLessons(): List<LessonResponse>
 
     @POST("api/Lessons")
-    suspend fun addLesson(@Body lesson: LessonResponseDTO): Response<Void>
+    suspend fun addLesson(@Body lesson: LessonResponseDTO): LessonResponse
 
     @GET("api/Lessons/{id}")
     suspend fun getLesson(@Path("id") id: Int): LessonResponse
@@ -19,7 +19,7 @@ interface LessonWebService {
     suspend fun updateLesson(@Path("id") id: Int, @Body lesson: LessonResponseDTO): LessonResponse
 
     @DELETE("api/Lessons/{id}")
-    suspend fun deleteLesson(@Path("id") id: Int): LessonResponse
+    suspend fun deleteLesson(@Path("id") id: Int): Response<Void>
 
     @GET("api/Lessons/GetLessonsByCourseId/{courseId}")
     suspend fun getLessonsByCourseId(@Path("courseId") courseId: Int): List<LessonResponse>

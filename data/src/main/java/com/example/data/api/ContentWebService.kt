@@ -32,6 +32,7 @@ interface ContentWebService {
 
     @PUT("api/Contents/update-file/{id}")
     fun updateContentFileByContentId(
+        @Path("id") contentId: Int,
         @Body body: RequestBody
     ): Call<ContentResponse>
 

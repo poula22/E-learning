@@ -16,6 +16,9 @@ import com.example.lamp.databinding.FragmentStudentCourseAssignmentBinding
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.assignment_recycler_view.StudentCourseAssignmentAdapter
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.assignment_submit.StudentCourseAssignmentSubmitFragment
 import com.google.android.material.tabs.TabLayout
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+
 //filter fun - new json
 class StudentCourseAssignmentFragment :
     Fragment() {
@@ -70,8 +73,16 @@ class StudentCourseAssignmentFragment :
     }
 
     private fun subscribeToLiveData() {
-        viewModel.liveData.observe(viewLifecycleOwner){
-            updateAssignmentsList(it)
+        viewModel.liveData.observe(viewLifecycleOwner){assignmentList ->
+            val swap=assignmentList.toMutableList()
+            assignmentList.forEach { assignment ->
+                assignment.assignedGrade?.let {
+                 if (it>0){
+                     swap.remove(assignment)
+                 }
+                }
+            }
+            updateAssignmentsList(swap)
         }
         viewModel.errorMessage.observe(viewLifecycleOwner){
             viewModel.errorMessage.value=it
@@ -124,25 +135,47 @@ class StudentCourseAssignmentFragment :
     }
 
     private fun getSelectedTabContent(tab: TabLayout.Tab?) {
-        var text=tab?.text.toString()
+        val text=tab?.text.toString()
         if (text.isNotEmpty()) {
-            var list=viewModel.filterList(text)
+            val list=viewModel.filterList(text)
             adapter.setFilteredList(list)
         }
     }
 
 
     private fun goToAssignmentSubmit(postion: Int) {
-        var bundle=Bundle()
-        var assignment: AssignmentDetailsResponseDTO? =viewModel.liveData.value?.get(postion)
-        bundle.putSerializable("assignment",assignment)
-        var fragment=StudentCourseAssignmentSubmitFragment()
-        fragment.arguments=bundle
-        requireActivity()
-            .supportFragmentManager
-            .beginTransaction()
-            .replace(this@StudentCourseAssignmentFragment.id,fragment)
-            .addToBackStack("")
-            .commit()
+        val assignment: AssignmentDetailsResponseDTO? =viewModel.liveData.value?.get(postion)
+        val current = LocalDateTime.now()
+        val output = assignment?.endTime?.let { LocalDateTime.parse(it) }
+        if (output!= null) {
+            if (current.isAfter(output)) {
+                Toast.makeText(requireContext(), "wait for assignment to be graded", Toast.LENGTH_SHORT).show()
+            } else {
+                val bundle = Bundle()
+                bundle.putSerializable("assignment", assignment)
+                val fragment = StudentCourseAssignmentSubmitFragment()
+                fragment.arguments = bundle
+                requireActivity()
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .replace(this@StudentCourseAssignmentFragment.id, fragment)
+                    .addToBackStack("")
+                    .commit()
+            }
+
+        }else{
+            val bundle = Bundle()
+            bundle.putSerializable("assignment", assignment)
+            val fragment = StudentCourseAssignmentSubmitFragment()
+            fragment.arguments = bundle
+            requireActivity()
+                .supportFragmentManager
+                .beginTransaction()
+                .replace(this@StudentCourseAssignmentFragment.id, fragment)
+                .addToBackStack("")
+                .commit()
+        }
+
+
     }
 }

@@ -40,7 +40,7 @@
                 android:id="@+id/deadline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{item.endTime.substring(0,9)}"
+                android:text="@{item.endTime.substring(0,10)}"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toStartOf="@+id/state"
                 app:layout_constraintHorizontal_weight="1"

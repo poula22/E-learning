@@ -5,6 +5,8 @@ import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOp
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.Path
 
 // ALL ONLINE DATA SOURCES SHOULD BE HERE
 
@@ -59,13 +61,13 @@ interface AssignmentAnswerOnlineDataSource {
 //}
 
 interface AssignmentOnlineDataSource {
-    suspend fun addAssignment(assignment: AssignmentResponseDTO): AssignmentResponseDTO
+    suspend fun addAssignment(body: RequestBody): Response<Void>
     suspend fun updateAssignment(
         id: Int,
         assignment: AssignmentResponseDTO
     ): AssignmentResponseDTO
 
-    suspend fun deleteAssignment(id: Int): AssignmentResponseDTO
+    suspend fun deleteAssignment(id: Int): Response<Void>
     suspend fun getAllAssignment(): List<AssignmentResponseDTO>
     suspend fun getAssignmentById(id: Int): AssignmentResponseDTO
     suspend fun getAssignmentsByCourseId(courseId: Int): List<AssignmentResponseDTO>
@@ -95,9 +97,9 @@ interface AssignmentOnlineDataSource {
 
 interface CourseOnlineDataSource {
     suspend fun getAllCourses(): List<CourseResponseDTO>
-    suspend fun addCourse(course: CourseResponseDTO): Response<Void>
+    suspend fun addCourse(body: RequestBody): Response<Void>
     suspend fun updateCourse(id: Int, course: CourseResponseDTO): CourseResponseDTO
-    suspend fun deleteCourse(id: Int): CourseResponseDTO
+    suspend fun deleteCourse(id: Int): Response<Void>
     suspend fun joinCourse(courseId: Int, studentId: Int): Response<Void>
     suspend fun dropCourse(courseId: Int, studentId: Int): Response<Void>
     suspend fun getCoursesByTeacherId(teacherId: Int): List<CourseResponseDTO>
@@ -120,10 +122,10 @@ interface FeatureOnlineDataSource {
 
 interface LessonOnlineDataSource {
     suspend fun getAllLessons(): List<LessonResponseDTO>
-    suspend fun addLesson(lesson: LessonResponseDTO): Response<Void>
+    suspend fun addLesson(lesson: LessonResponseDTO): LessonResponseDTO
     suspend fun getLesson(id: Int): LessonResponseDTO
     suspend fun updateLesson(id: Int, lesson: LessonResponseDTO): LessonResponseDTO
-    suspend fun deleteLesson(id: Int): LessonResponseDTO
+    suspend fun deleteLesson(id: Int): Response<Void>
     suspend fun getLessonsByCourseId(courseId: Int): List<LessonResponseDTO>
 }
 
@@ -134,7 +136,7 @@ interface ContentOnlineDataSource {
     suspend fun getAllContents(): List<ContentResponseDTO>
     suspend fun getContentById(id: Int): ContentResponseDTO
     suspend fun getContentsByLessonId(lessonId: Int): List<ContentResponseDTO>
-    suspend fun updateContentFileByContentId(body: RequestBody): ContentResponseDTO
+    suspend fun updateContentFileByContentId(contentId: Int,body: RequestBody) :ContentResponseDTO
 
 
 }
@@ -208,16 +210,12 @@ interface QuizGradeOnlineDataSource {
 }
 
 interface QuizOnlineDataSource {
-    suspend fun getAllQuizzes(): List<QuizResponseDTO>
-    suspend fun createQuiz(quiz: QuizResponseDTO): QuizResponseDTO
-    suspend fun getQuizById(id: Int): QuizResponseDTO
-    suspend fun updateQuiz(id: Int, quiz: QuizResponseDTO): QuizResponseDTO
-    suspend fun deleteQuiz(id: Int)
-    suspend fun getQuizzesByCourseId(courseId: Int): List<QuizResponseDTO>
-    suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
-        courseId: Int,
-        studentId: Int
-    ): List<QuizResponseDTO>
+    suspend fun getAllQuizzes(): List<TeacherQuizResponseDTO>
+    suspend fun createQuiz(quiz: TeacherQuizResponseDTO): Response<Void>
+    suspend fun getQuizById(id: Int): TeacherQuizResponseDTO
+    suspend fun updateQuiz(id: Int, quiz: TeacherQuizResponseDTO): TeacherQuizResponseDTO
+    suspend fun deleteQuiz(id: Int): TeacherQuizResponseDTO
+    suspend fun getQuizzesByCourseId(courseId: Int): List<TeacherQuizResponseDTO>
 
 }
 
@@ -250,6 +248,10 @@ interface UserOnlineDataSource {
     suspend fun deleteUserById(id: Int): UserResponseDTO
     suspend fun logIn(email: String, password: String): UserResponseDTO
     suspend fun logInTest(user: UserResponseDTO): UserResponseDTO
+    suspend fun updatePhoto(
+        @Path("id") id: Int,
+        @Body body: RequestBody
+    ): UserResponseDTO
 
 }
 

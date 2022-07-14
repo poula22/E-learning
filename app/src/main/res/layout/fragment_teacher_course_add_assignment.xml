@@ -76,7 +76,7 @@
             app:layout_constraintTop_toBottomOf="@id/description_layout" />
 
         <EditText
-
+            android:id="@+id/points"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
@@ -142,8 +142,7 @@
             android:layout_width="160dp"
             android:layout_height="60dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/rounded_btn_blue"
-            android:backgroundTint="#EDEDED"
+            android:background="#DAD9D9"
             android:gravity="center"
             android:text="No Attachment"
             android:textSize="20sp"

@@ -36,9 +36,11 @@ class PDFViewer:Fragment() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val pdf=requireArguments().getByteArray("pdf")
+        val pdf=requireArguments().getString("pdf")
         subscribeToLiveData()
-        viewModel.getFile("Services Latest.pdf")
+        if (pdf != null) {
+            viewModel.getFile(pdf)
+        }
         //resources.openRawResource(R.raw.sheet_2)
 
     }
