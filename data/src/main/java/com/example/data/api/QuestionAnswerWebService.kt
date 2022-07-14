@@ -2,6 +2,7 @@ package com.example.data.api
 
 import com.example.data.model.QuestionAnswerResponse
 import com.example.domain.model.QuestionAnswerResponseDTO
+import retrofit2.Response
 import retrofit2.http.*
 
 interface QuestionAnswerWebService {
@@ -38,7 +39,7 @@ interface QuestionAnswerWebService {
 
 
     @POST("api/QuestionAnswers/PostMultipleQuestionAnswers")
-    suspend fun postMultipleQuestionAnswers(@Body questionAnswers: List<QuestionAnswerResponseDTO>): List<QuestionAnswerResponse>
+    suspend fun postMultipleQuestionAnswers(@Body questionAnswers: List<QuestionAnswerResponseDTO>): Response<Void>
 
 
 }

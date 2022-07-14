@@ -12,10 +12,11 @@ import com.example.domain.repos.data_sources.QuestionAnswerOnlineDataSource
 import com.example.domain.repos.data_sources.QuestionOnlineDataSource
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import retrofit2.Response
 
 class StudentQuizViewModel : ViewModel() {
     val liveData = MutableLiveData<List<QuizDetailsResponseDTO>>()
-    val answerLiveData = MutableLiveData<List<QuestionAnswerResponseDTO>>()
+    val answerLiveData = MutableLiveData<Response<Void>>()
     val errorMessage = MutableLiveData<String>()
     private val webService = ApiManager.getQuestionApi()
     private val onlineDataSource: QuestionOnlineDataSource = QuestionOnlineDataSourceImpl(webService)

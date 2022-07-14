@@ -11,4 +11,5 @@ object CONSTANTS {
         var user_id=-1
         var sessionManager: SessionManager?=null
         var courseId=-1
+        var profilePic=""
 }

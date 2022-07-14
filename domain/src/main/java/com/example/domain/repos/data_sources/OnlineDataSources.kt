@@ -170,7 +170,7 @@ interface QuestionAnswerOnlineDataSource {
         questionId: Int
     ): QuestionAnswerResponseDTO
 
-    suspend fun postMultipleQuestionAnswers(questionAnswers: List<QuestionAnswerResponseDTO>): List<QuestionAnswerResponseDTO>
+    suspend fun postMultipleQuestionAnswers(questionAnswers: List<QuestionAnswerResponseDTO>): Response<Void>
 
 }
 

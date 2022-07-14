@@ -715,10 +715,10 @@ class QuestionAnswerOnlineDataSourceImpl(val service: QuestionAnswerWebService) 
         }
     }
 
-    override suspend fun postMultipleQuestionAnswers(questionAnswers: List<QuestionAnswerResponseDTO>): List<QuestionAnswerResponseDTO> {
+    override suspend fun postMultipleQuestionAnswers(questionAnswers: List<QuestionAnswerResponseDTO>): Response<Void> {
         try {
             val response = service.postMultipleQuestionAnswers(questionAnswers)
-            return response.map { it.convertTo(QuestionAnswerResponseDTO::class.java) }
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }

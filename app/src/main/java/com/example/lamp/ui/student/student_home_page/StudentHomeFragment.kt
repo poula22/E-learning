@@ -1,10 +1,12 @@
 package com.example.lamp.ui.student.student_home_page
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -58,49 +60,14 @@ class StudentHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
-
-
-
-        val simpleCallback = object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.RIGHT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Delete")
-                    .setMessage("Are you sure you want to delete this todo?")
-                    .setPositiveButton("Yes") { dialog, which ->
-
-                        val position = viewHolder.absoluteAdapterPosition
-                        Log.v("position", position.toString())
-                        val todo = adapter.todoList?.get(position)
-                        Log.v("todo", todo?.id.toString())
-                        adapter.todoList?.removeAt(position)
-                        viewModel.repository.removeTodo(todo!!)
-                        adapter.notifyItemRemoved(position)
-                    }
-                    .setNegativeButton("No") { dialog, which ->
-                        adapter.notifyItemChanged(viewHolder.adapterPosition)
-                    }
-                    .show()
-
-            }
-        }
-
-        val itemTouchHelper = ItemTouchHelper(simpleCallback)
-        itemTouchHelper.attachToRecyclerView(viewBinding.todoRecycler)
         subscirbeToLiveData()
+        initViews()
         viewModel.getData()
-        Log.v("data:::", viewModel.liveData.value.toString())
+        viewModel.getCourses()
+        viewModel.getImage()
+
+
+
     }
 
     fun subscirbeToLiveData() {
@@ -113,6 +80,32 @@ class StudentHomeFragment : Fragment() {
                 it.toString()
             )
 
+        }
+        viewModel.coursesLiveData.observe(viewLifecycleOwner){
+            Log.v("poula: ",it.toString())
+            if (it.size>4){
+                coursesRVAdapter.changeData(it.subList(it.size-4,it.size))
+            }else{
+                coursesRVAdapter.changeData(it)
+            }
+
+        }
+        viewModel.testLiveData.observe(viewLifecycleOwner){
+            Log.v("poula: ",it.toString())
+            viewBinding.roundedImageView.setImageBitmap(BitmapFactory.decodeStream(it.byteStream()))
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+            Log.v("poula: ",it.toString())
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+        viewModel.course.observe(viewLifecycleOwner){
+            Log.v("poula: ",it.toString())
+            if (it?.code()==200){
+                Toast.makeText(requireContext(), "courses added successfully", Toast.LENGTH_SHORT).show()
+                viewModel.getCourses()
+            }else{
+                Toast.makeText(requireContext(), "invalid course code", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -166,7 +159,46 @@ class StudentHomeFragment : Fragment() {
             showAddBottomSheet()
         }
 
+        val simpleCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
 
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Delete")
+                    .setMessage("Are you sure you want to delete this todo?")
+                    .setPositiveButton("Yes") { dialog, which ->
+
+                        val position = viewHolder.absoluteAdapterPosition
+                        Log.v("position", position.toString())
+                        val todo = adapter.todoList?.get(position)
+                        Log.v("todo", todo?.id.toString())
+                        adapter.todoList?.removeAt(position)
+                        viewModel.repository.removeTodo(todo!!)
+                        adapter.notifyItemRemoved(position)
+                    }
+                    .setNegativeButton("No") { dialog, which ->
+                        adapter.notifyItemChanged(viewHolder.adapterPosition)
+                    }
+                    .show()
+
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+        itemTouchHelper.attachToRecyclerView(viewBinding.todoRecycler)
+
+        viewBinding.joinCourseButton.setOnClickListener {
+            viewModel.joinCourse(viewBinding.courseCode.text.toString().toInt())
+        }
     }
 
     private fun showAddBottomSheet() {

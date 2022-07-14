@@ -15,6 +15,7 @@ import com.example.domain.repos.TodoRepository
 import com.example.domain.repos.data_sources.CourseOnlineDataSource
 import com.example.domain.repos.data_sources.TodoOfflineDataSource
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import retrofit2.HttpException
 import java.util.*
 
@@ -27,11 +28,25 @@ class TeacherHomeViewModel : ViewModel() {
     private val coursesDataSource:CourseOnlineDataSource= CourseOnlineDataSourceImpl(ApiManager.getCourseApi())
     val coursesLiveData = MutableLiveData<List<CourseResponseDTO>>()
     val errorMessage = MutableLiveData<String>()
+    val testLiveData=MutableLiveData<ResponseBody>()
+    private val testService=ApiManager.getFileTransferApi()
     fun getData() {
         viewModelScope.launch {
-            todoRepository.getAllTodo().let {
-                liveData.value = it
+            try {
+                todoRepository.getAllTodo().let {
+                    liveData.value = it
+                }
+            }catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.response()?.errorBody()?.string()
+                    }
+                    else -> {
+                        errorMessage.value = "failed"
+                    }
+                }
             }
+
         }
     }
 
@@ -86,6 +101,16 @@ class TeacherHomeViewModel : ViewModel() {
                 }
             }
 
+        }
+    }
+
+    fun getImage() {
+        viewModelScope.launch {
+            try {
+                testLiveData.value= testService.getImage(CONSTANTS.profilePic)
+            }catch (t:Throwable){
+                t.printStackTrace()
+            }
         }
     }
 }

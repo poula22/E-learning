@@ -67,7 +67,7 @@
 
                 <ScrollView
                     android:id="@+id/scroll_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
@@ -75,14 +75,14 @@
 
                     <LinearLayout
                         android:id="@+id/linear_layout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/courses_number_card"
-                            android:layout_width="220dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="15dp"
                             app:cardElevation="5dp"
@@ -117,41 +117,6 @@
                         </com.google.android.material.card.MaterialCardView>
 
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/students_number_card"
-                            style=""
-                            android:layout_width="220dp"
-                            android:layout_height="wrap_content"
-                            app:cardCornerRadius="15dp"
-                            app:cardElevation="5dp"
-                            app:cardUseCompatPadding="true">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="#64B5F6"
-                                android:orientation="vertical"
-                                android:padding="20dp">
-
-                                <!-- Title, secondary and supporting text -->
-                                <TextView
-                                    android:id="@+id/students_course_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Students"
-                                    android:textColor="#ffffff"
-                                    android:textSize="30sp" />
-
-                                <TextView
-                                    android:id="@+id/students_code"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="8dp"
-                                    android:text="35"
-                                    android:textColor="#ffffff"
-                                    android:textSize="30sp" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
                 </ScrollView>
 

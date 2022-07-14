@@ -65,7 +65,7 @@ class StudentQuizFragment : Fragment() {
             viewBinding.questionCard.item = question
             adapter.changeData(question.questionChoices)
         }
-        viewModel.answerLiveData.observe(viewLifecycleOwner) { list ->
+        viewModel.answerLiveData.observe(viewLifecycleOwner) {
             requireActivity().supportFragmentManager.popBackStack()
         }
     }

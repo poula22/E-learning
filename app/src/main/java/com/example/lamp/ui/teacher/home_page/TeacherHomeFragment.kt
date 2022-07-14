@@ -1,10 +1,12 @@
 package com.example.lamp.ui.teacher.home_page
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -53,7 +55,9 @@ class TeacherHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         subscirbeToLiveData()
+        viewModel.getCourses()
         viewModel.getData()
+        viewModel.getImage()
         Log.v("data:::", viewModel.liveData.value.toString())
     }
 
@@ -77,7 +81,16 @@ class TeacherHomeFragment : Fragment() {
         }
         viewModel.coursesLiveData.observe(viewLifecycleOwner){
             Log.v("poula: ",it.toString())
-            viewBinding.coursesCode.setText(it.size)
+            viewBinding.coursesCode.setText(it.size.toString())
+        }
+
+        viewModel.testLiveData.observe(viewLifecycleOwner){
+            Log.v("poula: ",it.toString())
+            viewBinding.roundedImageView.setImageBitmap(BitmapFactory.decodeStream(it.byteStream()))
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+            Log.v("poula: ",it.toString())
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -111,13 +124,7 @@ class TeacherHomeFragment : Fragment() {
                 .commit()
         }
 
-        viewBinding.studentsNumberCard.setOnClickListener {
-            requireActivity()
-                .supportFragmentManager
-                .beginTransaction().replace(R.id.fragment_container, TeacherStudentsFragment())
-                .addToBackStack("")
-                .commit()
-        }
+
         viewBinding.calendarView.selectedDate = CalendarDay.today()
         viewBinding.todoRecycler.adapter = adapter
         viewBinding.calendarView.setOnDateChangedListener { widget, calenderDay, selected ->

@@ -1,25 +1,46 @@
 package com.example.lamp.ui.teacher.profile_page
 
 import TeacherProfileViewModel
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
+import com.example.common_functions.ExternalStorageAccessFragment
 import com.example.domain.model.UserResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherProfileBinding
+import java.io.File
 
-class TeacherProfileFragment : Fragment() {
+class TeacherProfileFragment : ExternalStorageAccessFragment(){
     lateinit var viewBinding: FragmentTeacherProfileBinding
     lateinit var viewModel: TeacherProfileViewModel
     var email:String?=null
     var role:String?=null
     var profilePictuerURL:String?=null
+    override fun showProgressBar() {
+
+    }
+
+    override fun resultListener(byteArray: ByteArray) {
+        val file= filePath?.let {
+            File(it)
+        }
+        filePath?.let {
+            Log.v("filePath of image", it)
+        }
+        if (file != null) {
+            viewModel.changeUserImage(file)
+        }
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +70,7 @@ class TeacherProfileFragment : Fragment() {
 
     private fun initViews() {
         viewBinding.changeImage.setOnClickListener {
-
+            imagePick()
         }
 
         viewBinding.editProfileSubmit.setOnClickListener {
@@ -80,10 +101,17 @@ class TeacherProfileFragment : Fragment() {
             email=it.emailAddress
             role=it.role
             profilePictuerURL=it.profilePic
+            viewModel.getImage(it.profilePic.toString())
 //            viewBinding.roundedProfile.setBackgroundResource(it.profilePic)
         }
         viewModel.errorMessage.observe(viewLifecycleOwner){
             Log.v("ProfileFragment::",it)
+        }
+        viewModel.testLiveData.observe(viewLifecycleOwner){
+            viewBinding.roundedImageView.setImageBitmap(BitmapFactory.decodeStream(it.byteStream()))
+        }
+        viewModel.userUpdateLiveData.observe(viewLifecycleOwner){
+            viewModel.getUserInfo()
         }
     }
 

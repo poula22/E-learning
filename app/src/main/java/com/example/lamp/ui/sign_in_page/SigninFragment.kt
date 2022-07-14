@@ -59,6 +59,7 @@ class SigninFragment : Fragment() {
                     return@observe
                 }
             CONSTANTS.user_id= user.id!!
+            CONSTANTS.profilePic= user.profilePic!!
             requireActivity().supportFragmentManager.beginTransaction()
                 .addToBackStack("")
                 .replace(R.id.fragment_container, fragment)

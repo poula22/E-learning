@@ -1,6 +1,9 @@
 package com.example.lamp.ui.teacher.courses_page
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +25,10 @@ class TeacherCoursesFragment : Fragment() {
     lateinit var teacherCoursesBinding: FragmentTeacherCoursesBinding
     lateinit var adapter: TeacherCoursesAdapter
     lateinit var viewModel: TeacherCoursesViewModel
+    var mapOfCourses: HashMap<Int, Bitmap?> = hashMapOf()
+    var i :MutableList<Int> = mutableListOf()
+    var size=-1
+    var counter=-1
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,6 +56,19 @@ class TeacherCoursesFragment : Fragment() {
     fun subscribeToLiveData() {
         viewModel.coursesLiveData.observe(viewLifecycleOwner){
             adapter.changeData(it)
+            updateCoursesImages(it)
+        }
+
+        viewModel.fileLiveData.observe(viewLifecycleOwner) {
+            it?.toString()?.let { it1 -> Log.e("taaaaaa", it1) }
+            it?.let {
+                mapOfCourses.put(i.get(counter), BitmapFactory.decodeStream(it.byteStream()))
+            }
+            counter++
+            if (counter < size) {
+                mapOfCourses
+                    .let { it1 -> adapter.updateCoursesImages(it1) }
+            }
         }
     }
 
@@ -58,8 +78,21 @@ class TeacherCoursesFragment : Fragment() {
     }
 
 
+    private fun updateCoursesImages(it: MutableList<CourseResponseDTO>) {
+        size=it.size
+        counter=0
+        it.forEach {
+            it.courseImage?.let { it1 ->
+                i.add(it.id!!)
+                mapOfCourses.put(it.id!!,null)
+                viewModel.getImage(it1)
+            }
+        }
+
+    }
+
     private fun initViews() {
-        adapter = TeacherCoursesAdapter(TestData.COURSES, 1)
+        adapter = TeacherCoursesAdapter( type = 1)
         adapter.onCourseClickListener=object :TeacherCoursesAdapter.OnCourseClickListener{
             override fun setOnCourseClickListener(item: CourseResponseDTO?) {
                 requireActivity().supportFragmentManager

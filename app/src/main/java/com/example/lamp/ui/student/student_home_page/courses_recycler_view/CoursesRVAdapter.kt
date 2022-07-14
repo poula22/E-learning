@@ -91,6 +91,11 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type:
         notifyDataSetChanged()
     }
 
+    fun changeData(it: List<CourseResponseDTO>?) {
+        coursesItemsList = it?.map { CourseItem(it) }
+        notifyDataSetChanged()
+    }
+
     class CoursesItemViewHolder(var viewDataBinding: ViewDataBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
     }
