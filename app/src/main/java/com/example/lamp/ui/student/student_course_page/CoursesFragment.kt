@@ -9,10 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.common_functions.CONSTANTS
 import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
@@ -67,9 +70,29 @@ class CoursesFragment : Fragment() {
             }
 
         }
+        viewModel.deleteCourseLiveData.observe(viewLifecycleOwner) {
+            it?.let {
+                Log.e("taaaaaa", it.toString())
+                if (it.code()==200){
+                    Toast.makeText(requireContext(), "courses deleted successfully", Toast.LENGTH_SHORT).show()
+                    getAllCourses()
+                }else{
+                    Toast.makeText(requireContext(), "something went wrong", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         viewModel.course.observe(viewLifecycleOwner) {
             Log.e("taaaaaa", it.toString())
-            getAllCourses()
+            it?.let {
+                if (it.code()==200){
+                    Toast.makeText(requireContext(), "courses added successfully", Toast.LENGTH_SHORT).show()
+                    getAllCourses()
+                }else{
+                    Toast.makeText(requireContext(), "invalid course code", Toast.LENGTH_SHORT).show()
+                }
+            }
+
         }
 
         viewModel.fileLiveData.observe(viewLifecycleOwner) {
@@ -87,6 +110,7 @@ class CoursesFragment : Fragment() {
 
     private fun updateCoursesImages(it: MutableList<CourseResponseDTO>) {
         size=it.size
+        Log.e("taaaaaa", size.toString())
         counter=0
         it.forEach {
             it.courseImage?.let { it1 ->
@@ -115,6 +139,43 @@ class CoursesFragment : Fragment() {
         studentCoursesBinding.joinCourseButton.setOnClickListener {
             joinCourse()
         }
+
+        val simpleCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Delete")
+                    .setMessage("Are you sure you want to delete this todo?")
+                    .setPositiveButton("Yes") { dialog, which ->
+
+                        val position = viewHolder.absoluteAdapterPosition
+                        Log.v("position", position.toString())
+                        val course  = coursesRVAdapter.coursesItemsList?.get(position)
+                        Log.v("todo", course?.courseResponseDTO?.id.toString())
+                        coursesRVAdapter.coursesItemsList?.removeAt(position)
+                        viewModel.deleteCourse(course?.courseResponseDTO?.id!!)
+                        coursesRVAdapter.notifyItemRemoved(position)
+                    }
+                    .setNegativeButton("No") { dialog, which ->
+                        coursesRVAdapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
+                    }
+                    .show()
+
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+        itemTouchHelper.attachToRecyclerView(studentCoursesBinding.studentCoursesRecyclerView)
     }
 
     private fun goToCourseDetails(item: CourseResponseDTO?) {

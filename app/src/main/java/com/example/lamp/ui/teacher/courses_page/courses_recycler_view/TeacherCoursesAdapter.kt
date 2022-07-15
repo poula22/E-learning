@@ -15,7 +15,7 @@ import com.example.lamp.ui.student.student_course_page.CourseItem
 import java.util.HashMap
 
 
-class TeacherCoursesAdapter(var coursesItemsList: List<CourseItem>? = null, val type: Int) :
+class TeacherCoursesAdapter(var coursesItemsList: MutableList<CourseItem>? = null, val type: Int) :
     RecyclerView.Adapter<TeacherCoursesAdapter.CoursesItemViewHolder>() {
 
     val HOME_SCREEN = R.layout.item_student_home_course_rv
@@ -73,7 +73,7 @@ class TeacherCoursesAdapter(var coursesItemsList: List<CourseItem>? = null, val 
     fun changeData(coursesItemsList: List<CourseResponseDTO>) {
         this.coursesItemsList = coursesItemsList.map {
             CourseItem(it)
-        }
+        }.toMutableList()
         notifyDataSetChanged()
     }
 

@@ -15,7 +15,11 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.HttpException
+import retrofit2.Response
 
 class SigninViewModel : ViewModel() {
     var service: UserWebService = ApiManager.getUserApi()
@@ -26,25 +30,37 @@ class SigninViewModel : ViewModel() {
     val auth: FirebaseAuth = Firebase.auth
     fun signin(email: String, password: String) {
 
-            viewModelScope.launch {
+
                 //token = "Bearer ${sessionManager.fetchAuthToken()}"
                 //sessionManager?.saveAuthToken(result.authToken)
 //                var result = service.logIn(email, password)
                 try {
-                liveData.value = service.logInTest(UserResponseDTO(emailAddress = email, password = password))
+                    service.logInTest(UserResponseDTO(emailAddress = email, password = password)).enqueue(object :Callback<UserResponse>{
+                        override fun onResponse(
+                            call: Call<UserResponse>,
+                            response: Response<UserResponse>
+                        ) {
+                            liveData.postValue(response.body())
+                        }
+
+                        override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                            errorMessage.postValue(t.message)
+                        }
+
+                    })
 
                 } catch (t: Throwable) {
                     when (t) {
                         is HttpException ->
                             errorMessage.value = t.response()?.errorBody()?.string()
                         else ->{
-                            return@launch
+                            errorMessage.value = t.message
                         }
                     }
 
             }
 
-        }
+
 
     }
 

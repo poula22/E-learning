@@ -14,7 +14,7 @@ import com.example.lamp.databinding.ItemStudentCoursesBinding
 import com.example.lamp.databinding.ItemStudentHomeCourseRvBinding
 import com.example.lamp.ui.student.student_course_page.CourseItem
 
-class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type: Int) :
+class CoursesRVAdapter(var coursesItemsList: MutableList<CourseItem>? = null, val type: Int) :
     RecyclerView.Adapter<CoursesRVAdapter.CoursesItemViewHolder>() {
 
     val HOME_SCREEN = R.layout.item_student_home_course_rv
@@ -73,7 +73,7 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type:
         return coursesItemsList?.size ?: 0;
     }
     fun updateCoursesList(list: List<CourseResponseDTO>) {
-        coursesItemsList = list.map { CourseItem(it) }
+        coursesItemsList = list.map { CourseItem(it) }.toMutableList()
         notifyDataSetChanged()
     }
     fun updateCoursesImages(list: HashMap<Int, Bitmap?>){
@@ -90,9 +90,20 @@ class CoursesRVAdapter(var coursesItemsList: List<CourseItem>? = null, val type:
         Log.e("mark",list.toString())
         notifyDataSetChanged()
     }
+//fun updateCoursesImages(id:Int, bitmap: Bitmap?) {
+//    var i=0
+//    coursesItemsList?.forEach { courseItem->
+//            if (courseItem.courseResponseDTO.id == id){
+//                courseItem.bitmap=bitmap
+//                i= coursesItemsList?.indexOf(courseItem)!!
+//        }
+//    }
+//    Log.e("mark",i.toString())
+//    notifyItemChanged(i)
+//}
 
     fun changeData(it: List<CourseResponseDTO>?) {
-        coursesItemsList = it?.map { CourseItem(it) }
+        coursesItemsList = it?.map { CourseItem(it) }?.toMutableList()
         notifyDataSetChanged()
     }
 

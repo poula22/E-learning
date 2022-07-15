@@ -26,17 +26,17 @@ class StudentCourseGradesViewModel : ViewModel() {
         AssignmentOnlineDataSourceImpl(assignmentsService)
     val quizzesDataSource: QuizForGradeOnlineDataSource = QuizForGradeOnlineDataSourceImpl(quizzesService)
 
-    fun getGradesByStudentId() {
+    fun getGradesByStudentId(studentId: Int, courseId: Int) {
         viewModelScope.launch {
             try {
                 assignmentsLiveData.value =
                     assignmentsDataSource.getAssignmentsByCourseIdForStudent(
-                        CONSTANTS.courseId,
-                        CONSTANTS.user_id
+                        courseId,
+                        studentId
                     )
                 quizzesLiveData.value =
                     quizzesDataSource.getQuizzesByCourseId(
-                        CONSTANTS.courseId
+                        courseId
                     )
             } catch (ex: Exception) {
                 throw ex

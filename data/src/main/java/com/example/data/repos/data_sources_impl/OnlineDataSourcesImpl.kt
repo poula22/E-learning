@@ -618,7 +618,76 @@ class ParentOnlineDataSourceImpl(val service: ParentWebService) :
     ParentOnlineDataSource {
     override suspend fun addParent(parent: ParentResponseDTO): UserResponseDTO {
         try {
-            val response = service.addParent(parent)
+
+            if (parent.profilePic == null) {
+                val response = service.addParent(parent.firstName?.let {
+                    MultipartBody.Part.createFormData(
+                        "firstName",
+                        it
+                    )
+                }, parent.lastName?.let {
+                    MultipartBody.Part.createFormData(
+                        "lastName",
+                        it
+                    )
+                }, parent.phone?.let {
+                    MultipartBody.Part.createFormData(
+                        "phone",
+                        it
+                    )
+                }, parent.role?.let {
+                    MultipartBody.Part.createFormData(
+                        "role",
+                        it
+                    )
+                }, parent.emailAddress?.let {
+                    MultipartBody.Part.createFormData(
+                        "emailAddress",
+                        it
+                    )
+                }, parent.password?.let {
+                    MultipartBody.Part.createFormData(
+                        "password",
+                        it
+                    )
+                })
+                return response.convertTo(UserResponseDTO::class.java)
+            }
+
+            val response = service.addParent(parent.firstName?.let {
+                MultipartBody.Part.createFormData(
+                    "firstName",
+                    it
+                )
+            }, parent.lastName?.let {
+                MultipartBody.Part.createFormData(
+                    "lastName",
+                    it
+                )
+            }, parent.phone?.let {
+                MultipartBody.Part.createFormData(
+                    "phone",
+                    it
+                )
+            }, parent.role?.let {
+                MultipartBody.Part.createFormData(
+                    "role",
+                    it
+                )
+            }, parent.emailAddress?.let {
+                MultipartBody.Part.createFormData(
+                    "emailAddress",
+                    it
+                )
+            }, parent.password?.let {
+                MultipartBody.Part.createFormData(
+                    "password",
+                    it
+                )
+            }, MultipartBody.Part.createFormData(
+                "profilePic",
+                parent.profilePic!!
+            ))
             return response.convertTo(UserResponseDTO::class.java)
         } catch (throwable: Throwable) {
             throw throwable
@@ -1146,7 +1215,38 @@ class TeacherOnlineDataSourceImpl(val service: TeacherWebService) :
         try {
 
             if (teacher.profilePic == null) {
-                teacher.profilePic = ""
+                val response = service.addTeacher(teacher.firstName?.let {
+                    MultipartBody.Part.createFormData(
+                        "firstName",
+                        it
+                    )
+                }, teacher.lastName?.let {
+                    MultipartBody.Part.createFormData(
+                        "lastName",
+                        it
+                    )
+                }, teacher.phone?.let {
+                    MultipartBody.Part.createFormData(
+                        "phone",
+                        it
+                    )
+                }, teacher.role?.let {
+                    MultipartBody.Part.createFormData(
+                        "role",
+                        it
+                    )
+                }, teacher.emailAddress?.let {
+                    MultipartBody.Part.createFormData(
+                        "emailAddress",
+                        it
+                    )
+                }, teacher.password?.let {
+                    MultipartBody.Part.createFormData(
+                        "password",
+                        it
+                    )
+                })
+                return response
             }
 
             val response = service.addTeacher(teacher.firstName?.let {
@@ -1164,10 +1264,7 @@ class TeacherOnlineDataSourceImpl(val service: TeacherWebService) :
                     "phone",
                     it
                 )
-            }, MultipartBody.Part.createFormData(
-                "profilePic",
-                teacher.profilePic!!
-            ), teacher.role?.let {
+            }, teacher.role?.let {
                 MultipartBody.Part.createFormData(
                     "role",
                     it
@@ -1182,7 +1279,10 @@ class TeacherOnlineDataSourceImpl(val service: TeacherWebService) :
                     "password",
                     it
                 )
-            })
+            }, MultipartBody.Part.createFormData(
+                "profilePic",
+                teacher.profilePic!!
+            ))
             return response
         } catch (throwable: Throwable) {
             throw throwable

@@ -3,14 +3,19 @@ package com.example.data.api
 import com.example.data.model.ParentResponse
 import com.example.data.model.UserResponse
 import com.example.domain.model.ParentResponseDTO
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 interface ParentWebService {
+    @Multipart
     @POST("api/Parents")
-    suspend fun addParent(@Body parent: ParentResponseDTO): UserResponse
+    suspend fun addParent(@Part firstName: MultipartBody.Part?,
+                          @Part lastName: MultipartBody.Part?,
+                          @Part phone: MultipartBody.Part?,
+                          @Part role: MultipartBody.Part?,
+                          @Part email: MultipartBody.Part?,
+                          @Part password: MultipartBody.Part?,
+                          @Part profilePic: MultipartBody.Part? = null): UserResponse
 
     @GET("api/Parents/{parentId}/AddStudentsByEmailToParent/{studentEmail}")
     suspend fun addStudentsByEmailToParent(

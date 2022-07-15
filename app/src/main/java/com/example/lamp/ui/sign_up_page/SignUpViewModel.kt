@@ -8,10 +8,13 @@ import com.example.data.api.ParentWebService
 import com.example.data.api.StudentWebService
 import com.example.data.api.TeacherWebService
 import com.example.data.model.UserResponse
+import com.example.data.repos.data_sources_impl.ParentOnlineDataSourceImpl
 import com.example.data.repos.data_sources_impl.TeacherOnlineDataSourceImpl
 import com.example.domain.model.ParentResponseDTO
 import com.example.domain.model.StudentResponseDTO
 import com.example.domain.model.TeacherResponseDTO
+import com.example.domain.model.UserResponseDTO
+import com.example.domain.repos.data_sources.ParentOnlineDataSource
 import com.example.domain.repos.data_sources.TeacherOnlineDataSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -25,6 +28,8 @@ class SignUpViewModel : ViewModel() {
     var studentService: StudentWebService = ApiManager.getStudentApi()
     var teacherService: TeacherWebService = ApiManager.getTeacherApi()
     var parentService: ParentWebService = ApiManager.getParentApi()
+    private val parentOnlineDataSource:ParentOnlineDataSource= ParentOnlineDataSourceImpl(parentService)
+    val parentLiveData=MutableLiveData<UserResponseDTO>()
     var liveData = MutableLiveData<UserResponse>()
     var test = MutableLiveData<Response<Void>>()
     var errorMessage = MutableLiveData<String>()
@@ -77,7 +82,7 @@ class SignUpViewModel : ViewModel() {
                         )
                     )
                 } else if (userDTO.role == "Parent") {
-                    liveData.value = parentService.addParent(
+                    parentLiveData.value = parentOnlineDataSource.addParent(
                         ParentResponseDTO(
                             userDTO.firstName,
                             userDTO.lastName,
@@ -94,11 +99,25 @@ class SignUpViewModel : ViewModel() {
                 when (t) {
                     is HttpException ->
                         errorMessage.value = t.response()?.errorBody()?.string()
+                    else -> errorMessage.value = t.message
                 }
             }
 
         }
 
+    }
+
+    fun addChildren(email:List<String>){
+        viewModelScope.launch {
+            try {
+
+            }catch (t: Throwable) {
+                when (t) {
+                    is HttpException ->
+                        errorMessage.value = t.response()?.errorBody()?.string()
+                }
+            }
+        }
     }
 
     fun addUserToFirebase(email: String, password: String) {

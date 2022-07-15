@@ -42,31 +42,44 @@ class SigninFragment : Fragment() {
     }
 
     private fun subscribeToLiveData() {
-        viewModel.liveData.observe(viewLifecycleOwner) { user ->
-            var fragment: Fragment? = null
-            Log.v("user", user.toString())
-                if (user.role == "Parent") {
-                    fragment = ParentContainerFragment()
+        viewModel.liveData.observe(this.viewLifecycleOwner) { user ->
+            user?.let {
+                if (it.id!=null)
+                    CONSTANTS.user_id= it.id!!
+                if(it.profilePic!=null)
+                    CONSTANTS.profilePic= it.profilePic!!
+
+                Log.v("user", it.toString())
+                when (it.role) {
+                    "Parent" -> {
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, ParentContainerFragment())
+                            .commit()
+                    }
+                    "Teacher" -> {
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, TeacherContainerFragment())
+                            .commit()
+                    }
+                    "Student" -> {
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container,StudentContainerFragment())
+                            .commit()
+                    }
+                    else -> {
+
+                    }
                 }
-                else if (user.role == "Teacher") {
-                    fragment = TeacherContainerFragment()
-                }
-                else if (user.role == "Student") {
-                    fragment = StudentContainerFragment()
-                }
-                else {
-                    Toast.makeText(context, "Invalid user", Toast.LENGTH_SHORT).show()
-                    return@observe
-                }
-            CONSTANTS.user_id= user.id!!
-            CONSTANTS.profilePic= user.profilePic!!
-            requireActivity().supportFragmentManager.beginTransaction()
-                .addToBackStack("")
-                .replace(R.id.fragment_container, fragment)
-                .commit()
+
+
+            }
+
+
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            it?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
         }
 //        viewModel.test.observe(viewLifecycleOwner) {
 //            if (it) {
@@ -120,17 +133,17 @@ class SigninFragment : Fragment() {
         }
     }
 
-    private fun destinationProfile(): Fragment {
-        if (viewModel.liveData.value?.role == "Student") {
-            return StudentContainerFragment()
-        } else if (viewModel.liveData.value?.role == "Parent") {
-            return ParentContainerFragment()
-        } else if (viewModel.liveData.value?.role == "Teacher") {
-            return TeacherContainerFragment()
-        } else {
-            return SigninFragment()
-        }
-    }
+//    private fun destinationProfile(): Fragment {
+//        if (viewModel.liveData.value?.role == "Student") {
+//            return StudentContainerFragment()
+//        } else if (viewModel.liveData.value?.role == "Parent") {
+//            return ParentContainerFragment()
+//        } else if (viewModel.liveData.value?.role == "Teacher") {
+//            return TeacherContainerFragment()
+//        } else {
+//            return SigninFragment()
+//        }
+//    }
 
     private fun validate(): Boolean {
         var isValid = true

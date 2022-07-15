@@ -11,7 +11,7 @@ interface StudentWebService {
     @POST("api/Students")
     suspend fun addStudent(@Body student: StudentResponseDTO):UserResponse
     @GET("api/Students/GetStudentsByParentId/{parentId}")
-    suspend fun getStudentsByParentId(@Query("parentId") parentId:Int):List<StudentResponse>
+    suspend fun getStudentsByParentId(@Path("parentId") parentId:Int):List<StudentResponse>
     @GET("api/Students/GetStudentsByCourseId/{courseId}")
     suspend fun getStudentByCourseId(@Path("courseId") courseId:Int):List<StudentResponse>
     @GET("Email/{email}")

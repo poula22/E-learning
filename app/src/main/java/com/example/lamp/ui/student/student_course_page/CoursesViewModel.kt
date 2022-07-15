@@ -22,6 +22,7 @@ class CoursesViewModel : ViewModel() {
     var coursesLiveData = MutableLiveData<MutableList<CourseResponseDTO>>()
     var flag = false
     var course = MutableLiveData<Response<Void>?>()
+    var deleteCourseLiveData = MutableLiveData<Response<Void>?>()
     var errorMessage = MutableLiveData<String>()
     private val testService=ApiManager.getFileTransferApi()
     val fileLiveData=MutableLiveData<ResponseBody>()
@@ -41,7 +42,7 @@ class CoursesViewModel : ViewModel() {
     fun deleteCourse(id: Int) {
         viewModelScope.launch {
             try {
-                course.value = courseOnlineDataSource.dropCourse(id, CONSTANTS.user_id)
+                deleteCourseLiveData.value = courseOnlineDataSource.dropCourse(id, CONSTANTS.user_id)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {

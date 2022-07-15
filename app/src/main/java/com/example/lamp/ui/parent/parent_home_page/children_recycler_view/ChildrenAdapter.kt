@@ -9,7 +9,7 @@ import com.example.domain.model.StudentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemParentChildBinding
 
-class ChildrenAdapter(var children: MutableList<String>? = null) :
+class ChildrenAdapter(var children: MutableList<StudentResponseDTO>? = null) :
     RecyclerView.Adapter<ChildrenAdapter.ViewHolder>() {
 
     lateinit var itemParentChildBinding: ItemParentChildBinding
@@ -29,15 +29,18 @@ class ChildrenAdapter(var children: MutableList<String>? = null) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var child = children?.get(position)
-        holder.itemParentChildBinding.childName.text = child
+        val child = children?.get(position)
+        holder.itemParentChildBinding.childName.text = child?.firstName
+        holder.itemParentChildBinding.card.setOnClickListener {
+            onChildClickListener?.setOnChildClickListener(child!!)
+        }
     }
 
     override fun getItemCount(): Int = children?.size ?: 0
 
 
     fun changeData(children: List<StudentResponseDTO>) {
-        this.children = children.map { it.firstName.toString() }.toMutableList()
+        this.children = children.toMutableList()
         notifyDataSetChanged()
     }
 

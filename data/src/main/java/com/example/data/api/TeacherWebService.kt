@@ -13,9 +13,9 @@ interface TeacherWebService {
         @Part firstName: MultipartBody.Part?,
         @Part lastName: MultipartBody.Part?,
         @Part phone: MultipartBody.Part?,
-        @Part profilePic: MultipartBody.Part? = null,
         @Part role: MultipartBody.Part?,
         @Part email: MultipartBody.Part?,
-        @Part password: MultipartBody.Part?
+        @Part password: MultipartBody.Part?,
+        @Part profilePic: MultipartBody.Part? = null
     ): Response<Void>
 }

@@ -13,12 +13,14 @@ import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Callback
 import retrofit2.HttpException
+import retrofit2.Response
 
 class TeacherCoursesViewModel : ViewModel() {
-    var courseWebService = ApiManager.getCourseApi()
-    var courseOnlineDataSource: CourseOnlineDataSource = CourseOnlineDataSourceImpl(courseWebService)
-    var coursesLiveData = MutableLiveData<MutableList<CourseResponseDTO>>()
-    var errorMessage = MutableLiveData<String>()
+    val courseWebService = ApiManager.getCourseApi()
+    val courseOnlineDataSource: CourseOnlineDataSource = CourseOnlineDataSourceImpl(courseWebService)
+    val coursesLiveData = MutableLiveData<MutableList<CourseResponseDTO>>()
+    val errorMessage = MutableLiveData<String>()
+    val deleteCourseLiveData = MutableLiveData<Response<Void>?>()
     private val testService=ApiManager.getFileTransferApi()
     val fileLiveData=MutableLiveData<ResponseBody>()
     var flag = false
@@ -49,6 +51,23 @@ class TeacherCoursesViewModel : ViewModel() {
             }
         }
 
+    }
+
+    fun deleteCourse(id: Int) {
+        viewModelScope.launch {
+            try {
+                deleteCourseLiveData.value = courseOnlineDataSource.deleteCourse(CONSTANTS.courseId)
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.message
+                    }
+                    else -> {
+                        Log.e("Error", t.message.toString())
+                    }
+                }
+            }
+        }
     }
 
 

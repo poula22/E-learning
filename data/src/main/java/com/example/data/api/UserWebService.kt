@@ -3,6 +3,7 @@ package com.example.data.api
 import com.example.data.model.UserResponse
 import com.example.domain.model.UserResponseDTO
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface UserWebService {
@@ -26,7 +27,7 @@ interface UserWebService {
     ): UserResponse
 
     @POST("api/Users/LoginTest")
-    suspend fun logInTest(@Body user: UserResponseDTO): UserResponse
+    fun logInTest(@Body user: UserResponseDTO): Call<UserResponse>
 
     @PUT("api/Users/update-photo/{id}")
     suspend fun updatePhoto(

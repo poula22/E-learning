@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -11,8 +12,9 @@ import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseGradesContentBinding
 import com.example.lamp.ui.student.student_course_page.course_content.grades.assignments_rv.AssignmentsGradesAdapter
 import com.example.lamp.ui.student.student_course_page.course_content.grades.quizzes_rv.QuizzesGradesAdapter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class StudentCourseGradesFragment(courseId: Int) : Fragment() {
+class StudentCourseGradesFragment : Fragment() {
 
     lateinit var viewBinding: FragmentStudentCourseGradesContentBinding
     lateinit var assignmentsGradesAdapter: AssignmentsGradesAdapter
@@ -43,7 +45,9 @@ class StudentCourseGradesFragment(courseId: Int) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
         initViews()
-        viewModel.getGradesByStudentId()
+        val courseId=requireArguments().getInt("courseId")
+        val studentId=requireArguments().getInt("studentId")
+        viewModel.getGradesByStudentId(studentId,courseId)
     }
 
     private fun subscribeToLiveData() {
@@ -92,4 +96,14 @@ class StudentCourseGradesFragment(courseId: Int) : Fragment() {
 
 
     }
+
+
+    override fun onResume() {
+        super.onResume()
+        val bottomNavigationView: BottomNavigationView =
+            requireActivity().findViewById(R.id.parent_bottom_naviagation_view)
+        bottomNavigationView.isVisible = false
+    }
+
+
 }

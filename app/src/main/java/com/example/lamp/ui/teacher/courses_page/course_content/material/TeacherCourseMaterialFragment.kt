@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.MediaController
 import android.widget.Toast
 import androidx.annotation.NonNull
@@ -14,12 +15,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common_functions.CONSTANTS
 import com.example.domain.model.LessonResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseMaterialBinding
 import com.example.lamp.ui.teacher.courses_page.course_content.material.lessons_recycler_view.TeacherCourseLessonsAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -33,6 +34,7 @@ class TeacherCourseMaterialFragment : Fragment() {
     lateinit var adapter: TeacherCourseLessonsAdapter
     lateinit var listener:AbstractYouTubePlayerListener
     lateinit var youTubePlayer: YouTubePlayer
+    var path:String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(TeacherCourseMaterialViewModel::class.java)
@@ -61,34 +63,46 @@ class TeacherCourseMaterialFragment : Fragment() {
     private fun subScribeToLiveData() {
         viewModel.contentLiveData.observe(viewLifecycleOwner) {
             it?.let { contentResponseDTO ->
+                hideProgressBar()
                 contentResponseDTO.forEach { content ->
                     Log.v("contentResponseDTO", contentResponseDTO.toString())
                     content.link?.let { it1 -> loadVideo(it1) }
                     content.videoPath?.let { it1 ->
-                        var str=it1.replace("\\\\Abanoub\\wwwroot\\"," https://25.70.83.232:7097/")
+                        if (content.videoPath!=null ){
+                            if (content.videoPath!="")
+                                showProgressBar()
+                        }
+                        var str=it1.replace("\\\\Abanoub\\wwwroot\\Videos\\","")
                         str=str.replace("\\","/")
                         Log.e("str",str)
                         //63508411-35e9-4cc3-ad23-11df33cad213.mp4
                         //str.substring(str.lastIndexOf("/"))
-                        viewModel.getVideo("63508411-35e9-4cc3-ad23-11df33cad213.mp4")
+                        viewModel.getVideo(str)
                          }
                 }
             }
 
         }
         viewModel.LessonsLiveData.observe(viewLifecycleOwner) {
-            adapter.changeData(it)
+            it?.let {
+                adapter.changeData(it)
+            }
+            hideProgressBar()
         }
         viewModel.VideoLiveData.observe(viewLifecycleOwner){
-            Log.e("VideoLiveData",it.toString())
-            val file =
-                File.createTempFile(
-                    "test",
-                    ".mp4",
-                    requireContext().cacheDir
-                )
-            FileUtils.copyInputStreamToFile(it.byteStream(), file)
-            viewBinding.videoPlayer.setVideoPath(file.absolutePath)
+            it?.let {
+                Log.e("VideoLiveData",it.toString())
+                val file =
+                    File.createTempFile(
+                        "test",
+                        ".mp4",
+                        requireContext().cacheDir
+                    )
+                FileUtils.copyInputStreamToFile(it.byteStream(), file)
+                viewBinding.videoPlayer.setVideoPath(file.absolutePath)
+            }
+
+            hideProgressBar()
         }
         viewModel.removeLessonLiveData.observe(viewLifecycleOwner) {
             viewModel.getCourseLessons()
@@ -115,8 +129,35 @@ class TeacherCourseMaterialFragment : Fragment() {
         lifecycle.addObserver(youTubePlayerView)
         listener=object : AbstractYouTubePlayerListener() {
             override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
+
                 setVideoLoader(youTubePlayer)
-                loadVideo("https://www.youtube.com/watch?v=BGkL2Pq-g3A&list=RDBGkL2Pq-g3A&start_radio=1")
+                path?.let {
+                    loadVideo(it)
+                }
+            }
+
+            override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
+                Log.e("error", error.name)
+            }
+
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState
+            ) {
+                super.onStateChange(youTubePlayer, state)
+                if (state==PlayerConstants.PlayerState.PLAYING){
+                    path?.let {
+                        val bundle=Bundle()
+                        bundle.putSerializable("video",VideoItem(youTubePlayer,it))
+                        val fragment = VideoFullScreenFragment()
+                        fragment.arguments=bundle
+                        requireActivity().supportFragmentManager
+                            .beginTransaction().addToBackStack("")
+                            .replace(this@TeacherCourseMaterialFragment.id,fragment)
+                            .commit()
+                    }
+                    youTubePlayer.removeListener(this)
+                }
             }
         }
         youTubePlayerView.addYouTubePlayerListener(listener)
@@ -126,7 +167,10 @@ class TeacherCourseMaterialFragment : Fragment() {
         adapter = TeacherCourseLessonsAdapter()
         adapter.onItemClickListener = object : TeacherCourseLessonsAdapter.OnItemClickListener {
             override fun onItemClick(lesson: LessonResponseDTO) {
-                lesson.id?.let { viewModel.getLessonContent(it) }
+                lesson.id?.let {
+                    showProgressBar()
+                    viewModel.getLessonContent(it)
+                }
             }
 
             override fun onEditClick(lesson: LessonResponseDTO) {
@@ -218,6 +262,19 @@ class TeacherCourseMaterialFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         youTubePlayer.removeListener(listener)
+    }
+    private fun showProgressBar() {
+        viewBinding.greyBackground.visibility = View.VISIBLE
+        viewBinding.progressBar.visibility = View.VISIBLE
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+    }
+    private fun hideProgressBar() {
+        viewBinding.greyBackground.visibility = View.GONE
+        viewBinding.progressBar.visibility = View.GONE
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
 }

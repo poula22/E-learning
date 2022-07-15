@@ -35,7 +35,7 @@ class HomeViewModel : ViewModel() {
     }
 
 
-    fun getStudentsByParentId(parentId: Int): List<StudentResponseDTO> {
+    fun getStudentsByParentId(parentId: Int) {
         viewModelScope.launch {
             try {
                 val response = parentDataSource.getStudentsByParentId(parentId)
@@ -44,7 +44,7 @@ class HomeViewModel : ViewModel() {
                 e.printStackTrace()
             }
         }
-        return parentLiveData.value!!
+
     }
 
 

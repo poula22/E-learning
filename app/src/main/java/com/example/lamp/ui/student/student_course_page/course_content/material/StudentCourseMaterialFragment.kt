@@ -1,16 +1,15 @@
 package com.example.lamp.ui.student.student_course_page.course_content.material
 
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.MediaController
 import android.widget.Toast
 import androidx.annotation.NonNull
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +33,7 @@ class StudentCourseMaterialFragment() : Fragment() {
         StudentCourseLessonsAdapter(mutableListOf(LessonResponseDTO("desc1", 1, "lesson1", 1)))
 
     lateinit var listener:AbstractYouTubePlayerListener
-    lateinit var youTubePlayer: YouTubePlayer
+    var youTubePlayer: YouTubePlayer?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(StudentCourseMaterialViewModel::class.java)
@@ -56,7 +55,17 @@ class StudentCourseMaterialFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
         initViews()
+        showProgressBar()
         getCoursesLessons()
+    }
+
+    private fun showProgressBar() {
+        viewBinding.greyBackground.visibility = View.VISIBLE
+        viewBinding.progressBar.visibility = View.VISIBLE
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
     }
 
     private fun getCoursesLessons() {
@@ -79,6 +88,7 @@ class StudentCourseMaterialFragment() : Fragment() {
         playYoutubeVideo()
         adapter.onLessonClickListener = object : StudentCourseLessonsAdapter.OnLessonClickListener {
             override fun onLessonClick(lessonId: Int) {
+                showProgressBar()
                 getCourseLessonContent(lessonId)
             }
         }
@@ -118,34 +128,47 @@ class StudentCourseMaterialFragment() : Fragment() {
             it?.let {
                 updateLessonsList(it)
             }
+            hideProgressBar()
         }
         viewModel.contentLiveData.observe(viewLifecycleOwner) {
             it?.let { contentResponseDTO ->
-                contentResponseDTO.forEach { content ->
+                hideProgressBar()
+                contentResponseDTO.forEach{ content ->
+                    if (content.videoPath!=null ){
+                        if (content.videoPath!="")
+                            showProgressBar()
+                    }
+
+
                     Log.v("contentResponseDTO", contentResponseDTO.toString())
                     content.link?.let { it1 -> loadVideo(it1) }
                     content.videoPath?.let { it1 ->
-                        var str=it1.replace("\\\\Abanoub\\wwwroot\\"," https://25.70.83.232:7097/")
+                        var str=it1.replace("\\\\Abanoub\\wwwroot\\Videos\\","")
                         str=str.replace("\\","/")
                         Log.e("str",str)
                         //63508411-35e9-4cc3-ad23-11df33cad213.mp4
                         //str.substring(str.lastIndexOf("/"))
-                        viewModel.getVideo("63508411-35e9-4cc3-ad23-11df33cad213.mp4")
+
+                        viewModel.getVideo(str)
                     }
+
                 }
             }
 
         }
         viewModel.VideoLiveData.observe(viewLifecycleOwner){
-            Log.e("VideoLiveData",it.toString())
-            val file =
-                File.createTempFile(
-                    "test",
-                    ".mp4",
-                    requireContext().cacheDir
-                )
-            FileUtils.copyInputStreamToFile(it.byteStream(), file)
-            viewBinding.videoPlayer.setVideoPath(file.absolutePath)
+            it?.let {
+                Log.e("VideoLiveData",it.toString())
+                val file =
+                    File.createTempFile(
+                        "test",
+                        ".mp4",
+                        requireContext().cacheDir
+                    )
+                FileUtils.copyInputStreamToFile(it.byteStream(), file)
+                viewBinding.videoPlayer.setVideoPath(file.absolutePath)
+            }
+            hideProgressBar()
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
             it?.let {
@@ -153,6 +176,12 @@ class StudentCourseMaterialFragment() : Fragment() {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun hideProgressBar() {
+        viewBinding.greyBackground.visibility = View.GONE
+        viewBinding.progressBar.visibility = View.GONE
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     private fun updateLessonsList(it: List<LessonResponseDTO>) {
@@ -175,7 +204,7 @@ class StudentCourseMaterialFragment() : Fragment() {
         return youtubeUrl.substring(index.plus(2), index.plus(13))
     }
     private fun loadVideo(path: String) {
-        youTubePlayer.loadVideo(playYoutubeVideo(path), 0f)
+        youTubePlayer?.cueVideo(playYoutubeVideo(path), 0f)
     }
 
     private fun setVideoLoader(youTubePlayer: YouTubePlayer,) {

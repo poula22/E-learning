@@ -29,6 +29,9 @@ class CourseAdapter(var courses: List<ParentChildCoursesResponseDTO>? = null) :
             course?.teacherFirstName + " " + course?.teacherLastName
         holder.itemParentCourseBinding.childName.text
         holder.itemParentCourseBinding.courseName.text = course?.courseName
+        holder.itemParentCourseBinding.card.setOnClickListener {
+            onCourseClickListener?.setOnCourseClickListener(course!!)
+        }
     }
 
     override fun getItemCount(): Int {

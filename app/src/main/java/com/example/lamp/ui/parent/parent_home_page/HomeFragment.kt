@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -26,8 +27,6 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        students = viewModel.getStudentsByParentId(CONSTANTS.user_id)
-        names = students.map { it.firstName.toString() }.toMutableList()
     }
 
     override fun onCreateView(
@@ -44,6 +43,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
         initViews()
+        viewModel.getStudentsByParentId(CONSTANTS.user_id)
     }
 
     private fun subscribeToLiveData() {
@@ -53,14 +53,14 @@ class HomeFragment : Fragment() {
 
         viewModel.parentLiveData.observe(viewLifecycleOwner) {
             adapter.changeData(it)
-        }
+            viewBinding.noChildrenTxt.isVisible = it.isEmpty()
+       }
 
     }
 
     private fun initViews() {
 
-        adapter = ChildrenAdapter(names)
-        viewBinding.childrenRecyclerView.adapter = adapter
+        adapter = ChildrenAdapter()
         if (adapter.itemCount == 0) {
             viewBinding.noChildrenTxt.visibility = View.VISIBLE
         } else {
@@ -85,17 +85,20 @@ class HomeFragment : Fragment() {
         adapter.onChildClickListener =
             object : ChildrenAdapter.OnChildClickListener {
                 override fun setOnChildClickListener(child: StudentResponseDTO) {
+                    val bundle= Bundle()
+                    bundle.putInt("student_id",child.id!!)
+                    val fragment = CoursesFragment()
+                    fragment.arguments=bundle
                     requireActivity().supportFragmentManager
                         .beginTransaction()
                         .addToBackStack("")
                         .replace(
-                            R.id.teacher_fragment_tab,
-                            CoursesFragment(child.id!!)
+                            R.id.parent_fragment_tab,
+                            fragment
                         )
                         .commit()
                 }
             }
-
-
+        viewBinding.childrenRecyclerView.adapter = adapter
     }
 }

@@ -15,7 +15,7 @@ class CoursesViewModel : ViewModel() {
     var courseLiveData = MutableLiveData<List<ParentChildCoursesResponseDTO>>()
 
 
-    fun getCoursesByStudentId(studentId: Int): List<ParentChildCoursesResponseDTO> {
+    fun getCoursesByStudentId(studentId: Int) {
         viewModelScope.launch {
             try {
                 val response = courseDataSource.getCoursesByStudentIdForParent(studentId)
@@ -24,7 +24,6 @@ class CoursesViewModel : ViewModel() {
                 e.printStackTrace()
             }
         }
-        return courseLiveData.value!!
     }
 
 }

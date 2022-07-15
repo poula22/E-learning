@@ -25,6 +25,7 @@ class SignUpFragment : ExternalStorageAccessFragment() {
     lateinit var viewBinding: FragmentSignUpBinding
     var selected: String? = null
     var verified = true
+    var email:MutableList<String> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,17 @@ class SignUpFragment : ExternalStorageAccessFragment() {
 
     private fun subscirbeToLiveData() {
 
+        viewModel.parentLiveData.observe(viewLifecycleOwner){
+            Log.v("response test::", it.toString())
+            if (selected=="Parent"){
+                viewModel.addChildren(email)
+            }else{
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, SigninFragment())
+                    .commit()
+            }
+        }
+
         viewModel.test.observe(viewLifecycleOwner){
             Log.d("test",it.toString())
             requireActivity().supportFragmentManager.beginTransaction()
@@ -53,9 +65,14 @@ class SignUpFragment : ExternalStorageAccessFragment() {
             viewLifecycleOwner
         ) {
             Log.v("response test::", it.toString())
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, SigninFragment())
-                .commit()
+            if (selected=="Parent"){
+                viewModel.addChildren(email)
+            }else{
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, SigninFragment())
+                    .commit()
+            }
+
         }
 
         viewModel.errorMessage.observe(
@@ -119,12 +136,17 @@ class SignUpFragment : ExternalStorageAccessFragment() {
         viewBinding.buttonSignUpRegisteration.setOnClickListener {
 
             if (validate()) {
-                var firstName = viewBinding.firstName.editText?.text.toString()
-                var lastName = viewBinding.lastName.editText?.text.toString()
-                var email = viewBinding.email.text.toString()
-                var password = viewBinding.passwordSignUp.editText?.text.toString()
-                var phoneNumber = viewBinding.txtPhone.text.toString()
-
+                val firstName = viewBinding.firstName.editText?.text.toString()
+                val lastName = viewBinding.lastName.editText?.text.toString()
+                val email = viewBinding.email.text.toString()
+                val password = viewBinding.passwordSignUp.editText?.text.toString()
+                val phoneNumber = viewBinding.txtPhone.text.toString()
+                if (selected == "Parent"){
+                    this.email.add(viewBinding.childMail.editText?.text.toString())
+                    this.email.add(viewBinding.childEmail2.editText?.text.toString())
+                    this.email.add(viewBinding.childEmail3.editText?.text.toString())
+                    this.email.add(viewBinding.childEmail4.editText?.text.toString())
+                }
                 viewModel.addUser(
                     UserResponse(
                         firstName,
@@ -136,7 +158,6 @@ class SignUpFragment : ExternalStorageAccessFragment() {
                     )
                 )
                 viewModel.addUserToFirebase(email, password)
-
             }
         }
     }
