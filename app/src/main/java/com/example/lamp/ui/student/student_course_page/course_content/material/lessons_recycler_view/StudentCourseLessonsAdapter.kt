@@ -9,10 +9,13 @@ import com.example.domain.model.LessonResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCourseMaterialBinding
 
-class StudentCourseLessonsAdapter(var lessonList:List<LessonResponseDTO?>):RecyclerView.Adapter<StudentCourseLessonsAdapter.ViewHolder>(){
+class StudentCourseLessonsAdapter(var lessonList:List<LessonResponseDTO>?=null) :
+    RecyclerView.Adapter<StudentCourseLessonsAdapter.ViewHolder>() {
 
     private val viewPool = RecyclerView.RecycledViewPool()
-    class ViewHolder(var viewBinding: ItemStudentCourseMaterialBinding):RecyclerView.ViewHolder(viewBinding.root){
+
+    class ViewHolder(var viewBinding: ItemStudentCourseMaterialBinding) :
+        RecyclerView.ViewHolder(viewBinding.root) {
         fun expandCollapseView() {
             viewBinding.detailsBtn.setOnClickListener {
                 if (viewBinding.cardGroup.isVisible) {
@@ -38,14 +41,19 @@ class StudentCourseLessonsAdapter(var lessonList:List<LessonResponseDTO?>):Recyc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var viewBinding:ItemStudentCourseMaterialBinding=
-            DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_student_course_material,parent,false)
-            return ViewHolder(viewBinding)
+        var viewBinding: ItemStudentCourseMaterialBinding =
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_student_course_material,
+                parent,
+                false
+            )
+        return ViewHolder(viewBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var item=lessonList?.get(position)
-        holder.viewBinding.item=item
+        var item = lessonList?.get(position)
+        holder.viewBinding.item = item
         holder.viewBinding.lessonTitle.setOnClickListener {
             onLessonClickListener?.onLessonClick(item?.id!!)
         }
@@ -65,16 +73,17 @@ class StudentCourseLessonsAdapter(var lessonList:List<LessonResponseDTO?>):Recyc
         holder.expandCollapseView()
 
     }
-    fun updateLessonsList(lessonList:List<LessonResponseDTO>){
-        this.lessonList=lessonList
+
+    fun updateLessonsList(lessonList: List<LessonResponseDTO>) {
+        this.lessonList = lessonList
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int =lessonList?.size ?:0
+    override fun getItemCount(): Int = lessonList?.size ?: 0
 
-    var onLessonClickListener:OnLessonClickListener?=null
+    var onLessonClickListener: OnLessonClickListener? = null
 
-    interface OnLessonClickListener{
-        fun onLessonClick(lessonId:Int)
+    interface OnLessonClickListener {
+        fun onLessonClick(lessonId: Int)
     }
 }

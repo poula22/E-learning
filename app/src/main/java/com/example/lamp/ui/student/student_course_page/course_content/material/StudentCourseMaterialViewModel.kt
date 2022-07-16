@@ -3,6 +3,7 @@ package com.example.lamp.ui.student.student_course_page.course_content.material
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.common_functions.CONSTANTS
 import com.example.data.api.ApiManager
 import com.example.data.repos.MaterialRepositoryImpl
 import com.example.data.repos.data_sources_impl.ContentOnlineDataSourceImpl
@@ -31,10 +32,10 @@ class StudentCourseMaterialViewModel : ViewModel() {
     private val materialRepository:MaterialRepository=MaterialRepositoryImpl(lessonOnlineDataSource,contentOnlineDataSource)
 
 
-    fun getCourseLessons(courseId: Int) {
+    fun getCourseLessons() {
         viewModelScope.launch {
             try {
-                LessonsLiveData.value = materialRepository.getLessonsByCourseId(courseId)
+                LessonsLiveData.value = materialRepository.getLessonsByCourseId(CONSTANTS.courseId)
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {

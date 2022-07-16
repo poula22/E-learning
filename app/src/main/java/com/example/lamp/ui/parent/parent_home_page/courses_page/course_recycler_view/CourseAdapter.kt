@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.AssignmentResponseDTO
 import com.example.domain.model.ParentChildCoursesResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemParentCourseBinding
@@ -27,11 +26,12 @@ class CourseAdapter(var courses: List<ParentChildCoursesResponseDTO>? = null) :
         val course = courses?.get(position)
         holder.itemParentCourseBinding.teacherName.text =
             course?.teacherFirstName + " " + course?.teacherLastName
-        holder.itemParentCourseBinding.childName.text
         holder.itemParentCourseBinding.courseName.text = course?.courseName
         holder.itemParentCourseBinding.card.setOnClickListener {
             onCourseClickListener?.setOnCourseClickListener(course!!)
         }
+        holder.itemParentCourseBinding.email.text = course?.teacherEmailAddress
+        holder.itemParentCourseBinding.phone.text = course?.teacherPhone
     }
 
     override fun getItemCount(): Int {
@@ -55,8 +55,6 @@ class CourseAdapter(var courses: List<ParentChildCoursesResponseDTO>? = null) :
     interface OnCourseClickListener {
         fun setOnCourseClickListener(course: ParentChildCoursesResponseDTO)
     }
-
-
 
 
 }

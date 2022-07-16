@@ -4,7 +4,6 @@ import com.example.domain.model.CourseResponseDTO
 import com.example.domain.model.ParentChildCoursesResponseDTO
 import com.example.extentions.clearTime
 import com.example.lamp.R
-import com.example.lamp.ui.parent.parent_communicate_page.communicate_recycler_view.TeacherItem
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentFromStudentItem
 import com.example.lamp.ui.student.student_features_page.recitation.recite_words.reciteWordsRV.ReciteWordsItem
@@ -32,7 +31,7 @@ object TestData {
     )
 
     var STUDENTS: MutableList<StudentItem> = initStudents()
-    var TEACHERS: MutableList<TeacherItem> = initTeachers()
+//    var TEACHERS: MutableList<TeacherItem> = initTeachers()
     val CHILDREN: MutableList<String> = mutableListOf(
         "child 1",
         "child 2",
@@ -99,15 +98,15 @@ object TestData {
         return PARENTCOURSES
     }
 
-    private fun initTeachers(): MutableList<TeacherItem> {
-        TEACHERS = mutableListOf()
-        for (i in 1..100) {
-            TEACHERS.add(
-                TeacherItem("name " + i, "01000" + i, "name" + i + "@gmail.com", "name " + i)
-            )
-        }
-        return TEACHERS
-    }
+//    private fun initTeachers(): MutableList<TeacherItem> {
+//        TEACHERS = mutableListOf()
+//        for (i in 1..100) {
+//            TEACHERS.add(
+//                TeacherItem("name " + i, "01000" + i, "name" + i + "@gmail.com", "name " + i)
+//            )
+//        }
+//        return TEACHERS
+//    }
 
     private fun initStudents(): MutableList<StudentItem> {
         STUDENTS = mutableListOf()
