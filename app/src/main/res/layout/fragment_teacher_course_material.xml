@@ -40,7 +40,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/light_rose">
 
                 <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                     android:id="@+id/youtube_player_view"
@@ -49,23 +50,51 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <VideoView
+<!--                <VideoView-->
+<!--                    android:id="@+id/video_player"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:elevation="0dp"-->
+<!--                    app:layout_constraintBottom_toTopOf="@id/content_text_html"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/youtube_player_view" />-->
+                <Button
                     android:id="@+id/video_player"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="0dp"
+                    android:text="open Video"
                     app:layout_constraintBottom_toTopOf="@id/content_text_html"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/youtube_player_view" />
-
+                    app:layout_constraintTop_toBottomOf="@id/youtube_player_view"
+                    />
                 <TextView
                     android:id="@+id/content_text_html"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_yellow"
+                    android:textSize="24sp"
+                    android:text="dssdddd"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/video_player" />
+                <ImageView
+                    android:id="@+id/pdf_icon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/pdf_icon"
+                    app:layout_constraintTop_toBottomOf="@id/content_text_html"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+                <TextView
+                    android:id="@+id/assignment_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/video_player" />
+                    android:text="lesson.pdf"
+                    app:layout_constraintStart_toEndOf="@id/pdf_icon"
+                    app:layout_constraintTop_toTopOf="@id/pdf_icon"
+                    app:layout_constraintBottom_toBottomOf="@id/pdf_icon"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

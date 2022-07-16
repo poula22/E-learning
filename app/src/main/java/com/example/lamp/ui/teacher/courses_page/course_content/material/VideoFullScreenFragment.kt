@@ -1,87 +1,45 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.material
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
+import android.widget.MediaController
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentVideoFullScreenBinding
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 class VideoFullScreenFragment:Fragment() {
-    lateinit var viewBinding: FragmentVideoFullScreenBinding
-    lateinit var listener:AbstractYouTubePlayerListener
-    var path: String?=null
-    var youTubePlayer:YouTubePlayer?=null
-
-
+    lateinit var viewBinding:FragmentVideoFullScreenBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_video_full_screen, container, false
-        )
+        viewBinding=DataBindingUtil.inflate(inflater, R.layout.fragment_video_full_screen,container,false)
         return viewBinding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val videoItem= requireArguments()?.getSerializable("video") as VideoItem?
-        path=videoItem?.path
-        youTubePlayer=videoItem?.youTubePlayer
-        initViews()
-        path?.let { loadVideo(it) }
+        initView()
     }
 
-    private fun initViews() {
-        val youTubePlayerView: YouTubePlayerView = viewBinding.youtubePlayerView
-        lifecycle.addObserver(youTubePlayerView)
-        listener=object : AbstractYouTubePlayerListener() {
-            override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
-                setVideo(youTubePlayer)
-                path="https://www.youtube.com/watch?v=BGkL2Pq-g3A&list=RDBGkL2Pq-g3A&start_radio=1"
-                path?.let {
-                    loadVideo(it)
-                }
-            }
+    private fun initView() {
+        val mediaController = MediaController(requireActivity().baseContext)
+        mediaController.setAnchorView(viewBinding.videoPlayer)
+        val path=requireArguments().getString("video")
+        Log.v("path",path.toString())
+        viewBinding.videoPlayer.setMediaController(mediaController)
+        viewBinding.videoPlayer.keepScreenOn = true
+        viewBinding.videoPlayer.setVideoPath(path)
+        viewBinding.videoPlayer.requestFocus()
+        viewBinding.videoPlayer.start()
 
-            override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
-                Log.e("error", error.name)
-            }
-
-        }
-        youTubePlayerView.addYouTubePlayerListener(listener)
     }
 
-    private fun setVideo(youTubePlayer: YouTubePlayer) {
-        this.youTubePlayer=youTubePlayer
-    }
 
-    private fun loadVideo(path: String) {
-        youTubePlayer?.loadVideo(playYoutubeVideo(path), 0f)
-    }
-    private fun playYoutubeVideo(path: String? = null):String {
-        if (path!=null){
-            Log.e("path",path)
-            val videoId =
-                getYoutubeVideoId(path)
-            return videoId
-        }
-        return ""
-    }
-    private fun getYoutubeVideoId(youtubeUrl: String): String {
-        var index = youtubeUrl.indexOf("v=")
-        return youtubeUrl.substring(index.plus(2), index.plus(13))
-    }
 
 }

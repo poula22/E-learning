@@ -1,5 +1,6 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.material
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -58,20 +59,30 @@ class TeacherCourseAddLessonViewModel:ViewModel() {
                     .addFormDataPart("link", contentResponseDTO.link ?: "")
                     .addFormDataPart("lessonId",contentResponseDTO.lessonId.toString())
                     .addFormDataPart("showDate",contentResponseDTO.showDate ?: "")
-                if (pdfFile!=null){
-                    part.addFormDataPart("pdfPath",pdfFile.name,pdfFile.asRequestBody("application/pdf".toMediaTypeOrNull()))
-                }
+
                 if (videoFile!=null){
                     part.addFormDataPart("videoPath",videoFile.name,videoFile.asRequestBody("video/*".toMediaTypeOrNull()))
+//                    Log.v("videoFile",videoFile.totalSpace.toString())
                 }
 
+                if (pdfFile!=null){
+                    part.addFormDataPart("pdfPath",pdfFile.name,pdfFile.asRequestBody("application/pdf".toMediaTypeOrNull()))
+                    Log.v("pdfFile",pdfFile.name)
+                }
+
+
                 val requestBody: RequestBody=part.build()
+
+                Log.v("requestBody",requestBody.contentLength().toString())
                 contentLiveData.value = materialRepository.addContent(requestBody)
 
             } catch (t: Throwable) {
                 when (t) {
                     is HttpException -> {
                         errorMessage.value = t.response()?.errorBody()?.string()
+                    }
+                    else -> {
+                        throw t
                     }
 
                 }

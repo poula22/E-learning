@@ -38,19 +38,30 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
     private var pdfFlag=false
     var videofile:File?=null
     private var videoFlag=false
-    private var inputStream: InputStream?=null
+    private var inputStreamPdf: InputStream?=null
+    private var inputStreamVideo: InputStream?=null
     override fun showProgressBar() {
-
+        viewBinding.greyBackground.visibility = View.VISIBLE
+        viewBinding.progressBar.visibility = View.VISIBLE
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
     }
 
     override fun resultListener(byteArray: ByteArray) {
         try {
-            inputStream=fileUri?.let { requireActivity().contentResolver.openInputStream(it) }
+            if (pdfFlag){
+                inputStreamPdf=fileUri?.let { requireActivity().contentResolver.openInputStream(it) }
+            }
+            if (videoFlag){
+                inputStreamVideo=fileUri?.let { requireActivity().contentResolver.openInputStream(it) }
+            }
 
         }catch (e:Exception){
             Log.v("Exception",e.toString())
         }
-        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        hideProgressBar()
 
     }
 
@@ -90,7 +101,7 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
                 link = viewBinding.youtubeLink.text.toString(),
                 it.id,
                 0,
-                "",
+                viewBinding.description.text.toString(),
                 "2022-07-05T15:42:32.723Z"
             )
             assignData()
@@ -133,12 +144,12 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
             }
             if (lessonId!=-1){
                 val content= ContentResponseDTO(
-                    "",
-                    "",
+                    this.videofile?.absolutePath,
+                    this.pdfFile?.absolutePath,
                 link = viewBinding.youtubeLink.text.toString(),
                 lessonId,
                 0,
-                "",
+                viewBinding.description.text.toString(),
                 "2022-07-05T15:42:32.723Z"
                 )
                 assignData()
@@ -187,6 +198,13 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
     }
 
 
+    private fun hideProgressBar() {
+        viewBinding.greyBackground.visibility = View.GONE
+        viewBinding.progressBar.visibility = View.GONE
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+
+
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
 //        if ((requestCode == CONSTANTS.FILE_REQUEST_CODE || requestCode == CONSTANTS.VIDEO_REQUEST_CODE) && resultCode == RESULT_OK) {
@@ -202,7 +220,9 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
         startActivity(intent)
     }
     fun assignData(){
-        if (pdfFlag){
+
+        showProgressBar()
+            if (pdfFlag){
             pdfFile =
                 File.createTempFile(
                     "test",
@@ -210,18 +230,23 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
                     requireContext().cacheDir
                 )
             pdfFlag=false
-            FileUtils.copyInputStreamToFile(inputStream, pdfFile)
+            FileUtils.copyInputStreamToFile(inputStreamPdf, pdfFile)
+
         }
+
         if (videoFlag){
             videofile=
                 File.createTempFile(
-                    "test",
+                    "video",
                     ".mp4",
                     requireContext().cacheDir
                 )
             videoFlag=false
-            FileUtils.copyInputStreamToFile(inputStream, videofile)
+            FileUtils.copyInputStreamToFile(inputStreamVideo, videofile)
         }
+    hideProgressBar()
+
+
     }
 
     //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

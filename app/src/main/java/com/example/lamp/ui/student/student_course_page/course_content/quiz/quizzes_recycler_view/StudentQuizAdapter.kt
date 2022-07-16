@@ -4,12 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.QuizResponseDTO
-import com.example.domain.model.TeacherQuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCourseQuizCardBinding
 
-class StudentQuizAdapter(var quizzes:List<TeacherQuizResponseDTO>? = null) :
+class StudentQuizAdapter(var quizzes:List<StudentQuizItem>? = null) :
     RecyclerView.Adapter<StudentQuizAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,18 +24,18 @@ class StudentQuizAdapter(var quizzes:List<TeacherQuizResponseDTO>? = null) :
         var quiz = quizzes?.get(position)
         holder.viewBinding.item = quiz
         holder.viewBinding.startExamBtn.setOnClickListener{
-            onStartExamListener?.onStartExam(quiz?.id!!)
+            onStartExamListener?.onStartExam(quiz?.quizResponseDTO?.id!!,position,quiz?.duration!!)
         }
 
     }
     var onStartExamListener:OnStartExamListener?=null
 
     interface OnStartExamListener{
-        fun onStartExam(quizId:Int)
+        fun onStartExam(quizId: Int, position: Int, duration: String)
     }
 
     override fun getItemCount(): Int = quizzes?.size ?: 0
-    fun changeData(it: List<TeacherQuizResponseDTO>?) {
+    fun changeData(it: List<StudentQuizItem>?) {
         quizzes = it
         notifyDataSetChanged()
     }

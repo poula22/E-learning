@@ -53,6 +53,7 @@ class StudentQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var quizId = requireArguments().getInt("quizId")
+        quizDuration = requireArguments().getInt("duration")
         subscribeToLiveData()
         initViews()
         viewModel.getQuizQuestions(quizId)

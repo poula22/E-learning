@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.domain.model.TeacherQuizResponseDTO"/>
+            type="com.example.lamp.ui.student.student_course_page.course_content.quiz.quizzes_recycler_view.StudentQuizItem"/>
     </data>
 
 
@@ -33,7 +33,7 @@
                 android:ellipsize="end"
                 android:maxLines="4"
                 android:scrollHorizontally="false"
-                android:text="@{item.title}"
+                android:text="@{item.quizResponseDTO.title}"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{item.endTime.substring(0, 10)}"
+                android:text="@{item.quizResponseDTO.endTime.substring(0, 10)}"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/txt_deadline"
                 app:layout_constraintTop_toBottomOf="@+id/divider"
@@ -89,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textSize="18sp"
+                android:text="@{item.duration}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider"
                 tools:text="30min" />

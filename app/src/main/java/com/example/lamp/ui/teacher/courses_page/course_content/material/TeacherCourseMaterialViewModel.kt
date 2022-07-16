@@ -59,6 +59,9 @@ class TeacherCourseMaterialViewModel : ViewModel() {
                     is HttpException -> {
                         errorMessage.value = t.response()?.errorBody()?.string()
                     }
+                    else -> {
+                        errorMessage.value = t.message
+                    }
                 }
             }
         }
