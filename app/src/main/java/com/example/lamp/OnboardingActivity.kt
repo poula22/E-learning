@@ -19,9 +19,10 @@ class OnBoardingActivity : OnboardAdvanced() {
                 title = "Hey, Student!",
                 description = "Your Platform to ease learning process and provide all Tools you need",
                 resourceId = R.drawable.student_vector,
-
                 titleTypefaceFontRes = R.font.robotoflex,
                 descriptionTypefaceFontRes = R.font.robotoflex,
+                titleColor = Color.parseColor("#FF5252"),
+                descriptionColor = Color.parseColor("#FF5252"),
             )
         )
 
@@ -32,6 +33,8 @@ class OnBoardingActivity : OnboardAdvanced() {
                 resourceId = R.drawable.teacher_vector,
                 titleTypefaceFontRes = R.font.robotoflex,
                 descriptionTypefaceFontRes = R.font.robotoflex,
+                titleColor = Color.parseColor("#FF5252"),
+                descriptionColor = Color.parseColor("#FF5252"),
             )
         )
 
@@ -40,9 +43,10 @@ class OnBoardingActivity : OnboardAdvanced() {
                 title = "Greetings, Parent!",
                 description = "Follow up your children learning progress",
                 resourceId = R.drawable.parent_vector,
-
                 titleTypefaceFontRes = R.font.robotoflex,
                 descriptionTypefaceFontRes = R.font.robotoflex,
+                titleColor = Color.parseColor("#FF5252"),
+                descriptionColor = Color.parseColor("#FF5252"),
             )
         )
     }

@@ -1,6 +1,7 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.assignment
 
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,24 +10,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
-
 import com.example.common_functions.CommonFunctions
 import com.example.common_functions.CommonFunctions.Companion.calendar
 import com.example.common_functions.DocumentAccessFragment
 import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddAssignmentBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.runBlocking
-import okhttp3.internal.http.toHttpDateString
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.io.InputStream
-
-import java.text.SimpleDateFormat
-
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
 import java.util.*
 
 class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
@@ -156,7 +157,7 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
                 val endDate =viewBinding.endDateTxt.text.toString().replace("/","-")+"T00:00:00Z"
                 Log.v("date",startDate)
 
-                Toast.makeText(context, "saved succesful", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "saved successfully", Toast.LENGTH_SHORT).show()
                 //insert in database
                 val assignment=AssignmentResponseDTO(
                     filePath,points.toInt()
@@ -180,6 +181,34 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
             }
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
+//        requireActivity()
+//            .onBackPressedDispatcher
+//            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    Log.d(TAG, "Fragment back pressed invoked")
+//                    // Do custom work here
+//                    MaterialAlertDialogBuilder(requireContext())
+//                        .setTitle("Are you sure you want to discard changes?")
+////                        .setMessage("")
+//                        .setNeutralButton("Cancel") { dialog, which ->
+//                            // Respond to neutral button press
+//                        }
+//                        .setNegativeButton("Discard") { dialog, which ->
+//                            Toast.makeText(context, "Changes discarded", Toast.LENGTH_SHORT)
+//                                .show()
+//                            requireActivity().supportFragmentManager.popBackStack()
+//                        }
+//                        .show()
+//
+//
+//                    // if you want onBackPressed() to be called as normal afterwards
+//                    if (isEnabled) {
+//                        isEnabled = false
+//                        requireActivity().onBackPressed()
+//                    }
+//                }
+//            }
+//            )
     }
 
     // Intent for openning files
@@ -220,6 +249,20 @@ class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
         } else {
             viewBinding.pointsTxt.error = null
         }
+//
+//        val dtf: DateTimeFormatter = DateTimeFormatterBuilder()
+//            .parseCaseInsensitive()
+//            .appendPattern("u/M/d")
+//            .toFormatter(Locale.ENGLISH)
+//
+//        if(viewBinding.endDateTxt.text.let { LocalDateTime.parse(it,dtf) } <= viewBinding.startDateTxt.text.let { LocalDateTime.parse(it,dtf) }
+//            || viewBinding.startDateTxt.text.let { LocalDateTime.parse(it,dtf)  } < LocalDateTime.now()) {
+//            viewBinding.endDateTxt.error = "you should enter valid dates"
+//            isValid = false
+//        } else {
+//            viewBinding.endDateTxt.error = null
+//        }
+//
         return isValid
     }
 

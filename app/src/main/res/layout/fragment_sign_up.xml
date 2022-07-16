@@ -96,17 +96,15 @@
                     android:id="@+id/first_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp"
                     android:hint="First Name"
-                    android:paddingHorizontal="8dp"
-                    android:textColor="@color/black"
-                    app:boxBackgroundColor="@color/white"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="38dp"
-                    app:boxCornerRadiusBottomStart="38dp"
-                    app:boxCornerRadiusTopEnd="38dp"
-                    app:boxCornerRadiusTopStart="38dp"
-                    app:boxStrokeColor="@color/black"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="2dp"
                     app:layout_constraintEnd_toStartOf="@id/card"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -121,15 +119,14 @@
                     android:id="@+id/last_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
                     android:hint="Last Name"
-                    android:paddingHorizontal="8dp"
-                    app:boxBackgroundColor="@color/white"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="38dp"
-                    app:boxCornerRadiusBottomStart="38dp"
-                    app:boxCornerRadiusTopEnd="38dp"
-                    app:boxCornerRadiusTopStart="38dp"
-                    app:boxStrokeColor="@color/black"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="2dp"
                     app:layout_constraintEnd_toStartOf="@id/card"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/first_name">
@@ -178,15 +175,14 @@
                     android:id="@+id/email_sign_up"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
                     android:hint="Email"
-                    android:paddingHorizontal="8dp"
-                    app:boxBackgroundColor="@color/white"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="38dp"
-                    app:boxCornerRadiusBottomStart="38dp"
-                    app:boxCornerRadiusTopEnd="38dp"
-                    app:boxCornerRadiusTopStart="38dp"
-                    app:boxStrokeColor="@color/black"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="2dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/last_name">
@@ -202,15 +198,14 @@
                     android:id="@+id/password_sign_up"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
                     android:hint="password"
-                    android:paddingHorizontal="8dp"
-                    app:boxBackgroundColor="@color/white"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="38dp"
-                    app:boxCornerRadiusBottomStart="38dp"
-                    app:boxCornerRadiusTopEnd="38dp"
-                    app:boxCornerRadiusTopStart="38dp"
-                    app:boxStrokeColor="@color/black"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="2dp"
                     app:endIconMode="password_toggle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -227,15 +222,14 @@
                     android:id="@+id/confirm_password_sign_up"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
                     android:hint="Confirm Password"
-                    android:paddingHorizontal="8dp"
-                    app:boxBackgroundColor="@color/white"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="38dp"
-                    app:boxCornerRadiusBottomStart="38dp"
-                    app:boxCornerRadiusTopEnd="38dp"
-                    app:boxCornerRadiusTopStart="38dp"
-                    app:boxStrokeColor="@color/black"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="2dp"
                     app:endIconMode="password_toggle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -252,15 +246,14 @@
                     android:id="@+id/phone_sign_up"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
                     android:hint="Phone"
-                    android:paddingHorizontal="8dp"
-                    app:boxBackgroundColor="@color/white"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="38dp"
-                    app:boxCornerRadiusBottomStart="38dp"
-                    app:boxCornerRadiusTopEnd="38dp"
-                    app:boxCornerRadiusTopStart="38dp"
-                    app:boxStrokeColor="@color/black"
+                    app:boxCornerRadiusBottomEnd="20dp"
+                    app:boxCornerRadiusBottomStart="20dp"
+                    app:boxCornerRadiusTopEnd="20dp"
+                    app:boxCornerRadiusTopStart="20dp"
+                    app:boxStrokeWidth="2dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/confirm_password_sign_up"
@@ -275,142 +268,142 @@
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:id="@+id/children_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/phone_sign_up">
+                <!--                <LinearLayout-->
+                <!--                    android:id="@+id/children_layout"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="vertical"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/phone_sign_up">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Children"
-                        android:textSize="18sp" />
+                <!--                    <TextView-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="match_parent"-->
+                <!--                        android:layout_gravity="center"-->
+                <!--                        android:layout_marginStart="8dp"-->
+                <!--                        android:layout_marginTop="8dp"-->
+                <!--                        android:text="Children"-->
+                <!--                        android:textSize="18sp" />-->
 
-                    <LinearLayout
-                        android:id="@+id/linear_layout_add_children1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                <!--                    <LinearLayout-->
+                <!--                        android:id="@+id/linear_layout_add_children1"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:orientation="horizontal">-->
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/child_mail"
-                            android:layout_width="match_parent"
-                            android:layout_height="59dp"
-                            android:hint="Child 1 Email"
-                            android:paddingHorizontal="8dp"
-                            app:boxBackgroundColor="@color/white"
-                            app:boxBackgroundMode="outline"
-                            app:boxCornerRadiusBottomEnd="38dp"
-                            app:boxCornerRadiusBottomStart="38dp"
-                            app:boxCornerRadiusTopEnd="38dp"
-                            app:boxCornerRadiusTopStart="38dp"
-                            app:boxStrokeColor="@color/black">
+                <!--                        <com.google.android.material.textfield.TextInputLayout-->
+                <!--                            android:id="@+id/child_mail"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="59dp"-->
+                <!--                            android:hint="Child 1 Email"-->
+                <!--                            android:paddingHorizontal="8dp"-->
+                <!--                            app:boxBackgroundColor="@color/white"-->
+                <!--                            app:boxBackgroundMode="outline"-->
+                <!--                            app:boxCornerRadiusBottomEnd="38dp"-->
+                <!--                            app:boxCornerRadiusBottomStart="38dp"-->
+                <!--                            app:boxCornerRadiusTopEnd="38dp"-->
+                <!--                            app:boxCornerRadiusTopStart="38dp"-->
+                <!--                            app:boxStrokeColor="@color/black">-->
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:inputType="textEmailAddress"
-                                android:textSize="14sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                <!--                            <EditText-->
+                <!--                                android:layout_width="match_parent"-->
+                <!--                                android:layout_height="match_parent"-->
+                <!--                                android:inputType="textEmailAddress"-->
+                <!--                                android:textSize="14sp" />-->
+                <!--                        </com.google.android.material.textfield.TextInputLayout>-->
 
-                    </LinearLayout>
+                <!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:id="@+id/linear_layout_add_children2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                <!--                    <LinearLayout-->
+                <!--                        android:id="@+id/linear_layout_add_children2"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:orientation="horizontal">-->
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/child_email2"
-                            android:layout_width="match_parent"
-                            android:layout_height="59dp"
-                            android:hint="Child 2 Email"
-                            android:paddingHorizontal="8dp"
-                            app:boxBackgroundColor="@color/white"
-                            app:boxBackgroundMode="outline"
-                            app:boxCornerRadiusBottomEnd="38dp"
-                            app:boxCornerRadiusBottomStart="38dp"
-                            app:boxCornerRadiusTopEnd="38dp"
-                            app:boxCornerRadiusTopStart="38dp"
-                            app:boxStrokeColor="@color/black">
+                <!--                        <com.google.android.material.textfield.TextInputLayout-->
+                <!--                            android:id="@+id/child_email2"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="59dp"-->
+                <!--                            android:hint="Child 2 Email"-->
+                <!--                            android:paddingHorizontal="8dp"-->
+                <!--                            app:boxBackgroundColor="@color/white"-->
+                <!--                            app:boxBackgroundMode="outline"-->
+                <!--                            app:boxCornerRadiusBottomEnd="38dp"-->
+                <!--                            app:boxCornerRadiusBottomStart="38dp"-->
+                <!--                            app:boxCornerRadiusTopEnd="38dp"-->
+                <!--                            app:boxCornerRadiusTopStart="38dp"-->
+                <!--                            app:boxStrokeColor="@color/black">-->
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:inputType="textEmailAddress"
-                                android:textSize="14sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                <!--                            <EditText-->
+                <!--                                android:layout_width="match_parent"-->
+                <!--                                android:layout_height="match_parent"-->
+                <!--                                android:inputType="textEmailAddress"-->
+                <!--                                android:textSize="14sp" />-->
+                <!--                        </com.google.android.material.textfield.TextInputLayout>-->
 
-                    </LinearLayout>
+                <!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:id="@+id/linear_layout_add_children3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                <!--                    <LinearLayout-->
+                <!--                        android:id="@+id/linear_layout_add_children3"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:orientation="horizontal">-->
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/child_email3"
-                            android:layout_width="match_parent"
-                            android:layout_height="59dp"
-                            android:hint="Child 3 Email"
-                            android:paddingHorizontal="8dp"
-                            app:boxBackgroundColor="@color/white"
-                            app:boxBackgroundMode="outline"
-                            app:boxCornerRadiusBottomEnd="38dp"
-                            app:boxCornerRadiusBottomStart="38dp"
-                            app:boxCornerRadiusTopEnd="38dp"
-                            app:boxCornerRadiusTopStart="38dp"
-                            app:boxStrokeColor="@color/black">
+                <!--                        <com.google.android.material.textfield.TextInputLayout-->
+                <!--                            android:id="@+id/child_email3"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="59dp"-->
+                <!--                            android:hint="Child 3 Email"-->
+                <!--                            android:paddingHorizontal="8dp"-->
+                <!--                            app:boxBackgroundColor="@color/white"-->
+                <!--                            app:boxBackgroundMode="outline"-->
+                <!--                            app:boxCornerRadiusBottomEnd="38dp"-->
+                <!--                            app:boxCornerRadiusBottomStart="38dp"-->
+                <!--                            app:boxCornerRadiusTopEnd="38dp"-->
+                <!--                            app:boxCornerRadiusTopStart="38dp"-->
+                <!--                            app:boxStrokeColor="@color/black">-->
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:inputType="textEmailAddress"
-                                android:textSize="14sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                <!--                            <EditText-->
+                <!--                                android:layout_width="match_parent"-->
+                <!--                                android:layout_height="match_parent"-->
+                <!--                                android:inputType="textEmailAddress"-->
+                <!--                                android:textSize="14sp" />-->
+                <!--                        </com.google.android.material.textfield.TextInputLayout>-->
 
-                    </LinearLayout>
+                <!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:id="@+id/linear_layout_add_children4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                <!--                    <LinearLayout-->
+                <!--                        android:id="@+id/linear_layout_add_children4"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:orientation="horizontal">-->
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/child_email4"
-                            android:layout_width="match_parent"
-                            android:layout_height="59dp"
-                            android:hint="Child 4 Email"
-                            android:paddingHorizontal="8dp"
-                            app:boxBackgroundColor="@color/white"
-                            app:boxBackgroundMode="outline"
-                            app:boxCornerRadiusBottomEnd="38dp"
-                            app:boxCornerRadiusBottomStart="38dp"
-                            app:boxCornerRadiusTopEnd="38dp"
-                            app:boxCornerRadiusTopStart="38dp"
-                            app:boxStrokeColor="@color/black">
+                <!--                        <com.google.android.material.textfield.TextInputLayout-->
+                <!--                            android:id="@+id/child_email4"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="59dp"-->
+                <!--                            android:hint="Child 4 Email"-->
+                <!--                            android:paddingHorizontal="8dp"-->
+                <!--                            app:boxBackgroundColor="@color/white"-->
+                <!--                            app:boxBackgroundMode="outline"-->
+                <!--                            app:boxCornerRadiusBottomEnd="38dp"-->
+                <!--                            app:boxCornerRadiusBottomStart="38dp"-->
+                <!--                            app:boxCornerRadiusTopEnd="38dp"-->
+                <!--                            app:boxCornerRadiusTopStart="38dp"-->
+                <!--                            app:boxStrokeColor="@color/black">-->
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:inputType="textEmailAddress"
-                                android:textSize="14sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-                </LinearLayout>
+                <!--                            <EditText-->
+                <!--                                android:layout_width="match_parent"-->
+                <!--                                android:layout_height="match_parent"-->
+                <!--                                android:inputType="textEmailAddress"-->
+                <!--                                android:textSize="14sp" />-->
+                <!--                        </com.google.android.material.textfield.TextInputLayout>-->
+                <!--                    </LinearLayout>-->
+                <!--                </LinearLayout>-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

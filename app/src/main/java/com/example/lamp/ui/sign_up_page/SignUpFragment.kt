@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.CommonFunctions
 import com.example.common_functions.ExternalStorageAccessFragment
 import com.example.data.model.UserResponse
 import com.example.lamp.R
@@ -25,7 +26,7 @@ class SignUpFragment : ExternalStorageAccessFragment() {
     lateinit var viewBinding: FragmentSignUpBinding
     var selected: String? = null
     var verified = true
-    var email:MutableList<String> = mutableListOf()
+    var email: MutableList<String> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,19 +44,19 @@ class SignUpFragment : ExternalStorageAccessFragment() {
 
     private fun subscirbeToLiveData() {
 
-        viewModel.parentLiveData.observe(viewLifecycleOwner){
+        viewModel.parentLiveData.observe(viewLifecycleOwner) {
             Log.v("response test::", it.toString())
-            if (selected=="Parent"){
+            if (selected == "Parent") {
                 viewModel.addChildren(email)
-            }else{
+            } else {
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, SigninFragment())
                     .commit()
             }
         }
 
-        viewModel.test.observe(viewLifecycleOwner){
-            Log.d("test",it.toString())
+        viewModel.test.observe(viewLifecycleOwner) {
+            Log.d("test", it.toString())
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SigninFragment())
                 .commit()
@@ -65,9 +66,9 @@ class SignUpFragment : ExternalStorageAccessFragment() {
             viewLifecycleOwner
         ) {
             Log.v("response test::", it.toString())
-            if (selected=="Parent"){
+            if (selected == "Parent") {
                 viewModel.addChildren(email)
-            }else{
+            } else {
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, SigninFragment())
                     .commit()
@@ -106,27 +107,27 @@ class SignUpFragment : ExternalStorageAccessFragment() {
     }
 
     private fun initViews() {
-        viewBinding.childrenLayout.isVisible = false
+//        viewBinding.childrenLayout.isVisible = false
         viewBinding.imageStudent.setOnClickListener {
             it.setBackgroundResource(R.drawable.rounded_frame_yellow)
             viewBinding.imageParent.setBackgroundResource(R.drawable.rounded_frame)
             viewBinding.imageTeacher.setBackgroundResource(R.drawable.rounded_frame)
             selected = "Student"
-            viewBinding.childrenLayout.isVisible = false
+//            viewBinding.childrenLayout.isVisible = false
         }
         viewBinding.imageTeacher.setOnClickListener {
             it.setBackgroundResource(R.drawable.rounded_frame_yellow)
             viewBinding.imageParent.setBackgroundResource(R.drawable.rounded_frame)
             viewBinding.imageStudent.setBackgroundResource(R.drawable.rounded_frame)
             selected = "Teacher"
-            viewBinding.childrenLayout.isVisible = false
+//            viewBinding.childrenLayout.isVisible = false
         }
         viewBinding.imageParent.setOnClickListener {
             it.setBackgroundResource(R.drawable.rounded_frame_yellow)
             viewBinding.imageTeacher.setBackgroundResource(R.drawable.rounded_frame)
             viewBinding.imageStudent.setBackgroundResource(R.drawable.rounded_frame)
             selected = "Parent"
-            viewBinding.childrenLayout.isVisible = true
+//            viewBinding.childrenLayout.isVisible = true
         }
 
         viewBinding.card.setOnClickListener {
@@ -136,28 +137,33 @@ class SignUpFragment : ExternalStorageAccessFragment() {
         viewBinding.buttonSignUpRegisteration.setOnClickListener {
 
             if (validate()) {
-                val firstName = viewBinding.firstName.editText?.text.toString()
-                val lastName = viewBinding.lastName.editText?.text.toString()
-                val email = viewBinding.email.text.toString()
-                val password = viewBinding.passwordSignUp.editText?.text.toString()
-                val phoneNumber = viewBinding.txtPhone.text.toString()
-                if (selected == "Parent"){
-                    this.email.add(viewBinding.childMail.editText?.text.toString())
-                    this.email.add(viewBinding.childEmail2.editText?.text.toString())
-                    this.email.add(viewBinding.childEmail3.editText?.text.toString())
-                    this.email.add(viewBinding.childEmail4.editText?.text.toString())
-                }
-                viewModel.addUser(
-                    UserResponse(
-                        firstName,
-                        lastName,
-                        email,
-                        password,
-                        selected,
-                        phoneNumber
+                if (CommonFunctions.checkInternetConnection(requireContext())) {
+                    val firstName = viewBinding.firstName.editText?.text.toString()
+                    val lastName = viewBinding.lastName.editText?.text.toString()
+                    val email = viewBinding.email.text.toString()
+                    val password = viewBinding.passwordSignUp.editText?.text.toString()
+                    val phoneNumber = viewBinding.txtPhone.text.toString()
+//                    if (selected == "Parent") {
+//                        this.email.add(viewBinding.childMail.editText?.text.toString())
+//                        this.email.add(viewBinding.childEmail2.editText?.text.toString())
+//                        this.email.add(viewBinding.childEmail3.editText?.text.toString())
+//                        this.email.add(viewBinding.childEmail4.editText?.text.toString())
+//                    }
+                    viewModel.addUser(
+                        UserResponse(
+                            firstName,
+                            lastName,
+                            email,
+                            password,
+                            selected,
+                            phoneNumber
+                        )
                     )
-                )
-                viewModel.addUserToFirebase(email, password)
+                    viewModel.addUserToFirebase(email, password)
+                } else {
+                    Toast.makeText(context, "Please, check internet connection", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }
@@ -211,7 +217,7 @@ class SignUpFragment : ExternalStorageAccessFragment() {
             viewBinding.firstName.error = "First Name is required"
             isValid = false
 
-        }else if (!Pattern.matches("[a-zA-Z]+", viewBinding.firstName.editText?.text.toString())) {
+        } else if (!Pattern.matches("[a-zA-Z]+", viewBinding.firstName.editText?.text.toString())) {
 
             viewBinding.firstName.error = "First Name should be letters only"
             isValid = false
@@ -226,7 +232,7 @@ class SignUpFragment : ExternalStorageAccessFragment() {
             viewBinding.lastName.error = "Last Name is required"
             isValid = false
 
-        }else if (!Pattern.matches("[a-zA-Z]+", viewBinding.lastName.editText?.text.toString())) {
+        } else if (!Pattern.matches("[a-zA-Z]+", viewBinding.lastName.editText?.text.toString())) {
 
             viewBinding.lastName.error = "Last Name should be letters only"
             isValid = false
@@ -239,15 +245,16 @@ class SignUpFragment : ExternalStorageAccessFragment() {
         if (selected == null) {
             Toast.makeText(context, "Please select your role", Toast.LENGTH_SHORT).show()
             isValid = false
-        } else if (selected == "Parent") {
-            if (viewBinding.childMail.editText?.text.toString().isEmpty()
-                && viewBinding.childEmail2.editText?.text.toString().isEmpty()
-                && viewBinding.childEmail3.editText?.text.toString().isEmpty()
-                && viewBinding.childEmail4.editText?.text.toString().isEmpty()
-            ) {
-                viewBinding.childMail.error = "At least one child email is required"
-            }
         }
+//        else if (selected == "Parent") {
+//            if (viewBinding.childMail.editText?.text.toString().isEmpty()
+//                && viewBinding.childEmail2.editText?.text.toString().isEmpty()
+//                && viewBinding.childEmail3.editText?.text.toString().isEmpty()
+//                && viewBinding.childEmail4.editText?.text.toString().isEmpty()
+//            ) {
+//                viewBinding.childMail.error = "At least one child email is required"
+//            }
+//        }
         return isValid
     }
 

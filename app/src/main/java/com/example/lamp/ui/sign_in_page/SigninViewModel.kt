@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common_functions.CONSTANTS
+import com.example.common_functions.CommonFunctions
 import com.example.data.api.ApiManager
 import com.example.data.api.UserWebService
 import com.example.data.model.UserResponse
@@ -40,7 +41,12 @@ class SigninViewModel : ViewModel() {
                             call: Call<UserResponse>,
                             response: Response<UserResponse>
                         ) {
-                            liveData.postValue(response.body())
+                            if (response.code() == 200) {
+                                liveData.postValue(response.body())
+                            } else {
+                                errorMessage.value = "Invalid email or password"
+                            }
+
                         }
 
                         override fun onFailure(call: Call<UserResponse>, t: Throwable) {

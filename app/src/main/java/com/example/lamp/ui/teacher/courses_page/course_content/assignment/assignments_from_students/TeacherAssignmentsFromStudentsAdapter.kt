@@ -9,8 +9,9 @@ import com.example.domain.model.AssignmentAnswerDetailsResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherAssignmentsFromStudentsBinding
 
-class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentAnswerDetailsResponseDTO>?=null
-    ,val totalPoints:Int) : RecyclerView.Adapter<TeacherAssignmentsFromStudentsAdapter.ViewHolder>() {
+class TeacherAssignmentsFromStudentsAdapter(
+    var assignmentList: List<AssignmentAnswerDetailsResponseDTO>? = null, val totalPoints: Int
+) : RecyclerView.Adapter<TeacherAssignmentsFromStudentsAdapter.ViewHolder>() {
     class ViewHolder(var itemViewBinding: ItemTeacherAssignmentsFromStudentsBinding) :
         RecyclerView.ViewHolder(itemViewBinding.root)
 
@@ -28,18 +29,24 @@ class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentA
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = assignmentList?.get(position)
         holder.itemViewBinding.item = item
-        Log.v("assignmentList",item?.id.toString())
+        Log.v("assignmentList", item?.id.toString())
         holder.itemViewBinding.points.setText(totalPoints.toString())
         holder.itemViewBinding.assignGrade.setOnClickListener {
             if (holder.itemViewBinding.studentGradeTxt.text.toString() == "" ||
                 holder.itemViewBinding.studentGradeTxt.text.toString()
                     .toInt() > holder.itemViewBinding.points.text.toString().toInt()
             ) {
-                holder.itemViewBinding.studentGradeTxt.error="please enter valid grade"
+                holder.itemViewBinding.studentGradeTxt.error = "please enter valid grade"
             } else {
-                onGradesSubmitListener?.let {  submitListener->
-                    submitListener.onGradeSubmit(item!!,holder.itemViewBinding.studentGradeTxt.text.toString().toInt())
-                    it.setBackgroundResource(R.color.green)
+                onGradesSubmitListener?.let { submitListener ->
+                    submitListener.onGradeSubmit(
+                        item!!,
+                        holder.itemViewBinding.studentGradeTxt.text.toString().toInt()
+                    )
+                    it.setBackgroundResource(R.drawable.rounded_btn_green)
+                    holder.itemViewBinding.studentGradeTxt.isEnabled = false
+                    holder.itemViewBinding.studentGradeTxt.isFocusable = false
+                    holder.itemViewBinding.studentGradeTxt.isFocusableInTouchMode = false
                 }
 
             }
@@ -52,17 +59,18 @@ class TeacherAssignmentsFromStudentsAdapter(var assignmentList: List<AssignmentA
 
     override fun getItemCount(): Int = assignmentList?.size ?: 0
     fun changeData(assignmentList: List<AssignmentAnswerDetailsResponseDTO>?) {
-        this.assignmentList=assignmentList
+        this.assignmentList = assignmentList
         notifyDataSetChanged()
     }
 
-    var  onPdfOpenListener:OnPdfOpenListener?=null
-    var onGradesSubmitListener:OnGradesSubmitListener?=null
+    var onPdfOpenListener: OnPdfOpenListener? = null
+    var onGradesSubmitListener: OnGradesSubmitListener? = null
 
-    interface OnPdfOpenListener{
-        fun onPdfOpen(pdf:String?)
+    interface OnPdfOpenListener {
+        fun onPdfOpen(pdf: String?)
     }
-    interface OnGradesSubmitListener{
+
+    interface OnGradesSubmitListener {
         fun onGradeSubmit(assignmentAnswerDetails: AssignmentAnswerDetailsResponseDTO, grade: Int)
     }
 }

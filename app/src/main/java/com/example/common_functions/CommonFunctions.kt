@@ -161,6 +161,11 @@ class CommonFunctions {
                             }
                             .show()
 
+                        if (isEnabled) {
+                            isEnabled = false
+                            activity.onBackPressed()
+                        }
+
                     }
                 })
         }
