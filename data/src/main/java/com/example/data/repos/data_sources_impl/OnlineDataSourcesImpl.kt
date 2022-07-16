@@ -951,10 +951,10 @@ class QuizGradeOnlineDataSourceImpl(val service: QuizGradeWebService) :
         }
     }
 
-    override suspend fun quizGrades(quizGrades: QuizGradeResponseDTO): QuizGradeResponseDTO {
+    override suspend fun quizGrades(quizGrades: QuizGradeResponseDTO): Response<Void> {
         try {
             val response = service.quizGrades(quizGrades)
-            return response.convertTo(QuizGradeResponseDTO::class.java)
+            return response
         } catch (throwable: Throwable) {
             throw throwable
         }

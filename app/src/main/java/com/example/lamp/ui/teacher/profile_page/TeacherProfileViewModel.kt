@@ -89,4 +89,8 @@ class TeacherProfileViewModel : ViewModel() {
 
         }
     }
+
+    fun logOut() {
+        CONSTANTS.sessionManager?.deleteData()
+    }
 }

@@ -52,7 +52,6 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
         teacherAddCourseBinding.addCourseBtn.setOnClickListener {
             if (validateForm()) {
                 val courseName = teacherAddCourseBinding.courseNameLayout.editText?.text.toString()
-                val courseCode = teacherAddCourseBinding.codeLayout.editText?.text.toString()
                 val description =
                     teacherAddCourseBinding.descriptionLayout.editText?.text.toString()
                 val courseImageId = R.drawable.login //???
@@ -79,12 +78,6 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
             isValid = false
         } else {
             teacherAddCourseBinding.courseNameLayout.error = null
-        }
-        if (teacherAddCourseBinding.codeLayout.editText?.text.toString().isBlank()) {
-            teacherAddCourseBinding.codeLayout.error = "please enter todo details"
-            isValid = false
-        } else {
-            teacherAddCourseBinding.codeLayout.error = null
         }
         if (teacherAddCourseBinding.descriptionLayout.editText?.text.toString().isBlank()) {
             teacherAddCourseBinding.descriptionLayout.error = "please enter todo details"

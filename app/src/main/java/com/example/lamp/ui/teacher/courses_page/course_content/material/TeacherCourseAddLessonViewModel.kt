@@ -60,10 +60,11 @@ class TeacherCourseAddLessonViewModel:ViewModel() {
                     .addFormDataPart("lessonId",contentResponseDTO.lessonId.toString())
                     .addFormDataPart("showDate",contentResponseDTO.showDate ?: "")
 
-                if (videoFile!=null){
-                    part.addFormDataPart("videoPath",videoFile.name,videoFile.asRequestBody("video/*".toMediaTypeOrNull()))
-//                    Log.v("videoFile",videoFile.totalSpace.toString())
-                }
+
+                videoFile?.asRequestBody("video/*".toMediaTypeOrNull())
+                    ?.let { part.addFormDataPart("videoPath",videoFile.name, it) }
+                    Log.v("videoFile",videoFile?.totalSpace.toString())
+
 
                 if (pdfFile!=null){
                     part.addFormDataPart("pdfPath",pdfFile.name,pdfFile.asRequestBody("application/pdf".toMediaTypeOrNull()))

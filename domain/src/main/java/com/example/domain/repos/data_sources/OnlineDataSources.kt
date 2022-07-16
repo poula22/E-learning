@@ -201,7 +201,7 @@ interface QuestionOnlineDataSource {
 
 interface QuizGradeOnlineDataSource {
     suspend fun getAllQuizGrades(): List<QuestionResponseDTO>
-    suspend fun quizGrades(quizGrades: QuizGradeResponseDTO): QuizGradeResponseDTO
+    suspend fun quizGrades(quizGrades: QuizGradeResponseDTO):  Response<Void>
     suspend fun deleteQuizGrades(id: Int): QuizGradeResponseDTO
     suspend fun updateQuizGrades(id: Int, QuizGrades: QuizGradeResponseDTO): QuizGradeResponseDTO
     suspend fun getQuizGrades(id: Int): QuizGradeResponseDTO

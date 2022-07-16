@@ -6,13 +6,14 @@ import com.example.data.model.QuizGradeResponse
 import com.example.domain.model.QuestionResponseDTO
 import com.example.domain.model.QuizGradeResponseDTO
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface QuizGradeWebService {
     @GET("api/QuizGrades")
     suspend fun getAllQuizGrades(): List<QuestionResponse>
     @POST("api/QuizGrades")
-    suspend fun quizGrades(@Body quizGrades: QuizGradeResponseDTO): QuizGradeResponse
+    suspend fun quizGrades(@Body quizGrades: QuizGradeResponseDTO): Response<Void>
     @DELETE("api/QuizGrades/{id}")
     suspend fun deleteQuizGrades(@Path("id") id: Int): QuizGradeResponse
     @PUT("api/QuizGrades/{id}")

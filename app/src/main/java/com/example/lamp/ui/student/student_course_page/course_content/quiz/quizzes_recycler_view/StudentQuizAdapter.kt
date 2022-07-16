@@ -24,7 +24,7 @@ class StudentQuizAdapter(var quizzes:List<StudentQuizItem>? = null) :
         var quiz = quizzes?.get(position)
         holder.viewBinding.item = quiz
         holder.viewBinding.startExamBtn.setOnClickListener{
-            onStartExamListener?.onStartExam(quiz?.quizResponseDTO?.id!!,position,quiz?.duration!!)
+            onStartExamListener?.onStartExam(quiz?.quizResponseDTO?.id!!,position,quiz.duration!!)
         }
 
     }

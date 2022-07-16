@@ -28,7 +28,7 @@ class VideoFullScreenFragment:Fragment() {
     }
 
     private fun initView() {
-        val mediaController = MediaController(requireActivity().baseContext)
+        val mediaController = MediaController(requireContext())
         mediaController.setAnchorView(viewBinding.videoPlayer)
         val path=requireArguments().getString("video")
         Log.v("path",path.toString())

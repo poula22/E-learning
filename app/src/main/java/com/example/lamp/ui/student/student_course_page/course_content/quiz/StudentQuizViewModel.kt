@@ -6,10 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.api.ApiManager
 import com.example.data.repos.data_sources_impl.QuestionAnswerOnlineDataSourceImpl
 import com.example.data.repos.data_sources_impl.QuestionOnlineDataSourceImpl
+import com.example.data.repos.data_sources_impl.QuizGradeOnlineDataSourceImpl
 import com.example.domain.model.QuestionAnswerResponseDTO
 import com.example.domain.model.QuizDetailsResponseDTO
+import com.example.domain.model.QuizGradeResponseDTO
 import com.example.domain.repos.data_sources.QuestionAnswerOnlineDataSource
 import com.example.domain.repos.data_sources.QuestionOnlineDataSource
+import com.example.domain.repos.data_sources.QuizGradeOnlineDataSource
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
@@ -21,6 +24,8 @@ class StudentQuizViewModel : ViewModel() {
     private val webService = ApiManager.getQuestionApi()
     private val onlineDataSource: QuestionOnlineDataSource = QuestionOnlineDataSourceImpl(webService)
     private val answersOnlineDataSource:QuestionAnswerOnlineDataSource = QuestionAnswerOnlineDataSourceImpl(ApiManager.getQuestionAnswerApi())
+    val gradeLiveData = MutableLiveData<Response<Void>>()
+    private val quizGradeOnlineDataSource : QuizGradeOnlineDataSource = QuizGradeOnlineDataSourceImpl(ApiManager.getQuizGradeApi())
     fun getQuizQuestions(quizId: Int) {
         viewModelScope.launch {
             try {
@@ -58,6 +63,23 @@ class StudentQuizViewModel : ViewModel() {
 
         }
 
+    }
+
+    fun gradeQuiz(quizGrade:QuizGradeResponseDTO){
+        viewModelScope.launch {
+            try {
+                gradeLiveData.value = quizGradeOnlineDataSource.quizGrades(quizGrade)
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException -> {
+                        errorMessage.value = t.response()?.errorBody()?.string()
+                    }
+                    else -> {
+                        errorMessage.value = "error"
+                    }
+                }
+            }
+        }
     }
 
 }

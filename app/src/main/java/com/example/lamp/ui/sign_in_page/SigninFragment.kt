@@ -17,6 +17,8 @@ import com.example.lamp.ui.parent.ParentContainerFragment
 import com.example.lamp.ui.sign_up_page.SignUpFragment
 import com.example.lamp.ui.student.StudentContainerFragment
 import com.example.lamp.ui.teacher.TeacherContainerFragment
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.regex.Pattern
 
 class SigninFragment : Fragment() {
@@ -40,6 +42,21 @@ class SigninFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
         initView()
+        val user=viewModel.autoSignIn()
+        if (user?.token!=null){
+            val current = LocalDateTime.now(ZoneId.of("UTC"))
+            Log.v("current",current.toString())
+            Log.v("exp",user.expiresOn!!)
+            val exp = user.expiresOn?.let { LocalDateTime.parse(it.replace("Z","")) }
+            if (current.isEqual(exp) || current.isAfter(exp)){
+                viewModel.deleteData()
+
+            }else{
+                CONSTANTS.user_id = user.id!!
+                CONSTANTS.profilePic = user.profilePic!!
+                navigate(user.role!!)
+            }
+        }
     }
 
     private fun subscribeToLiveData() {
@@ -51,26 +68,7 @@ class SigninFragment : Fragment() {
                     CONSTANTS.profilePic = it.profilePic!!
 
                 Log.v("user", it.toString())
-                when (it.role) {
-                    "Parent" -> {
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, ParentContainerFragment())
-                            .commit()
-                    }
-                    "Teacher" -> {
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, TeacherContainerFragment())
-                            .commit()
-                    }
-                    "Student" -> {
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, StudentContainerFragment())
-                            .commit()
-                    }
-                    else -> {
-
-                    }
-                }
+                navigate(it.role!!)
 
 
             }
@@ -79,7 +77,7 @@ class SigninFragment : Fragment() {
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
             it?.let {
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
         }
         viewModel.test.observe(viewLifecycleOwner) {
@@ -97,6 +95,29 @@ class SigninFragment : Fragment() {
                 } else {
                     Toast.makeText(context, "Please verify your email", Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+    }
+
+    private fun navigate(role:String){
+        when (role) {
+            "Parent" -> {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, ParentContainerFragment())
+                    .commit()
+            }
+            "Teacher" -> {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, TeacherContainerFragment())
+                    .commit()
+            }
+            "Student" -> {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, StudentContainerFragment())
+                    .commit()
+            }
+            else -> {
+
             }
         }
     }

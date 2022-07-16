@@ -26,5 +26,24 @@ data class UserResponse(
 	val profilePic: String? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null
+	val id: Int? = null,
+
+
+	@field:SerializedName("refreshTokenExpiration")
+	val refreshTokenExpiration: String? = null,
+
+	@field:SerializedName("isAuthenticated")
+	val isAuthenticated: Boolean? = null,
+
+	@field:SerializedName("message")
+	val message: Any? = null,
+
+	@field:SerializedName("token")
+	val token: String? = null,
+
+	@field:SerializedName("expiresOn")
+	val expiresOn: String? = null,
+
+	@field:SerializedName("refreshToken")
+	val refreshToken: String? = null
 )

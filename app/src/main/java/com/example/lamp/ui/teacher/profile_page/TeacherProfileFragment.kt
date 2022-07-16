@@ -16,6 +16,7 @@ import com.example.common_functions.ExternalStorageAccessFragment
 import com.example.domain.model.UserResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherProfileBinding
+import com.example.lamp.ui.sign_in_page.SigninFragment
 import java.io.File
 
 class TeacherProfileFragment : ExternalStorageAccessFragment(){
@@ -86,6 +87,12 @@ class TeacherProfileFragment : ExternalStorageAccessFragment(){
             )
             updateUserInfo(user)
 
+        }
+        viewBinding.logout.setOnClickListener {
+            viewModel.logOut()
+            requireActivity().supportFragmentManager.beginTransaction().replace(this.id ,
+                SigninFragment()
+            ).commit()
         }
     }
 

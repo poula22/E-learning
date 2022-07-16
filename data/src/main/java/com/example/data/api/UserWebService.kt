@@ -26,7 +26,7 @@ interface UserWebService {
         @Path("email") email: String, @Path("password") password: String
     ): UserResponse
 
-    @POST("api/Users/LoginTest")
+    @POST("api/Users/Login")
     fun logInTest(@Body user: UserResponseDTO): Call<UserResponse>
 
     @PUT("api/Users/update-photo/{id}")

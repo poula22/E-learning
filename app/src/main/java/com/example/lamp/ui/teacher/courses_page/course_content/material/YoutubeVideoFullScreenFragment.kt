@@ -36,7 +36,7 @@ class YoutubeVideoFullScreenFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val videoItem= requireArguments()?.getSerializable("video") as VideoItem?
+        val videoItem= requireArguments().getSerializable("video") as VideoItem?
         path=videoItem?.path
         youTubePlayer=videoItem?.youTubePlayer
         initViews()

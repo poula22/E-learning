@@ -131,6 +131,7 @@ class TeacherCoursesFragment : Fragment() {
         }
 
 
+
         val simpleCallback = object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.RIGHT

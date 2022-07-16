@@ -10,6 +10,7 @@ import com.example.common_functions.CommonFunctions
 import com.example.data.api.ApiManager
 import com.example.data.api.UserWebService
 import com.example.data.model.UserResponse
+import com.example.data.model.convertTo
 import com.example.domain.model.UserResponseDTO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -29,12 +30,16 @@ class SigninViewModel : ViewModel() {
     val sessionManager = CONSTANTS.sessionManager
     var test = MutableLiveData<Boolean>()
     val auth: FirebaseAuth = Firebase.auth
+
+
+
+//    val token = "Bearer ${sessionManager?.fetchAuthToken()}"
+
+    fun autoSignIn(): UserResponseDTO?{
+        return sessionManager?.fetchData()
+    }
+
     fun signin(email: String, password: String) {
-
-
-                //token = "Bearer ${sessionManager.fetchAuthToken()}"
-                //sessionManager?.saveAuthToken(result.authToken)
-//                var result = service.logIn(email, password)
                 try {
                     service.logInTest(UserResponseDTO(emailAddress = email, password = password)).enqueue(object :Callback<UserResponse>{
                         override fun onResponse(
@@ -42,6 +47,8 @@ class SigninViewModel : ViewModel() {
                             response: Response<UserResponse>
                         ) {
                             if (response.code() == 200) {
+                                response.body()?.convertTo(UserResponseDTO::class.java)
+                                    ?.let { sessionManager?.saveAuthToken(it) }
                                 liveData.postValue(response.body())
                             } else {
                                 errorMessage.value = "Invalid email or password"
@@ -79,7 +86,7 @@ class SigninViewModel : ViewModel() {
     fun loginFirebase(email: String, password: String) {
 
         auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener() { task ->
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
@@ -90,5 +97,9 @@ class SigninViewModel : ViewModel() {
                 }
                 test.value = task.isSuccessful
             }
+    }
+
+    fun deleteData() {
+        sessionManager?.deleteData()
     }
 }

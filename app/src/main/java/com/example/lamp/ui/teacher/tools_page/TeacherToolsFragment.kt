@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherToolsBinding
 import com.example.lamp.test_data.TestData
+import com.example.lamp.ui.sign_in_page.SigninFragment
 import com.example.lamp.ui.teacher.tools_page.tools_recycler_view.TeacherToolsAdapter
 
 
@@ -35,6 +36,8 @@ class TeacherToolsFragment : Fragment() {
     private fun initViews() {
         adapter = TeacherToolsAdapter(TestData.TOOLS)
         fragmentTeacherToolsBinding.toolsRecyclerView.adapter = adapter
+
+
     }
 
 }

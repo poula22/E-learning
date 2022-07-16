@@ -40,7 +40,7 @@ class TeacherCourseMaterialFragment : Fragment() {
     lateinit var viewModel: TeacherCourseMaterialViewModel
     lateinit var adapter: TeacherCourseLessonsAdapter
     lateinit var listener:AbstractYouTubePlayerListener
-    lateinit var youTubePlayer: YouTubePlayer
+    var youTubePlayer: YouTubePlayer?=null
     var path:String? = null
     var file:File? = null
     var pdfPath:String? = null
@@ -73,8 +73,6 @@ class TeacherCourseMaterialFragment : Fragment() {
         viewBinding.assignmentTxt.isVisible=false
         viewBinding.contentTextHtml.isVisible=false
         viewModel.getCourseLessons()
-
-        path="https://www.youtube.com/watch?v=BGkL2Pq-g3A&list=RDBGkL2Pq-g3A&start_radio=1"
 //        viewBinding.videoPlayer.setVideoPath(path)
     }
 
@@ -82,7 +80,7 @@ class TeacherCourseMaterialFragment : Fragment() {
         viewModel.contentLiveData.observe(viewLifecycleOwner) {
             it?.let { contentResponseDTO ->
                 contentResponseDTO.get(0).let { content ->
-//                    hideProgressBar()
+                    hideProgressBar()
                     viewBinding.videoPlayer.isVisible = content.videoPath != null
                     viewBinding.youtubePlayerView.isVisible = content.link != null
                     viewBinding.pdfIcon.isVisible=content.pdfPath != null
@@ -117,6 +115,8 @@ class TeacherCourseMaterialFragment : Fragment() {
                     }
                 }
             }
+            if(it==null)
+                hideProgressBar()
 //            if (it==null){
 //                hideProgressBar()
 //                viewBinding.youtubePlayerView.isVisible=false
@@ -326,7 +326,7 @@ class TeacherCourseMaterialFragment : Fragment() {
     }
 
     private fun loadVideo(path: String) {
-        youTubePlayer.cueVideo(playYoutubeVideo(path), 0f)
+        youTubePlayer?.cueVideo(playYoutubeVideo(path), 0f)
     }
 
     private fun setVideoLoader(youTubePlayer: YouTubePlayer,) {
@@ -352,7 +352,7 @@ class TeacherCourseMaterialFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        youTubePlayer.removeListener(listener)
+        youTubePlayer?.removeListener(listener)
         requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
     private fun showProgressBar() {

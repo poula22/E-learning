@@ -51,10 +51,10 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
 
     override fun resultListener(byteArray: ByteArray) {
         try {
-            if (pdfFlag){
+            if (pdfFlag && inputStreamPdf == null) {
                 inputStreamPdf=fileUri?.let { requireActivity().contentResolver.openInputStream(it) }
             }
-            if (videoFlag){
+            if (videoFlag && inputStreamVideo == null) {
                 inputStreamVideo=fileUri?.let { requireActivity().contentResolver.openInputStream(it) }
             }
 
@@ -109,7 +109,7 @@ class TeacherCourseAddLessonFragment : DocumentAccessFragment() {
         }
         viewModel.contentLiveData.observe(viewLifecycleOwner){
             Toast.makeText(requireContext(), "added successfully", Toast.LENGTH_SHORT).show()
-//            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.popBackStack()
         }
         viewModel.errorMessage.observe(viewLifecycleOwner){
             Toast.makeText(context,it,Toast.LENGTH_LONG).show()

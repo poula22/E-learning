@@ -20,6 +20,7 @@ import com.example.common_functions.CONSTANTS
 import com.example.domain.model.QuestionAnswerResponseDTO
 import com.example.domain.model.QuestionChoiceResponseDTO
 import com.example.domain.model.QuizDetailsResponseDTO
+import com.example.domain.model.QuizGradeResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentQuizBinding
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.answers_recycler_view.StudentQuizAnswersAdapter
@@ -34,7 +35,7 @@ class StudentQuizFragment : Fragment() {
     lateinit var viewModel: StudentQuizViewModel
     lateinit var adapter: StudentQuizAnswersAdapter
     var quizDuration = 1
-
+    var quizId=-1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(StudentQuizViewModel::class.java)
@@ -52,8 +53,9 @@ class StudentQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var quizId = requireArguments().getInt("quizId")
+        quizId = requireArguments().getInt("quizId")
         quizDuration = requireArguments().getInt("duration")
+        if (quizDuration==0) quizDuration=1
         subscribeToLiveData()
         initViews()
         viewModel.getQuizQuestions(quizId)
@@ -67,7 +69,13 @@ class StudentQuizFragment : Fragment() {
             adapter.changeData(question.questionChoices)
         }
         viewModel.answerLiveData.observe(viewLifecycleOwner) {
-            requireActivity().supportFragmentManager.popBackStack()
+            viewModel.gradeQuiz(QuizGradeResponseDTO(CONSTANTS.user_id,quizId))
+        }
+        viewModel.gradeLiveData.observe(viewLifecycleOwner) {
+            if (it.code()==200)
+                requireActivity().supportFragmentManager.popBackStack()
+            else
+                Toast.makeText(requireContext(),it.errorBody()?.string(),Toast.LENGTH_LONG).show()
         }
     }
 

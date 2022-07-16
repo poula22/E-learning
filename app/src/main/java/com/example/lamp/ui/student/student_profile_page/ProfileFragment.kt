@@ -14,6 +14,7 @@ import com.example.common_functions.ExternalStorageAccessFragment
 import com.example.domain.model.UserResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentProfileBinding
+import com.example.lamp.ui.sign_in_page.SigninFragment
 import java.io.File
 
 class ProfileFragment : ExternalStorageAccessFragment() {
@@ -83,8 +84,11 @@ class ProfileFragment : ExternalStorageAccessFragment() {
         viewModel.testLiveData.observe(viewLifecycleOwner){
             viewBinding.roundedImageView.setImageBitmap(BitmapFactory.decodeStream(it.byteStream()))
         }
-        viewModel.userUpdateLiveData.observe(viewLifecycleOwner){
-            viewModel.getUserInfo()
+        viewBinding.logout.setOnClickListener {
+            viewModel.logOut()
+            requireActivity().supportFragmentManager.beginTransaction().replace(this.id ,
+                SigninFragment()
+            ).commit()
         }
     }
 
@@ -106,6 +110,11 @@ class ProfileFragment : ExternalStorageAccessFragment() {
                 CONSTANTS.user_id
             )
             viewModel.updateUserInfo(CONSTANTS.user_id,user)
+        }
+
+        viewBinding.logout.setOnClickListener {
+            viewModel.logOut()
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.student_fragment_tab,SigninFragment()).commit()
         }
     }
 

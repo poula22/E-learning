@@ -55,10 +55,37 @@ class StudentQuizzesFragment : Fragment() {
         viewModel.liveData.observe(viewLifecycleOwner) { list ->
             val swap = list.map { quiz -> StudentQuizItem(quiz) }.toMutableList()
             Log.v("swap", swap.toString())
+            val current = LocalDateTime.now()
 
+//            for (i in 0 until swap.size) {
+//                val quiz=swap[i]
+//                val posTime = quiz.quizResponseDTO.postTime?.let { LocalDateTime.parse(it) }
+//                val startTime = quiz.quizResponseDTO.startTime?.let { LocalDateTime.parse(it) }
+//                val endTime = quiz.quizResponseDTO.endTime?.let { LocalDateTime.parse(it) }
+//                if (quiz.quizResponseDTO.grade != null) {
+//                    quiz.quizResponseDTO.grade?.let { grade ->
+//                        if (grade >= 0) {
+//                            swap.remove(quiz)
+//                        }
+//
+//                    }
+//                } else if (posTime != null || endTime != null) {
+//                    Log.d("post", "posTime: $posTime")
+//                    Log.d("current", "current: $current")
+//                    Log.d("endTime", "endTime: $endTime")
+//                    if (current.isBefore(posTime) || current.isAfter(endTime)) {
+//                        swap.remove(quiz)
+//                    } else if (startTime != null && endTime != null) {
+//                        Log.d("endTime", "endTime: $endTime")
+//                        Log.d("startTime", "startTime: $startTime")
+//                        quiz.duration =
+//                            "" + (Math.abs(endTime.hour - startTime.hour) * 60 + Math.abs(endTime.minute - startTime.minute))
+//                        Log.v("duration", quiz.duration.toString())
+//                    }
+//                }
+//            }
             swap.forEach { quiz ->
                 val posTime = quiz.quizResponseDTO.postTime?.let { LocalDateTime.parse(it) }
-                val current = LocalDateTime.now()
                 val startTime = quiz.quizResponseDTO.startTime?.let { LocalDateTime.parse(it) }
                 val endTime = quiz.quizResponseDTO.endTime?.let { LocalDateTime.parse(it) }
                 if (quiz.quizResponseDTO.grade != null) {
@@ -72,9 +99,10 @@ class StudentQuizzesFragment : Fragment() {
                     Log.d("post", "posTime: $posTime")
                     Log.d("current", "current: $current")
                     Log.d("endTime", "endTime: $endTime")
-                    if (current.isBefore(posTime) || current.isAfter(endTime)) {
-                        swap.remove(quiz)
-                    } else if (startTime != null && endTime != null) {
+//                    if (current.isBefore(posTime) || current.isAfter(endTime)) {
+//                        swap.remove(quiz)
+//                    } else
+                        if (startTime != null && endTime != null) {
                             Log.d("endTime", "endTime: $endTime")
                             Log.d("startTime", "startTime: $startTime")
                         quiz.duration =
@@ -88,13 +116,14 @@ class StudentQuizzesFragment : Fragment() {
     }
 
     private fun initViews() {
-        viewBinding.createDraftRecycler.adapter = adapter
         adapter.onStartExamListener = object : StudentQuizAdapter.OnStartExamListener {
             override fun onStartExam(quizId: Int, position: Int, duration: String) {
                 goToExam(quizId, position,duration.toInt())
             }
 
         }
+        viewBinding.createDraftRecycler.adapter = adapter
+
 
     }
 

@@ -111,7 +111,9 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/quizzes"
-                    tools:listitem="@layout/item_grade" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:listitem="@layout/item_grade"
+                    android:paddingBottom="100dp"/>
 
 <!--                <TextView-->
 <!--                    android:id="@+id/lessons"-->

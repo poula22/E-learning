@@ -92,4 +92,12 @@ class ProfileViewModel : ViewModel() {
             }
         }
     }
+
+    fun logOut() {
+        try {
+            CONSTANTS.sessionManager?.deleteData()
+        }catch (t:Throwable){
+            throw t
+        }
+    }
 }
