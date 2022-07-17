@@ -57,7 +57,7 @@ class SigninViewModel : ViewModel() {
                         }
 
                         override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                            errorMessage.postValue(t.message)
+                            errorMessage.postValue("Something went wrong")
                         }
 
                     })
@@ -65,9 +65,9 @@ class SigninViewModel : ViewModel() {
                 } catch (t: Throwable) {
                     when (t) {
                         is HttpException ->
-                            errorMessage.value = t.response()?.errorBody()?.string()
+                            errorMessage.value = "Something went wrong"
                         else ->{
-                            errorMessage.value = t.message
+                            errorMessage.value = "Something went wrong"
                         }
                     }
 

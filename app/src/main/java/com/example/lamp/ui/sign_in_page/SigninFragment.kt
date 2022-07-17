@@ -77,7 +77,7 @@ class SigninFragment : Fragment() {
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) {
             it?.let {
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
         }
         viewModel.test.observe(viewLifecycleOwner) {

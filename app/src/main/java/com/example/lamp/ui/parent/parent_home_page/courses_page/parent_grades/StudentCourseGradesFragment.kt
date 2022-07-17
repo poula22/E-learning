@@ -69,32 +69,23 @@ class StudentCourseGradesFragment : Fragment() {
         viewBinding.assignmentsRv.adapter = assignmentsGradesAdapter
         viewBinding.quizzesRv.adapter = quizzesGradesAdapter
 
-//        for (i in assignmentsGradesAdapter.assignmentsGrades!!.indices) {
-//            assignmentCount += assignmentsGradesAdapter.assignmentsGrades!!.get(i).assignedGrade!!
-//            counter++
-//        }
-//        for (i in quizzesGradesAdapter.quizzesGrades!!.indices) {
-//            quizCount += quizzesGradesAdapter.quizzesGrades!!.get(i).grade!!
-//            counter++
-//        }
-//        var overallCount = assignmentCount + quizCount
-//        var overallGrades = 0
-//        if (counter != 0) {
-//            overallGrades = overallCount / counter
-//        } else {
-//            overallGrades = 0
-//        }
-//        // overall grades equals sum of assignments and quizzes grades divided by items count
-//
-//        if (overallGrades == 0) {
-//            viewBinding.overallPercentageProgress.visibility = View.GONE
-//            viewBinding.overallPercentageTxt.text = "No grades"
-//        } else {
-//            viewBinding.overallPercentageTxt.text = "$overallGrades%"
-//            viewBinding.overallPercentageProgress.progress = overallGrades
-//        }
-
-
+//         overall grades equals sum of assignments and quizzes grades divided by items count
+        val overallGrades =
+            (assignmentsGradesAdapter.assignmentsGrades?.sumOf {
+                it.assignedGrade?.div(it.totalPoints!!)?.times(100)!!
+            }
+                    )?.plus((quizzesGradesAdapter.quizzesGrades?.sumOf {
+                    it.assignedGrade?.div(it.totalPoints!!)?.times(100)!!
+                }!!))
+        val itemsCount = (assignmentsGradesAdapter.assignmentsGrades?.size
+                )?.plus((quizzesGradesAdapter.quizzesGrades?.size!!))
+        if (itemsCount == 0 || overallGrades == null) {
+            viewBinding.overallPercentageProgress.visibility = View.GONE
+            viewBinding.overallPercentageTxt.text = "No grades"
+        } else {
+            var overall = overallGrades.div(itemsCount!!)
+            viewBinding.overallPercentageTxt.text = overall.toString()
+        }
     }
 
 

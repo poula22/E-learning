@@ -1,5 +1,6 @@
 package com.example.data.api
 
+import com.example.data.model.NewQuizResponse
 import com.example.data.model.QuizResponse
 import com.example.domain.model.QuizResponseDTO
 import retrofit2.http.*
@@ -27,7 +28,7 @@ interface QuizWebServiceForGrades {
     suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
         @Path("courseId") courseId: Int,
         @Path("studentId") studentId: Int
-    ): List<QuizResponse>
+    ): List<NewQuizResponse>
 
 
 }

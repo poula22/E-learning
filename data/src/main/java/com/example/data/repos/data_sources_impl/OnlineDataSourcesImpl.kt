@@ -7,7 +7,6 @@ import com.example.data.data_classes.URLOCR
 import com.example.data.model.AssignmentResponse
 import com.example.data.model.convertTo
 import com.example.domain.model.*
-import com.example.domain.repos.QuizForGradeOnlineDataSource
 import com.example.domain.repos.data_sources.*
 import com.microsoft.azure.cognitiveservices.vision.computervision.implementation.ComputerVisionImpl
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadHeaders
@@ -312,11 +311,11 @@ class AssignmentOnlineDataSourceImpl(
     override suspend fun getAssignmentGradesByCourseIdByStudentIdForTeacher(
         courseId: Int,
         studentId: Int
-    ): List<AssignmentResponseDTO> {
+    ): List<NewAssignmentResponseDTO> {
         try {
             val response =
                 service.getAssignmentGradesByCourseIdByStudentIdForTeacher(courseId, studentId)
-            return response.map { it.convertTo(AssignmentResponseDTO::class.java) }
+            return response.map { it.convertTo(NewAssignmentResponseDTO::class.java) }
         } catch (throwable: Throwable) {
             throw throwable
         }
@@ -1085,11 +1084,11 @@ class QuizForGradeOnlineDataSourceImpl(val service :QuizWebServiceForGrades): Qu
         override suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
             courseId: Int,
             studentId: Int
-        ): List<QuizResponseDTO> {
+        ): List<NewQuizResponseDTO> {
             try {
                 val response =
                     service.getQuizGradesByCourseIdAndStudentIdForTeacher(courseId, studentId)
-                return response.map { it.convertTo(QuizResponseDTO::class.java) }
+                return response.map { it.convertTo(NewQuizResponseDTO::class.java) }
             } catch (throwable: Throwable) {
                 throw throwable
             }

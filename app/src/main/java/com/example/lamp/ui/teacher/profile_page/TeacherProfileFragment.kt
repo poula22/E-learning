@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common_functions.CONSTANTS
 import com.example.common_functions.ExternalStorageAccessFragment
@@ -17,20 +16,21 @@ import com.example.domain.model.UserResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherProfileBinding
 import com.example.lamp.ui.sign_in_page.SigninFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 
-class TeacherProfileFragment : ExternalStorageAccessFragment(){
+class TeacherProfileFragment : ExternalStorageAccessFragment() {
     lateinit var viewBinding: FragmentTeacherProfileBinding
     lateinit var viewModel: TeacherProfileViewModel
-    var email:String?=null
-    var role:String?=null
-    var profilePictuerURL:String?=null
+    var email: String? = null
+    var role: String? = null
+    var profilePictuerURL: String? = null
     override fun showProgressBar() {
 
     }
 
     override fun resultListener(byteArray: ByteArray) {
-        val file= filePath?.let {
+        val file = filePath?.let {
             File(it)
         }
         filePath?.let {
@@ -45,7 +45,7 @@ class TeacherProfileFragment : ExternalStorageAccessFragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel=ViewModelProvider(this).get(TeacherProfileViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TeacherProfileViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -75,7 +75,7 @@ class TeacherProfileFragment : ExternalStorageAccessFragment(){
         }
 
         viewBinding.editProfileSubmit.setOnClickListener {
-            val user= UserResponseDTO(
+            val user = UserResponseDTO(
                 viewBinding.firstName.editText?.text.toString(),
                 viewBinding.lastName.editText?.text.toString(),
                 email,
@@ -90,34 +90,38 @@ class TeacherProfileFragment : ExternalStorageAccessFragment(){
         }
         viewBinding.logout.setOnClickListener {
             viewModel.logOut()
-            requireActivity().supportFragmentManager.beginTransaction().replace(this.id ,
+            requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.teacher_fragment_tab,
                 SigninFragment()
             ).commit()
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).visibility =
+                View.GONE
+
         }
     }
 
     private fun updateUserInfo(user: UserResponseDTO) {
-        viewModel.updateUserInfo(CONSTANTS.user_id,user)
+        viewModel.updateUserInfo(CONSTANTS.user_id, user)
     }
 
     private fun subscribeToLiveData() {
-        viewModel.liveData.observe(viewLifecycleOwner){
+        viewModel.liveData.observe(viewLifecycleOwner) {
             viewBinding.firstName.editText?.setText(it.firstName)
             viewBinding.lastName.editText?.setText(it.lastName)
             viewBinding.phone.editText?.setText(it.phone)
-            email=it.emailAddress
-            role=it.role
-            profilePictuerURL=it.profilePic
+            email = it.emailAddress
+            role = it.role
+            profilePictuerURL = it.profilePic
             viewModel.getImage(it.profilePic.toString())
 //            viewBinding.roundedProfile.setBackgroundResource(it.profilePic)
         }
-        viewModel.errorMessage.observe(viewLifecycleOwner){
-            Log.v("ProfileFragment::",it)
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            Log.v("ProfileFragment::", it)
         }
-        viewModel.testLiveData.observe(viewLifecycleOwner){
+        viewModel.testLiveData.observe(viewLifecycleOwner) {
             viewBinding.roundedImageView.setImageBitmap(BitmapFactory.decodeStream(it.byteStream()))
         }
-        viewModel.userUpdateLiveData.observe(viewLifecycleOwner){
+        viewModel.userUpdateLiveData.observe(viewLifecycleOwner) {
             viewModel.getUserInfo()
         }
     }

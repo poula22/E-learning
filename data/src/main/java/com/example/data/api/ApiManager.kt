@@ -23,7 +23,7 @@ class ApiManager {
             .build()
 
         private val unSafeClient = getUnsafeOkHttpClient()?.addInterceptor(logging)?.build()
-        private const val BASEURL_BACKEND: String = "https://25.70.83.232:7097/"
+        private const val BASEURL_BACKEND: String = "https://192.168.8.186:7070/"
         //192.168.8.186:7097/
         //25.70.83.232:7097/
         private const val BASEURL_OCR: String = "https://eastus.api.cognitive.microsoft.com/"

@@ -66,8 +66,12 @@ class TeacherCourseGradesFragment(
 
 //         overall grades equals sum of assignments and quizzes grades divided by items count
         val overallGrades =
-            (assignmentsGradesAdapter.assignmentsGrades?.sumOf { it.grade!! }
-                    )?.plus((quizzesGradesAdapter.quizzesGrades?.sumOf { it.grade!! }!!))
+            (assignmentsGradesAdapter.assignmentsGrades?.sumOf {
+                it.assignedGrade?.div(it.totalPoints!!)?.times(100)!!
+            }
+                    )?.plus((quizzesGradesAdapter.quizzesGrades?.sumOf {
+                    it.assignedGrade?.div(it.totalPoints!!)?.times(100)!!
+                }!!))
         val itemsCount = (assignmentsGradesAdapter.assignmentsGrades?.size
                 )?.plus((quizzesGradesAdapter.quizzesGrades?.size!!))
         if (itemsCount == 0 || overallGrades == null) {

@@ -15,6 +15,7 @@ import com.example.domain.model.UserResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentProfileBinding
 import com.example.lamp.ui.sign_in_page.SigninFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 
 class ProfileFragment : ExternalStorageAccessFragment() {
@@ -110,9 +111,11 @@ class ProfileFragment : ExternalStorageAccessFragment() {
         }
         viewBinding.logout.setOnClickListener {
             viewModel.logOut()
-            requireActivity().supportFragmentManager.beginTransaction().replace(this.id ,
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.parent_fragment_tab ,
                 SigninFragment()
             ).commit()
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).visibility = View.GONE
+
         }
     }
 }

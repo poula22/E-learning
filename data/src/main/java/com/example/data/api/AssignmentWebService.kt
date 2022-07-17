@@ -2,6 +2,7 @@ package com.example.data.api
 
 import com.example.data.model.AssignmentDetailsResponse
 import com.example.data.model.AssignmentResponse
+import com.example.data.model.NewAssignmentResponse
 import com.example.domain.model.AssignmentResponseDTO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -48,7 +49,7 @@ interface AssignmentWebService {
     suspend fun getAssignmentGradesByCourseIdByStudentIdForTeacher(
         @Path("courseId") courseId: Int,
         @Path("studentId") studentId: Int
-    ): List<AssignmentResponse>
+    ): List<NewAssignmentResponse>
 
 
 }

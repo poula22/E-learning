@@ -101,7 +101,7 @@ class TeacherCoursesFragment : Fragment() {
             it.courseImage?.let { it1 ->
                 i.add(it.id!!)
                 mapOfCourses.put(it.id!!,null)
-                viewModel.getImage(it1)
+//                viewModel.getImage(it1)
             }
         }
 

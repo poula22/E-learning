@@ -17,18 +17,7 @@ interface OCRRepository {
     ): ReadOperationResult
 }
 
-interface QuizForGradeOnlineDataSource{
-    suspend fun getAllQuizzes(): List<QuizResponseDTO>
-    suspend fun createQuiz(quiz: QuizResponseDTO): QuizResponseDTO
-    suspend fun getQuizById(id: Int): QuizResponseDTO
-    suspend fun updateQuiz(id: Int, quiz: QuizResponseDTO): QuizResponseDTO
-    suspend fun deleteQuiz(id: Int)
-    suspend fun getQuizzesByCourseId(courseId: Int): List<QuizResponseDTO>
-    suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
-        courseId: Int,
-        studentId: Int
-    ): List<QuizResponseDTO>
-}
+
 
 interface TodoRepository {
     fun addTodo(todo: TodoDTO)

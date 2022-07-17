@@ -17,6 +17,7 @@ import com.example.lamp.databinding.FragmentParentHomeBinding
 import com.example.lamp.ui.parent.parent_home_page.children_recycler_view.ChildrenAdapter
 import com.example.lamp.ui.parent.parent_home_page.courses_page.CoursesFragment
 import com.example.lamp.ui.parent.parent_home_page.courses_page.parent_grades.StudentCourseGradesFragment
+import java.util.regex.Pattern
 
 class HomeFragment : Fragment() {
     lateinit var viewBinding: FragmentParentHomeBinding
@@ -70,6 +71,7 @@ class HomeFragment : Fragment() {
         var student =
             ParentStudentRequestDTO(viewBinding.email.editText?.text.toString(), CONSTANTS.user_id)
         viewBinding.addChildBtn.setOnClickListener {
+            if(viewBinding.email.editText?.text.toString().isNotEmpty()){
             for (i in sentRequests) {
                 if (i == student.studentEmail) {
                     Toast.makeText(context, "Pending student verification", Toast.LENGTH_SHORT)
@@ -78,6 +80,15 @@ class HomeFragment : Fragment() {
                     sentRequests.add(student.studentEmail)
                     viewModel.verifyStudentRequest(student)
                 }
+            }
+            }else if (!Pattern.matches(
+                    "(?:[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
+                    viewBinding.email.editText?.text.toString()
+                )
+            ) {
+                viewBinding.email.error = "Incorrect email address"
+            } else {
+                viewBinding.email.error = null
             }
         }
 

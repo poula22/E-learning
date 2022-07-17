@@ -6,10 +6,11 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.AssignmentDetailsResponseDTO
+import com.example.domain.model.NewAssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemGradeBinding
 
-class AssignmentsGradesAdapter(var assignmentsGrades: List<AssignmentDetailsResponseDTO>? = null) :
+class AssignmentsGradesAdapter(var assignmentsGrades: List<NewAssignmentResponseDTO>? = null) :
     RecyclerView.Adapter<AssignmentsGradesAdapter.AssignmentsGradesViewHolder>() {
 
     lateinit var viewBinding: ItemGradeBinding
@@ -35,9 +36,12 @@ class AssignmentsGradesAdapter(var assignmentsGrades: List<AssignmentDetailsResp
         var assignmentGrade = assignmentsGrades?.get(position)
         holder.viewBinding.title.text = assignmentGrade?.title.toString()
         if (assignmentGrade?.assignedGrade != null) {
-            holder.viewBinding.percentageTxt.text = assignmentGrade.assignedGrade.toString() + "%"
+            holder.viewBinding.percentageTxt.text =
+                assignmentGrade.assignedGrade!!.div(assignmentGrade.totalPoints!!).times(100)
+                    .toString() + "%"
             holder.viewBinding.progressPercentage.progress =
-                assignmentGrade.assignedGrade!!.toInt() //TODO: divide by todo * 100
+                assignmentGrade.assignedGrade!!.div(assignmentGrade.totalPoints!!).times(100)
+                    .toString().toInt()
             holder.viewBinding.notGraded.isVisible = false
         } else {
             holder.viewBinding.notGraded.isVisible = true
@@ -52,7 +56,7 @@ class AssignmentsGradesAdapter(var assignmentsGrades: List<AssignmentDetailsResp
 
     }
 
-    fun changeData(assignmentsGrades: List<AssignmentDetailsResponseDTO>) {
+    fun changeData(assignmentsGrades: List<NewAssignmentResponseDTO>) {
         this.assignmentsGrades = assignmentsGrades
         notifyDataSetChanged()
     }

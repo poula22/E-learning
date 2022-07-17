@@ -1,5 +1,6 @@
 package com.example.data.api
 
+import com.example.data.model.NewQuizResponse
 import com.example.data.model.QuizResponse
 import com.example.data.model.TeacherQuizResponse
 import com.example.domain.model.QuizResponseDTO
@@ -26,5 +27,9 @@ interface QuizWebService {
     @GET("api/Quizes/GetQuizzesByCourseId/{courseId}")
     suspend fun getQuizzesByCourseId(@Path("courseId") courseId: Int): List<TeacherQuizResponse>
 
-
+    @GET("api/Quizes/GetQuizGrades/ByCourseId/ByStudentId/ForTeacher/{courseId}/{studentId}")
+    suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
+        @Path("courseId") courseId: Int,
+        @Path("studentId") studentId: Int
+    ): List<NewQuizResponse>
 }
