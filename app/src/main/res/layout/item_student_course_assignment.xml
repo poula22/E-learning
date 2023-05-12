@@ -7,97 +7,73 @@
 
         <variable
             name="item"
-            type="com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem" />
+            type="com.example.domain.model.AssignmentDetailsResponseDTO" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item_assignment_constrain_layout"
+    <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp">
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="10dp">
 
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{item.title}"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toStartOf="@+id/deadline"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Assignment Title" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="2dp"
-            android:layout_height="30dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/deadline"
-            app:layout_constraintStart_toEndOf="@+id/title"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/deadline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{String.valueOf(item.deadline.date)+String.valueOf('/')+String.valueOf(item.deadline.month+1)+String.valueOf('/')+String.valueOf(item.deadline.year+1900)}"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toStartOf="@+id/state"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/title"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Deadline" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="2dp"
-            android:layout_height="30dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/state"
-            app:layout_constraintStart_toEndOf="@+id/deadline"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{item.state}"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toStartOf="@+id/grade"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/deadline"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="State" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="2dp"
-            android:layout_height="30dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/grade"
-            app:layout_constraintStart_toEndOf="@+id/state"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/grade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{String.valueOf(item.grade)}"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/state"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Grade" />
-
-        <com.google.android.material.divider.MaterialDivider
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_assignment_constrain_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            android:layout_height="wrap_content">
 
-            />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.title}"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toStartOf="@+id/deadline"
+                app:layout_constraintHorizontal_weight="1.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Assignment" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/deadline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.endTime.substring(0,10)}"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toStartOf="@+id/state"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/title"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Deadline" />
+
+
+            <TextView
+                android:id="@+id/state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.submitted.toString()}"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toStartOf="@+id/grade"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/deadline"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="State" />
+
+            <TextView
+                android:id="@+id/grade"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(item.assignedGrade)}"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="0.5"
+                app:layout_constraintStart_toEndOf="@+id/state"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Grade" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
 </layout>

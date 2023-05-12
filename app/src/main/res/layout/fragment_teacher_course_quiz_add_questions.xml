@@ -11,9 +11,9 @@
         android:id="@+id/quizedit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ececec">
+        android:padding="10dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/create_question_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,8 +22,8 @@
             android:clickable="true"
             android:contentDescription="Add"
             android:focusable="true"
-            android:src="@android:drawable/ic_input_add"
-            android:tint="@android:color/white"
+            android:text="Add Question"
+            app:icon="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -38,43 +38,102 @@
             app:layout_constraintTop_toTopOf="parent"
             app:titleTextColor="@android:color/white" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/quiz_edit_quiz_title"
-            android:layout_width="0dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:ems="10"
-            android:hint="Quiz Title"
-            android:inputType="textPersonName"
+            android:hint="Quiz Name"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeWidth="1dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+
+            <EditText
+                android:id="@+id/quiz_title_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <EditText
+            android:id="@+id/grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginStart="15dp"
+            android:hint="grade"
+            app:layout_constraintStart_toEndOf="@id/quiz_edit_quiz_title"
+            app:layout_constraintBottom_toBottomOf="@id/quiz_edit_quiz_title"
+            app:layout_constraintTop_toTopOf="@id/quiz_edit_quiz_title"
+            />
         <TextView
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="save"
+            android:text="Save"
             android:textColor="#CE007BFF"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/quiz_instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:gravity="start"
+
             android:hint="Instructions"
-            android:lines="3"
-            android:maxLines="5"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeWidth="1dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quiz_edit_quiz_title" />
+            app:layout_constraintTop_toBottomOf="@+id/quiz_edit_quiz_title">
+
+            <EditText
+                android:id="@+id/quiz_instructions_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:lines="3"
+                android:maxLines="5" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/quiz_start_date"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="start date"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeWidth="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quiz_instructions">
+
+
+        <EditText
+            android:id="@+id/quiz_start_date_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginStart="15dp"
+            android:hint="duration in min"
+            app:layout_constraintStart_toEndOf="@id/quiz_start_date"
+            app:layout_constraintBottom_toBottomOf="@id/quiz_start_date"
+            app:layout_constraintTop_toTopOf="@id/quiz_start_date"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/quiz_edit_questions_list"
@@ -88,7 +147,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quiz_instructions"
+            app:layout_constraintTop_toBottomOf="@id/quiz_start_date"
             tools:listitem="@layout/item_teacher_course_quiz_create_question">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -101,7 +160,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quiz_instructions">
+            app:layout_constraintTop_toBottomOf="@+id/quiz_start_date">
 
             <LinearLayout
                 android:id="@+id/create_question_layout"

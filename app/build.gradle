@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -43,52 +44,79 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation project(path: ':domain')
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation project(path: ':data')
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
+    implementation 'com.hierynomus:smbj:0.11.5'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
 
+    //
 
     //google cloud vision api dep
-    implementation platform('com.google.cloud:libraries-bom:25.3.0')
+    implementation platform('com.google.cloud:libraries-bom:25.4.0')
     implementation 'com.google.cloud:google-cloud-vision'
     implementation 'com.google.cloud:google-cloud-storage'
     ///////////////////////////////
-    implementation 'com.microsoft.cognitiveservices.speech:client-sdk:1.21.0'
+    implementation 'com.microsoft.cognitiveservices.speech:client-sdk:1.22.0'
     /////////////////////////////////
     implementation 'com.microsoft.projectoxford:vision:1.0.395'
     implementation 'com.microsoft.azure.cognitiveservices:azure-cognitiveservices-computervision:1.0.9-beta'
 
-    implementation platform('software.amazon.awssdk:bom:2.17.201')
-    implementation 'com.amplifyframework:aws-api:1.36.0-dev-preview.0'
-    implementation 'com.amplifyframework:aws-datastore:1.36.0-dev-preview.0'
+//    implementation platform('software.amazon.awssdk:bom:2.17.215')
+//    implementation 'com.amplifyframework:aws-api:1.36.5-dev-preview.0'
+//    implementation 'com.amplifyframework:aws-datastore:1.36.5-dev-preview.0'
     ////////////////////////////////////////////////////////////
-    implementation ('com.github.prolificinteractive:material-calendarview:2.0.0'){
-        exclude( group :"org.threeten", module: "threetenbp")
+    implementation('com.github.prolificinteractive:material-calendarview:2.0.0') {
+        exclude(group: "org.threeten", module: "threetenbp")
     }
     ///////////////////////////////////////////////////////////////
 //    implementation 'com.github.jkwiecien:EasyImage:3.2.0'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
-    implementation 'androidx.fragment:fragment-ktx:1.4.1'
-    implementation 'androidx.activity:activity-ktx:1.4.0'
+    implementation 'androidx.fragment:fragment-ktx:1.5.0'
+    implementation 'androidx.activity:activity-ktx:1.5.0'
 
 /////////
     implementation 'com.github.arhanashik:LinkPreview:1.2.3'
 
 //    implementation 'com.github.afreakyelf:Pdf-Viewer:v1.0.7'
 
-
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
+
+    implementation 'com.github.akshaaatt:Onboarding:1.0.3'
+
+//
+    implementation 'nl.dionsegijn:konfetti-xml:2.0.2'
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+
+    // Declare the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+//    implementation 'com.github.zerobranch:SwipeLayout:1.3.1'
+
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+//    //glide
+//    implementation 'com.github.bumptech.glide:glide:4.13.2'
+//    kapt 'com.github.bumptech.glide:compiler:4.13.2'
+//    implementation 'com.github.bumptech.glide:okhttp3-integration:4.13.2'
+//
+    implementation 'com.squareup.picasso:picasso:2.8'
+
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "736686986561",
+    "project_id": "lampit",
+    "storage_bucket": "lampit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736686986561:android:43d3682e51f024a432bdc0",
+        "android_client_info": {
+          "package_name": "com.example.lamp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736686986561-ohl3op1u23s1jfmolj895onrmloa04de.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVD3NJ3gBGvtsbcIECZHFTMwthvonoPLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736686986561-ohl3op1u23s1jfmolj895onrmloa04de.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

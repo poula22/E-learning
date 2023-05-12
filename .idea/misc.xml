@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable-anydpi/ic_edit_text.xml" value="0.1505" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/gradient_1.xml" value="0.1435" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/gradient_2.xml" value="0.1435" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/gradient_3.xml" value="0.1435" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/gradient_4.xml" value="0.1435" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_add.xml" value="0.1175" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_add_child.xml" value="0.1505" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.1405" />
@@ -12,6 +16,7 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_courses.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_features.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_home.xml" value="0.1615" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_menu.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_menu_camera.xml" value="0.1505" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.1505" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.1505" />
@@ -19,15 +24,24 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_students.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_tools.xml" value="0.1615" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/ic_websites.xml" value="0.1615" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/lamp1.xml" value="0.146" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/lamp_background.xml" value="0.146" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_btn_green.xml" value="0.146" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_button.xml" value="0.1505" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_frame.xml" value="0.1505" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_frame_green.xml" value="0.1345" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_frame_yellow.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_text.xml" value="0.1505" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/rounded_transparent.xml" value="0.146" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/drawable/side_nav_bar.xml" value="0.1505" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/activity_main.xml" value="0.12613981762917933" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/activity_onboarding.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/activity_quiz_student.xml" value="0.2578125" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/activity_quiz_teacher.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/activity_splash_screen.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/app_bar_student_course_container.xml" value="0.165625" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/app_bar_teacher_course_container.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fireworks.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_add_todo.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_feature_ocr.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_feature_recitation.xml" value="0.25885416666666666" />
@@ -36,63 +50,84 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_feature_recite_words.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_feature_recite_words_bottom_sheet.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_feature_recite_words_check.xml" value="0.25885416666666666" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_feature_summarization.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_feature_summarization.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_feature_translation.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_home.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_parent_children.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_parent_communicate.xml" value="0.14402173913043478" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_parent_container_all_tabs.xml" value="0.25905797101449274" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_parent_courses.xml" value="0.10405348934391977" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_parent_home.xml" value="0.10405348934391977" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_parent_home.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_recite_words_bottom_sheet.xml" value="0.259375" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_recite_words_check.xml" value="0.259375" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_signin.xml" value="0.12613981762917933" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_sign_up.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_signin.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_container_all_tabs.xml" value="0.259375" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_assignment.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_assignment_submit.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_container.xml" value="0.165625" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_details.xml" value="0.25885416666666666" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_courses.xml" value="0.10405348934391977" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_grades.xml" value="0.153125" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_grades_content.xml" value="0.16302083333333334" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_course_material.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_courses.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_features.xml" value="0.115625" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_profile.xml" value="0.13489583333333333" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_home.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_profile.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_quiz.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_quiz_finished_stats.xml" value="0.165625" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_student_websites.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_add_course.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_container_all_tabs.xml" value="0.1828125" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_add_assignment.xml" value="0.25885416666666666" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_add_section.xml" value="0.16" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_add_section.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_assignment.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_container.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_dashboard.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_details.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_grades.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_grades_student_content.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_grades_students.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_material.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_material_grades.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_quiz_add_questions.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_quiz_create.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_quiz_edit.xml" value="0.1578125" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_quizzes.xml" value="0.2" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_settings.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_settings.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_course_students.xml" value="0.2006340579710145" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_courses.xml" value="0.25905797101449274" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_home.xml" value="0.2129115006412997" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_profile.xml" value="0.17083333333333334" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_quiz_create.xml" value="0.16666666666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_students.xml" value="0.2129115006412997" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_tools.xml" value="0.2129115006412997" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/fragment_teacher_tools.xml" value="0.1271393643031785" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/ic_communicate.xml" value="0.2129115006412997" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_feature_recite_words.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_feature_recite_words_check.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_grade.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_language.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_onboarding.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_child.xml" value="0.25885416666666666" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_communicate.xml" value="0.10405348934391977" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_course.xml" value="0.10405348934391977" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_assignment.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_communicate.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_parent_course.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_assignment.xml" value="0.4" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_material.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_material_lesson_content.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_quiz_card.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_quiz_question.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_quiz_question_answer.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_quiz_question_card.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_course_quiz_question_indicator.xml" value="0.2" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_courses.xml" value="0.10405348934391977" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_home_course_rv.xml" value="0.10405348934391977" />
-        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_home_feature_rv.xml" value="0.10405348934391977" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_courses.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_feature.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_home_course_rv.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_home_feature_rv.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_student_websites.xml" value="0.2129115006412997" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_assignments_from_students.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_assignment.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_grades.xml" value="0.25885416666666666" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_material.xml" value="0.12588652482269502" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_material_lesson_content.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_quiz.xml" value="0.1578125" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_quiz_card.xml" value="0.25885416666666666" />
@@ -102,9 +137,11 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_quiz_question.xml" value="0.15677083333333333" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_course_quiz_question_answer.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_quiz_question_answer.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_student_grade.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/item_teacher_students.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/items_student_feature.xml" value="0.10405348934391977" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/nav_header_teacher_course_details.xml" value="0.23731884057971014" />
+        <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/no_internet.xml" value="0.25885416666666666" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/layout/recyclerview_todo_item.xml" value="0.17083333333333334" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/activity_main_drawer.xml" value="0.259375" />
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/fragment_nav_drawer.xml" value="0.2553846153846154" />
@@ -119,29 +156,35 @@
         <entry key="..\:/AndroidStudioProjects/E-learning/app/src/main/res/menu/teacher_nav_drawer.xml" value="0.25885416666666666" />
         <entry key="..\:/Android_Studio/.gradle/caches/transforms-3/6d013df5b22d785a9ce7e0717098ae99/transformed/android-rteditor-1.7.6/res/layout/rte_toolbar_character.xml" value="0.25885416666666666" />
         <entry key="..\:/Android_Studio/.gradle/caches/transforms-3/6d013df5b22d785a9ce7e0717098ae99/transformed/android-rteditor-1.7.6/res/layout/rte_toolbar_paragraph.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_courses.xml" value="0.1085" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_done.xml" value="0.191" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_edit.xml" value="0.1085" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.121" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_menu.xml" value="0.152" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/ic_upload.xml" value="0.1415" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/rounded_button.xml" value="0.125" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/rounded_text.xml" value="0.1275" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/drawable/rounded_triangle.xml" value="0.125" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout-w1240dp/activity_signin.xml" value="0.152" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout-w936dp/activity_signin.xml" value="0.136" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/activity_main.xml" value="0.24074074074074073" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/activity_signin.xml" value="0.2" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/app_bar_student_course_container.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/app_bar_teacher_course_container.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fireworks.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_container.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_container_all_tabs.xml" value="0.176" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_feature_ocr.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_feature_recite_paragraph_check.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_feature_recite_words.xml" value="0.1" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_feature_summarization.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_feature_translation.xml" value="0.176" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_parent_children.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_parent_communicate.xml" value="0.25" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_parent_container_all_tabs.xml" value="0.25" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_parent_container_all_tabs.xml" value="0.24074074074074073" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_parent_courses.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_parent_home.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_recite_paragraph.xml" value="0.25" />
@@ -149,36 +192,50 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_recite_words.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_recite_words_bottom_sheet.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_recite_words_check.xml" value="0.24615384615384617" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_sign_up.xml" value="0.152" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_sign_up.xml" value="0.2" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_signin.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_container_all_tabs.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_assignment.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_assignment_submit.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_assignment_submit.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_container.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_details.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_grades.xml" value="0.2453125" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_grades_content.xml" value="0.152" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_material.xml" value="0.2" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_course_quizzes.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_courses.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_features.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_home.xml" value="0.264" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_quiz.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_profile.xml" value="0.2339622641509434" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_quiz.xml" value="0.23048327137546468" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_quiz_finished_stats.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_student_websites.xml" value="0.25" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_add_course.xml" value="0.25" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_add_course.xml" value="0.23938223938223938" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_assignments_from_students.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_container_all_tabs.xml" value="0.25" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_add_assignment.xml" value="0.264" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_container_all_tabs.xml" value="0.24074074074074073" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_add_assignment.xml" value="0.22426470588235295" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_add_section.xml" value="0.2453125" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_assignment.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_container.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_dashboard.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_details.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_edit_material.xml" value="0.2484375" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_grades.xml" value="0.2453125" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_grades_student_content.xml" value="0.12" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_grades_students.xml" value="0.2453125" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_homework.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_material.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_material.xml" value="0.176" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_quiz_add_questions.xml" value="0.2453125" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_quizzes.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_settings.xml" value="0.2453125" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_course_students.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_courses.xml" value="0.25" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_courses.xml" value="0.24124513618677043" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_home.xml" value="0.25" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_profile.xml" value="0.264" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_profile.xml" value="0.16" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_students.xml" value="0.25" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_tools.xml" value="0.25" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_teacher_tools.xml" value="0.22962962962962963" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/fragment_video_full_screen.xml" value="0.2484375" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_course_grade.xml" value="0.2453125" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_course_rv.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_feature_recite_words.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_feature_rv.xml" value="0.264" />
@@ -187,12 +244,13 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_parent_course.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_recite_word_check.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_assignment.xml" value="0.2" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_material.xml" value="0.2453125" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_material_lesson_content.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_quiz_card.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_quiz_question_answer.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_quiz_question_card.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_course_quiz_question_card.xml" value="0.23938223938223938" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_courses.xml" value="0.25" />
-        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_home_course_rv.xml" value="0.25" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_home_course_rv.xml" value="0.2" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_home_feature_rv.xml" value="0.264" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_recite_words.xml" value="0.109375" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_student_websites.xml" value="0.25" />
@@ -206,16 +264,22 @@
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_teacher_course_quiz_question_answer.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/item_teacher_students.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/items_student_feature.xml" value="0.16" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/nav_header_teacher_course_details.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/layout/pdf_viewer.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/home_navigation_menu.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/parent_bottom_navigation_menu.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/student_bottom_navigation_menu.xml" value="0.25" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/teacher_bottom_navigation_menu.xml" value="0.25" />
+        <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/menu/teacher_nav_drawer.xml" value="0.23265306122448978" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1535" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1535" />
         <entry key="..\:/Users/nvenr/AndroidStudioProjects/Lamp/data/src/main/res/layout/activity_main.xml" value="0.152" />
       </map>
     </option>
+  </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Desktop" />
+    <option name="OPTION_SCOPE" value="public" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

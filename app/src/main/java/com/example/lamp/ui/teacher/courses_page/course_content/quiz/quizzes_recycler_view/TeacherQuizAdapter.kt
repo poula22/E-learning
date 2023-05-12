@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.QuizResponseDTO
+import com.example.domain.model.TeacherQuizResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizCardBinding
 
-class TeacherQuizAdapter(var quizzes: MutableList<QuizItem>? = null) :
+class TeacherQuizAdapter(var quizzes: MutableList<TeacherQuizResponseDTO>? = null) :
     RecyclerView.Adapter<TeacherQuizAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,8 +26,9 @@ class TeacherQuizAdapter(var quizzes: MutableList<QuizItem>? = null) :
         var quiz = quizzes?.get(position)
         holder.viewBinding.item = quiz
         holder.viewBinding.createQuizDeleteQuiz.setOnClickListener{
-            quizzes?.remove(quiz)
-//            notifyDataSetChanged()
+            if (quiz != null) {
+                onEditQuizListener?.onDeleteQuiz(quiz)
+            }
         }
         holder.viewBinding.createQuizEditQuiz.setOnClickListener{
             onEditQuizListener?.onEditQuiz(quiz!!)
@@ -35,10 +38,16 @@ class TeacherQuizAdapter(var quizzes: MutableList<QuizItem>? = null) :
     var onEditQuizListener:OnEditQuizListener?=null
 
     interface OnEditQuizListener{
-        fun onEditQuiz(quiz:QuizItem)
+        fun onEditQuiz(quiz:TeacherQuizResponseDTO)
+        fun onDeleteQuiz(quiz:TeacherQuizResponseDTO)
     }
 
     override fun getItemCount(): Int = quizzes?.size ?: 0
+    fun changeData(quizList: List<TeacherQuizResponseDTO>?) {
+        quizzes?.clear()
+        quizzes=quizList?.toMutableList()
+        notifyDataSetChanged()
+    }
 
     class ViewHolder(val viewBinding: ItemTeacherCourseQuizCardBinding) :
         RecyclerView.ViewHolder(viewBinding.root)

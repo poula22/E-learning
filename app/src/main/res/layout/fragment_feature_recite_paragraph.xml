@@ -42,7 +42,6 @@
                 android:layout_height="wrap_content"
                 android:text="Recite from:"
                 android:textSize="20dp"
-
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -121,8 +120,8 @@
                 android:id="@+id/text_input"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:hint="recite here"
-
+                android:layout_marginTop="10dp"
+                android:hint="Recite here"
                 android:scrollbars="vertical"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="outline"
@@ -130,7 +129,6 @@
                 app:boxCornerRadiusBottomStart="20dp"
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
-                app:boxStrokeWidth="3dp"
                 app:hintTextColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/card_voice">
 
@@ -142,13 +140,15 @@
                     android:lines="12" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_recite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/light_rose"
                 android:scrollbars="vertical"
-                android:text="recite"
+                android:text="Recite"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_input" />

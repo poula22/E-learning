@@ -5,20 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.CONSTANTS
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherAddCourseBinding
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
     lateinit var teacherAddCourseBinding: FragmentTeacherAddCourseBinding
+    lateinit var viewModel: TeacherAddCourseViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        teacherAddCourseBinding = DataBindingUtil.inflate<FragmentTeacherAddCourseBinding>(
+        teacherAddCourseBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_teacher_add_course,
             container,
@@ -27,37 +30,45 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
         return teacherAddCourseBinding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(TeacherAddCourseViewModel::class.java)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
     }
 
-    fun initViews() {
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner){
+            onCourseAddedListener?.OnAddCourse()
+            dismiss()
+        }
+    }
 
+    fun initViews() {
         teacherAddCourseBinding.addCourseBtn.setOnClickListener {
             if (validateForm()) {
-                val teacherName =
-                    teacherAddCourseBinding.teacherNameLayout.editText?.text.toString()
                 val courseName = teacherAddCourseBinding.courseNameLayout.editText?.text.toString()
-                val courseCode = teacherAddCourseBinding.codeLayout.editText?.text.toString()
                 val description =
                     teacherAddCourseBinding.descriptionLayout.editText?.text.toString()
-                val courseImageId = R.drawable.login
-                val startDate = "2020-01-01"
-                val endDate = "2020-01-01"
-                val course =
-                    CourseItem(
-                        courseName,
-                        teacherName,
-                        courseCode,
-                        description,
-                        courseImageId,
-                        startDate,
-                        endDate
+                val courseImageId = R.drawable.login //???
+//                val startDate = "2020-01-01"
+//                val endDate = "2020-01-01"
+                val courseDTO =
+                    CourseResponseDTO(
+                        courseName,"",CONSTANTS.user_id,null, description
                     )
-                dismiss()
+                addCourse(courseDTO)
+
             }
         }
+    }
+
+    private fun addCourse(courseDTO: CourseResponseDTO) {
+        viewModel.AddCourse(courseDTO)
     }
 
     fun validateForm(): Boolean {
@@ -68,25 +79,17 @@ class TeacherAddCoursesBottomSheet : BottomSheetDialogFragment() {
         } else {
             teacherAddCourseBinding.courseNameLayout.error = null
         }
-        if (teacherAddCourseBinding.codeLayout.editText?.text.toString().isBlank()) {
-            teacherAddCourseBinding.codeLayout.error = "please enter todo details"
-            isValid = false
-        } else {
-            teacherAddCourseBinding.codeLayout.error = null
-        }
         if (teacherAddCourseBinding.descriptionLayout.editText?.text.toString().isBlank()) {
             teacherAddCourseBinding.descriptionLayout.error = "please enter todo details"
             isValid = false
         } else {
             teacherAddCourseBinding.descriptionLayout.error = null
         }
-        if (teacherAddCourseBinding.teacherNameLayout.editText?.text.toString().isBlank()) {
-            teacherAddCourseBinding.teacherNameLayout.error = "please enter todo details"
-            isValid = false
-        } else {
-            teacherAddCourseBinding.teacherNameLayout.error = null
-        }
         return isValid
+    }
+    var onCourseAddedListener:OnCourseAddedListener?=null
+    interface OnCourseAddedListener{
+        fun OnAddCourse()
     }
 
 }

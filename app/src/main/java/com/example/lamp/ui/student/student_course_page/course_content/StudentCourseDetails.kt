@@ -1,35 +1,44 @@
 package com.example.lamp.ui.student.student_course_page.course_content
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.AppBarConfiguration
-import com.example.lamp.MainActivity
+import com.example.common_functions.CONSTANTS
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseDetailsBinding
-import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.StudentCourseAssignmentFragment
+import com.example.lamp.ui.student.student_course_page.course_content.grades.StudentCourseGradesFragment
 import com.example.lamp.ui.student.student_course_page.course_content.material.StudentCourseMaterialFragment
 import com.example.lamp.ui.student.student_course_page.course_content.quiz.StudentQuizzesFragment
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import retrofit2.Response
 
 
-class StudentCourseDetails(var course: CourseItem?) : Fragment() {
+class StudentCourseDetails(var course: CourseResponseDTO?) : Fragment() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewBinding: FragmentStudentCourseDetailsBinding
-    private var fragment:Fragment?=null
+    private var fragment: Fragment? = null
+    private lateinit var viewModel: StudentCourseDetailsViewModel
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(StudentCourseDetailsViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,8 +54,26 @@ class StudentCourseDetails(var course: CourseItem?) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        CONSTANTS.courseId = course?.id!!
+        subscribeToLiveData()
         initViews()
 
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            isCourseDropped(it)
+        }
+    }
+
+    private fun isCourseDropped(response: Response<Void>?) {
+        if (response?.code() == 200) {
+            Toast.makeText(requireContext(), "Course Dropped", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+        else{
+            Toast.makeText(requireContext(), "Course Not Dropped", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initViews() {
@@ -72,28 +99,13 @@ class StudentCourseDetails(var course: CourseItem?) : Fragment() {
             drawerLayout.open()
         }
         viewBinding.navView.setNavigationItemSelectedListener { item ->
-            viewBinding.studentCourseContainer.toolbar.subtitle =
-                viewBinding.navView.menu.findItem(item.itemId).title
-            if (item.itemId == R.id.assignment) {
-                var bundle=Bundle()
-                bundle.putSerializable("assignmentList",TestData.ASSIGNMENTS as ArrayList<AssignmentItem>)
-                var fragmentSwap= StudentCourseAssignmentFragment()
-                fragmentSwap.arguments=bundle
-                fragment=fragmentSwap
-            } else if (item.itemId == R.id.material) {
-                fragment=StudentCourseMaterialFragment(course)
-            } else if (item.itemId == R.id.dashboard) {
-
-            } else if (item.itemId == R.id.quizzes) {
-                fragment=StudentQuizzesFragment()
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
+            navigateToSelectedFragment(item,drawerLayout)
             return@setNavigationItemSelectedListener true
         }
         viewBinding.studentCourseContainer.infoIcon.setOnClickListener {
 
         }
-        drawerLayout.addDrawerListener(object :DrawerLayout.DrawerListener{
+        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
@@ -101,20 +113,7 @@ class StudentCourseDetails(var course: CourseItem?) : Fragment() {
             }
 
             override fun onDrawerClosed(drawerView: View) {
-                fragment?.let {
-                    Handler(Looper.getMainLooper()).postDelayed( {
-                        requireActivity().supportFragmentManager
-                            .beginTransaction()
-                            .replace(
-                                R.id.student_course_content_container,
-                                it
-                            )
-                            .commit()
-                    },0)
-
-                }
-                fragment=null
-
+                doNavigation()
             }
 
             override fun onDrawerStateChanged(newState: Int) {
@@ -128,6 +127,54 @@ class StudentCourseDetails(var course: CourseItem?) : Fragment() {
         viewBinding.studentCourseContainer.infoIcon.setOnClickListener {
             viewBinding.studentCourseContainer.toolbar.subtitle = "Course Info"
         }
+
+        viewBinding.studentCourseContainer.infoIcon.setOnClickListener {
+            dropCourse()
+        }
+    }
+
+    private fun dropCourse() {
+        viewModel.dropCourse()
+    }
+
+    private fun doNavigation() {
+        fragment?.let {
+            Handler(Looper.getMainLooper()).postDelayed({
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(
+                        R.id.student_course_content_container,
+                        it
+                    )
+                    .commit()
+            }, 0)
+
+        }
+        fragment = null
+    }
+
+    private fun navigateToSelectedFragment(item: MenuItem,drawerLayout: DrawerLayout) {
+        viewBinding.studentCourseContainer.toolbar.subtitle =
+            viewBinding.navView.menu.findItem(item.itemId).title
+        if (item.itemId == R.id.assignment) {
+//                var bundle=Bundle()
+//                bundle.putInt("courseId",course?.id!!)
+            var fragmentSwap = StudentCourseAssignmentFragment()
+//                fragmentSwap.arguments=bundle
+            fragment = fragmentSwap
+        } else if (item.itemId == R.id.material) {
+            var fragmentSwap = StudentCourseMaterialFragment()
+            fragment = fragmentSwap
+        } else if (item.itemId == R.id.dashboard) {
+
+        } else if (item.itemId == R.id.quizzes) {
+            var fragmentSwap = StudentQuizzesFragment()
+            fragment = fragmentSwap
+        } else if (item.itemId == R.id.grades) {
+            var fragmentSwap = StudentCourseGradesFragment()
+            fragment = fragmentSwap
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
     }
 
     override fun onDetach() {

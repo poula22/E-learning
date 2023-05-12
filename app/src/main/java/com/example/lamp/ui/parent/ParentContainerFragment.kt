@@ -8,19 +8,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentParentContainerAllTabsBinding
-import com.example.lamp.ui.parent.parent_children_page.ChildrenFragment
-import com.example.lamp.ui.parent.parent_communicate_page.CommunicateFragment
-import com.example.lamp.ui.parent.parent_courses_page.CoursesFragment
 import com.example.lamp.ui.parent.parent_home_page.HomeFragment
+import com.example.lamp.ui.parent.parent_profile_page.ProfileFragment
 
-class ParentContainerFragment:Fragment() {
+class ParentContainerFragment : Fragment() {
     lateinit var parentContainerAllTabsBinding: FragmentParentContainerAllTabsBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        parentContainerAllTabsBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_parent_container_all_tabs,container,false)
+        parentContainerAllTabsBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_parent_container_all_tabs,
+            container,
+            false
+        )
         return parentContainerAllTabsBinding.root
     }
 
@@ -30,30 +33,20 @@ class ParentContainerFragment:Fragment() {
     }
 
     private fun initView() {
-        parentContainerAllTabsBinding.parentBottomNaviagationView.setOnItemSelectedListener { menuItem->
-            if(menuItem.itemId==R.id.home){
+        parentContainerAllTabsBinding.parentBottomNaviagationView.setOnItemSelectedListener { menuItem ->
+            if (menuItem.itemId == R.id.home) {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.parent_fragment_tab, HomeFragment())
                     .commit()
-            }else if(menuItem.itemId==R.id.children){
+            } else if (menuItem.itemId == R.id.profile) {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.parent_fragment_tab, ChildrenFragment())
-                    .commit()
-            }else if(menuItem.itemId==R.id.courses){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.parent_fragment_tab, CoursesFragment())
-                    .commit()
-            }else if(menuItem.itemId==R.id.communicate){
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.parent_fragment_tab, CommunicateFragment())
+                    .replace(R.id.parent_fragment_tab, ProfileFragment())
                     .commit()
             }
             return@setOnItemSelectedListener true
         }
-        parentContainerAllTabsBinding.parentBottomNaviagationView.selectedItemId=R.id.home
+        parentContainerAllTabsBinding.parentBottomNaviagationView.selectedItemId = R.id.home
     }
 }

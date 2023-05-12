@@ -11,21 +11,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.common_functions.CONSTANTS
+import com.example.domain.model.CourseResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseDetailsBinding
 import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_home_page.courses_recycler_view.CourseItem
 import com.example.lamp.ui.teacher.courses_page.course_content.assignment.TeacherCourseAssignmentFragment
-import com.example.lamp.ui.teacher.courses_page.course_content.dashboard.todo_list.TeacherCourseDashboardFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.grades.students_page.TeacherCourseStudentsFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.material.TeacherCourseMaterialFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.quiz.TeacherCourseQuizzesFragment
 import com.example.lamp.ui.teacher.courses_page.course_content.settings.TeacherCourseSettingsFragment
-import com.example.lamp.ui.teacher.students_page.TeacherStudentsFragment
+import com.example.lamp.ui.teacher.courses_page.course_content.students.TeacherStudentsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 
-class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
+class TeacherCourseDetails(var course: CourseResponseDTO?) : Fragment() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewBinding: FragmentTeacherCourseDetailsBinding
@@ -45,7 +46,7 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-
+        CONSTANTS.courseId = course?.id!!
     }
 
     private fun initViews() {
@@ -59,7 +60,6 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.dashboard,
                 R.id.announcements,
                 R.id.assignment,
                 R.id.grades,
@@ -77,33 +77,44 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
                 viewBinding.navView.menu.findItem(item.itemId).title
             when (item.itemId) {
                 R.id.assignment -> {
-                    fragment=TeacherCourseAssignmentFragment()
+                    fragment = TeacherCourseAssignmentFragment()
                 }
                 R.id.material -> {
-                    fragment=TeacherCourseMaterialFragment(TestData.COURSES[0])
+                    fragment = TeacherCourseMaterialFragment()
                 }
                 R.id.edit_course -> {
-                    fragment=TeacherCourseSettingsFragment()
+                    val bundle=Bundle()
+                    bundle.putSerializable("course",course)
+                    fragment = TeacherCourseSettingsFragment()
+                    fragment?.arguments=bundle
                 }
                 R.id.students -> {
-                    fragment=TeacherStudentsFragment(TestData.STUDENTS)
-                }
-                R.id.dashboard -> {
-                    fragment=TeacherCourseDashboardFragment()
+                    fragment = TeacherStudentsFragment()
+                    // TestData.STUDENTS
                 }
                 R.id.quizzes -> {
-                    fragment=TeacherCourseQuizzesFragment()
+                    fragment = TeacherCourseQuizzesFragment()
+                }
+                R.id.grades -> {
+                    fragment = TeacherCourseStudentsFragment()
                 }
             }
 
-            //????????
+
             viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
-            //????????
+                val bundle=Bundle()
+                bundle.putSerializable("course",course)
+                fragment = TeacherCourseSettingsFragment()
+                fragment?.arguments=bundle
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.teacher_course_content_container, fragment!!)
+                    .addToBackStack(null)
+                    .commit()
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true
         }
-        drawerLayout.addDrawerListener(object :DrawerLayout.DrawerListener{
+        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
@@ -112,17 +123,17 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
 
             override fun onDrawerClosed(drawerView: View) {
                 fragment?.let {
-                    Handler(Looper.getMainLooper()).postDelayed( {
+                    Handler(Looper.getMainLooper()).postDelayed({
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(
                                 R.id.teacher_course_content_container,
                                 it
                             )
                             .commit()
-                    },0)
+                    }, 0)
 
                 }
-                fragment=null
+                fragment = null
 
             }
 
@@ -131,8 +142,8 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
             }
 
         })
-        viewBinding.navView.setCheckedItem(R.id.dashboard)
-        viewBinding.navView.menu.performIdentifierAction(R.id.dashboard, 0)
+        viewBinding.navView.setCheckedItem(R.id.announcements)
+        viewBinding.navView.menu.performIdentifierAction(R.id.announcements, 0)
         viewBinding.teacherCourseContainer.settingsIcon.setOnClickListener {
             viewBinding.teacherCourseContainer.toolbar.subtitle = "Settings"
             requireActivity().supportFragmentManager.beginTransaction()
@@ -143,14 +154,19 @@ class TeacherCourseDetails(var course: CourseItem?) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewBinding.navView.menu.performIdentifierAction(viewBinding.navView.checkedItem?.itemId!!, 0)
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.teacher_course_content_container,
-                fragment!!
-            )
-            .commit()
-        fragment=null
+        viewBinding.navView.menu.performIdentifierAction(
+            viewBinding.navView.checkedItem?.itemId!!,
+            0
+        )
+        fragment?.let {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.teacher_course_content_container,
+                    fragment!!
+                )
+                .commit()
+        }
+        fragment = null
     }
 
     override fun onDetach() {

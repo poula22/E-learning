@@ -8,25 +8,25 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/splash_screen.AppBarOverlay">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             app:navigationIcon="@drawable/ic_menu"
-            app:popupTheme="@style/splash_screen.PopupOverlay">
+            app:subtitleTextColor="@color/white"
+            app:titleTextColor="@color/white">
 
             <ImageView
                 android:id="@+id/info_icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="top|end"
-                android:src="@drawable/ic_info"
                 android:layout_marginEnd="10dp"
-                />
+                android:src="@drawable/ic_info"
+                app:tint="@color/white" />
 
         </androidx.appcompat.widget.Toolbar>
 

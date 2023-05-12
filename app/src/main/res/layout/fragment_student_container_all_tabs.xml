@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/polapola">
 
         <FrameLayout
             android:id="@+id/student_fragment_tab"
@@ -27,6 +28,8 @@
             app:itemIconTint="@color/black"
             tools:menu="@menu/student_bottom_navigation_menu"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

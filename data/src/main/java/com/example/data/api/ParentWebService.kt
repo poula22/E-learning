@@ -1,22 +1,24 @@
 package com.example.data.api
 
-import com.example.data.data_classes.Parent
 import com.example.data.model.ParentResponse
-import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import com.example.data.model.UserResponse
+import com.example.domain.model.ParentResponseDTO
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 interface ParentWebService {
-    @POST("h1")
-    fun addParent(@Query("parent")parent: Parent): Call<ParentResponse>
-    @POST("h1")
-    fun updateParent(@Query("parent") apiKey:String): Call<ParentResponse>
-    @DELETE("h1")
-    fun deleteParent(@Query("id") id:Int): Call<ParentResponse>
-    @GET("h1")
-    fun getAllParent(): Call<List<ParentResponse>>
-    @GET("h1")
-    fun getParentById(@Query("id") id:Int): Call<ParentResponse>
+    @Multipart
+    @POST("api/Parents")
+    suspend fun addParent(@Part firstName: MultipartBody.Part?,
+                          @Part lastName: MultipartBody.Part?,
+                          @Part phone: MultipartBody.Part?,
+                          @Part role: MultipartBody.Part?,
+                          @Part email: MultipartBody.Part?,
+                          @Part password: MultipartBody.Part?,
+                          @Part profilePic: MultipartBody.Part? = null): UserResponse
+
+    @GET("api/Parents/{parentId}/AddStudentsByEmailToParent/{studentEmail}")
+    suspend fun addStudentsByEmailToParent(
+        @Path("parentId") parentId: Int, @Path("studentEmail") studentEmail: String
+    ): List<ParentResponse>
 }

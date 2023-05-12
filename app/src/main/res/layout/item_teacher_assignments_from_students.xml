@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentFromStudentItem" />
+            type="com.example.domain.model.AssignmentAnswerDetailsResponseDTO" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,7 +28,7 @@
                 android:id="@+id/student_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.studentName}"
+                android:text="@{item.studentFirstName}"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -48,7 +48,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
-                android:text="@{String.valueOf(item.totalPoints)}"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/student_grade_txt"
                 app:layout_constraintEnd_toStartOf="@+id/assign_grade"
@@ -59,22 +58,24 @@
                 android:id="@+id/student_grade_txt"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:gravity="center"
                 android:hint="30"
-                android:text="@{String.valueOf(item.studentGrade)}"
-                android:textSize="24sp"
                 android:inputType="numberDecimal"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toStartOf="@+id/points"
-                app:layout_constraintTop_toTopOf="parent"
-                android:autofillHints="" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/attachment"
                 android:layout_width="160dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/rounded_btn"
+                android:background="@drawable/rounded_btn_blue"
                 android:backgroundTint="#F3E5F5"
+                android:clickable="true"
+                android:elevation="5dp"
+                android:focusable="true"
                 android:gravity="center"
                 android:text="@{item.fileName}"
                 android:textSize="20sp"
@@ -82,18 +83,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/student_name"
                 tools:text="Document.pdf" />
 
-            <TextView
-                android:id="@+id/student_assignment_note"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:lines="5"
-                android:text="@{item.assignmentNote}"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/attachment"
-                tools:text="fffff" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/student_assignment_note"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="8dp"-->
+            <!--                android:lines="5"-->
+            <!--                android:text="@{item.assignmentNote}"-->
+            <!--                android:textSize="18sp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/attachment"-->
+            <!--                tools:text="fffff" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

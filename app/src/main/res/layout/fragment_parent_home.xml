@@ -100,7 +100,7 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/features_home"
+                android:id="@+id/children"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -116,30 +116,123 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/features_home"
+                app:layout_constraintTop_toBottomOf="@id/children"
                 tools:listitem="@layout/item_parent_child" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/courses_home"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/no_children_txt"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Courses"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/children_recycler_view" />
+                android:gravity="center"
+                android:text="No children added"
+                android:textSize="30sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/add_child_card"
+                app:layout_constraintTop_toBottomOf="@id/children" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/courses_recycler_view"
-                android:layout_width="wrap_content"
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/add_child_card"
+                style="@style/Widget.Material3.CardView.Outlined"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="170dp"
+                android:backgroundTint="#E3F2FD"
+                app:cardCornerRadius="20dp"
+                app:contentPadding="12dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/courses_home"
-                tools:listitem="@layout/item_parent_course" />
+                app:layout_constraintTop_toBottomOf="@+id/children">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/add_child"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add child"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:hint="Email"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:boxStrokeWidth="2dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/add_child">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="textEmailAddress"
+                            android:lines="1" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/add_child_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="5dp"
+                            android:backgroundTint="#3A4BB7"
+                            android:text="Add Child" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!--            <com.google.android.material.card.MaterialCardView-->
+            <!--                style="@style/Widget.Material3.CardView.Outlined"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:backgroundTint="#FFEBEE"-->
+            <!--                app:cardCornerRadius="20dp"-->
+            <!--                app:contentPadding="5dp"-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/add_child_card">-->
+
+            <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent">-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/child_pending"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="child@child.com"-->
+            <!--                        android:textSize="20sp"-->
+            <!--                        android:layout_marginStart="15dp"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                        app:layout_constraintStart_toStartOf="parent"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+
+            <!--                    <com.google.android.material.button.MaterialButton-->
+            <!--                        android:id="@+id/cancel_btn"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:backgroundTint="#B73A3A"-->
+            <!--                        android:text="Cancel"-->
+            <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+
+            <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <!--            </com.google.android.material.card.MaterialCardView>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -1,50 +1,52 @@
 package com.example.data.api.microsoft_summarization
 //
-//import com.azure.ai.textanalytics.TextAnalyticsClient
 //import com.azure.ai.textanalytics.TextAnalyticsClientBuilder
-//import com.azure.ai.textanalytics.models.AnalyzeActionsOptions
-//import com.azure.ai.textanalytics.models.AnalyzeActionsResult
-//import com.azure.ai.textanalytics.models.ExtractSummaryAction
-//import com.azure.ai.textanalytics.models.TextAnalyticsActions
+//import com.azure.ai.textanalytics.models.*
 //import com.azure.core.credential.AzureKeyCredential
 //import java.util.function.Consumer
 //
-//
-//object Example {
-//    private const val KEY = "ba7ac8ba7e1e4fcaa764596e102a26e9"
-//    private const val ENDPOINT = "https://lampit-textanalytics.cognitiveservices.azure.com/"
+///**
+// * Sample demonstrates how to synchronously execute an "Extractive Summarization" action in a batch of documents.
+// */
+//object AnalyzeExtractiveSummarization {
+//    /**
+//     * Main method to invoke this demo about how to analyze an "Extractive Summarization" action.
+//     *
+//     * @param args Unused arguments to the program.
+//     */
 //    @JvmStatic
-//    fun main() {
-//        val client = authenticateClient(KEY, ENDPOINT)
-//        summarizationExample(client)
-//    }
-//
-//    // Method to authenticate the client object with your key and endpoint
-//    fun authenticateClient(key: String?, endpoint: String?): TextAnalyticsClient {
-//        return TextAnalyticsClientBuilder()
-//            .credential(AzureKeyCredential(key))
-//            .endpoint(endpoint)
+//    fun mainFunc() {
+//        val client = TextAnalyticsClientBuilder()
+//            .credential(AzureKeyCredential("ba7ac8ba7e1e4fcaa764596e102a26e9"))
+//            .endpoint("https://lampit-textanalytics.cognitiveservices.azure.com/")
 //            .buildClient()
-//    }
-//
-//    // Example method for summarizing text
-//    fun summarizationExample(client: TextAnalyticsClient) {
 //        val documents: MutableList<String> = ArrayList()
 //        documents.add(
-//            "The extractive summarization feature uses natural language processing techniques "
-//                    + "to locate key sentences in an unstructured text document. "
-//                    + "These sentences collectively convey the main idea of the document. This feature is provided as an API for developers. "
-//                    + "They can use it to build intelligent solutions based on the relevant information extracted to support various use cases. "
-//                    + "In the public preview, extractive summarization supports several languages. "
-//                    + "It is based on pretrained multilingual transformer models, part of our quest for holistic representations. "
-//                    + "It draws its strength from transfer learning across monolingual and harness the shared nature of languages "
-//                    + "to produce models of improved quality and efficiency."
+//            "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic,"
+//                    + " human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI"
+//                    + " Cognitive Services, I have been working with a team of amazing scientists and engineers to turn "
+//                    + "this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship"
+//                    + " among three attributes of human cognition: monolingual text (X), audio or visual sensory signals,"
+//                    + " (Y) and multilingual (Z). At the intersection of all three, there’s magic—what we call XYZ-code"
+//                    + " as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear,"
+//                    + " see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term"
+//                    + " vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have"
+//                    + " pretrained models that can jointly learn representations to support a broad range of downstream"
+//                    + " AI tasks, much in the way humans do today. Over the past five years, we have achieved human"
+//                    + " performance on benchmarks in conversational speech recognition, machine translation, "
+//                    + "conversational question answering, machine reading comprehension, and image captioning. These"
+//                    + " five breakthroughs provided us with strong signals toward our more ambitious aspiration to"
+//                    + " produce a leap in AI capabilities, achieving multisensory and multilingual learning that "
+//                    + "is closer in line with how humans learn and understand. I believe the joint XYZ-code is a "
+//                    + "foundational component of this aspiration, if grounded with external knowledge sources in "
+//                    + "the downstream AI tasks."
 //        )
 //        val syncPoller = client.beginAnalyzeActions(
 //            documents,
-//            TextAnalyticsActions().setDisplayName("{tasks_display_name}")
+//            TextAnalyticsActions().setDisplayName("display_name")
 //                .setExtractSummaryActions(
-//                    ExtractSummaryAction()
+//                    ExtractSummaryAction().setMaxSentenceCount(4)
+//                        .setOrderBy(SummarySentencesOrder.RANK)
 //                ),
 //            "en",
 //            AnalyzeActionsOptions()

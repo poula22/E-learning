@@ -5,25 +5,28 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.CONSTANTS
+import com.example.domain.model.AssignmentDetailsResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentStudentCourseAssignmentBinding
-import com.example.lamp.test_data.TestData
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.assignment_recycler_view.StudentCourseAssignmentAdapter
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.assignment_submit.StudentCourseAssignmentSubmitFragment
-import com.example.lamp.ui.student.student_features_page.recitation.recite_paragraph.ReciteParagraphFragment
-import com.example.lamp.ui.student.student_features_page.recitation.recite_words.ReciteWordsFragment
 import com.google.android.material.tabs.TabLayout
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 
+//filter fun - new json
 class StudentCourseAssignmentFragment :
     Fragment() {
     lateinit var viewBinding: FragmentStudentCourseAssignmentBinding
     lateinit var adapter: StudentCourseAssignmentAdapter
     lateinit var tabLayout: TabLayout
     lateinit var viewModel: StudentCourseAssignmentViewModel
+    val courseId:Int = CONSTANTS.courseId
 
     private fun initTabs(
         all: TabLayout.Tab,
@@ -61,33 +64,43 @@ class StudentCourseAssignmentFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        subscibeToLiveData()
-        viewModel.getData(requireArguments())
-
+        subscribeToLiveData()
+        getAllAssignments()
     }
 
-    private fun subscibeToLiveData() {
-        viewModel.liveData.observe(viewLifecycleOwner){
-            adapter.setFilteredList(it)
+    private fun getAllAssignments() {
+        viewModel.getData(courseId)
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.liveData.observe(viewLifecycleOwner){assignmentList ->
+            val swap=assignmentList.toMutableList()
+            assignmentList.forEach { assignment ->
+                assignment.assignedGrade?.let {
+                 if (it>0){
+                     swap.remove(assignment)
+                 }
+                }
+            }
+            updateAssignmentsList(swap)
         }
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+            viewModel.errorMessage.value=it
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateAssignmentsList(assignmentsList: List<AssignmentDetailsResponseDTO>) {
+        adapter.setFilteredList(assignmentsList.toMutableList())
     }
 
     private fun initViews() {
         adapter= StudentCourseAssignmentAdapter()
         adapter.onStudentAssignmentClickedListener=object :StudentCourseAssignmentAdapter.OnStudentAssignmentClickedListener{
             override fun onAssignmentClick(postion: Int) {
-                var bundle=Bundle()
-                var assignment: AssignmentItem? =viewModel.liveData.value?.get(postion)
-                bundle.putSerializable("assignment",assignment)
-                var fragment=StudentCourseAssignmentSubmitFragment()
-                fragment.arguments=bundle
-                requireActivity()
-                    .supportFragmentManager
-                    .beginTransaction()
-                    .replace(this@StudentCourseAssignmentFragment.id,fragment)
-                    .addToBackStack("")
-                    .commit()
+                goToAssignmentSubmit(postion)
             }
+
         }
         viewBinding.studentAssignmentsRv.adapter=adapter
         tabLayout = viewBinding.tabLayout
@@ -113,11 +126,7 @@ class StudentCourseAssignmentFragment :
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     Log.v("action;::",tab?.text.toString())
-                    var text=tab?.text.toString()
-                    if (text.isNotEmpty()) {
-                        var list=viewModel.filterList(text)
-                        adapter.setFilteredList(list)
-                    }
+                    getSelectedTabContent(tab)
                 }
             }
         )
@@ -125,8 +134,48 @@ class StudentCourseAssignmentFragment :
 
     }
 
+    private fun getSelectedTabContent(tab: TabLayout.Tab?) {
+        val text=tab?.text.toString()
+        if (text.isNotEmpty()) {
+            val list=viewModel.filterList(text)
+            adapter.setFilteredList(list)
+        }
+    }
 
 
+    private fun goToAssignmentSubmit(postion: Int) {
+        val assignment: AssignmentDetailsResponseDTO? =viewModel.liveData.value?.get(postion)
+        val current = LocalDateTime.now()
+        val output = assignment?.endTime?.let { LocalDateTime.parse(it) }
+        if (output!= null) {
+            if (current.isAfter(output)) {
+                Toast.makeText(requireContext(), "wait for assignment to be graded", Toast.LENGTH_SHORT).show()
+            } else {
+                val bundle = Bundle()
+                bundle.putSerializable("assignment", assignment)
+                val fragment = StudentCourseAssignmentSubmitFragment()
+                fragment.arguments = bundle
+                requireActivity()
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .replace(this@StudentCourseAssignmentFragment.id, fragment)
+                    .addToBackStack("")
+                    .commit()
+            }
+
+        }else{
+            val bundle = Bundle()
+            bundle.putSerializable("assignment", assignment)
+            val fragment = StudentCourseAssignmentSubmitFragment()
+            fragment.arguments = bundle
+            requireActivity()
+                .supportFragmentManager
+                .beginTransaction()
+                .replace(this@StudentCourseAssignmentFragment.id, fragment)
+                .addToBackStack("")
+                .commit()
+        }
 
 
+    }
 }

@@ -1,22 +1,35 @@
 package com.example.data.api
 
-import com.example.data.data_classes.Quiz
+import com.example.data.model.NewQuizResponse
 import com.example.data.model.QuizResponse
-import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import com.example.data.model.TeacherQuizResponse
+import com.example.domain.model.QuizResponseDTO
+import com.example.domain.model.TeacherQuizResponseDTO
+import retrofit2.Response
+import retrofit2.http.*
 
 interface QuizWebService {
-    @POST("h1")
-    fun addQuiz(@Query("quiz")quiz: Quiz): Call<QuizResponse>
-    @POST("h1")
-    fun updateQuiz(@Query("quiz") apiKey:String): Call<QuizResponse>
-    @DELETE("h1")
-    fun deleteQuiz(@Query("id") id:Int): Call<QuizResponse>
-    @GET("h1")
-    fun getAllQuiz(): Call<List<QuizResponse>>
-    @GET("h1")
-    fun getQuizById(@Query("id") id:Int): Call<QuizResponse>
+    @GET("api/Quizes")
+    suspend fun getAllQuizzes(): List<TeacherQuizResponse>
+
+    @POST("api/Quizes")
+    suspend fun createQuiz(@Body quiz: TeacherQuizResponseDTO): Response<Void>
+
+    @GET("api/Quizes/{id}")
+    suspend fun getQuizById(@Path("id") id: Int): TeacherQuizResponse
+
+    @PUT("api/Quizes/{id}")
+    suspend fun updateQuiz(@Path("id") id: Int, @Body quiz: TeacherQuizResponseDTO): TeacherQuizResponse
+
+    @DELETE("api/Quizes/{id}")
+    suspend fun deleteQuiz(@Path("id") id: Int)
+
+    @GET("api/Quizes/GetQuizzesByCourseId/{courseId}")
+    suspend fun getQuizzesByCourseId(@Path("courseId") courseId: Int): List<TeacherQuizResponse>
+
+    @GET("api/Quizes/GetQuizGrades/ByCourseId/ByStudentId/ForTeacher/{courseId}/{studentId}")
+    suspend fun getQuizGradesByCourseIdAndStudentIdForTeacher(
+        @Path("courseId") courseId: Int,
+        @Path("studentId") studentId: Int
+    ): List<NewQuizResponse>
 }

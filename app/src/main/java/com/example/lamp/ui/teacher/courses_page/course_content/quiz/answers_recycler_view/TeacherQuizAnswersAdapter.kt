@@ -6,10 +6,13 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.QuestionChoiceResponseDTO
+import com.example.domain.model.QuestionResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemTeacherCourseQuizQuestionAnswerBinding
+import com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.TeacherQuizQuestionsAdapter
 
-class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
+class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?=null) :
     RecyclerView.Adapter<TeacherQuizAnswersAdapter.ViewHolder>() {
     init {
         if (answers==null){
@@ -36,6 +39,8 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
         var item=answers?.get(position)
         holder.viewBinding.item=item
         holder.viewBinding.answerListItemAnswerText.addTextChangedListener {
+            if (item!=null)
+                answers?.set(position,item)
             Log.v("pos:::",item.toString())
         }
         holder.viewBinding.answerListItemDelete.setOnClickListener {
@@ -61,17 +66,30 @@ class TeacherQuizAnswersAdapter(var answers: MutableList<AnswerItem>?) :
 
     override fun getItemCount(): Int = answers?.size ?:0
 
-    fun addAnswer(){
-        answers?.add(AnswerItem())
+    fun addAnswer(answerItem: AnswerItem){
+
+        answers?.add(answerItem)
         notifyItemInserted(answers?.size?.minus(1)!!)
     }
 
 
-    private fun removeItem(position: Int, item: AnswerItem) {
+    fun changeAnswers(questionAnswer: List<QuestionChoiceResponseDTO>?) {
+        answers?.clear()
+
+        questionAnswer?.forEach {
+            answers?.add(AnswerItem(it))
+        }
+
+        notifyDataSetChanged()
+    }
+
+    private fun removeItem(position: Int, item: AnswerItem?) {
         answers?.remove(item)
         if (selectedItem==position){
             selectedItem=-1
         }
+
         notifyItemRemoved(position)
     }
+
 }

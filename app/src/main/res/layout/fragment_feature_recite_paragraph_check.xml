@@ -40,9 +40,9 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="recite by:"
+                android:layout_marginBottom="10dp"
+                android:text="Recite by:"
                 android:textSize="20dp"
-
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -121,8 +121,9 @@
                 android:id="@+id/text_input"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:hint="recite here"
+                android:layout_marginTop="10dp"
 
+                android:hint="recite here"
                 android:scrollbars="vertical"
                 app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="outline"
@@ -130,7 +131,6 @@
                 app:boxCornerRadiusBottomStart="20dp"
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
-                app:boxStrokeWidth="3dp"
                 app:hintTextColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/card_voice">
 
@@ -142,16 +142,42 @@
                     android:lines="12" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/btn_recite"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_check"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/light_rose"
                 android:scrollbars="vertical"
-                android:text="check"
+                android:text="Check"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_input" />
+
+
+            <TextView
+                android:id="@+id/result_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recitation CorrectionPercentage"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/result_percentage" />
+
+            <TextView
+                android:id="@+id/result_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30%"
+                android:textSize="50sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_check" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

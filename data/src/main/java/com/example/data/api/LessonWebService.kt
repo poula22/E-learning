@@ -1,22 +1,27 @@
 package com.example.data.api
 
-import com.example.data.data_classes.Lesson
 import com.example.data.model.LessonResponse
-import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import com.example.domain.model.LessonResponseDTO
+import retrofit2.Response
+import retrofit2.http.*
 
 interface LessonWebService {
-    @POST("h1")
-    fun addLesson(@Query("lesson")lesson: Lesson): Call<LessonResponse>
-    @POST("h1")
-    fun updateLesson(@Query("lesson") apiKey:String): Call<LessonResponse>
-    @DELETE("h1")
-    fun deleteLesson(@Query("id") id:Int): Call<LessonResponse>
-    @GET("h1")
-    fun getAllLesson(): Call<List<LessonResponse>>
-    @GET("h1")
-    fun getLessonById(@Query("id") id:Int): Call<LessonResponse>
+    @GET("api/Lessons")
+    suspend fun getAllLessons(): List<LessonResponse>
+
+    @POST("api/Lessons")
+    suspend fun addLesson(@Body lesson: LessonResponseDTO): LessonResponse
+
+    @GET("api/Lessons/{id}")
+    suspend fun getLesson(@Path("id") id: Int): LessonResponse
+
+    @PUT("api/Lessons/{id}")
+    suspend fun updateLesson(@Path("id") id: Int, @Body lesson: LessonResponseDTO): LessonResponse
+
+    @DELETE("api/Lessons/{id}")
+    suspend fun deleteLesson(@Path("id") id: Int): Response<Void>
+
+    @GET("api/Lessons/GetLessonsByCourseId/{courseId}")
+    suspend fun getLessonsByCourseId(@Path("courseId") courseId: Int): List<LessonResponse>
+
 }

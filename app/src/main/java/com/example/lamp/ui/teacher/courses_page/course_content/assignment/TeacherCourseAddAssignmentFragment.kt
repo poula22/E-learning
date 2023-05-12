@@ -1,47 +1,73 @@
 package com.example.lamp.ui.teacher.courses_page.course_content.assignment
 
-import android.annotation.SuppressLint
-import android.app.Activity
+
+import android.content.ContentValues.TAG
 import android.content.Intent
-import android.icu.util.LocaleData
-import android.os.Build
-import android.text.format.DateFormat
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.isVisible
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import com.example.commonFunctions.CommonFunctions
-import com.example.commonFunctions.CommonFunctions.Companion.calendar
+import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.CONSTANTS
+import com.example.common_functions.CommonFunctions
+import com.example.common_functions.CommonFunctions.Companion.calendar
+import com.example.common_functions.DocumentAccessFragment
+import com.example.domain.model.AssignmentResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentTeacherCourseAddAssignmentBinding
-import com.example.lamp.test_data.TestData
-import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
-import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.navigation.NavigationView
-import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.runBlocking
+import org.apache.commons.io.FileUtils
+import java.io.File
+import java.io.InputStream
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.ofPattern
+import java.time.format.DateTimeFormatterBuilder
 import java.util.*
 
-class TeacherCourseAddAssignmentFragment : Fragment() {
+class TeacherCourseAddAssignmentFragment : DocumentAccessFragment() {
     lateinit var viewBinding: FragmentTeacherCourseAddAssignmentBinding
-    var filePath:String?=null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    lateinit var viewModel: TeacherCourseAddAssignmentViewModel
+    var path:String?=null
+    private var inputStream: InputStream?=null
+    override fun showProgressBar() {
+        return
+    }
+
+    override fun resultListener(byteArray: ByteArray) {
+        //no3 el file??? png-pdf
+        viewBinding.attachment.setText("File Attached")
+        viewBinding.attachment.setBackgroundResource(R.color.dark_green)
+        try {
+            inputStream=fileUri?.let { requireActivity().contentResolver.openInputStream(it) }
+        }catch (e:Exception){
+            Log.v("Exception",e.toString())
+        }
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel=ViewModelProvider(this).get(TeacherCourseAddAssignmentViewModel::class.java)
+    }
+    fun subscribeToLiveData(){
+        viewModel.liveData.observe(viewLifecycleOwner){
+            if (it.code()==200)
+                requireActivity().supportFragmentManager.popBackStack()
+            else
+                Toast.makeText(requireContext(),"error",Toast.LENGTH_LONG).show()
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,34 +82,36 @@ class TeacherCourseAddAssignmentFragment : Fragment() {
         return viewBinding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("SetTextI18n")
     private fun initViews() {
-        if (calendar.get(Calendar.MONTH).plus(1)<10){
+        if (calendar.get(Calendar.MONTH).plus(1) < 10) {
             viewBinding.startDateTxt.setText(
-                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/" +"0"+ calendar.get(Calendar.MONTH).plus(1)+ "/"
-                        + calendar.get(Calendar.YEAR)
+                "" + calendar.get(Calendar.YEAR) + "/" + "0" + calendar.get(Calendar.MONTH)
+                    .plus(1) + "/"
+                        + calendar.get(Calendar.DAY_OF_MONTH)
             )
             viewBinding.endDateTxt.setText(
-                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/" +"0"+ calendar.get(Calendar.MONTH).plus(1) + "/"
-                        + calendar.get(Calendar.YEAR)
+                "" + calendar.get(Calendar.YEAR) + "/" + "0" + calendar.get(Calendar.MONTH)
+                    .plus(1) + "/"
+                        + calendar.get(Calendar.DAY_OF_MONTH)
             )
-        }
-        else
-        {
+        } else {
             viewBinding.startDateTxt.setText(
-                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/"+ calendar.get(Calendar.MONTH).plus(1)+ "/"
-                        + calendar.get(Calendar.YEAR)
+                "" + calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH)
+                    .plus(1) + "/"
+                        + calendar.get(Calendar.DAY_OF_MONTH)
             )
             viewBinding.endDateTxt.setText(
-                "" + calendar.get(Calendar.DAY_OF_MONTH) + "/"+ calendar.get(Calendar.MONTH).plus(1) + "/"
-                        + calendar.get(Calendar.YEAR)
+                "" + calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH)
+                    .plus(1) + "/"
+                        + calendar.get(Calendar.DAY_OF_MONTH)
             )
         }
 
@@ -96,53 +124,103 @@ class TeacherCourseAddAssignmentFragment : Fragment() {
         }
 
         viewBinding.addAttachmentBtn.setOnClickListener {
-            CommonFunctions.uploadDoc(requireActivity())
-        }
+           uploadDoc()
+//            val x = selectPdf()
+//            viewBinding.attachment.text = x
+//            Log.v("fragment", this.view.toString())
 
-        viewBinding.addAttachmentBtn.setOnClickListener {
-            val intentDocument = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "*/*"
-                putExtra(
-                    Intent.EXTRA_MIME_TYPES, arrayOf(
-                        "application/pdf"
-                    )
-                )
-            }
-            startForFileResult.launch(intentDocument)
+
+
         }
+//        fun Uri.getName(context: Context): String {
+//            val returnCursor = context.contentResolver.query(this, null, null, null, null)
+//            val nameIndex = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+//            returnCursor?.moveToFirst()
+//            val fileName = returnCursor?.getString(nameIndex!!)
+//            returnCursor?.close()
+//            return fileName!!
+//        }
+
+
         viewBinding.saveBtn.setOnClickListener {
-            if(validateForm()){
-                var title=viewBinding.title.text.toString()
-                var description=viewBinding.description.text.toString()
-                var points=viewBinding.pointsTxt.text.toString()
-                var datePattern=SimpleDateFormat("dd/MM/yyyy")
+            if (validateForm()) {
+                val title = viewBinding.title.text.toString()
+                val description = viewBinding.description.text.toString()
+                val points = viewBinding.points.text.toString()
+//                val datePattern = SimpleDateFormat("dd/MM/yyyy")
 
-                val startDate = datePattern.parse(
-                    viewBinding.startDateTxt.text.toString()
-                )
+                val startDate =viewBinding.startDateTxt.text.toString().replace("/","-")+"T00:00:00Z"
 
+//                datePattern.parse(
+//                    viewBinding.endDateTxt.text.toString()
+//                )
+                val endDate =viewBinding.endDateTxt.text.toString().replace("/","-")+"T00:00:00Z"
+                Log.v("date",startDate)
 
-                val endDate = datePattern.parse(
-                    viewBinding.endDateTxt.text.toString())
-
-                Toast.makeText(context, "saved succesful", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "saved successfully", Toast.LENGTH_SHORT).show()
                 //insert in database
-                TestData.ASSIGNMENTS.add(AssignmentItem(title,description,startDate,endDate,points,100,
-                    TestData.ASSIGNMENT_FROM_STUDENT))
-                requireActivity().supportFragmentManager.popBackStack()
+                val assignment=AssignmentResponseDTO(
+                    filePath,points.toInt()
+                    ,description
+                    ,null
+                    , endDate
+                    ,title, CONSTANTS.courseId
+                    ,startDate
+                )
+                val file =
+                    File.createTempFile(
+                        "test",
+                        ".pdf",
+                        requireContext().cacheDir
+                    )
+                runBlocking {
+                    FileUtils.copyInputStreamToFile(inputStream, file)
+                }
+                Log.v("file",file.toString())
+                viewModel.addAssignment(assignment,file)
             }
         }
         CommonFunctions.onBackPressed(requireActivity(), viewLifecycleOwner, requireContext())
+//        requireActivity()
+//            .onBackPressedDispatcher
+//            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    Log.d(TAG, "Fragment back pressed invoked")
+//                    // Do custom work here
+//                    MaterialAlertDialogBuilder(requireContext())
+//                        .setTitle("Are you sure you want to discard changes?")
+////                        .setMessage("")
+//                        .setNeutralButton("Cancel") { dialog, which ->
+//                            // Respond to neutral button press
+//                        }
+//                        .setNegativeButton("Discard") { dialog, which ->
+//                            Toast.makeText(context, "Changes discarded", Toast.LENGTH_SHORT)
+//                                .show()
+//                            requireActivity().supportFragmentManager.popBackStack()
+//                        }
+//                        .show()
+//
+//
+//                    // if you want onBackPressed() to be called as normal afterwards
+//                    if (isEnabled) {
+//                        isEnabled = false
+//                        requireActivity().onBackPressed()
+//                    }
+//                }
+//            }
+//            )
     }
 
-    override fun onStart() {
-        super.onStart()
-        var toolbar:Toolbar=requireActivity().findViewById(R.id.toolbar)
-        toolbar.isVisible=false
-        var drawerLayout:DrawerLayout=requireActivity().findViewById(R.id.drawer_layout)
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    // Intent for openning files
+    fun selectPdf() : String?{
+        val pdfIntent = Intent(Intent.ACTION_GET_CONTENT)
+        pdfIntent.type = "application/pdf"
+        pdfIntent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(pdfIntent, 12)
+        return pdfIntent.data?.path
+
     }
+
 
     fun validateForm(): Boolean {
         var isValid = true
@@ -171,24 +249,22 @@ class TeacherCourseAddAssignmentFragment : Fragment() {
         } else {
             viewBinding.pointsTxt.error = null
         }
+//
+//        val dtf: DateTimeFormatter = DateTimeFormatterBuilder()
+//            .parseCaseInsensitive()
+//            .appendPattern("u/M/d")
+//            .toFormatter(Locale.ENGLISH)
+//
+//        if(viewBinding.endDateTxt.text.let { LocalDateTime.parse(it,dtf) } <= viewBinding.startDateTxt.text.let { LocalDateTime.parse(it,dtf) }
+//            || viewBinding.startDateTxt.text.let { LocalDateTime.parse(it,dtf)  } < LocalDateTime.now()) {
+//            viewBinding.endDateTxt.error = "you should enter valid dates"
+//            isValid = false
+//        } else {
+//            viewBinding.endDateTxt.error = null
+//        }
+//
         return isValid
     }
-    val startForFileResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            val resultCode = result.resultCode
-            val data = result.data
 
-            if (resultCode == Activity.RESULT_OK) {
-                //Image Uri will not be null for RESULT_OK
-                val fileUri = data?.data!!
-                filePath=fileUri.path
-
-            } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_SHORT).show()
-            }
-        }
 
 }

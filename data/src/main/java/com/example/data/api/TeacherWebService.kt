@@ -1,22 +1,21 @@
 package com.example.data.api
 
-import com.example.data.data_classes.Teacher
-import com.example.data.model.TeacherResponse
-import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
+import okhttp3.MultipartBody
+import retrofit2.Response
+import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.Part
 
 interface TeacherWebService {
-    @POST("h1")
-    fun addTeacher(@Query("teacher")teacher: Teacher): Call<TeacherResponse>
-    @POST("h1")
-    fun updateTeacher(@Query("teacher") apiKey:String): Call<TeacherResponse>
-    @DELETE("h1")
-    fun deleteTeacher(@Query("id") id:Int): Call<TeacherResponse>
-    @GET("h1")
-    fun getAllTeacher(): Call<List<TeacherResponse>>
-    @GET("h1")
-    fun getTeacherById(@Query("id") id:Int): Call<TeacherResponse>
+    @Multipart
+    @POST("api/Teachers")
+    suspend fun addTeacher(
+        @Part firstName: MultipartBody.Part?,
+        @Part lastName: MultipartBody.Part?,
+        @Part phone: MultipartBody.Part?,
+        @Part role: MultipartBody.Part?,
+        @Part email: MultipartBody.Part?,
+        @Part password: MultipartBody.Part?,
+        @Part profilePic: MultipartBody.Part? = null
+    ): Response<Void>
 }

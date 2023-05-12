@@ -5,15 +5,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.commonFunctions.CommonFunctions
+import androidx.lifecycle.ViewModelProvider
+import com.example.common_functions.CommonFunctions
+import com.example.domain.model.RecitationParagraphRequestDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.FragmentFeatureReciteParagraphCheckBinding
 
 class ReciteParagraphCheckFragment(var paragraph: String) : Fragment() {
     lateinit var viewBinding: FragmentFeatureReciteParagraphCheckBinding
     lateinit var mediaRecorder: MediaRecorder
+    lateinit var viewModel: ReciteParagraphViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(ReciteParagraphViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,7 +37,21 @@ class ReciteParagraphCheckFragment(var paragraph: String) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
         initViews()
+    }
+
+    private fun subscribeToLiveData() {
+        viewModel.recitationLiveData.observe(viewLifecycleOwner) {
+            viewBinding.resultPercentage.isVisible = true
+            viewBinding.resultText.isVisible = true
+            viewBinding.resultPercentage.text = it.similarity?.times(100).toString() + "%"
+            if (it.similarity?.times(100).toString().toInt() > 50) {
+                viewBinding.resultPercentage.setTextColor(resources.getColor(R.color.green, null))
+            } else {
+                viewBinding.resultPercentage.setTextColor(resources.getColor(R.color.red, null))
+            }
+        }
     }
 
     private fun initViews() {
@@ -55,6 +79,13 @@ class ReciteParagraphCheckFragment(var paragraph: String) : Fragment() {
         viewBinding.cardDocument.setOnClickListener {
             CommonFunctions.uploadDoc(requireActivity())
         }
+
+        viewBinding.btnCheck.setOnClickListener {
+            var request =
+                RecitationParagraphRequestDTO(paragraph, viewBinding.paragraphInput.text.toString())
+            viewModel.getSimilarity(request)
+        }
+
 
     }
 

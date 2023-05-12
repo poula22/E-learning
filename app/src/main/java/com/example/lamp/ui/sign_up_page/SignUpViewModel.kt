@@ -1,69 +1,139 @@
 package com.example.lamp.ui.sign_up_page
 
-import android.util.Log
-import android.widget.EditText
-import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.api.ApiManager
-import com.example.data.api.LoginInfoWebService
-import com.example.data.model.LoginInfoResponse
-import com.example.data.repos.OCROnlineDataSourceImp
-import com.example.data.repos.OCRRepositoryImp
-import com.example.domain.repos.OCROnlineDataSource
-import com.example.domain.repos.OCRRepository
-import com.microsoft.azure.cognitiveservices.vision.computervision.models.ReadOperationResult
-import com.microsoft.cognitiveservices.speech.*
-import com.microsoft.cognitiveservices.speech.samples.sdkdemo.MicrophoneStream
-import kotlinx.coroutines.async
+import com.example.data.api.ParentWebService
+import com.example.data.api.StudentWebService
+import com.example.data.api.TeacherWebService
+import com.example.data.model.UserResponse
+import com.example.data.repos.data_sources_impl.ParentOnlineDataSourceImpl
+import com.example.data.repos.data_sources_impl.TeacherOnlineDataSourceImpl
+import com.example.domain.model.ParentResponseDTO
+import com.example.domain.model.StudentResponseDTO
+import com.example.domain.model.TeacherResponseDTO
+import com.example.domain.model.UserResponseDTO
+import com.example.domain.repos.data_sources.ParentOnlineDataSource
+import com.example.domain.repos.data_sources.TeacherOnlineDataSource
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import retrofit2.Call
-import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
 
 
 class SignUpViewModel : ViewModel() {
-    //MVVM
-//    val liveData=MutableLiveData<OCRResponseDTO?>()
-    val liveData=MutableLiveData<ReadOperationResult>()
-    var ocrOnlineDataSource: OCROnlineDataSource = OCROnlineDataSourceImp()
-    var ocrRepository: OCRRepository = OCRRepositoryImp(ocrOnlineDataSource)
+    var studentService: StudentWebService = ApiManager.getStudentApi()
+    var teacherService: TeacherWebService = ApiManager.getTeacherApi()
+    var parentService: ParentWebService = ApiManager.getParentApi()
+    private val parentOnlineDataSource:ParentOnlineDataSource= ParentOnlineDataSourceImpl(parentService)
+    val parentLiveData=MutableLiveData<UserResponseDTO>()
+    var liveData = MutableLiveData<UserResponse>()
+    var test = MutableLiveData<Response<Void>>()
+    var errorMessage = MutableLiveData<String>()
 
-    val service:LoginInfoWebService=ApiManager.getLoginApi()
+    val teacherDataSource:TeacherOnlineDataSource=TeacherOnlineDataSourceImpl(teacherService)
 
+    val auth: FirebaseAuth = Firebase.auth
+    var verifiedMessage: String = ""
+    var exception: Exception? = null
+    var resultFirebase=MutableLiveData<Boolean>()
 
-    var microphoneStream:MicrophoneStream?=null
-
-    fun getData(){
-        Thread{
-
-//            val result=ocrRepository.getTextFromImage("unk"
-//                ,"https://ocr-demo.abtosoftware.com/uploads/handwritten2.jpg")
-            try{
-                    runBlocking {
-                        var result= ocrRepository.getTextFromImageReadApi(url = "https://ocr-demo.abtosoftware.com/uploads/handwritten2.jpg")
-                        viewModelScope.launch { liveData.value=result }
-
-                    }
-
-
-
-            }catch (e:Exception){
-
+    fun addUser(userDTO: UserResponse) {
+        viewModelScope.launch {
+            try {
+//                liveData.value = teacherService.addTeacher(
+//                    TeacherResponseDTO(
+//                        "test2",
+//                        "test2",
+//                        "test10@gmail.com",
+//                        "test2",
+//                        "Teacher",
+//                        "+201233333335",
+//                        ""
+//                    )
+//                )
+                if (userDTO.role == "Teacher") {
+                    test.value = teacherDataSource.addTeacher(
+                        TeacherResponseDTO(
+                            userDTO.firstName,
+                            userDTO.lastName,
+                            userDTO.emailAddress,
+                            userDTO.password,
+                            userDTO.role,
+                            userDTO.phone,
+                            userDTO.profilePic,
+                            userDTO.id
+                        )
+                    )
+                } else if (userDTO.role == "Student") {
+                    liveData.value = studentService.addStudent(
+                        StudentResponseDTO(
+                            userDTO.firstName,
+                            userDTO.lastName,
+                            userDTO.emailAddress,
+                            userDTO.password,
+                            userDTO.role,
+                            userDTO.phone,
+                            userDTO.profilePic,
+                            userDTO.id
+                        )
+                    )
+                } else if (userDTO.role == "Parent") {
+                    parentLiveData.value = parentOnlineDataSource.addParent(
+                        ParentResponseDTO(
+                            userDTO.firstName,
+                            userDTO.lastName,
+                            userDTO.emailAddress,
+                            userDTO.password,
+                            userDTO.role,
+                            userDTO.phone,
+                            userDTO.profilePic,
+                            userDTO.id
+                        )
+                    )
+                }
+            } catch (t: Throwable) {
+                when (t) {
+                    is HttpException ->
+                        errorMessage.value = t.response()?.errorBody()?.string()
+                    else -> errorMessage.value = t.message
+                }
             }
 
-        }.start()
-    }
-
-    fun getTestData(): ReadOperationResult {
-        return liveData.value!!
-    }
-
-    fun test(txtPhone: EditText) {
+        }
 
     }
 
+    fun addChildren(email:List<String>){
+        viewModelScope.launch {
+            try {
 
+            }catch (t: Throwable) {
+                when (t) {
+                    is HttpException ->
+                        errorMessage.value = t.response()?.errorBody()?.string()
+                }
+            }
+        }
+    }
+
+    fun addUserToFirebase(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener() { task1 ->
+                var result = task1.isSuccessful
+                resultFirebase.value=result
+                if (result) {
+                    val user = FirebaseAuth.getInstance().currentUser
+                    user?.sendEmailVerification()
+                    verifiedMessage = "Verification email sent"
+
+                } else {
+                    exception = task1.exception
+                    verifiedMessage = exception?.message.toString()
+                }
+            }
+    }
 }

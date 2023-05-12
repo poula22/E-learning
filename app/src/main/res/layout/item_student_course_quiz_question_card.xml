@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.lamp.ui.teacher.courses_page.course_content.quiz.questions_recycler_view.QuestionItem" />
+            type="com.example.domain.model.QuizDetailsResponseDTO" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -34,7 +34,7 @@
                 android:scrollHorizontally="false"
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
                 android:textSize="20sp"
-                android:text="@{item.question}"
+                android:text="@{item.title}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -69,6 +69,7 @@
                     android:id="@+id/question_answer_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

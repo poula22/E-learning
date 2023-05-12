@@ -2,21 +2,21 @@ package com.example.data.api
 
 import com.example.data.data_classes.ToDoList
 import com.example.data.model.ToDoListResponse
+import com.example.domain.model.TodoDTO
 import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ToDoListWebService {
-    @POST("h1")
-    fun addToDoList(@Query("toDoList")toDoList: ToDoList): Call<ToDoListResponse>
-    @POST("h1")
-    fun updateToDoList(@Query("toDoList") apiKey:String): Call<ToDoListResponse>
-    @DELETE("h1")
-    fun deleteToDoList(@Query("id") id:Int): Call<ToDoListResponse>
-    @GET("h1")
-    fun getAllToDoList(): Call<List<ToDoListResponse>>
-    @GET("h1")
-    fun getToDoListById(@Query("id") id:Int): Call<ToDoListResponse>
+    @GET("api/ToDoLists")
+    suspend fun getToDoLists(): ToDoListResponse
+    @POST("api/ToDoLists")
+    suspend fun addToDoList(@Body toDoList:TodoDTO): ToDoListResponse
+    @PUT("api/ToDoLists/{id}")
+    suspend fun updateToDoList(@Path("id") id:Int, @Body toDoList:TodoDTO): ToDoListResponse
+    @DELETE("api/ToDoLists/{id}")
+    suspend fun deleteToDoList(@Path("id") id:Int): ToDoListResponse
+    @GET("api/ToDoLists/{id}")
+    suspend fun getToDoList(@Path("id") id:Int): ToDoListResponse
+    @GET("api/ToDoLists/GetToDoListsByUserId/{userId}")
+    suspend fun getToDoListsByUserId(@Path("userId") userId:Int): ToDoListResponse
 }

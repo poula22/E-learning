@@ -10,21 +10,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:paddingStart="15dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="15dp">
+
         <TextView
             android:id="@+id/no_students_found"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No students found"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/students_search" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/students_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F4F4F4"
+            android:background="@drawable/rounded_text"
+            android:backgroundTint="#E6E6E6"
+            app:defaultQueryHint="Student Name"
+            app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,21 +42,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="Students (32)"
+            android:text="Students"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/students_search" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sort_by"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:text="Extend All"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/students_search"
-            app:layout_constraintBottom_toTopOf="@id/teacher_students_recycler_view" />
 
 
         <androidx.recyclerview.widget.RecyclerView

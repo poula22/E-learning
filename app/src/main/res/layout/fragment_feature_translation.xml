@@ -156,9 +156,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
                 android:maxLines="1"
-                app:layout_constraintBottom_toTopOf="@+id/text_output"
                 app:layout_constraintStart_toEndOf="@id/translate_to"
                 app:layout_constraintTop_toBottomOf="@id/text_input">
 
@@ -170,15 +170,17 @@
                     android:text="ar" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/translate_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_marginEnd="16dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
                 android:backgroundTint="@color/light_purple"
                 android:text="Translate"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/languages_dropdown_menu"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_input" />
+                app:layout_constraintTop_toTopOf="@+id/languages_dropdown_menu" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_output"
@@ -196,7 +198,7 @@
                 app:hintTextColor="@color/black"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/translate_btn">
+                app:layout_constraintTop_toBottomOf="@id/languages_dropdown_menu">
 
                 <EditText
                     android:id="@+id/text_output_text"

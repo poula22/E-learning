@@ -121,7 +121,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Text to summarize"
                 android:scrollbars="vertical"
-                app:boxBackgroundColor="@color/white"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="20dp"
                 app:boxCornerRadiusBottomStart="20dp"
@@ -133,29 +132,97 @@
                 app:layout_constraintTop_toBottomOf="@id/card_voice">
 
                 <EditText
+                    android:id="@+id/paragraphInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top"
-                    android:lines="12"
+                    android:lines="8"
                     android:textSize="25sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <Button
-                android:id="@+id/translate_btn"
+            <TextView
+                android:id="@+id/or_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OR website :"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/url_input"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_input" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/url_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:hint="Article to summarize"
+                android:scrollbars="vertical"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxStrokeWidth="2dp"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/or_url"
+                app:layout_constraintTop_toBottomOf="@id/text_input">
+
+                <EditText
+                    android:id="@+id/url"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:lines="1"
+                    android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/sentences_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Result Sentences No. "
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/text_output"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/url_input" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/sentence_number"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="7dp"
+                android:background="@drawable/rounded_transparent"
+                android:gravity="center"
+                android:hint="3"
+                android:inputType="numberDecimal"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toTopOf="@id/text_output"
+                app:layout_constraintEnd_toStartOf="@+id/summarize_btn"
+                app:layout_constraintStart_toEndOf="@id/sentences_txt"
+                app:layout_constraintTop_toBottomOf="@id/url_input" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/summarize_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/light_pink"
                 android:text="Summarize"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_input" />
+                app:layout_constraintTop_toBottomOf="@id/url_input" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_output"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Translated text"
+                android:hint="Summarization"
                 android:scrollbars="vertical"
                 app:boxBackgroundColor="@color/light_pink"
                 app:boxBackgroundMode="outline"
@@ -165,9 +232,18 @@
                 app:boxCornerRadiusTopStart="20dp"
                 app:boxStrokeWidth="2dp"
                 app:hintTextColor="@color/black"
-
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/translate_btn" />
+                app:layout_constraintTop_toBottomOf="@id/summarize_btn">
+
+                <EditText
+                    android:id="@+id/text_output_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:inputType="none"
+                    android:lines="5"
+                    android:textSize="25sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.AssignmentDetailsResponseDTO
 import com.example.lamp.R
 import com.example.lamp.databinding.ItemStudentCourseAssignmentBinding
 import com.example.lamp.ui.student.student_course_page.course_content.assignment.AssignmentItem
 
 
-class StudentCourseAssignmentAdapter(var assignments: MutableList<AssignmentItem>? = null) :
+class StudentCourseAssignmentAdapter(var assignments: MutableList<AssignmentDetailsResponseDTO>? = null) :
     RecyclerView.Adapter<StudentCourseAssignmentAdapter.ViewHolder>() {
 
     lateinit var viewBinding: ItemStudentCourseAssignmentBinding
@@ -24,7 +25,7 @@ class StudentCourseAssignmentAdapter(var assignments: MutableList<AssignmentItem
         return ViewHolder(viewBinding)
     }
 
-    fun setFilteredList(filteredList: MutableList<AssignmentItem>) {
+    fun setFilteredList(filteredList: MutableList<AssignmentDetailsResponseDTO>) {
         this.assignments = filteredList
         notifyDataSetChanged()
     }
@@ -43,7 +44,7 @@ class StudentCourseAssignmentAdapter(var assignments: MutableList<AssignmentItem
     }
     var onStudentAssignmentClickedListener:OnStudentAssignmentClickedListener?=null
     interface OnStudentAssignmentClickedListener{
-        fun onAssignmentClick(pos:Int)
+        fun onAssignmentClick(postion:Int)
     }
 
     override fun getItemCount(): Int = assignments?.size ?: 0
